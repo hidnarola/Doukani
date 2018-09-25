@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /classified_application/
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule ^(.*)$ index.php [L]
+
+Options -Indexes
+ErrorDocument 403 http://doukani.com/404_page

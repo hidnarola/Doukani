@@ -1,0 +1,98 @@
+canvas {display:none;}
+.alert-info .user-img-t {
+left: 0px !important;
+position:auto !important;
+top:0px !important;		
+}
+
+*{margin:0; padding:0;}
+body{ margin:0; padding:0; font-family: 'Roboto', sans-serif; font-weight:400;}
+.custome-chat {  margin-top: 20px;}
+.custome-chat ul{ list-style:none;}
+
+.custome-chat ul li{ display:block; width:100%; margin:0 0 20px; position:relative; z-index:10; padding: 15px;   background: #fff; max-width:1000px;}
+.first-chat{ display:inline-block; width:100%; margin:0 0 20px; z-index:12; position:relative;}
+.first-chat h4{color:#333; font-size:16px; line-height:100%; margin:10px 0 10px; padding:0; font-weight:700; display:inline-block;}
+.first-chat p{ color:#999; font-size:13px; line-height:100%; margin:0 0 10px; padding:0; font-weight:400;}
+.first-chat-img{ float:left; width:80px; height:80px; border:1px solid #ccc; background:#ddd; margin:0 15px 0 0; -webkit-border-radius:80px; -moz-border-radius:80px; -o-border-radius:80px; border-radius:80px;}
+.first-chat-img img{ width:80px; height:80px; -webkit-border-radius:80px; -moz-border-radius:80px; -o-border-radius:80px; border-radius:80px;}
+
+.grounp-comments:after{ content:""; width:1px; height:100%; background:#ccc; position:absolute; left:-43px; bottom:48%; z-index:-1;}
+.grounp-comments + .grounp-comments:after{ height:120%;}
+.grounp-comments:before{ content:""; width:40px; height:1px; background:#ccc; position:absolute; left:-43px; top:50%; z-index:-1;}
+.grounp-comments{ border:1px solid #ccc; margin:0 0 20px 0; padding:15px 15px 15px 100px; display:inline-block; vertical-aling:top; position:relative; z-index:10; -webkit-border-radius:8px; -moz-border-radius:8px; -o-border-radius:8px; border-radius:8px; background:#fff; width:100%;}
+.grounp-comments-icons{ position:absolute; margin:0; top:15px; left:15px;}
+.grounp-comments-img{ width:60px; height:60px; background:#fff; border:1px solid #ddd; -webkit-border-radius:60px; -moz-border-radius:40px; -o-border-radius:40px; border-radius:40px;}
+.grounp-comments-img img{-webkit-border-radius:40px; -moz-border-radius:40px; -o-border-radius:40px; border-radius:40px; width:100%; height:100%;}
+.grounp-comments-icons span{ position:absolute; top:0; right:-2px; width:12px; height:12px; display:block; -webkit-border-radius:50px; -moz-border-radius:50px; -o-border-radius:50px; border-radius:50px;}
+.grounp-comments-icons span.online{  background:green;}
+.grounp-comments-icons span.offline{ background:grey;}
+
+.grounp-comments p{ font-size:15.5px; color:#333; line-height:normal; margin: 0 0 15px;}
+
+.grounp-comments-right{ width:100%;}
+.user-name{ margin:0 0 10px; display:inline-block; vertical-align:top; width:100%;}
+.user-name h5{ float:left; color:#333; font-size:15px; font-weight:700; margin:0; padding:0;}
+.user-name h6{ float:right; color:#999; font-size:13px; font-weight:400; margin:0; padding:0;}
+
+.comment-function p{ display:inline-block; vertical-align:top; margin:0 10px 0 0;}
+.comment-function p a{ color:#999; font-size:13px; text-decoration:none; line-height: 18px; }
+.comment-function p a:hover{ color:red;}
+
+.comment-replay{ position:relative; width:100%; display:inline-block;} 
+.comment-replay input[type="text"]{ background:#fff; border:1px solid #ddd; padding:3px 5px 7px 12px; 
+line-height:20px; float:left; width:68%; height:32px; color:#333; text-transform:capitalize;}
+.comment-replay button ,.comment-replay.button{ width:18%; float:left; background:#034694; border:0; color:#fff; height:27px; text-transform:uppercase; line-height:28px; cursor:pointer; margin-left:2%;}
+.callmulti_form .data-icon { line-height:26px;  max-width: 150px; position:relative; width:100%;float:right; margin:0 0 0 10px;}
+.data-icon a{ color:#034694; font-size:14px;}
+.data-icon a:hover{ color:#034694;}
+.data-icon i { margin: -2px 6px 0; padding: 0;}
+
+.show-commentbox { position: absolute; right:10px; top:12px; z-index:100;}
+.show-commentbox a{ color:#333; font-size:18px;} 
+.show-commentbox a:hover{ color:#034694; }
+
+.comment-box-01{ display:none; padding:0 0 0 80px;}
+h6.sent-comment{ line-height:27px; margin:0; padding:0; float:right; }
+.comment-box-01 + .comment-box-01 .grounp-comments:after{ height:150%;}
+#send-message-popup .alert-info { background-color: #eaeaea;}
+.textarea-control{ width:80%; float:left; }
+.comment-replay .emoji-picker-icon {right:0px; top: 7px;}
+
+@media (min-width:768px) and (max-width:991px){
+.grounp-comments {  min-width: 460px;}
+.comment-replay input[type="text"] { width: 64%;}
+
+}
+@media(max-width:767px){
+.first-chat { text-align: center;}
+.custome-chat { margin: 80px auto; padding: 0 15px; width: auto;}
+.first-chat-img { float: none; margin: 0 auto 15px; width: 80px;}
+.grounp-comments::after,
+.grounp-comments::before{ display:none;}
+.grounp-comments { width: 100%; margin:0 0 15px; padding:15px;}
+.grounp-comments-right { float: none; width: 100%;}
+.comment-replay input[type="text"]{ width:100%;}
+.comment-replay button{ width:auto; padding:0 10px;}
+.show-commentbox { position: absolute; right: 10px; top: 29px; z-index: 100;}
+.grounp-comments-icons { float: none; margin: 0 auto 20px; position: relative; text-align: center;}
+.grounp-comments-img {margin: 0 auto; }
+.grounp-comments-right { text-align: center;}
+.user-name { display: inline-block; text-align: center; }
+.user-name h5 { float: none; margin: 0 0 10px;}
+.user-name h6 {float: left;}
+.sent-comment { color: #999; display:inline-block; margin:0; padding:10px 0 5px; position:relative; right:0; top:0;}
+.custome-chat { margin: 0 auto; padding: 0; width: auto;}	
+.custome-chat ul + br,
+.custome-chat ul + br + br,
+.custome-chat ul + br + br + br{ display:none;}
+.comment-replay p.lead input.form-control { height:auto; padding:5px 10px;}
+.comment-replay button { padding:0; text-align:center; width:70px;}
+.comment-box-01 { padding:0;}
+
+}
+
+@media(max-width:359px){
+.comment-replay button { float:none; margin:0 auto 10px; padding:0; text-align:center; width:80%;}
+.comment-replay .data-icon { width:150px; margin:0; line-height:25px; float:none; text-decoration:none; margin:0 auto;}
+}

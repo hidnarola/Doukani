@@ -1,0 +1,18 @@
+@media(max-width: 1024px){
+.storebtnwrraper a img{max-width: 150px;}
+}
+@media(max-width: 990px){
+.rform {margin: 15px 0px;}
+.rwraaper .hu-tag img{width: 100px;}
+.storebtnwrraper a img {
+    max-width: 100px;
+}
+.pr0 {padding-right: 15px !important;}
+.pl0 { padding-left: 15px !important;}
+.rwraaper .hu-tag {top: 30px;}
+.storebtnwrraper {margin-bottom: 30px;}
+.lpart{padding: 30px 15px 0px 15px;}
+.rwraaper{padding: 87px 15px 0px 15px;}
+.storebtnwrraper a img {max-width: 100%;margin-bottom: 15px}
+.form-holder {margin: 30px 0px;}
+}

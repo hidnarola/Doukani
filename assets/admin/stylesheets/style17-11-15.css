@@ -1,0 +1,120 @@
+.uploadArea{ min-height:300px; height:auto; border:1px dotted #ccc; padding:10px; cursor:move; margin-bottom:10px; position:relative;}
+.uploadArea h1 { 
+	color:#ccc; 
+	width:100%; 
+	z-index:0; 
+	text-align:center; 
+	vertical-align:middle; 
+	position:absolute; 
+	top:25px;
+}
+.dfiles{ 
+	clear:both; 
+	border:1px 
+	solid #ccc; 
+	background-color:#E4E4E4; 
+	/*padding:3px;  */
+	position:relative; 
+	height:25px; 
+	margin:3px; 
+	z-index:1; 
+	width:97%; 
+	opacity:0.6; 
+	cursor:default;}
+.buttonUpload {
+ display:inline-block; padding: 4px 10px 4px; text-align: center; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); background-color: #0074cc; -webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px; border-color: #e6e6e6 #e6e6e6 #bfbfbf; border: 1px solid #cccccc; color:#fff; }
+.progress img{ margin-top:7px; margin-left:24px; }
+.dfiles h5, .dfiles h5 img {  float:left;  }
+.uploadArea h1, .dfiles h5{ padding:0px; margin:0px; }
+.uploadArea h1.title{ font-family:'Boogaloo', cursive; padding:10px; }
+.dfiles h5{ width:95%; line-height:25px;}
+
+ul.sortable{
+	list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px;
+}
+
+ul.sortable li{
+	font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+    padding: 10px;
+}
+
+span.toggle{
+	display: inline-block;
+    width: 100%;
+}
+ul.sublist li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-weight: normal !important;
+    list-style: outside none none;
+}
+ul.sublist{
+	padding: 0;
+}
+.fileinput-button input {
+    cursor: pointer;
+    direction: ltr;
+    font-size: 23px;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;    
+}
+.fileinput-button {
+    margin-bottom: 4px;
+    overflow: hidden;
+    position: relative;
+}
+.title {
+    color: #3d579d;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+}
+.file_upload_btn{
+	border: 1px solid #ddd;
+    border-radius: 3px;
+    margin: 10px 5px;
+    min-height: 137px;
+    padding: 10px 0;
+}
+.delete_btn{
+	background:#fff;
+	border-radius:3px;
+	padding:3px;
+	bottom: 5px;
+    cursor: pointer;
+    position: absolute;
+    right: 35px;
+    text-align: center;
+}
+.delete_btn_main {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 3px;
+    bottom: 181px;
+    cursor: pointer;
+    padding: 6px;
+    position: absolute;
+    right: 170px;
+    text-align: center;
+}
+.file_upload_btn input[type="file"]{
+	margin: 0 auto 10px;
+    width: 80px;
+}
+.file_img1{
+	margin: 10px 4px -13px 120px;
+    
+}
+.delete_btn i{
+	padding-right:0;
+}
+
+.FeaturedAds-popup{ text-align:center;}
+.FeaturedAds-popup button,
+.FeaturedAds-popup a{ display:inline-block; vertical-align:top;}
+.FeaturedAds-popup .input-group-addon{ height: 34px; line-height: 22px; padding: 5px 10px; position: absolute; right: 0; top: 0; width: auto;}
+
+

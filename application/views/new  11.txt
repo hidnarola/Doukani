@@ -1,0 +1,50 @@
+iv class="col-sm-4">
+					<div class="custome-chat">
+					<ul>
+			<li>
+				
+                  <div class="box box-bordered box-nomargin">
+					
+                    <div class="box-header ">
+						<div class="first-chat">
+							<div class="first-chat-img"></div>
+							<h4>like Aldus PageMaker including versions </h4>
+							<p>was popularised in the</p>
+						</div>                      
+						  <div class="actions">
+							<a href="#" class="btn box-remove btn-xs btn-link"><i class="icon-remove"></i>
+							</a>
+							
+							<a href="#" class="btn box-collapse btn-xs btn-link"><i></i>
+							</a>
+						  </div>
+                    </div>
+							<div class="box-content">
+								<div class="comment-box-01">
+									<div class="grounp-comments">
+										<div class="grounp-comments-icons">
+											<div class="grounp-comments-img"></div>
+											<span class="online"></span>
+										</div>
+										<div class="grounp-comments-right">
+											<div class="user-name">
+												<h5>PageMaker including</h5>
+												<h6>22-12-2015</h6>
+											</div>	
+											<p>Simply dummy text of the printing and typesetting industry but also the leap into electronic typesetting</p><br>
+											<div class="comment-replay">
+												<form>
+													<input type="text" name="" placeholder="replay here..." />
+													<button type="submit">Replay</button>
+												</form>
+												<div class="data-icon"><a href="#"><i class="fa fa-database"></i></a></div>
+											</div>
+										</div>                      
+							</div>
+						</div>
+                    </div>
+                  </div>
+				  </li>
+				  </ul>
+                </div>
+                </div>
