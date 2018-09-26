@@ -73,7 +73,7 @@
                                             <div class='form-group'>
                                                 <label class='col-md-2 control-label' for='inputText1'>Store Sub-domain<span>*</span></label>
                                                 <div class='col-md-5 controls'>
-                                                    <input placeholder='Store Domain' class="form-control" name="store_domain" id="store_domain" type='text' value="<?php echo $old_store_details[0]->store_domain; ?>" data-rule-required='true' onkeypress="return isNumber1(event);" maxlength="15">
+                                                    <input placeholder='Store Domain' class="form-control" name="store_domain" id="store_domain" type='text' value="<?php echo $old_store_details[0]->store_domain; ?>" data-rule-required='true' onkeypress="return isNumber1(event);" maxlength="20">
                                                     <span id="full_domain"><?php echo $old_store_details[0]->store_domain; ?>.doukani.com</span>
                                                     <br>
                                                     <span class="store_domain_status"></span>

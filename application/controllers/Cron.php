@@ -13,7 +13,7 @@ class Cron extends CI_Controller {
 
         $msg = "deactivate_ads";
         mail("kek@narola.email", "deactivate_ads cron", $msg);
-
+//        die();
         $data = array('function_name' => 'deactivate_ads - start', 'created_date' => date('y-m-d H:i:s', time()));
         $this->dbcommon->insert('cron_status', $data);
 

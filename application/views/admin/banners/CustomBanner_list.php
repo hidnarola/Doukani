@@ -157,7 +157,7 @@
                                                                                 <td><?php echo $superCategory['ban_id']; ?></td>
                                                                                 <td>
                                                                                     <?php if (!empty($superCategory['site_url'])) { ?>
-                                                                                        <a href="<?php echo $superCategory['site_url']; ?>"><i class="icon-globe"></i></a>
+                                                                                        <a href="//<?php echo $superCategory['site_url']; ?>" target="_blank"><i class="icon-globe"></i></a>
                                                                                     <?php } ?>
                                                                                 </td>
                                                                                 <td><?php echo $superCategory['ban_type_name']; ?></td>

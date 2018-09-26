@@ -111,7 +111,7 @@ class StoreRegistration extends My_controller {
             $this->form_validation->set_rules('password1', 'Password', 'trim|alpha_numeric|min_length[6]|max_length[15]');
 //            $this->form_validation->set_rules('date_of_birth', 'Birth Date', 'required');
 //            if ($_POST['user_role'] == 'storeUser') {
-            $this->form_validation->set_rules('store_domain', 'Store Domain', 'trim|required|min_length[5]|max_length[20]|callback_check_subdomain_name');
+            $this->form_validation->set_rules('store_domain', 'Store Domain', 'trim|required|min_length[3]|max_length[20]|callback_check_subdomain_name');
             $this->form_validation->set_rules('store_name', 'Store Name', 'trim|required|min_length[5]|max_length[20]|callback_check_store_name');
 //            }
 //            echo '<pre>';

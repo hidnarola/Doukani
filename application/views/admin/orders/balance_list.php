@@ -1,6 +1,7 @@
 <html lang="en">
     <head>
         <?php $this->load->view('admin/include/head'); ?>        
+        <style>.action_drop_down  .sr-only {position: relative;}</style>
     </head>
     <body class='contrast-fb'>
         <?php $this->load->view('admin/include/header'); ?>
@@ -85,20 +86,20 @@
 
                                         <div class='box-content box-no-padding'>
                                             <div class="table_add_display responsive-table">
-                                                <div class="table-responsive foo scrollable-area">
+                                                <div class="table-responsive foo scrollable-area table-responsive">
                                                     <form method="post" action="" id="userForm" class="form form-horizontal">
                                                         <table class="display responsive no-wrap my-trading-account-table table automation-table marketing-materials-table" cellspacing="0" width="100%">
                                                             <thead>
                                                                 <tr>                                                                                                               
-                                                                    <th>Order Number</th>
-                                                                    <th>Store Name</th>
-                                                                    <th class="text-right">Percentage</th>
-                                                                    <th class="text-right">Doukani Commission</th>
-                                                                    <th class="text-right">Store Amount</th>
-                                                                    <th class="text-right">Order Amount</th>
-                                                                    <th>Balance Status</th>
-                                                                    <th>Order Status</th>
-                                                                    <th>Actions</th>
+                                                                    <th width="10%">Order Number</th>
+                                                                    <th width="10%">Store Name</th>
+                                                                    <th width="10%" class="text-right">Percentage</th>
+                                                                    <th width="10%" class="text-right">Doukani Commission</th>
+                                                                    <th width="10%" class="text-right">Store Amount</th>
+                                                                    <th width="10%" class="text-right">Order Amount</th>
+                                                                    <th width="10%">Balance Status</th>
+                                                                    <th width="10%">Order Status</th>
+                                                                    <th width="20%">Actions</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -126,8 +127,22 @@
                                                                             </td>
                                                                             <td><?php echo ucfirst($list['order_status']); ?></td>
                                                                             <td>
-                                                                                <a target="_blank" href="<?php echo site_url() . 'admin/users/e_wallet/?userid=' . $list['store_owner']; ?>" class="btn btn-primary view_details has-tooltip" data-placement="top" data-original-title="Store's E-walllet" id="<?php echo $list['order_id']; ?>"><i class="icon-money"></i></a>
-                                                                                <a target="_blank" href="<?php echo site_url() . 'admin/orders/order_details/' . $list['order_id']; ?>" class="btn btn-info view_details has-tooltip" data-placement="top" data-original-title="Order Details" id="<?php echo $list['order_id']; ?>"><i class="icon-eye-open"></i></a>
+                                                                                <div class="btn-group action_drop_down">
+                                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Actions</button>
+                                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                                                        <span class="caret"></span>
+                                                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                                                    </button>
+                                                                                    <ul class="dropdown-menu" role="menu">
+                                                                                        <li>
+                                                                                            <a target="_blank" href="<?php echo site_url() . 'admin/users/e_wallet/?userid=' . $list['store_owner']; ?>" class="view_details" id="<?php echo $list['order_id']; ?>"><i class="icon-money"></i> Store's E-walllet</a>
+                                                                                        </li>
+                                                                                        <li class="divider"></li>
+                                                                                        <li>
+                                                                                            <a target="_blank" href="<?php echo site_url() . 'admin/orders/order_details/' . $list['order_id']; ?>" class="view_details" id="<?php echo $list['order_id']; ?>"><i class="icon-eye-open"></i> Order Details</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
                                                                             </td>                                                                    
                                                                         </tr>
                                                                         <?php

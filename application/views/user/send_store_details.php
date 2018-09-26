@@ -24,7 +24,7 @@
                                 <label>Store Sub-domain <span style="color:red;">*</span></label>
                             </div>                            
                             <div class='col-sm-8'>
-                                <input placeholder='Store Domain' class="form-control" name="store_domain" id="store_domain" type='text' value="" data-rule-required='true' onkeypress="return isNumber1(event);" maxlength="15">
+                                <input placeholder='Store Domain' class="form-control" name="store_domain" id="store_domain" type='text' value="" data-rule-required='true' onkeypress="return isNumber1(event);" maxlength="20">
                                 <span id="full_domain">.doukani.com</span>
                                 <br>
                                 <span class="store_domain_status"></span>

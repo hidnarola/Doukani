@@ -931,7 +931,7 @@ class Users extends CI_Controller {
             // validation
             if (isset($_REQUEST['user_role']) && $_REQUEST['user_role'] == 'storeUser') {
 
-                $this->form_validation->set_rules('store_domain', 'Store sub-domain', 'trim|required|callback_check_subdomain_name|alpha_numeric');
+                $this->form_validation->set_rules('store_domain', 'Store sub-domain', 'trim|required|min_length[3]|max_length[20]|callback_check_subdomain_name|alpha_numeric');
                 $this->form_validation->set_rules('store_name', 'Store Name', 'trim|required|callback_check_store_name');
                 $this->form_validation->set_rules('store_status', 'Active / Hold', 'trim|required');
                 $this->form_validation->set_rules('store_is_inappropriate', 'Status', 'trim|required');
@@ -1857,7 +1857,7 @@ class Users extends CI_Controller {
             $data['product_count'] = $product_count;
 
             if (!empty($_POST)):
-                $this->form_validation->set_rules('store_domain', 'Store sub-domain', 'trim|required|callback_check_edit_subdomain_name|alpha_numeric');
+                $this->form_validation->set_rules('store_domain', 'Store sub-domain', 'trim|required|min_length[3]|max_length[20]|callback_check_edit_subdomain_name|alpha_numeric');
                 $this->form_validation->set_rules('new_store_name', 'Store Name', 'trim|required|callback_check_edit_store_name');
                 $this->form_validation->set_rules('store_status', 'Active / Hold Status', 'trim|required');
                 $this->form_validation->set_rules('store_is_inappropriate', 'Status', 'trim|required');
@@ -2554,7 +2554,7 @@ FROM e_wallet_request_response e LEFT JOIN store s ON s.store_owner = e.store_ow
 
                 if ($this->input->post()) {
 
-                    $this->form_validation->set_rules('store_domain', 'Store sub-domain', 'trim|required|callback_check_subdomain_name|alpha_numeric');
+                    $this->form_validation->set_rules('store_domain', 'Store sub-domain', 'trim|required|min_length[3]|max_length[20]|callback_check_subdomain_name|alpha_numeric');
                     $this->form_validation->set_rules('store_name', 'Store Name', 'trim|required|callback_check_store_name');
                     $this->form_validation->set_rules('status', 'Status', 'trim|required');
                     if (isset($_POST['category_id1']) && (int) $_POST['category_id1'] == 0) {

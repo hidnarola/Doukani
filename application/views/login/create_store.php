@@ -191,8 +191,8 @@
                                 },
                                 store_domain: {
                                     required: true,
-                                    minlength: 5,
-                                    maxlength: 15
+                                    minlength: 3,
+                                    maxlength: 20
                                 },
                                 store_description: {required: true},
 //                                shipping_cost: {required: true}
@@ -206,8 +206,8 @@
                                 },
                                 store_domain: {
                                     required: "Store URL is required.",
-                                    minlength: "Store domain name should be of minimum 5 chars",
-                                    maxlength: "Store domain name should be of maximum 15 chars"
+                                    minlength: "Store domain name should be of minimum 3 chars",
+                                    maxlength: "Store domain name should be of maximum 20 chars"
                                 },
                                 store_description: {required: "Store Description is required."},
 //                                shipping_cost: {required: "Shipping Cost is required."}

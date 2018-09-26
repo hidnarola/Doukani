@@ -450,7 +450,7 @@
                                                                                         if (($pro['user_role'] == 'admin' && $system_mgt == 1) || $user_mgt == 1) {
                                                                                             ?>        
                                                                                             <li>
-                                                                                                <a chref="<?php echo $user_link_; ?>" target="_blank">
+                                                                                                <a href="<?php echo $user_link_; ?>" target="_blank">
                                                                                                     <i class="fa fa-eye"></i> View Seller Details
                                                                                                 </a>
                                                                                             </li>
