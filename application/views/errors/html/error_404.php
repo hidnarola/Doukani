@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">    
 	<link href='<?php echo HTTPS.website_url; ?>assets/admin/images/meta_icons/favicon.ico' rel='shortcut icon' type='image/x-icon'>        
-    <title><?php echo $page_title; ?></title>	
+    <title><?php echo '404 - Page not found.'; ?></title>	
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800,400italic' rel='stylesheet' type='text/css'>
 	<style>
 		*{ margin:0; padding:0;}

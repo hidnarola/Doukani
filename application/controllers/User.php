@@ -130,7 +130,7 @@ class User extends My_controller {
         $where = " where user_id='" . $current_user['user_id'] . "'";
         $user = $this->dbcommon->getrowdetails('user', $where);
 
-        $total_followers = $this->dbcommon->get_myfollowers_count($user->user_id, 'following');
+        $total_followers = $this->dbcommon->get_myfollowers_count($user->user_id);
         $data['total_followers'] = $total_followers;
         $where_is = " * from subscription where email_address='" . $user->email_id . "'";
         $sub_set = $this->dbcommon->getnumofdetails_($where_is);

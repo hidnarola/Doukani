@@ -31,7 +31,7 @@
             document.write('<style>.noscript { display: none; }</style>');
         </script>    
         <script type="text/javascript" src="<?php echo site_url(); ?>assets/front/javascripts/buttons.js"></script>
-        <script type="text/javascript">stLight.options({publisher: "e16e028e-6148-4bb8-9d36-8ddd8927b25b", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+        <!--<script type="text/javascript">stLight.options({publisher: "e16e028e-6148-4bb8-9d36-8ddd8927b25b", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>-->
         <script src="<?php echo base_url(); ?>assets/admin/javascripts/plugins/lightbox/lightbox.min.js" type="text/javascript"></script>
         <style>
             .badge_top {top:initial;}
@@ -240,7 +240,9 @@
                                                         <?php } ?>                        
                                                     </ul>
                                                 </h3>
-                                                <?php if (!isset($company_details['email_id']) || isset($company_details['followers_count'])) { ?>
+                                                <?php                                                 
+//                                                print_r($company_details);
+                                                if (!isset($company_details['email_id']) || isset($company_details['followers_count'])) { ?>
                                                     <div class="contact">
                                                         <?php if (!isset($company_details['email_id']) && !empty($company_details['email_id'])) { ?>
                                                             <p class="c-line"><strong>Email Address: </strong><?php echo $company_details['email_id']; ?></p>

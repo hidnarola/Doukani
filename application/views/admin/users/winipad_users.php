@@ -95,7 +95,7 @@ $suffixUrl = $queryString;
                                             <!--<form action="<?php echo $url ?>" method="get" style="margin-top: 10px;">-->
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-sm-6 col-sm-offset-1 text-right" style="margin-bottom: 10px;">
+                                                    <div class="col-sm-6" style="margin-bottom: 10px;">
                                                         <input type="text" placeholder="Search By firstname/Email" name="search" class="form-control" value="<?php if (isset($_GET['search'])) echo $_GET['search']; ?>">
                                                     </div>
                                                     <div class="col-sm-2 text-right">

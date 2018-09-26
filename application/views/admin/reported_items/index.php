@@ -45,7 +45,7 @@ $suffixUrl = $queryString;
                                         <form action="<?php echo site_url() . 'admin/reported_items/' ?>" method="get" style="margin-top: 10px;">
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-sm-6 col-sm-offset-1 text-right" style="margin-bottom: 10px;">
+                                                    <div class="col-sm-6" style="margin-bottom: 10px;">
                                                         <input type="text" placeholder="Search By ID/Seller/Title" name="search" class="form-control" value="<?php if (isset($_GET['search'])) echo $_GET['search']; ?>">
                                                     </div>
                                                     <div class="col-sm-2 text-right">
@@ -56,13 +56,14 @@ $suffixUrl = $queryString;
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </form>                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class='title text-right total-disp'><h4><span class="label label-success"><?php echo $total_records; ?></span> Total Records </h4></div>
                                 </div>
                             </div>
+                            <hr class="hr-normal">
                             <?php if ($this->session->flashdata('msg') != ''): ?>
                                 <div class='alert alert-info text-center'>
                                     <a class='close' data-dismiss='alert' href='#'>&times;</a>

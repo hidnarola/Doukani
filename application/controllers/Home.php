@@ -1135,7 +1135,7 @@ class Home extends My_controller {
               (IF(p.product_image IS NULL OR p.product_image='',0,1) +
                IF(p.youtube_link IS NULL  OR p.youtube_link='',0,1) +
                IF(p.video_name IS NULL  OR p.video_name='',0,1) +
-               (COUNT(pi.product_image_id))) as MyTotal,
+               (COUNT(DISTINCT pi.product_image_id))) as MyTotal,
                if(fe.product_id IS NOT NULL and (CONVERT_TZ(NOW(),'+00:00','" . ASIA_DUBAI_OFFSET . "') between fe.dateFeatured and fe.dateExpire),1,'') as featured_ad " . $like_fav_field . $field_list . "
             FROM product as p
              left join category as c on p.category_id=c.category_id 
@@ -1303,7 +1303,7 @@ class Home extends My_controller {
               (IF(p.product_image IS NULL OR p.product_image='',0,1) +
                IF(p.youtube_link IS NULL  OR p.youtube_link='',0,1) +
                IF(p.video_name IS NULL  OR p.video_name='',0,1) +
-               (COUNT(pi.product_image_id))) as MyTotal,
+               (COUNT(DISTINCT pi.product_image_id))) as MyTotal,
                IF(fe.product_id IS NOT NULL and (CONVERT_TZ(NOW(),'+00:00','" . ASIA_DUBAI_OFFSET . "') between fe.dateFeatured and fe.dateExpire),1,'') as featured_ad " . $like_fav_field . ",
                state.state_name,p.latitude,p.longitude,state.latitude state_latitude, state.longitude state_longitude,p.address
             FROM product as p
@@ -1502,7 +1502,7 @@ class Home extends My_controller {
                 (IF(p.product_image IS NULL OR p.product_image='',0,1) +
                 IF(p.youtube_link IS NULL  OR p.youtube_link='',0,1) +
                 IF(p.video_name IS NULL  OR p.video_name='',0,1) +
-                (COUNT(pi.product_image_id))) as MyTotal,
+                (COUNT(DISTINCT pi.product_image_id))) as MyTotal,
                 if(fe.product_id IS NOT NULL and (CONVERT_TZ(NOW(),'+00:00','" . ASIA_DUBAI_OFFSET . "') between fe.dateFeatured and fe.dateExpire),1,'') as featured_ad " . $like_fav_field . $field_list . "
                 FROM product as p 
                     left join category as c  on p.category_id=c.category_id

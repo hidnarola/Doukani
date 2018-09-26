@@ -291,8 +291,8 @@ class Alloffers extends My_controller {
                 $data['request_from'] = 'company_offer_page';
                 $data['user'] = $check_user_slug;
                 $company_details = $this->offer->company_details($user_slug);
-                $data['company_details'] = $company_details;
-
+                $data['company_details'] = $company_details;                
+                
                 $data['check_offer_slug'] = $check_offer_slug;
                 $data['page_title'] = $check_offer_slug['offer_title'];
                 $data['offer_detail'] = 'yes';

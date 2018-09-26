@@ -6,7 +6,7 @@
         <?php $this->load->view('include/google_tab_manager_head'); ?>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-XPpHskmvNVI5zH7T52Kvgja829p6Ek&libraries"></script>	
         <script src="<?php echo site_url(); ?>assets/front/javascripts/oms.min.js"></script>
-        <script src="<?php echo site_url(); ?>assets/front/javascripts/oms.js"></script>
+        <!--<script src="<?php echo site_url(); ?>assets/front/javascripts/oms.js"></script>-->
         <script src="<?php echo site_url(); ?>assets/front/javascripts/markerclusterer.js"></script>    
         <link href='<?php echo base_url(); ?>assets/front/stylesheets/owl.theme.css' rel='stylesheet' type='text/css'>
         <script type="text/javascript">

@@ -245,14 +245,14 @@
                                                                 <?php if ($admin_permission != 'only_listing') { ?>
                                                                     <th width="3%"><input type="checkbox" id="all" value="0" onclick="all_select();" style="height: 16px;"/></th>
                                                                 <?php } ?>
-                                                                <th width="10%" style="word-wrap: break-word; white-space: pre-line;">Name</th>
+                                                                <th width="20%" style="word-wrap: break-word; white-space: pre-line;">Name</th>
                                                                 <th width="5%">Image</th>
                                                                 <th width="10%">Category</th>
                                                                 <th width="5%">Price</th>
                                                                 <th width="10%">Status</th>
                                                                 <th width="10%">Product Is</th>
                                                                 <th width="15%">Contact Details</th>
-                                                                <th width="35%">Action</th>
+                                                                <th width="20%">Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
