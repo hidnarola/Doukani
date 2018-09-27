@@ -56,7 +56,16 @@
                                 <h1 class='pull-left'>
                                     <i class='icon-list-ol'></i>
                                     <span>Listings</span>
-                                </h1>               
+                                </h1>
+                                <div class='pull-right'>                                  
+                                    <?php                                    
+                                    $page_redirect = (isset($_GET['page'])) ? '?page=' . $_GET['page'] : '';
+                                    $view_path = base_url() . "admin/classifieds/listings_view/" . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '/' . $this->uri->segment(6) . '/' . $page_redirect;
+                                    ?>
+                                    <a href='<?php echo $view_path; ?>' class="btn-primary btn-lg">
+                                        <i class="fa fa-eye"></i>&nbsp;View Ad
+                                    </a>
+                                </div>
                             </div>
                             <hr class="hr-normal">
                             <?php if(validation_errors() != false) { ?>

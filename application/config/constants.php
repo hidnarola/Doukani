@@ -227,8 +227,10 @@ define('ASIA_DUBAI_OFFSET', '+04:00');
 
 define('SITE_ADMIN_EMAIL', 'adonis@adonis.name');
 
-define('PAY_TABS_MERCHANT_EMAIL', 'adonis@adonis.name');
-define('PAY_TABS_SECRET_KEY', 'cW7Ts6vkXjLCq7lihHx8cFI002Rr9qHlnOfPVK9S3Vuu3QMkxksKZbKZdCrm38IqXXgSHqLLlggo62IDnbnmn8mALNXOWFfTDvMk');
+//define('PAY_TABS_MERCHANT_EMAIL', 'adonis@adonis.name');
+define('PAY_TABS_MERCHANT_EMAIL', 'huzefa_fv@yahoo.com');
+//define('PAY_TABS_SECRET_KEY', 'cW7Ts6vkXjLCq7lihHx8cFI002Rr9qHlnOfPVK9S3Vuu3QMkxksKZbKZdCrm38IqXXgSHqLLlggo62IDnbnmn8mALNXOWFfTDvMk');
+define('PAY_TABS_SECRET_KEY', '9AcmUGSY8ywm2KApimIICyWkvQBieahoLuLFaDDjcaFeUgEdCmVfUSzqIbIXl0l6u6MFKpYWAEbuVPIxbEN6wmxfxgdTgy0LFMrq');
 define('PAY_TABS_SITE_URL', 'https://doukani.com');
 define('PAY_TABS_RETURN_URL', 'https://doukani.com/');
 define('PAY_TABS_IP_MERCHANT', '52.35.194.19');

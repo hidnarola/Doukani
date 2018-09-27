@@ -7,6 +7,7 @@ class Classifieds extends CI_Controller {
         parent::__construct();
         $this->load->model('dblogin', '', TRUE);
         $this->load->model('dbcommon', '', TRUE);
+        $this->load->model('product', '', TRUE);
         $this->load->library('permission');
         $this->load->library('My_PHPMailer');
         $this->load->library('parser');
@@ -1058,7 +1059,7 @@ class Classifieds extends CI_Controller {
             $this->unset_alllisting_session();
 
             $data = array();
-            
+
             $data['redirect_admin_to'] = $redirect;
             $data['page_title'] = 'Add Listing';
 
@@ -2021,7 +2022,7 @@ class Classifieds extends CI_Controller {
 
         if ($pro_id != '' && $redirect != '' && $function != '') {
             $data = array();
-            
+
             $data['redirect_admin_to'] = $redirect;
             $admin_permission = $this->session->userdata('admin_modules_permission');
             $admin_user = $this->session->userdata('user');
@@ -4611,6 +4612,92 @@ class Classifieds extends CI_Controller {
         $response = $this->dbcommon->send_mail_seller();
         echo json_encode($response);
         exit;
+    }
+
+    public function like_user_list($product_id = NULL) {
+
+        if (!is_null($product_id) && (int) $product_id > 0) {
+            $data['page_title'] = 'Users List';
+            $search = '';
+            $url = '';
+            if (isset($_REQUEST['per_page'])) {
+                $per_page = $_REQUEST['per_page'];
+                $url .= '&per_page=' . $per_page;
+                $search .= '&per_page=' . $per_page;
+            } else
+                $per_page = $this->per_page;
+
+            if (isset($_REQUEST['page']) && !empty($search))
+                $search .= '&page=' . $_REQUEST['page'];
+            elseif (isset($_REQUEST['page']))
+                $search .= '?page=' . $_REQUEST['page'];
+
+            $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
+            $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
+
+            $where = ' u.user_id FROM user u
+                    LEFT JOIN like_product lp ON lp.user_id = u.user_id
+                    WHERE lp.product_id= ' . $product_id . ' GROUP BY u.user_id
+                ';
+//        $where = ' u.user_id FROM user u
+//                    LEFT JOIN like_product lp ON lp.user_id = u.user_id
+//                    GROUP BY u.user_id
+//                ';
+
+            $pagination_data = $this->dbcommon->pagination($url, $where, $per_page, 'yes');
+            $data["links"] = $pagination_data['links'];
+            $data['total_records'] = $pagination_data['total_rows'];
+
+            $users_list = $this->product->get_product_like_users($product_id, $offset);
+            $data['users_list'] = $users_list;
+
+            $this->load->view('admin/listings/like_users_list', $data);
+        } else {
+            redirect('admin/home');
+        }
+    }
+
+    public function favorite_user_list($product_id = NULL) {
+
+        if (!is_null($product_id) && (int) $product_id > 0) {
+            $data['page_title'] = 'Users List';
+            $search = '';
+            $url = '';
+            if (isset($_REQUEST['per_page'])) {
+                $per_page = $_REQUEST['per_page'];
+                $url .= '&per_page=' . $per_page;
+                $search .= '&per_page=' . $per_page;
+            } else
+                $per_page = $this->per_page;
+
+            if (isset($_REQUEST['page']) && !empty($search))
+                $search .= '&page=' . $_REQUEST['page'];
+            elseif (isset($_REQUEST['page']))
+                $search .= '?page=' . $_REQUEST['page'];
+
+            $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
+            $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
+
+//        $where = ' u.user_id FROM user u
+//                    LEFT JOIN favourite_product fp ON fp.user_id = u.user_id
+//                    WHERE fp.product_id= ' . $product_id . ' GROUP BY u.user_id
+//                ';
+            $where = ' u.user_id FROM user u
+                    LEFT JOIN favourite_product fp ON fp.user_id = u.user_id
+                    GROUP BY u.user_id
+                ';
+
+            $pagination_data = $this->dbcommon->pagination($url, $where, $per_page, 'yes');
+            $data["links"] = $pagination_data['links'];
+            $data['total_records'] = $pagination_data['total_rows'];
+
+            $users_list = $this->product->get_product_favorite_users($product_id, $offset);
+            $data['users_list'] = $users_list;
+
+            $this->load->view('admin/listings/favorite_users_list', $data);
+        } else {
+            redirect('admin/home');
+        }
     }
 
 }

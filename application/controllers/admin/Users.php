@@ -1642,7 +1642,7 @@ class Users extends CI_Controller {
 
         $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
         $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
-        $data['featured_stores'] = $this->store->get_featuredstore($offset, $per_page, NULL, $only_featured);        
+        $data['featured_stores'] = $this->store->get_featuredstore($offset, $per_page, NULL, $only_featured);
         $data['url'] = $url;
         $pagination_data = $this->dbcommon->pagination($url, $wh_count, $per_page, 'yes');
 
@@ -2713,6 +2713,82 @@ FROM e_wallet_request_response e LEFT JOIN store s ON s.store_owner = e.store_ow
             $this->session->set_flashdata(array('msg' => 'Store Request(s) not found', 'class' => 'alert-info'));
         }
         redirect('admin/users/store_request_list/' . $redirect_url);
+    }
+
+    function followers($user_id = NULL) {
+
+        if (!is_null($user_id) && (int) $user_id > 0) {
+            $data['page_title'] = 'Followers List';
+            $search = '';
+            $url = '';
+            if (isset($_REQUEST['per_page'])) {
+                $per_page = $_REQUEST['per_page'];
+                $url .= '&per_page=' . $per_page;
+                $search .= '&per_page=' . $per_page;
+            } else
+                $per_page = $this->per_page;
+
+            if (isset($_REQUEST['page']) && !empty($search))
+                $search .= '&page=' . $_REQUEST['page'];
+            elseif (isset($_REQUEST['page']))
+                $search .= '?page=' . $_REQUEST['page'];
+
+            $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
+            $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
+
+            $where = ' u.user_id FROM followed_seller fs
+                    LEFT JOIN user u ON u.user_id = fs.user_id
+                    WHERE  fs.seller_id = ' . $user_id . ' AND u.is_delete NOT IN (1,4)';
+
+            $pagination_data = $this->dbcommon->pagination($url, $where, $per_page, 'yes');
+            $data["links"] = $pagination_data['links'];
+            $data['total_records'] = $pagination_data['total_rows'];
+
+            $users_list = $this->dbcommon->get_myfollowerslist($user_id, $offset, $per_page);
+            $data['users_list'] = $users_list;
+
+            $this->load->view('admin/users/followers_users_list', $data);
+        } else {
+            redirect('admin/home');
+        }
+    }
+
+    function following($user_id = NULL) {
+
+        if (!is_null($user_id) && (int) $user_id > 0) {
+            $data['page_title'] = 'Following Users List';
+            $search = '';
+            $url = '';
+            if (isset($_REQUEST['per_page'])) {
+                $per_page = $_REQUEST['per_page'];
+                $url .= '&per_page=' . $per_page;
+                $search .= '&per_page=' . $per_page;
+            } else
+                $per_page = $this->per_page;
+
+            if (isset($_REQUEST['page']) && !empty($search))
+                $search .= '&page=' . $_REQUEST['page'];
+            elseif (isset($_REQUEST['page']))
+                $search .= '?page=' . $_REQUEST['page'];
+
+            $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
+            $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
+
+            $where = ' u.user_id FROM followed_seller fs
+                    LEFT JOIN user u ON u.user_id = fs.seller_id
+                    WHERE  fs.user_id = ' . $user_id . ' AND u.is_delete NOT IN (1,4)';
+
+            $pagination_data = $this->dbcommon->pagination($url, $where, $per_page, 'yes');
+            $data["links"] = $pagination_data['links'];
+            $data['total_records'] = $pagination_data['total_rows'];
+
+            $users_list = $this->dbcommon->get_myfollowerslist($user_id, $offset, $per_page, 'following');
+            $data['users_list'] = $users_list;
+
+            $this->load->view('admin/users/following_users_list', $data);
+        } else {
+            redirect('admin/home');
+        }
     }
 
 }
