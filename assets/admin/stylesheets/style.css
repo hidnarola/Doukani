@@ -481,3 +481,4 @@ a{text-decoration:none !important;}
 .responsive-table {position: relative;overflow: hidden;}
 .action_drop_down .btn-group > .btn, .btn-group-vertical > .btn {float: left;}
 /*.action_drop_down  .sr-only {position: relative;}*/
+.display-none {display:none;}

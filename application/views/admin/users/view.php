@@ -13,17 +13,15 @@
                         <div class='col-xs-12'>
                             <div class='page-header page-header-with-buttons'>
                                 <h1 class='pull-left'>
-                                    <?php 
+                                    <?php
                                     $user_type = '';
-                                    if($user['user_role']=='generalUser') {
+                                    if ($user['user_role'] == 'generalUser') {
                                         $user_type = 'Classified User';
                                         echo "<i class='icon-user'></i>";
-                                    }
-                                    elseif($user['user_role']=='storeUser') {
+                                    } elseif ($user['user_role'] == 'storeUser') {
                                         $user_type = 'Store User';
                                         echo "<i class='icon-building'></i>";
-                                    }
-                                    elseif($user['user_role']=='offerUser') {
+                                    } elseif ($user['user_role'] == 'offerUser') {
                                         $user_type = 'Offer User';
                                         echo "<i class='icon-tags'></i>";
                                     }
@@ -101,12 +99,12 @@
                                                         <input title='Nickname' class="form-control" disabled name='user_nick_name'type='text' value="<?php echo $user['nick_name']; ?>" data-rule-required='true'>		                  
                                                     </div>
                                                 </div> 
-<!--                                                <div class='form-group'>
-                                                    <label class='col-md-2 control-label' for='inputText1'>PayPal E-mail</label>
-                                                    <div class='col-md-5 controls'>
-                                                        <input placeholder="PayPal E-mail" class="form-control" disabled name="paypal_email_id" id="paypal_email_id" type="text" value="<?php echo $user['paypal_email_id']; ?>"/>
-                                                    </div>
-                                                </div>-->
+                                                <!--                                                <div class='form-group'>
+                                                                                                    <label class='col-md-2 control-label' for='inputText1'>PayPal E-mail</label>
+                                                                                                    <div class='col-md-5 controls'>
+                                                                                                        <input placeholder="PayPal E-mail" class="form-control" disabled name="paypal_email_id" id="paypal_email_id" type="text" value="<?php echo $user['paypal_email_id']; ?>"/>
+                                                                                                    </div>
+                                                                                                </div>-->
                                                 <div class='form-group'>
                                                     <label class='col-md-2 control-label' for='inputText1'>Contact Number</label>
                                                     <div class='col-md-5 controls'>
@@ -206,30 +204,30 @@
                                                         <label><input name="notification" type="checkbox" <?php if ($user['chat_notification'] == 1) echo 'checked'; ?> />&nbsp;Email Chat Notification</label>
                                                     </div>
                                                 </div>
-                                                <?php if(isset($user_type) && $user_type=='offerUser') { ?>
-                                                <div class='form-group'>
-                                                    <label class='col-md-2 control-label' for='inputText1'>Current Month's Ads</label>
-                                                    <div class='col-md-5 controls'>
-                                                        <input placeholder='' disabled class="form-control"  name="" type='text' value="<?php echo $user['currtotads']; ?>" />
+                                                <?php if (isset($user_type) && $user_type == 'offerUser') { ?>
+                                                    <div class='form-group'>
+                                                        <label class='col-md-2 control-label' for='inputText1'>Current Month's Ads</label>
+                                                        <div class='col-md-5 controls'>
+                                                            <input placeholder='' disabled class="form-control"  name="" type='text' value="<?php echo $user['currtotads']; ?>" />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class='form-group'>
-                                                    <label class='col-md-2 control-label' for='inputText1'>Current Month's Left Ads</label>
-                                                    <div class='col-md-5 controls'>
-                                                        <input placeholder='' disabled class="form-control"  name="" type='text' value="<?php echo $user['currleftads']; ?>" />
+                                                    <div class='form-group'>
+                                                        <label class='col-md-2 control-label' for='inputText1'>Current Month's Left Ads</label>
+                                                        <div class='col-md-5 controls'>
+                                                            <input placeholder='' disabled class="form-control"  name="" type='text' value="<?php echo $user['currleftads']; ?>" />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class='form-group'>
-                                                    <label class='col-md-2 control-label' for='inputText1'>Total Ads</label>
-                                                    <div class='col-md-5 controls'>
-                                                        <input placeholder='' disabled class="form-control"  name="" type='text' value="<?php
-                                                        if ($user['totalads'] != '')
-                                                            echo $user['totalads'];
-                                                        else
-                                                            echo $user['currtotads']
-                                                            ?>" />
+                                                    <div class='form-group'>
+                                                        <label class='col-md-2 control-label' for='inputText1'>Total Ads</label>
+                                                        <div class='col-md-5 controls'>
+                                                            <input placeholder='' disabled class="form-control"  name="" type='text' value="<?php
+                                                            if ($user['totalads'] != '')
+                                                                echo $user['totalads'];
+                                                            else
+                                                                echo $user['currtotads']
+                                                                ?>" />
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 <?php } ?>
                                                 <div class='form-group'>
                                                     <label class='col-md-2 control-label' for='inputText1'>Total Posted Ads</label>
@@ -240,6 +238,22 @@
                                                         else
                                                             echo $user['currleftads'];
                                                         ?>" />
+                                                    </div>
+                                                </div>
+                                                <div class='form-group'>                        
+                                                    <label class='col-md-2 control-label' for='inputText1'>Followers</label>
+                                                    <div class='col-md-5 controls'>
+                                                        <a href='<?php echo base_url() . 'admin/users/followers/' . $user['user_id']; ?>' class="btn btn-primary" target="_blank">
+                                                            <i class="fa fa-users"></i>&nbsp;Users List
+                                                        </a>                                    
+                                                    </div>
+                                                </div>
+                                                <div class='form-group'>                        
+                                                    <label class='col-md-2 control-label' for='inputText1'>Following</label>
+                                                    <div class='col-md-5 controls'>
+                                                        <a href='<?php echo base_url() . 'admin/users/following/' . $user['user_id']; ?>' class="btn btn-primary" target="_blank">
+                                                            <i class="fa fa-users"></i>&nbsp;Users List
+                                                        </a>                                    
                                                     </div>
                                                 </div>
                                                 <div class="form-actions form-actions-padding-sm">
@@ -269,11 +283,11 @@
                 </div>
             </section>
         </div>
-<?php $this->load->view('admin/include/footer-script'); ?>
-<script>    
-    $(':input').attr('readonly','readonly');
-    $("select").attr("disabled","disabled");
-    $(":input").attr("disabled","disabled");
-</script> 
+        <?php $this->load->view('admin/include/footer-script'); ?>
+        <script>
+            $(':input').attr('readonly', 'readonly');
+            $("select").attr("disabled", "disabled");
+            $(":input").attr("disabled", "disabled");
+        </script> 
     </body>
 </html>

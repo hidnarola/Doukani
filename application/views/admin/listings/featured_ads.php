@@ -150,6 +150,24 @@
                                                                                                 <i class='icon-edit'></i> Un-featured
                                                                                             </a>
                                                                                         </li>
+                                                                                        <li class="divider"></li>
+                                                                                        <li>
+                                                                                            <?php 
+                                                                                                $view_path = base_url() . "admin/classifieds/listings_view/listings/classified/" . $pro['product_id'];
+                                                                                            ?>
+                                                                                            <a href='<?php echo $view_path; ?>'>
+                                                                                                <i class="fa fa-info-circle"></i> View Ad
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li class="divider"></li>
+                                                                                        <li>
+                                                                                            <?php 
+                                                                                                $view_path = base_url() . "admin/classifieds/listings_edit/listings/classified/" . $pro['product_id'];
+                                                                                            ?>
+                                                                                            <a href='<?php echo $edit_path; ?>'>
+                                                                                                <i class='icon-edit'></i> Edit Ad
+                                                                                            </a>   
+                                                                                        </li>
                                                                                     </ul>
                                                                                 </div>
                                                                             </td>

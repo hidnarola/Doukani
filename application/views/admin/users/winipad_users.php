@@ -95,8 +95,8 @@ $suffixUrl = $queryString;
                                             <!--<form action="<?php echo $url ?>" method="get" style="margin-top: 10px;">-->
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-sm-6" style="margin-bottom: 10px;">
-                                                        <input type="text" placeholder="Search By firstname/Email" name="search" class="form-control" value="<?php if (isset($_GET['search'])) echo $_GET['search']; ?>">
+                                                    <div class="col-sm-10" style="margin-bottom: 10px;">
+                                                        <input type="text" placeholder="Search By Email / FirstNme / Username / Nickname" name="search" class="form-control" value="<?php if (isset($_GET['search'])) echo $_GET['search']; ?>">
                                                     </div>
                                                     <div class="col-sm-2 text-right">
                                                         <button type="submit" id="" class="btn btn-primary">
@@ -305,7 +305,7 @@ $suffixUrl = $queryString;
                                                                                         <li class="divider"></li>
                                                                                         <li>
                                                                                             <a href='<?php echo base_url() . "admin/users/edit/" . $pro['user_id']; ?>'>
-                                                                                                <i class='icon-edit'></i> Edit User
+                                                                                                <i class='icon-edit'></i> Edit User Details
                                                                                             </a>
                                                                                         </li>
                                                                                         <li class="divider"></li>

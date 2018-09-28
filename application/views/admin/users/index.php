@@ -263,7 +263,7 @@
                                     <div class="col-sm-3">
                                         <div class="box bordered-box orange-border" style="margin-bottom:0;">
                                             <div class="box-header orange-background">
-                                                <div class="title">Email Search</div>
+                                                <div class="title">Search Text</div>
                                                 <div class="actions">
                                                     <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
                                                     </a>
@@ -271,7 +271,17 @@
                                             </div>
                                             <div class="box-content ">
                                                 <div class="form-group">
-                                                    <input type="text" name="email_search" id="email_search" class="form-control" placeholder="Email" value="<?php echo @$_GET['email_search']; ?>">
+                                                    <?php if ($this->uri->segment(4) == 'generalUser') { ?>
+                                                        <input type="text" name="search_text" id="search_text" class="form-control" placeholder="Search Text" value="<?php echo @$_GET['search_text']; ?>">
+                                                        <small class="text-green">You can search Email / Username / Nickname</small>
+                                                    <?php } if ($this->uri->segment(4) == 'storeUser') { ?>
+                                                        <input type="text" name="search_text" id="search_text" class="form-control" placeholder="Search Text" value="<?php echo @$_GET['search_text']; ?>">
+                                                        <small class="text-green">You can search Email / Username / Nickname / Store Name / Store Domain</small>
+                                                    <?php } if ($this->uri->segment(4) == 'offerUser') { ?>
+                                                        <input type="text" name="search_text" id="search_text" class="form-control" placeholder="Search Text" value="<?php echo @$_GET['search_text']; ?>">
+                                                        <small class="text-green">You can search Email / Username / Nickname / Company Name</small>
+                                                    <?php } ?>
+
                                                 </div>
                                             </div>
                                         </div>

@@ -559,6 +559,7 @@ class Home extends My_controller {
 
         $data = array();
         $data = array_merge($data, $this->get_elements());
+        
         $data['slug'] = 'search';
         $data['is_logged'] = 0;
         $data['login_username'] = null;
@@ -697,9 +698,9 @@ class Home extends My_controller {
 
             $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
             $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
-            $data['category'] = $category;
+            $data['category1'] = $category;
 
-            foreach ($data['category'] as $a => $b) {
+            foreach ($data['category1'] as $a => $b) {
                 $__catagory_list[] = $b['catagory_name'];
             }
 
@@ -720,7 +721,7 @@ class Home extends My_controller {
                 'description' => 'Search best products from catagory like ' . $seo_catagory . ' at doukani',
                 'keyword' => implode(', ', $__keywords) . ' classified, doukani, search'
             ];
-
+            
             $this->load->view('home/search', $data);
         }
     }
@@ -801,9 +802,9 @@ class Home extends My_controller {
 
         $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
         $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
-        $data['category'] = $category;
+        $data['category1'] = $category;
 
-        foreach ($data['category'] as $a => $b) {
+        foreach ($data['category1'] as $a => $b) {
             $__catagory_list[] = $b['catagory_name'];
         }
 
@@ -1050,9 +1051,9 @@ class Home extends My_controller {
 
         $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
         $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
-        $data['category'] = $category;
+        $data['category1'] = $category;
 
-        foreach ($data['category'] as $a => $b) {
+        foreach ($data['category1'] as $a => $b) {
             $__catagory_list[] = $b['catagory_name'];
         }
 
@@ -1231,9 +1232,9 @@ class Home extends My_controller {
 
         $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
         $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
-        $data['category'] = $category;
+        $data['category1'] = $category;
 
-        foreach ($data['category'] as $a => $b) {
+        foreach ($data['category1'] as $a => $b) {
             $__catagory_list[] = $b['catagory_name'];
         }
 
@@ -3500,9 +3501,9 @@ class Home extends My_controller {
 
                 $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
                 $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
-                $data['category'] = $category;
+                $data['category1'] = $category;
 
-                foreach ($data['category'] as $a => $b) {
+                foreach ($data['category1'] as $a => $b) {
                     $__catagory_list[] = $b['catagory_name'];
                 }
 
@@ -3778,9 +3779,9 @@ class Home extends My_controller {
 
                 $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
                 $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
-                $data['category'] = $category;
+                $data['category1'] = $category;
 
-                foreach ($data['category'] as $a => $b) {
+                foreach ($data['category1'] as $a => $b) {
                     $__catagory_list[] = $b['catagory_name'];
                 }
 

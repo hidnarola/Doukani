@@ -56,7 +56,11 @@
                                         </h1>                                        
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
+                            <form id="form1" name="form1" action="<?php echo site_url() . 'admin/users/followers/' . $this->uri->segment(4); ?>" method="get" accept-charset="UTF-8">
+                                <input type="hidden" name="per_page" id="per_page" value="<?php echo (isset($_REQUEST['per_page'])) ? $_REQUEST['per_page'] : 10; ?>">
+                                <button type="submit" name="submit" id="submit" class="btn  btn-primary display-none"><i class="fa fa-search"></i></button>
+                            </form>
                             <div class="row">                                
                                 <div class="col-sm-6">                                    
                                     <div class='title'>                         
@@ -171,7 +175,25 @@
                                                         <ul class="pagination pagination-sm"><?php if (isset($links)) echo $links; ?></ul>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="col-sm-4">
+                                                        <label>Per page : </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select name="per_page1" id="per_page1" class="form-control" >
+                                                            <option value="2" <?php echo (isset($_GET['per_page']) && $_GET['per_page'] == '2') ? 'selected' : ''; ?>>2</option>    
+                                                            <option value="10" <?php echo (isset($_GET['per_page']) && $_GET['per_page'] == '10') ? 'selected' : ''; ?>>10</option>    
+                                                            <option value="25" <?php echo (isset($_GET['per_page']) && $_GET['per_page'] == '25') ? 'selected' : ''; ?>>25</option>
+                                                            <option value="50" <?php echo (isset($_GET['per_page']) && $_GET['per_page'] == '50') ? 'selected' : ''; ?>>50</option>
+                                                            <option value="100" <?php echo (isset($_GET['per_page']) && $_GET['per_page'] == '100') ? 'selected' : ''; ?>>100</option>
+                                                        </select>
+                                                        <br>
+                                                        <br>
+                                                    </div>
+                                                </div>                                                
+                                            </div>                                             
                                         </div>
                                     </div>
                                 </div>
@@ -184,3 +206,11 @@
         <?php $this->load->view('admin/include/footer-script'); ?>          
     </body>
 </html>
+<script type="text/javascript">
+    $(document).find('#per_page1').on('change', function () {
+        var per_page = $(this).val();
+        console.log(per_page);
+        $('#per_page').val(per_page);
+        $(document).find('#submit').click();
+    });
+</script>

@@ -241,6 +241,22 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-sm-3">
+                                        <div class="box bordered-box orange-border" style="margin-bottom:0;">
+                                            <div class="box-header orange-background">
+                                                <div class="title">Search Text</div>
+                                                <div class="actions">
+                                                    <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="box-content ">
+                                                <div class="form-group">
+                                                    <input type="text" name="search_text" id="search_text" class="form-control" placeholder="Product Name" value="<?php echo @$_GET['search_text']; ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-sm-2">
                                         <div class="box bordered-box orange-border" style="margin-bottom:0;">
                                             <div class="box-header">

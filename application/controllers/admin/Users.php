@@ -43,6 +43,7 @@ class Users extends CI_Controller {
 //        $this->session->unset_userdata('repost_userid');
 
         if ($user_role != '') {
+            $con = '';
             $qu = '';
             $search = '';
             $filter_val = '';
@@ -190,11 +191,18 @@ class Users extends CI_Controller {
                 }
             }
 
-            if (isset($_REQUEST['email_search']) && !empty($_REQUEST['email_search'])) {
-                $stat = $_REQUEST['email_search'];
-                $url .= "&email_search=" . $stat;
-                $qu .= " and u.email_id like '%" . $_REQUEST['email_search'] . "%'";
-                $search .= '&email_search=' . $_REQUEST['email_search'];
+            if (isset($_REQUEST['search_text']) && !empty($_REQUEST['search_text'])) {
+                $stat = $_REQUEST['search_text'];
+                $url .= "&search_text=" . $stat;
+
+                if ($user_role == 'generalUser')
+                    $qu .= " and ( u.email_id like '%" . $_REQUEST['search_text'] . "%' OR u.nick_name like '%" . $_REQUEST['search_text'] . "%' OR u.username like '%" . $_REQUEST['search_text'] . "%' ) ";
+                elseif ($user_role == 'storeUser')
+                    $qu .= " and ( u.email_id like '%" . $_REQUEST['search_text'] . "%' OR u.nick_name like '%" . $_REQUEST['search_text'] . "%' OR u.username like '%" . $_REQUEST['search_text'] . "%' OR s.store_name like '%" . $_REQUEST['search_text'] . "%'  OR s.store_domain like '%" . $_REQUEST['search_text'] . "%' ) ";
+                elseif ($user_role == 'offerUser')
+                    $qu .= " and ( u.email_id like '%" . $_REQUEST['search_text'] . "%' OR u.nick_name like '%" . $_REQUEST['search_text'] . "%' OR u.username like '%" . $_REQUEST['search_text'] . "%' OR o.company_name like '%" . $_REQUEST['search_text'] . "%') ";
+
+                $search .= '&search_text=' . $_REQUEST['search_text'];
             }
 
             if (isset($_REQUEST['per_page'])) {
@@ -1643,6 +1651,7 @@ class Users extends CI_Controller {
         $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
         $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
         $data['featured_stores'] = $this->store->get_featuredstore($offset, $per_page, NULL, $only_featured);
+//        echo $this->db->last_query();
         $data['url'] = $url;
         $pagination_data = $this->dbcommon->pagination($url, $wh_count, $per_page, 'yes');
 
@@ -2369,8 +2378,6 @@ class Users extends CI_Controller {
         if (isset($_GET['dt']))
             $dt = $_GET['dt'];
 
-
-
         $query = "SELECT * FROM `user` u  Where `u`.`is_delete` =0 AND insert_from = 'web-ipad' ";
         if ($this->input->get('search')) {
             $keyword = $this->input->get('search');
@@ -2378,6 +2385,10 @@ class Users extends CI_Controller {
             $query .= " AND (u.first_name like '%$keyword%'";
             $query .= " OR ";
             $query .= "u.email_id like '%$keyword%'";
+            $query .= " OR ";
+            $query .= "u.first_name like '%$keyword%'";
+            $query .= " OR ";
+            $query .= "u.nick_name like '%$keyword%'";
             $query .= " OR ";
             $query .= "u.username like '%$keyword%')";
         }
@@ -2721,17 +2732,18 @@ FROM e_wallet_request_response e LEFT JOIN store s ON s.store_owner = e.store_ow
             $data['page_title'] = 'Followers List';
             $search = '';
             $url = '';
+
             if (isset($_REQUEST['per_page'])) {
                 $per_page = $_REQUEST['per_page'];
-                $url .= '&per_page=' . $per_page;
-                $search .= '&per_page=' . $per_page;
+                $url .= '?per_page=' . $per_page;
+                $search .= '?per_page=' . $per_page;
             } else
                 $per_page = $this->per_page;
 
             if (isset($_REQUEST['page']) && !empty($search))
                 $search .= '&page=' . $_REQUEST['page'];
             elseif (isset($_REQUEST['page']))
-                $search .= '?page=' . $_REQUEST['page'];
+                $search .= '&page=' . $_REQUEST['page'];
 
             $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
             $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
@@ -2759,17 +2771,18 @@ FROM e_wallet_request_response e LEFT JOIN store s ON s.store_owner = e.store_ow
             $data['page_title'] = 'Following Users List';
             $search = '';
             $url = '';
+
             if (isset($_REQUEST['per_page'])) {
                 $per_page = $_REQUEST['per_page'];
-                $url .= '&per_page=' . $per_page;
-                $search .= '&per_page=' . $per_page;
+                $url .= '?per_page=' . $per_page;
+                $search .= '?per_page=' . $per_page;
             } else
                 $per_page = $this->per_page;
 
             if (isset($_REQUEST['page']) && !empty($search))
                 $search .= '&page=' . $_REQUEST['page'];
             elseif (isset($_REQUEST['page']))
-                $search .= '?page=' . $_REQUEST['page'];
+                $search .= '&page=' . $_REQUEST['page'];
 
             $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
             $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;

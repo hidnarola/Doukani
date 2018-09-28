@@ -1003,6 +1003,11 @@ class Classifieds extends CI_Controller {
                 $query .= "  and product_posted_by=" . $_REQUEST['userid'];
             }
 
+            if (isset($_REQUEST['search_text']) && !empty($_REQUEST['search_text'])) {
+                $query .= "  and product_name LIKE '%" . $_REQUEST['search_text'] . "%'";
+                $url .= '&search_text=' . $_REQUEST['search_text'];
+            }
+
             //left join repost r on r.productid<>p.product_id
             $wh_count = " p.product_id FROM product as p  
                     left join category as c on c.category_id=p.category_id 
@@ -4622,15 +4627,15 @@ class Classifieds extends CI_Controller {
             $url = '';
             if (isset($_REQUEST['per_page'])) {
                 $per_page = $_REQUEST['per_page'];
-                $url .= '&per_page=' . $per_page;
-                $search .= '&per_page=' . $per_page;
+                $url .= '?per_page=' . $per_page;
+                $search .= '?per_page=' . $per_page;
             } else
                 $per_page = $this->per_page;
 
             if (isset($_REQUEST['page']) && !empty($search))
                 $search .= '&page=' . $_REQUEST['page'];
             elseif (isset($_REQUEST['page']))
-                $search .= '?page=' . $_REQUEST['page'];
+                $search .= '&page=' . $_REQUEST['page'];
 
             $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
             $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
@@ -4665,27 +4670,27 @@ class Classifieds extends CI_Controller {
             $url = '';
             if (isset($_REQUEST['per_page'])) {
                 $per_page = $_REQUEST['per_page'];
-                $url .= '&per_page=' . $per_page;
-                $search .= '&per_page=' . $per_page;
+                $url .= '?per_page=' . $per_page;
+                $search .= '?per_page=' . $per_page;
             } else
                 $per_page = $this->per_page;
 
             if (isset($_REQUEST['page']) && !empty($search))
                 $search .= '&page=' . $_REQUEST['page'];
             elseif (isset($_REQUEST['page']))
-                $search .= '?page=' . $_REQUEST['page'];
+                $search .= '&page=' . $_REQUEST['page'];
 
             $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
             $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
 
-//        $where = ' u.user_id FROM user u
-//                    LEFT JOIN favourite_product fp ON fp.user_id = u.user_id
-//                    WHERE fp.product_id= ' . $product_id . ' GROUP BY u.user_id
-//                ';
             $where = ' u.user_id FROM user u
                     LEFT JOIN favourite_product fp ON fp.user_id = u.user_id
-                    GROUP BY u.user_id
+                    WHERE fp.product_id= ' . $product_id . ' GROUP BY u.user_id
                 ';
+//            $where = ' u.user_id FROM user u
+//                    LEFT JOIN favourite_product fp ON fp.user_id = u.user_id
+//                    GROUP BY u.user_id
+//                ';
 
             $pagination_data = $this->dbcommon->pagination($url, $where, $per_page, 'yes');
             $data["links"] = $pagination_data['links'];

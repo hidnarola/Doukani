@@ -106,6 +106,31 @@
                                                                                         <a data-path='<?php echo base_url() . "admin/users/update_unfeatured/" . $pro['store_id'] . '/' . $page_redirect; ?>' id="unfeatured_store">
                                                                                             <i class='icon-edit'></i> Un-featured
                                                                                         </a>
+                                                                                    </li>                                                                                    
+                                                                                    <li class="divider"></li>
+                                                                                    <li>
+                                                                                        <a href='<?php echo base_url() . "admin/users/view_store/" . $pro['store_id'] . '/' . $page_redirect; ?>' target="_blank">
+                                                                                            <i class="fa fa-building-o"></i> View Store Details
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li class="divider"></li>
+                                                                                    <li>
+                                                                                        <a href='<?php echo base_url() . "admin/users/edit_store/" . $pro['store_id'] . $page_redirect; ?>' target="_blank">
+                                                                                            <i class='icon-edit'></i>&nbsp;Edit Store Details
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li class="divider"></li>
+                                                                                    <li>
+                                                                                        <a href = '<?php echo base_url() . "admin/users/view/" . $pro['user_id'] . '/' . $page_redirect; ?>' target="_blank">
+                                                                                            <i class = "fa fa-info-circle"></i> View User Details
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li class="divider"></li>
+                                                                                    <li>
+                                                                                        <a href = '<?php echo base_url() . "admin/users/edit/" . $pro['user_id'] . $page_redirect; ?>' target="_blank">
+                                                                                            <i class = 'icon-edit'></i>
+                                                                                            Edit User Details
+                                                                                        </a>
                                                                                     </li>
                                                                                 </ul>
                                                                             </div>
