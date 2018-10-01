@@ -48,7 +48,7 @@
                                 <?php $this->load->view('store/store_common'); ?>                        
                                 <div class="store-products-wrapper">
                                     <div class="store-products-head">
-                                        <h2><?php echo $store[0]->store_name . '\'s Store'; ?></h2>
+                                        <a href="<?php echo 'http://'.$store[0]->store_domain.'.doukani.com'; ?>"><h2><?php echo $store[0]->store_name . '\'s Store'; ?></h2></a>
                                         <br><br>
                                         (Since <?php echo $store_user_regidate; ?>)                              
                                     </div>

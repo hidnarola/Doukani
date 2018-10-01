@@ -1,3 +1,4 @@
+<?php if(isset($store_main_page) && $store_main_page == 'yes') { ?>
 <div class="store-top-section">
     <div class="store-individual-slider">               
         <?php
@@ -140,6 +141,7 @@
         </div>
     </div>
 </div>
+<?php } ?>
 <div class="col-sm-12">
     <?php if ($this->session->userdata('send_msg') != '') { ?>
         <div class='alert  alert-info alert-dismissable'>
