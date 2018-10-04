@@ -9,64 +9,66 @@ class Trial extends My_controller {
         parent::__construct();
     }
 
-    public function index() {
+    public function index($multiple = NULL) {
+        $this->load->library('parser');
 
-//        $email_id = SITE_ADMIN_EMAIL;
-        $email_id = 'kek@narola.email';
-        $current_user = $this->session->userdata('gen_user');
-        $user_id = $current_user['user_id'];
+        $parser_data = array();
+        $status1 = 'Approved';
+        $product = 'Test product Name';
+        $product_status = 'Ad Status : ' . $status1;
 
-        $this->db->select('SUM(b.store_amount) AS store_balance, GROUP_CONCAT(b.id) balance_ids, s.store_name');
-        $this->db->join('orders o', 'o.id = b.order_id', 'LEFT');
-        $this->db->join('store s', 's.store_owner = b.store_owner', 'LEFT');
-        $this->db->where('o.status', 'completed');
-        $this->db->where('o.is_delete', 0);
-        $this->db->where('o.delivery_type', 'PREPAID');
-        $this->db->where('o.id = b.order_id');
-        $this->db->where('b.store_owner',   $user_id);
-        $this->db->where('b.status', 1);
-        $this->db->group_by('o.id');
+        $button_link = base_url() . "login/index";
+        $button_label = 'Click here to Login';
 
-        $query = $this->db->get('balance b');
-        $balance = $query->row_array();
 
-        if (isset($balance) && $balance['store_balance'] > 0)
-            $amount = number_format($balance['store_balance'], 2);
-        else
-            $amount = 0.00;
-
-        $button_label = 'Update Payment Status';
-        $title = 'Payment Request';
-        $store_name = $balance['store_name'];
-        $button_link = base_url() . 'admin/users/e_wallet/?userid=' . $user_id;
-
-        $count_of_peding_request = $this->dbcommon->getnumofdetails_(' * FROM e_wallet_request_response WHERE store_owner = ' . $user_id . ' AND status = 0');
-
-        if ($count_of_peding_request == 0) {
-            $in_wallet_data = array(
-                'store_owner' => $user_id,
-                'amount' => $amount,
-                'status' => 0,
-                'balance_ids' => $balance['balance_ids'],
-                'created_by' => $user_id,
-                'created_date' => date('Y-m-d H:i:s')
-            );
-            $result = $this->dbcommon->insert('e_wallet_request_response', $in_wallet_data);
-
-            $content = '
-        <div style="margin-top:-21; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:0; padding-left:0; width:416px; float: right; font-family: Roboto, sans-serif;">                        
-                        <h3>Payment Request</h3>
-                                        <p style="margin: 1em 0;">
-                                        Hello Admin,
-                                        </p>
-                                        <p style="margin: 1em 0;">
-                                        ' . $store_name . ' has sent request for AED ' . $amount . '
-                                        </p>
-    <a style="background: #ed1b33 none repeat scroll 0 0;border-radius: 4px;color: #fff;display: inline-table;font-family: Roboto,sans-serif;font-size: 14px;font-weight: 400;height: 36px;line-height: 34px; padding-top:3px; padding-right:12px; padding-bottom:3px; padding-left:12px; text-align: center;text-decoration:none; width:240px; " href="' . $button_link . '">' . $button_label . '</a></div>';
-
-            $new_data = $this->dbcommon->mail_format($title, $content);
-            send_mail($email_id, $title, $new_data, 'info@doukani.com');
+        if (is_null($multiple)) {
+            $title = $product_status;
+            $product_title = ' Your Ad : ' . $product . ' has been updated as ' . $status1 . '.';
+            $product_text = '<h6 style="font-family: Roboto, sans-serif; color:#7f7f7f; font-size:15px; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:6px; padding-left:0; font-weight:400;">' . $product_title . '</h6>';
+        } else {
+            $product_title = 'Product List';
+            $product_text = '<h3 style="font-family: Roboto, sans-serif; color:#7f7f7f; font-size:24px; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:6px; padding-left:0; font-weight:400;">' . $product_title . '</h3>';
+            $title = 'Ads Status';
         }
+
+        $product_list = array(
+            array('product_name' => 'Test 1', 'status' => 'Approved'),
+            array('product_name' => 'Test 2', 'status' => 'Un-Approved'),
+            array('product_name' => 'Test 1', 'status' => 'Approved'),
+            array('product_name' => 'Test 2', 'status' => 'Un-Approved'),
+            array('product_name' => 'Test 1', 'status' => 'Approved'),
+            array('product_name' => 'Test 2', 'status' => 'Un-Approved'),
+            array('product_name' => 'Test 1', 'status' => 'Approved'),
+            array('product_name' => 'Test 2', 'status' => 'Un-Approved')
+        );
+
+        if (is_null($multiple)) {
+            $table = '';
+        } else {
+            $table = '<table border="1" width="90%" style="border-collapse:collapse;border: 1px solid #ccc !important;">
+                    <tr>
+                        <th style="text-align:left;padding:8px;">Ad Name</th>
+                        <th style="text-align:center;padding:8px;">Status</th>
+                    </tr>';
+            foreach ($product_list as $list) {
+                $table .= '<tr>
+                        <td style="padding:5px;">' . $list['product_name'] . '</td>
+                        <td style="text-align:center;padding:5px;">' . $list['status'] . '</td>
+                    </tr>';
+            }
+            $table .= '</table>';
+        }
+        $content = '
+       <div style="margin-top:-21; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:0; padding-left:0; width:416px; float: right; font-family: Roboto, sans-serif;"> <br>
+        ' . $product_text . '
+        <br>' . $table .
+                '<br>
+        <a style="background: #ed1b33 none repeat scroll 0 0;border-radius: 4px;color: #fff;display: inline-table;font-family: Roboto,sans-serif;font-size: 14px;font-weight: 400;height: 36px;line-height: 34px; padding-top:3px; padding-right:12px; padding-bottom:3px; padding-left:12px; text-align: center;text-decoration:none; width:156px; " href="' . $button_link . '">' . $button_label . '</a></div>
+';
+
+        $new_data = $this->dbcommon->mail_format($title, $content);
+        $new_data = $this->parser->parse_string($new_data, $parser_data, '1');
+        print_r($new_data);
     }
 
     public function test1() {

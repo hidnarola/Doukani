@@ -153,18 +153,20 @@
                                                 <label class='col-md-2 control-label' for='inputText1'>Store Cover Image</label>
                                                 <div class='col-md-5'>
                                                     <div class="cover-size-div">Recommend Size: 1920*440</div>
-                                                    <?php if ($old_store_details[0]->new_data_status == 1) {
+                                                    <?php
+                                                    if ($old_store_details[0]->new_data_status == 1) {
                                                         
-                                                    } else { ?>
+                                                    } else {
+                                                        ?>
 
                                                         <input title='Store Cover Image' name='new_store_cover_image' type='file' class='form-control' onchange="javascript:loadimage(this);" id="new_store_cover_image">                                                
-                                                <?php } ?>
+                                                    <?php } ?>
                                                 </div>
-<?php if ($old_store_details[0]->new_data_status == 1) { ?>
+                                                <?php if ($old_store_details[0]->new_data_status == 1) { ?>
                                                     <div class='col-md-5'>
                                                         <input title='New Store Cover Image' name='new_store_cover_image' type='file' class='form-control' onchange="javascript:loadimage(this);" id="new_store_cover_image">
                                                     </div>
-<?php } ?>
+                                                <?php } ?>
                                             </div>
                                             <div class='form-group'>
                                                 <label class='col-md-2 control-label'></label>
@@ -198,15 +200,15 @@
                                                     <div class='col-md-5'>
                                                         <img alt="New Store Cover Image" src="<?php echo $store_cover_img; ?>" onerror="this.src='<?php echo $store_start . base_url() . 'assets/upload/store_cover_image.png' . $store_end; ?>'"/>
                                                     </div>
-<?php } ?>
+                                                <?php } ?>
 
                                                 <?php if ($old_store_details[0]->new_data_status == 1) { ?>
                                                     <div class='col-md-5'>
                                                         <img alt="New Store Cover Image" src="<?php echo $new_store_cover_img; ?>" onerror="this.src='<?php echo $store_start . base_url() . 'assets/upload/store_cover_image.png' . $store_end; ?>'"/>
                                                     </div>
-<?php } ?>
+                                                <?php } ?>
                                             </div>
-                                                <?php //endif; ?>
+                                            <?php //endif;   ?>
                                             <div class='form-group'>
                                                 <label class='col-md-2 control-label' for='inputText1'>Meta Title</label>
                                                 <?php if ($old_store_details[0]->new_data_status == 1) { ?>
@@ -217,7 +219,7 @@
                                                     <div class='col-md-5 controls'>
                                                         <input placeholder='New Meta Title' class="form-control" name="new_meta_title" type='text' value="<?php echo $old_store_details[0]->meta_title; ?>" maxlength="255" >
                                                     </div>
-<?php } ?>
+                                                <?php } ?>
                                                 <?php if ($old_store_details[0]->new_data_status == 1) { ?>
                                                     <div class='col-md-5 controls'>
                                                         <input placeholder='New Meta Title' class="form-control" name="new_meta_title" type='text' value="<?php echo $new_store_details[0]->meta_title; ?>" maxlength="255" >
@@ -234,15 +236,15 @@
                                                     <div class='col-md-5 controls'>
                                                         <textarea cols="78" rows="5" class="form-control" name="new_meta_description" ><?php echo $old_store_details[0]->meta_description; ?></textarea>                                                
                                                     </div>
-<?php } ?>
+                                                <?php } ?>
                                                 <?php if ($old_store_details[0]->new_data_status == 1) { ?>
                                                     <div class='col-md-5 controls'>
                                                         <textarea cols="78" rows="5" class="form-control" name="new_meta_description" ><?php echo $new_store_details[0]->meta_description; ?></textarea>
                                                     </div>
-                                            <?php } ?>
+                                                <?php } ?>
                                             </div>
                                             <hr class='hr-normal'> 
-<?php //if($old_store_details[0]->store_details_verified==0) {  ?>       
+                                            <?php //if($old_store_details[0]->store_details_verified==0) {    ?>       
                                             <div class='form-group'>
                                                 <label class='col-md-2 control-label' for='inputText1'>Store's New Details Verification</label>
                                                 <div class='col-md-1 controls'>
@@ -252,7 +254,7 @@
                                                     (Note: When you click this, it will display in Store Related Pages (Front End). Make sure for Store's new details before you click to this check box)
                                                 </div>
                                             </div>
-<?php //}  ?>
+                                            <?php //}    ?>
                                             <div class='form-group'>
                                                 <label class='col-md-2 control-label' for='inputText1'>Active/Hold Status<span>*</span></label>
                                                 <div class='col-md-3 controls'>
@@ -293,16 +295,16 @@
 //                                                    foreach ($state as $st) {
                                             ?>
                                             <!--                                            <div class='form-group'>
-                                                                                            <label class='col-md-2 control-label' for='inputText1'><?php // echo $st['state_name'];  ?></label>
+                                                                                            <label class='col-md-2 control-label' for='inputText1'><?php // echo $st['state_name'];     ?></label>
                                                                                             <div class='col-md-3 controls'>
-                                            <?php // $costing =  $this->dbcommon->shipping_cost($old_store_details[0]->store_owner,$st['state_id']);  ?>
-                                                                                                <input type="text" name="state_<?php // echo $st['state_id']; ?>" id="state_<?php // echo $st['state_id']; ?>" value="<?php // if(isset($costing->shipping_cost) && sizeof($costing->shipping_cost) > 0) echo $costing->shipping_cost ?>" class="form-control">                                                    
+                                            <?php // $costing =  $this->dbcommon->shipping_cost($old_store_details[0]->store_owner,$st['state_id']);    ?>
+                                                                                                <input type="text" name="state_<?php // echo $st['state_id'];    ?>" id="state_<?php // echo $st['state_id'];    ?>" value="<?php // if(isset($costing->shipping_cost) && sizeof($costing->shipping_cost) > 0) echo $costing->shipping_cost    ?>" class="form-control">                                                    
                                                                                             </div>
                                                                                         </div>-->
-<?php
+                                            <?php
 //   }
 //                                                 }                                              
-?>			   
+                                            ?>			   
                                             <div class="form-actions form-actions-padding-sm">
                                                 <div class="row">
                                                     <div class="col-md-10 col-md-offset-2">
@@ -323,7 +325,7 @@
                 </div>
             </section>
         </div>
-<?php $this->load->view('admin/include/footer-script'); ?>
+        <?php $this->load->view('admin/include/footer-script'); ?>
         <script>
             var flag1 = 0;
             var flag2 = 0;

@@ -3102,7 +3102,7 @@ class Home extends My_controller {
             }
 
             $data['share_url'] = $share_url;
-
+            $data['store_main_page'] = 'yes';
             $this->load->view('store/store_details', $data);
         } else {
             override_404();

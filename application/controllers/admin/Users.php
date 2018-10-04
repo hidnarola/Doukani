@@ -1990,8 +1990,7 @@ class Users extends CI_Controller {
                         'store_is_inappropriate' => $_POST['store_is_inappropriate']
                     );
 
-                    $array = array('store_id' => $old_store_details[0]->store_id);
-
+                    $array = array('store_id' => $old_store_details[0]->store_id);                    
                     /*
                       original Store table
                      */
@@ -2001,10 +2000,10 @@ class Users extends CI_Controller {
                     if (isset($_POST['sub_category_id1']))
                         $in_data['sub_category_id'] = (isset($_POST['category_id1']) && (int) $_POST['category_id1'] > 0) ? $_POST['sub_category_id1'] : 0;
 
-                    $in_data['website_url'] = (isset($_POST['category_id1']) && (int) $_POST['category_id1'] == 0) ? $this->input->post('new_website_url') : '';
+                    $in_data['website_url'] = $this->input->post('new_website_url');
                     $in_data['store_name'] = $this->input->post('new_store_name');
 
-                    $in_data['store_description'] = (isset($_POST['category_id1']) && (int) $_POST['category_id1'] > 0) ? $this->input->post('new_store_description') : '';
+                    $in_data['store_description'] = $this->input->post('new_store_description');
 
                     $in_data['meta_title'] = $this->input->post('new_meta_title');
                     $in_data['meta_description'] = $this->input->post('new_meta_description');
@@ -2028,12 +2027,12 @@ class Users extends CI_Controller {
                     /*
                       store_new_details table
                      */
-                    // if($old_store_details[0]->new_data_status=='1' && $verified=='1') {                                  
+                    // if($old_store_details[0]->new_data_status=='1' && $verified=='1') { 
                     $up_data['store_name'] = $this->input->post('new_store_name');
                     $up_data['store_description'] = $this->input->post('new_store_description');
                     $up_data['meta_title'] = $this->input->post('new_meta_title');
                     $up_data['meta_description'] = $this->input->post('new_meta_description');
-
+//                    }
                     if ($verified == 1 && $upload_status == 0)
                         $up_data['store_cover_image'] = $store_cover_image;
 

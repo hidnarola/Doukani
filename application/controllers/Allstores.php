@@ -109,7 +109,6 @@ class Allstores extends My_controller {
         if ($total_stores <= $per_page) {
             $data['hide'] = "true";
         }
-        $data['store_main_page'] = 'yes';
         
         $this->load->view('store/all_stores', $data);
         $this->output->enable_profiler(FALSE);
