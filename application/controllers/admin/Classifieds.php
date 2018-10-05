@@ -14,7 +14,7 @@ class Classifieds extends CI_Controller {
         $this->load->helper('email');
         $this->per_page = 100;
         $this->per_page_ = 10;
-        // $this->load->library('UploadHandler');
+// $this->load->library('UploadHandler');
     }
 
     public function categories() {
@@ -24,9 +24,9 @@ class Classifieds extends CI_Controller {
         $total_product = $this->dbcommon->getnumofdetails_($query);
         $data['total_records'] = $total_product;
 
-        //$data['hide'] = "false";
+//$data['hide'] = "false";
         if ($total_product <= 10) {
-            //    $data['hide'] = "true";
+//    $data['hide'] = "true";
         }
 
         $query = ' 0=0 order by cat_order';
@@ -62,7 +62,7 @@ class Classifieds extends CI_Controller {
         if ($this->session->userdata('gen_user')) {
             $data['is_logged'] = 1;
         }
-        //$arr["html"] = $this->load->view('admin/category/more_cat', $data, TRUE);		
+//$arr["html"] = $this->load->view('admin/category/more_cat', $data, TRUE);		
         $data["val"] = $hide;
         echo json_encode($data);
         exit();
@@ -92,7 +92,7 @@ class Classifieds extends CI_Controller {
 
         $target_dir = base_url() . front_fontawesome . 'font-awesome.css';
         $subject = $this->file_get_contents_curl($target_dir);
-        // $subject = file_get_contents(document_root . front_fontawesome.'font-awesome.css');
+// $subject = file_get_contents(document_root . front_fontawesome.'font-awesome.css');
         preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
 
         $icons = array();
@@ -104,7 +104,7 @@ class Classifieds extends CI_Controller {
         $data['icons'] = $icons;
 
         if (!empty($_POST)):
-            // validation 
+// validation 
             $this->form_validation->set_rules('cat_name', 'Category Name', 'trim|required');
             $this->form_validation->set_error_delimiters('', '');
             if ($this->form_validation->run() == FALSE):
@@ -112,7 +112,7 @@ class Classifieds extends CI_Controller {
                 $data['msg_class'] = 'alert-info';
                 $this->load->view('admin/category/add', $data);
             else:
-                //print_r($_FILES); die;
+//print_r($_FILES); die;
 
                 $picture = '';
                 if (isset($_FILES['cat_image']['tmp_name']) && $_FILES['cat_image']['tmp_name'] != '') {
@@ -124,7 +124,7 @@ class Classifieds extends CI_Controller {
                     $uploadOk = 1;
                     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
                     $imageFileType = strtolower($imageFileType);
-                    // Allow certain file formats
+// Allow certain file formats
                     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
                         $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                         $data['msg_class'] = 'alert-info';
@@ -175,7 +175,7 @@ class Classifieds extends CI_Controller {
                         }
                     }
                 }
-                // $query = "SELECT max(cat_order)as cat_order  FROM `classified_app`.`category`";
+// $query = "SELECT max(cat_order)as cat_order  FROM `classified_app`.`category`";
                 $query = "SELECT max(cat_order)as cat_order  FROM `category`";
                 $result = $this->dbcommon->get_distinct($query);
 
@@ -222,10 +222,10 @@ class Classifieds extends CI_Controller {
             $where = " where category_id='" . $cat_id . "'";
             $category = $this->dbcommon->getdetails('category', $where);
             $pattern = '/\.(fa-(?:\w+(?:-)?)+):before/';
-            // $pattern = '/\.(fa-(?:\w+(?:-)?)+):before\s+{\s*content:\s*"(.+)";\s+}/';
+// $pattern = '/\.(fa-(?:\w+(?:-)?)+):before\s+{\s*content:\s*"(.+)";\s+}/';
             $target_dir = base_url() . front_fontawesome . 'font-awesome.css';
             $subject = $this->file_get_contents_curl($target_dir);
-            // $subject = file_get_contents(document_root . front_fontawesome.'font-awesome.css');
+// $subject = file_get_contents(document_root . front_fontawesome.'font-awesome.css');
             preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
 
             $icons = array();
@@ -255,7 +255,7 @@ class Classifieds extends CI_Controller {
                             $uploadOk = 1;
                             $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
                             $imageFileType = strtolower($imageFileType);
-                            // Allow certain file formats
+// Allow certain file formats
                             if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
                                 $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                                 $data['msg_class'] = 'alert-info';
@@ -407,7 +407,7 @@ class Classifieds extends CI_Controller {
                     $success++;
                 }
                 else {
-                    //not to delete
+//not to delete
                 }
             }
 
@@ -439,7 +439,7 @@ class Classifieds extends CI_Controller {
         $parent_category = $this->dbcommon->get_row('category', $array);
         $data['parent_category'] = $parent_category;
 
-        //$where = " category_id='" . $cat_id . "' limit ".$page.", ".$config["per_page"];		
+//$where = " category_id='" . $cat_id . "' limit ".$page.", ".$config["per_page"];		
         $where = " category_id='" . $cat_id . "'";
         $category = $this->dbcommon->filter('sub_category', $where);
 
@@ -467,7 +467,7 @@ class Classifieds extends CI_Controller {
 
         $target_dir = base_url() . front_fontawesome . 'font-awesome.css';
         $subject = $this->file_get_contents_curl($target_dir);
-        // $subject = file_get_contents(document_root . front_fontawesome.'font-awesome.css');
+// $subject = file_get_contents(document_root . front_fontawesome.'font-awesome.css');
         preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
 
         $icons = array();
@@ -483,7 +483,7 @@ class Classifieds extends CI_Controller {
 
         $user = $this->session->userdata('user');
         if (!empty($_POST)):
-            // validation 
+// validation 
             $this->form_validation->set_rules('cat_name', 'Category Name', 'trim|required');
             $this->form_validation->set_error_delimiters('', '');
             if ($this->form_validation->run() == FALSE):
@@ -501,7 +501,7 @@ class Classifieds extends CI_Controller {
                     $uploadOk = 1;
                     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
                     $imageFileType = strtolower($imageFileType);
-                    // Allow certain file formats
+// Allow certain file formats
                     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
                         $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                         $data['msg_class'] = 'alert-info';
@@ -549,7 +549,7 @@ class Classifieds extends CI_Controller {
                         }
                     }
                 }
-                // $query = "SELECT max(sub_cat_order)as sub_cat_order  FROM `classified_app`.`sub_category` where category_id=$cat_id";
+// $query = "SELECT max(sub_cat_order)as sub_cat_order  FROM `classified_app`.`sub_category` where category_id=$cat_id";
                 $query = "SELECT max(sub_cat_order)as sub_cat_order  FROM `sub_category` where category_id=$cat_id";
                 $result = $this->dbcommon->get_distinct($query);
                 if ($result[0]['sub_cat_order'] == NULL || $result[0]['sub_cat_order'] == "") {
@@ -609,7 +609,7 @@ class Classifieds extends CI_Controller {
 
         $target_dir = base_url() . front_fontawesome . 'font-awesome.css';
         $subject = $this->file_get_contents_curl($target_dir);
-        // $subject = file_get_contents(document_root . front_fontawesome.'font-awesome.css');
+// $subject = file_get_contents(document_root . front_fontawesome.'font-awesome.css');
         preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
 
         $icons = array();
@@ -646,7 +646,7 @@ class Classifieds extends CI_Controller {
                         $uploadOk = 1;
                         $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
                         $imageFileType = strtolower($imageFileType);
-                        // Allow certain file formats
+// Allow certain file formats
                         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
                             $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                             $data['msg_class'] = 'alert-info';
@@ -780,7 +780,7 @@ class Classifieds extends CI_Controller {
 
                     $success++;
                 } else {
-                    //not to delete
+//not to delete
                 }
             }
 
@@ -842,7 +842,7 @@ class Classifieds extends CI_Controller {
                 $check_getuser = $this->db->query('select * from user 
                                     left join store on store.store_owner=user.user_id
                                     where user_id=' . (int) $_GET['userid'] . ' and is_delete in(0,3) limit 1')->row_array();
-                //and user_role in ("storeUser","generalUser","offerUser","admin","superadmin")
+//and user_role in ("storeUser","generalUser","offerUser","admin","superadmin")
                 $chkuser_id = (int) $check_getuser['user_id'];
 
                 if ($chkuser_id > 0) {
@@ -864,7 +864,7 @@ class Classifieds extends CI_Controller {
 
             if (isset($_REQUEST['page']))
                 $search .= '?page=' . $_REQUEST['page'];
-            //country
+//country
             if (isset($_REQUEST['userid']) && $_REQUEST['userid'] != 0) {
                 $listing_userid = $_REQUEST['userid'];
             } else {
@@ -876,40 +876,40 @@ class Classifieds extends CI_Controller {
             } else {
                 $filter_val = 0;
             }
-            //country
+//country
             if (isset($_REQUEST['con']) && $_REQUEST['con'] != 0) {
                 $listing_country = $_REQUEST['con'];
             } else {
                 $listing_country = 0;
             }
-            //state- emirates
+//state- emirates
             if (isset($_REQUEST['st']) && $_REQUEST['st'] != 0) {
                 $listing_state = $_REQUEST['st'];
             } else {
                 $listing_state = 0;
             }
-            //category
+//category
             if (isset($_REQUEST['cat']) && $_REQUEST['cat'] != 0) {
                 $listing_category = $_REQUEST['cat'];
             } else {
                 $listing_category = 0;
             }
 
-            //sub-category
+//sub-category
             if (isset($_REQUEST['sub_cat']) && $_REQUEST['sub_cat'] != 0) {
                 $listing_sub_category = $_REQUEST['sub_cat'];
             } else {
                 $listing_sub_category = 0;
             }
 
-            //status
+//status
             if (isset($_REQUEST['status']) && $_REQUEST['status'] != "0") {
                 $listing_status = $_REQUEST['status'];
             } else {
                 $listing_status = 0;
             }
 
-            //other status
+//other status
             if (isset($_REQUEST['other_status']) && $_REQUEST['other_status'] != "0") {
                 $listing_oth_status = $_REQUEST['other_status'];
             } else {
@@ -967,7 +967,7 @@ class Classifieds extends CI_Controller {
                 }
             }
 
-            // other status
+// other status
             if ($listing_oth_status != '' && $listing_oth_status != "0") {
 
                 if ($listing_oth_status == 'sold') {
@@ -1008,7 +1008,7 @@ class Classifieds extends CI_Controller {
                 $url .= '&search_text=' . $_REQUEST['search_text'];
             }
 
-            //left join repost r on r.productid<>p.product_id
+//left join repost r on r.productid<>p.product_id
             $wh_count = " p.product_id FROM product as p  
                     left join category as c on c.category_id=p.category_id 
                     left join sub_category as sc on sc.sub_category_id=p.sub_category_id  
@@ -1195,7 +1195,7 @@ class Classifieds extends CI_Controller {
                     $this->form_validation->set_rules('location', 'Country', 'trim|required');
                     $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
 
-                    // if(isset($data['productowner_role']) && $data['productowner_role']=='storeUser') {
+// if(isset($data['productowner_role']) && $data['productowner_role']=='storeUser') {
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                     }
@@ -1823,7 +1823,7 @@ class Classifieds extends CI_Controller {
 
                                 $file_name = base64_decode($file);
                                 $ext = explode(".", $file_name);
-                                //$picture 	= 	time() . "." . end($ext);
+//$picture 	= 	time() . "." . end($ext);
                                 $target_dir = document_root . product;
                                 $target_file = $target_dir . "original/" . $file_name;
                                 $this->load->library('thumbnailer');
@@ -1838,12 +1838,12 @@ class Classifieds extends CI_Controller {
                                     $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $file_name);
                                 }
 
-                                //watermark
+//watermark
                                 $file_name = base64_decode($file);
                                 $ext = explode(".", base64_decode($file));
                                 $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
                                 $dest = document_root . product . 'original/' . $file_name;
-                                //if($key > 0) {						
+//if($key > 0) {						
                                 if (file_exists(document_root . product . 'original/' . $file_name)) {
                                     $this->dbcommon->watermarkImage($file_name, $WaterMark, $dest, 50, 'original');
                                     $ext = explode(".", base64_decode($file));
@@ -1870,7 +1870,7 @@ class Classifieds extends CI_Controller {
                             foreach ($fileNameArray as $key => $file) {
                                 $file_name = base64_decode($file);
                                 $ext = explode(".", $file_name);
-                                //$picture 	= 	time() . "." . end($ext);
+//$picture 	= 	time() . "." . end($ext);
                                 $target_dir = document_root . product;
                                 $target_file = $target_dir . "original/" . $file_name;
                                 $this->load->library('thumbnailer');
@@ -1885,7 +1885,7 @@ class Classifieds extends CI_Controller {
                                     $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $file_name);
                                 }
 
-                                //watermark
+//watermark
                                 $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
                                 $dest = document_root . product . 'original/' . $file_name;
                                 if (file_exists(document_root . product . 'original/' . $file_name)) {
@@ -2009,7 +2009,7 @@ class Classifieds extends CI_Controller {
                 else:
                     $data['msg'] = 'Ad not added, Please try again';
                     $data['msg_class'] = 'alert-info';
-                //$this->load->view('admin/listings/add', $data);
+//$this->load->view('admin/listings/add', $data);
                 endif;
 
             else:
@@ -2145,7 +2145,7 @@ class Classifieds extends CI_Controller {
 
                 $model = $this->dbcommon->filter('model', $where);
                 $data['model'] = $model;
-                //}		
+//}		
                 $vido_cnt = 0;
                 if ($product[0]['video_name'] != '')
                     $vido_cnt = 1;
@@ -2180,7 +2180,7 @@ class Classifieds extends CI_Controller {
 
                     $where = " product_id='" . $pro_id . "'";
                     $data['images'] = $this->dbcommon->filter('products_images', $where);
-                    //print_r( $data['images']);
+//print_r( $data['images']);
                     $images_num = 0;
                     if (isset($_FILES)) {
                         end($_FILES);
@@ -2191,10 +2191,10 @@ class Classifieds extends CI_Controller {
                         if (isset($d[1]))
                             $images_num = $d[1];
                     }
-                    //if(isset($_FILES))
-                    //$images_num =  sizeof($_FILES);
-                    //if(isset($_FILES['multiUpload']['name']))
-                    //      echo     $images_num = sizeof($_FILES['multiUpload']['name']);
+//if(isset($_FILES))
+//$images_num =  sizeof($_FILES);
+//if(isset($_FILES['multiUpload']['name']))
+//      echo     $images_num = sizeof($_FILES['multiUpload']['name']);
 
                     if (isset($_POST['default_submit'])) {
                         $img1 = $this->dbcommon->get_images($pro_id);
@@ -2213,7 +2213,7 @@ class Classifieds extends CI_Controller {
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
 
-                        // if(isset($productowner_role) && $productowner_role=='storeUser') {  
+// if(isset($productowner_role) && $productowner_role=='storeUser') {  
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         }
@@ -2370,7 +2370,7 @@ class Classifieds extends CI_Controller {
                         else:
                             $pro = strtoupper(substr($_POST['title'], 0, 2));
                             $pro_code = $cat . $pro . $num . $str;
-                            //here
+//here
                             $fileName = $this->input->post("form2_images_arr");
                             $youtube = $_POST["youtube"];
                             $video = $_POST["video"];
@@ -2407,7 +2407,7 @@ class Classifieds extends CI_Controller {
                                 $youtube = $product[0]['youtube_link'];
                             }
 
-                            //$img_name   =   $this->image_upload($images_num,$pro_id,$product);
+//$img_name   =   $this->image_upload($images_num,$pro_id,$product);
                             $my_wh = ' where product_id=' . $pro_id;
 
                             $product_bk = (array) $this->dbcommon->getrowdetails('product', $my_wh);
@@ -2509,7 +2509,7 @@ class Classifieds extends CI_Controller {
 
                                 $result = $this->dbcommon->insert('product_vehicles_extras', $data_extras);
                             }
-                        //exit;
+//exit;
                         endif;
                     } elseif (isset($_POST['real_estate_houses_submit'])) {
                         $img1 = $this->dbcommon->get_images($pro_id);
@@ -2538,7 +2538,7 @@ class Classifieds extends CI_Controller {
                             $pro = strtoupper(substr($_POST['houses_ad_title'], 0, 2));
                             $pro_code = $cat . $pro . $num . $str;
 
-                            //$img_name   =   $this->image_upload($images_num,$pro_id,$product);
+//$img_name   =   $this->image_upload($images_num,$pro_id,$product);
                             $fileName = $this->input->post("form3_images_arr");
                             $youtube = $_POST["youtube"];
                             $video = $_POST["video"];
@@ -2774,7 +2774,7 @@ class Classifieds extends CI_Controller {
 
                             $result = $this->dbcommon->insert('product_old_data', $pro_bk);
 
-                            //$img_name   =   $this->image_upload($images_num,$pro_id,$product);
+//$img_name   =   $this->image_upload($images_num,$pro_id,$product);
 
                             $data = array(
                                 'product_code' => $pro_code,
@@ -3181,8 +3181,8 @@ class Classifieds extends CI_Controller {
                         endif;
                     } else {
                         $this->load->view('admin/listings/edit', $data);
-                        //redirect('admin/classifieds/listings_edit/'.$pro_id,$data);
-                        //$this->load->view('admin/listings/edit/'.$pro_id, $data);
+//redirect('admin/classifieds/listings_edit/'.$pro_id,$data);
+//$this->load->view('admin/listings/edit/'.$pro_id, $data);
                     }
                     if (isset($result)) {
 
@@ -3190,10 +3190,10 @@ class Classifieds extends CI_Controller {
 //                            print_r($_POST['cov_img']);
 //                            print_r($img1);
 //                            exit;
-                            //for old images
+//for old images
                             foreach ($img1 as $key => $val) {
                                 $ext = explode(".", $val);
-                                //$val)
+//$val)
                                 if ($_POST['cov_img'] == '' && $key == 1) {
                                     $user_data = array(
                                         'product_image' => $val
@@ -3225,14 +3225,14 @@ class Classifieds extends CI_Controller {
                                 }
                             }
                         }
-                        //for new images 			
+//for new images 			
                         $fileNameArray = explode(',', $fileName);
 
                         if (sizeof($fileNameArray) > 0 && $fileNameArray[0] != '') {
                             foreach ($fileNameArray as $key => $file) {
                                 $file_name = base64_decode($file);
                                 $ext = explode(".", $file_name);
-                                //$picture 	= 	time() . "." . end($ext);
+//$picture 	= 	time() . "." . end($ext);
                                 $target_dir = document_root . product;
                                 $target_file = $target_dir . "original/" . $file_name;
                                 $this->load->library('thumbnailer');
@@ -3247,7 +3247,7 @@ class Classifieds extends CI_Controller {
                                     $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $file_name);
                                 }
 
-                                //watermark
+//watermark
                                 $file_name = base64_decode($file);
                                 $ext = explode(".", base64_decode($file));
                                 $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
@@ -3291,7 +3291,7 @@ class Classifieds extends CI_Controller {
                             $status = $_POST['product_is_inappropriate'];
                             $send_msg = '';
 
-                            //if($product->product_is_inappropriate != $_POST['product_is_inappropriate']) {
+//if($product->product_is_inappropriate != $_POST['product_is_inappropriate']) {
                             if ($status == 'Approve') {
                                 $send_msg = 'Your product has been updated as Active.';
                                 $status1 = 'Active';
@@ -3322,13 +3322,13 @@ class Classifieds extends CI_Controller {
 
                             $new_data = $this->dbcommon->mail_format($title, $content);
                             $new_data = $this->parser->parse_string($new_data, $parser_data, '1');
-                            //,'info@doukani.com'
+//,'info@doukani.com'
                             if ($user_em->email_id != '') {
                                 if (send_mail($user_em->email_id, $send_msg, $new_data)) {
                                     
                                 }
                             }
-                            //}
+//}
 
                             $this->session->set_flashdata(array('msg' => 'product updated successfully.', 'class' => 'alert-success'));
                             if ($pro_id > 0 && isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && isset($user_em->user_id)) {
@@ -3339,13 +3339,13 @@ class Classifieds extends CI_Controller {
                                 redirect('admin/classifieds/' . $function . '/' . $redirect . $page_redirect);
                             }
                         else:
-                        //echo 'fail';
-                        //$data['msg'] = 'product not updated, Please try again';
-                        //$data['msg_class'] = 'alert-info';
-                        //$this->load->view('admin/listings/edit', $data);
+//echo 'fail';
+//$data['msg'] = 'product not updated, Please try again';
+//$data['msg_class'] = 'alert-info';
+//$this->load->view('admin/listings/edit', $data);
                         endif;
                     endif;
-                //exit;
+//exit;
                 endif;
             }
             else {
@@ -3371,9 +3371,9 @@ class Classifieds extends CI_Controller {
         }
     }
 
-    //delete existing images
+//delete existing images
     public function removeimage() {
-        //sub images       
+//sub images       
 
         $target_dir = document_root . product;
         $where = "product_image_id='" . $_POST['value'] . "'";
@@ -3387,10 +3387,10 @@ class Classifieds extends CI_Controller {
         $this->dbcommon->delete('products_images', $array);
     }
 
-    //remove existing video
+//remove existing video
     public function removevideo() {
 
-        //sub images
+//sub images
         $target_dir = document_root . product;
 
         @unlink($target_dir . "video/" . $_POST['video']);
@@ -3408,7 +3408,7 @@ class Classifieds extends CI_Controller {
     }
 
     public function removemainimage() {
-        //main image        
+//main image        
         $target_dir = document_root . product;
 
         $where = "product_id='" . $_POST['prod_id'] . "'";
@@ -3432,7 +3432,7 @@ class Classifieds extends CI_Controller {
         $this->dbcommon->update('product', $array, $data);
     }
 
-    //remove jquery uploaded images
+//remove jquery uploaded images
     public function remove_image_uploaded() {
         $target_dir = document_root . product;
         $array = explode(",", $_POST['all_data']);
@@ -3445,7 +3445,7 @@ class Classifieds extends CI_Controller {
         }
     }
 
-    //remove jquery uploaded images
+//remove jquery uploaded images
     public function remove_video_uploaded() {
         $target_dir = document_root . product;
         @unlink($target_dir . "video/" . base64_decode($_POST['value']));
@@ -3455,9 +3455,9 @@ class Classifieds extends CI_Controller {
         @unlink($target_dir . "video_image/" . $img_name . "_videoimg.jpg");
     }
 
-    //get data while posting ad or update post
+//get data while posting ad or update post
     public function show_emirates_postadd() {
-        //$value = 4;
+//$value = 4;
         if (isset($_REQUEST['value']) && $_REQUEST['value'] != '')
             $val = $_REQUEST['value'];
         else
@@ -3552,7 +3552,7 @@ class Classifieds extends CI_Controller {
             $data['redirect_admin_to'] = $redirect;
             $data['page_title'] = 'View Listing';
             $where = " where product_id='" . $pro_id . "'";
-            // $product = $this->dbcommon->getdetails('product', $where);
+// $product = $this->dbcommon->getdetails('product', $where);
 
             $product_type = 'default';
 
@@ -3709,26 +3709,26 @@ class Classifieds extends CI_Controller {
             } else {
                 $filter_val = 0;
             }
-            //country
+//country
             if (isset($_REQUEST['con']) && $_REQUEST['con'] != 0) {
                 $spam_country = $_REQUEST['con'];
             } else {
                 $spam_country = 0;
             }
-            //state- emirates
+//state- emirates
             if (isset($_REQUEST['st']) && $_REQUEST['st'] != 0) {
                 $spam_state = $_REQUEST['st'];
             } else {
                 $spam_state = 0;
             }
-            //category
+//category
             if (isset($_REQUEST['cat']) && $_REQUEST['cat'] != 0) {
                 $spam_category = $_REQUEST['cat'];
             } else {
                 $spam_category = 0;
             }
 
-            //sub-category
+//sub-category
             if (isset($_REQUEST['sub_cat']) && $_REQUEST['sub_cat'] != 0) {
                 $spam_sub_category = $_REQUEST['sub_cat'];
             } else {
@@ -3836,7 +3836,7 @@ class Classifieds extends CI_Controller {
         $filter_opt = $this->input->post("value");
         $sub_cat = $this->input->post("subcat");
         $state_id = $this->input->post("state");
-        //$spam_query = $this->input->post("spam");
+//$spam_query = $this->input->post("spam");
         $spam_query = " product.product_deactivate is null and  product.is_delete = 0 and product.product_is_inappropriate != 'Inappropriate'";
         $main_data = array();
         if ($filter_val == '0') {
@@ -3895,7 +3895,7 @@ class Classifieds extends CI_Controller {
             $main_data['product'] = $query->result_array();
         }
 
-        //echo '<pre>';
+//echo '<pre>';
 
         echo $this->load->view('admin/listings/list_index', $main_data, TRUE);
         exit();
@@ -3947,7 +3947,7 @@ class Classifieds extends CI_Controller {
                 if ($check_getuser['store_status'] > 0 && $check_getuser['store_is_inappropriate'] != 'Approve')
                     redirect('admin/home');
                 else {
-                    //print_r($check_getuser);
+//print_r($check_getuser);
                     $main_data['user_category_id'] = $check_getuser['category_id'];
                     $main_data['user_sub_category_id'] = $check_getuser['sub_category_id'];
                 }
@@ -4005,14 +4005,12 @@ class Classifieds extends CI_Controller {
 
     public function update_status($function = NULL, $product_for = NULL) {
 
-        //print_r($_REQUEST);
+//print_r($_REQUEST);
         $user = array($this->session->userdata('user'));
         $status = $this->input->post("status");
-
         $order = explode(",", $this->input->post("checked_val"));
-        //if ($status == "available" || $status == "sold" || $status == "out of stock" || $status == "discontinued") {
+
         if ($status == "available" || $status == "sold") {
-            //$field_name = "product_status";
             $field_name = "product_is_sold";
         } else {
             $field_name = "product_is_inappropriate";
@@ -4021,89 +4019,130 @@ class Classifieds extends CI_Controller {
             array_shift($order);
         }
         $success = 0;
-        foreach ($order as $value) {
+        $product_list = array();
+        $title = '';
+        if (isset($order) && sizeof($order) > 0) {
+            foreach ($order as $value) {
+                if ($status == 'sold') {
+                    $data = array(
+                        $field_name => $status,
+                        'product_is_sold' => 1,
+                        'admin_modified_at' => date('y-m-d H:i:s', time())
+                    );
+                    $array = array('product_id' => $value, 'product_is_inappropriate' => 'Approve');
+                    $in_arr = array('user_id' => $user[0]->user_id, 'product_id' => $value);
 
-            if ($status == 'sold') {
-                $data = array(
-                    $field_name => $status,
-                    'product_is_sold' => 1,
-                    'admin_modified_at' => date('y-m-d H:i:s', time())
-                );
-                $array = array('product_id' => $value, 'product_is_inappropriate' => 'Approve');
-                $in_arr = array('user_id' => $user[0]->user_id,
-                    'product_id' => $value
-                );
+                    $this->dbcommon->insert('user_mark_sold', $in_arr);
+                } elseif ($status == 'available' || $status == 'Approve') {
+                    $data = array(
+                        $field_name => $status,
+                        'product_is_sold' => 0,
+                        'product_is_inappropriate' => 'Approve',
+                        'product_deactivate' => null,
+                        'admin_modified_at' => date('y-m-d H:i:s', time())
+                    );
 
-                $this->dbcommon->insert('user_mark_sold', $in_arr);
-            } elseif ($status == 'available' || $status == 'Approve') {
-                $data = array(
-                    $field_name => $status,
-                    'product_is_sold' => 0,
-                    'product_is_inappropriate' => 'Approve',
-                    'product_deactivate' => null,
-                    'admin_modified_at' => date('y-m-d H:i:s', time())
-                );
-
-                $array = array('product_id' => $value, 'is_delete' => 0);
-                $del = array('product_id' => $value);
-                $this->dbcommon->delete('user_mark_sold', $del);
-            } else {
-                $data = array(
-                    $field_name => $status,
-                    'admin_modified_at' => date('y-m-d H:i:s', time())
-                );
-                $array = array('product_id' => $value);
-            }
-            $array = array('product_id' => $value);
-            $result = $this->dbcommon->update('product', $array, $data);
-
-            if (isset($result)) {
-                $success = 1;
-
-                $where = " where product_id='" . $value . "' and is_delete=0";
-                $product = $this->dbcommon->getrowdetails('product', $where);
-
-                $where1 = " where user_id='" . $product->product_posted_by . "' and is_delete=0";
-                $user_em = $this->dbcommon->getrowdetails('user', $where1);
-
-                $send_msg = '';
-                if ($status == 'available') {
-                    $send_msg = 'Your product has been updated as Active.';
-                    $status1 = 'Active';
-                } elseif ($status == 'sold') {
-                    $send_msg = 'Your product has been updated as Sold.';
-                    $status1 = 'Sold';
-                } elseif ($status == 'Approve') {
-                    $send_msg = 'Your product has been updated as Active.';
-                    $status1 = 'Active';
-                } elseif ($status == 'Unapprove') {
-                    $send_msg = 'Your product has been updated as Unapprove.';
-                    $status1 = 'Unapprove';
-                } elseif ($status == 'Inappropriate') {
-                    $send_msg = 'Your product has been updated as Inappropriate.';
-                    $status1 = 'Inappropriate';
+                    $array = array('product_id' => $value, 'is_delete' => 0);
+                    $del = array('product_id' => $value);
+                    $this->dbcommon->delete('user_mark_sold', $del);
+                } else {
+                    $data = array(
+                        $field_name => $status,
+                        'admin_modified_at' => date('y-m-d H:i:s', time())
+                    );
+                    $array = array('product_id' => $value);
                 }
-                $parser_data = array();
+                $array = array('product_id' => $value);
+                $result = $this->dbcommon->update('product', $array, $data);
 
-                $product = $product->product_name;
-                $product_status = 'Ad Status : ' . $status1;
-                $title = $product_status;
-                $button_link = base_url() . "login/index";
-                $button_label = 'Click here to Login';
+                if (isset($result)) {
+                    $success = 1;
 
-                $product_title = ' Your Ad : ' . $product . ' has been updated as ' . $status1 . '.';
-                $content = '
+                    $where = " where product_id='" . $value . "' and is_delete=0";
+                    $product = $this->dbcommon->getrowdetails('product', $where);
+
+                    $product_name = $product->product_name;
+                    $product_list[$product->product_posted_by][] = $product_name;
+                }
+            }
+
+            if (isset($product_list) && sizeof($product_list) > 0) {
+                foreach ($product_list as $key => $list) {
+                    $send_msg = '';
+                    if ($status == 'available') {
+                        if (sizeof($list) == 1)
+                            $send_msg = 'Your product has been updated as Active.';
+                        else
+                            $send_msg = 'Your products have been updated as Active.';
+                        $status1 = 'Active';
+                    } elseif ($status == 'sold') {
+                        if (sizeof($list) == 1)
+                            $send_msg = 'Your product has been updated as Sold.';
+                        else
+                            $send_msg = 'Your products have been updated as Sold.';
+                        $status1 = 'Sold';
+                    } elseif ($status == 'Approve') {
+                        if (sizeof($list) == 1)
+                            $send_msg = 'Your product has been updated as Active.';
+                        else
+                            $send_msg = 'Your products have been updated as Active.';
+                        $status1 = 'Active';
+                    } elseif ($status == 'Unapprove') {
+                        if (sizeof($list) == 1)
+                            $send_msg = 'Your product has been updated as Unapprove.';
+                        else
+                            $send_msg = 'Your products have been updated as Unapprove.';
+                        $status1 = 'Unapprove';
+                    } elseif ($status == 'Inappropriate') {
+                        if (sizeof($list) == 1)
+                            $send_msg = 'Your product has been updated as Inappropriate.';
+                        else
+                            $send_msg = 'Your products have been updated as Inappropriate.';
+                        $status1 = 'Inappropriate';
+                    }
+
+                    $parser_data = array();
+                    $button_link = base_url() . "login/index";
+                    $button_label = 'Click here to Login';
+
+                    if (sizeof($list) == 1) {
+                        $product_status = 'Ad Status : ' . $status1;
+                        $title = $product_status;
+                        $product_title = ' Your Ad : ' . $list[0] . ' has been updated as ' . $status1 . '.';
+                        $product_text = '<h6 style="font-family: Roboto, sans-serif; color:#7f7f7f; font-size:15px; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:6px; padding-left:0; font-weight:400;">' . $product_title . '</h6>';
+                    } else {
+                        $product_status = 'Ads Status : ' . $status1;
+                        $title = $product_status;
+                        $product_title = 'Below products have been ' . $status1 . '.';
+                        $product_text = '<h3 style="font-family: Roboto, sans-serif; color:#7f7f7f; font-size:24px; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:6px; padding-left:0; font-weight:400;">' . $product_title . '</h3>';
+                    }
+
+                    $product_list_table = '';
+                    if (sizeof($list) > 1) {
+                        $i = 1;
+                        $product_list_table = '<table width="90%" style="border-collapse:collapse;">';
+                        foreach ($list as $l) {
+                            $product_list_table .= '<tr><td style="padding:5px;">' . $i . '. ' . $l . '</td></tr>';
+                            $i++;
+                        }
+                        $product_list_table .= '</table>';
+                    }
+
+                    $content = '
        <div style="margin-top:-21; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:0; padding-left:0; width:416px; float: right; font-family: Roboto, sans-serif;"> <br>
-        <h6 style="font-family: Roboto, sans-serif; color:#7f7f7f; font-size:12px; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:6px; padding-left:0; font-weight:400;">' . $product_title . '</h6>       
-        <br>
-        <a style="background: #ed1b33 none repeat scroll 0 0;border-radius: 4px;color: #fff;display: inline-table;font-family: Roboto,sans-serif;font-size: 14px;font-weight: 400;height: 36px;line-height: 34px; padding-top:3px; padding-right:12px; padding-bottom:3px; padding-left:12px; text-align: center;text-decoration:none; width:156px; " href="' . $button_link . '">' . $button_label . '</a></div>
-';
+        ' . $product_text . '
+        <br>' . $product_list_table . '<br>
+        <a style="background: #ed1b33 none repeat scroll 0 0;border-radius: 4px;color: #fff;display: inline-table;font-family: Roboto,sans-serif;font-size: 14px;font-weight: 400;height: 36px;line-height: 34px; padding-top:3px; padding-right:12px; padding-bottom:3px; padding-left:12px; text-align: center;text-decoration:none; width:156px; " href="' . $button_link . '">' . $button_label . '</a></div>';
+                    $new_data = $this->dbcommon->mail_format($title, $content);
+                    $new_data = $this->parser->parse_string($new_data, $parser_data, '1');
 
-                $new_data = $this->dbcommon->mail_format($title, $content);
-                $new_data = $this->parser->parse_string($new_data, $parser_data, '1');
-                if ($user_em->email_id != '') {
-                    if (send_mail($user_em->email_id, $send_msg, $new_data, 'info@doukani.com')) {
-                        
+                    $where1 = " where user_id='" . $key . "' and is_delete=0";
+                    $user_em = $this->dbcommon->getrowdetails('user', $where1);
+
+                    if ($user_em->email_id != '') {
+                        if (send_mail($user_em->email_id, $send_msg, $new_data, 'info@doukani.com')) {
+                            
+                        }
                     }
                 }
             }
@@ -4175,7 +4214,7 @@ class Classifieds extends CI_Controller {
     public function image_upload($images_num, $pro_id, $product) {
         if ($images_num > 0) {
             for ($i = 1; $i <= $images_num; $i++) {
-                //print_r($_FILES['multiUpload'.$i]['tmp_name']);
+//print_r($_FILES['multiUpload'.$i]['tmp_name']);
                 if (isset($_FILES['multiUpload' . $i]['tmp_name']) && $_FILES['multiUpload' . $i]['tmp_name'] != '') {
                     $target_dir = document_root . product;
                     $profile_picture = $_FILES['multiUpload' . $i]['name'];
@@ -4185,7 +4224,7 @@ class Classifieds extends CI_Controller {
                     $uploadOk = 1;
                     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
                     $imageFileType = strtolower($imageFileType);
-                    // Allow certain file formats
+// Allow certain file formats
                     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "mp4") {
                         $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                         $data['msg_class'] = 'alert-info';
@@ -4208,7 +4247,7 @@ class Classifieds extends CI_Controller {
                                     'product_id' => $pro_id,
                                     'product_image' => $picture_ban[$i]
                                 );
-                                //print_r($data1);
+//print_r($data1);
                                 if ($i > 1)
                                     $result = $this->dbcommon->insert('products_images', $data1);
                                 $this->load->library('thumbnailer');
@@ -4255,7 +4294,7 @@ class Classifieds extends CI_Controller {
                     }
                 }
             }
-            //exit;
+//exit;
             if (isset($images_num)) :
             /* for ($i = 2; $i <= $images_num; $i++) 
               {
@@ -4411,40 +4450,40 @@ class Classifieds extends CI_Controller {
                 $per_page = $this->per_page;
             }
 
-            //country
+//country
             if (isset($_REQUEST['con']) && $_REQUEST['con'] != 0) {
                 $repost_country = $_REQUEST['con'];
             } else {
                 $repost_country = 0;
             }
-            //state- emirates
+//state- emirates
             if (isset($_REQUEST['st']) && $_REQUEST['st'] != 0) {
                 $repost_state = $_REQUEST['st'];
             } else {
                 $repost_state = 0;
             }
-            //category
+//category
             if (isset($_REQUEST['cat']) && $_REQUEST['cat'] != 0) {
                 $repost_category = $_REQUEST['cat'];
             } else {
                 $repost_category = 0;
             }
 
-            //sub-category
+//sub-category
             if (isset($_REQUEST['sub_cat']) && $_REQUEST['sub_cat'] != 0) {
                 $repost_sub_category = $_REQUEST['sub_cat'];
             } else {
                 $repost_sub_category = 0;
             }
 
-            //status
+//status
             if (isset($_REQUEST['status']) && $_REQUEST['status'] != "0") {
                 $repost_status = $_REQUEST['status'];
             } else {
                 $repost_status = 0;
             }
 
-            //other status
+//other status
             if (isset($_REQUEST['other_status']) && $_REQUEST['other_status'] != "0") {
                 $repost_oth_status = $_REQUEST['other_status'];
             } else {
@@ -4581,7 +4620,7 @@ class Classifieds extends CI_Controller {
         }
     }
 
-    //remove radio selection wise 
+//remove radio selection wise 
     public function remove_image_selected() {
         $target_dir = document_root . product;
         $val = $_POST['value'];

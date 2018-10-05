@@ -15,46 +15,42 @@ class Trial extends My_controller {
         $parser_data = array();
         $status1 = 'Approved';
         $product = 'Test product Name';
-        $product_status = 'Ad Status : ' . $status1;
-
         $button_link = base_url() . "login/index";
         $button_label = 'Click here to Login';
 
-
         if (is_null($multiple)) {
+            $product_status = 'Ad Status : ' . $status1;
             $title = $product_status;
             $product_title = ' Your Ad : ' . $product . ' has been updated as ' . $status1 . '.';
             $product_text = '<h6 style="font-family: Roboto, sans-serif; color:#7f7f7f; font-size:15px; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:6px; padding-left:0; font-weight:400;">' . $product_title . '</h6>';
         } else {
-            $product_title = 'Product List';
+            $product_status = 'Ads Status : ' . $status1;
+            $title = $product_status;
+            $product_title = 'Below products have been ' . $status1 . '.';
             $product_text = '<h3 style="font-family: Roboto, sans-serif; color:#7f7f7f; font-size:24px; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0; padding-top:0; padding-right:0; padding-bottom:6px; padding-left:0; font-weight:400;">' . $product_title . '</h3>';
-            $title = 'Ads Status';
         }
 
         $product_list = array(
-            array('product_name' => 'Test 1', 'status' => 'Approved'),
-            array('product_name' => 'Test 2', 'status' => 'Un-Approved'),
-            array('product_name' => 'Test 1', 'status' => 'Approved'),
-            array('product_name' => 'Test 2', 'status' => 'Un-Approved'),
-            array('product_name' => 'Test 1', 'status' => 'Approved'),
-            array('product_name' => 'Test 2', 'status' => 'Un-Approved'),
-            array('product_name' => 'Test 1', 'status' => 'Approved'),
-            array('product_name' => 'Test 2', 'status' => 'Un-Approved')
+            array('product_name' => 'Nokia 7 Plus With Axiom Warranty ( 7 months left ) In perfect'),
+            array('product_name' => 'Premium Embroidery Thread'),
+            array('product_name' => 'Infiniti QX50 2014'),
+            array('product_name' => 'Nokia 7 Plus With Axiom Warranty ( 7 months left ) In perfect'),
+            array('product_name' => 'Test 1'),
+            array('product_name' => 'Test 2'),
+            array('product_name' => 'Test 1'),
+            array('product_name' => 'Test 2')
         );
 
         if (is_null($multiple)) {
             $table = '';
         } else {
-            $table = '<table border="1" width="90%" style="border-collapse:collapse;border: 1px solid #ccc !important;">
-                    <tr>
-                        <th style="text-align:left;padding:8px;">Ad Name</th>
-                        <th style="text-align:center;padding:8px;">Status</th>
-                    </tr>';
+            $table = '<table width="90%" style="border-collapse:collapse;">';
+            $i = 1;
             foreach ($product_list as $list) {
                 $table .= '<tr>
-                        <td style="padding:5px;">' . $list['product_name'] . '</td>
-                        <td style="text-align:center;padding:5px;">' . $list['status'] . '</td>
+                        <td style="padding:5px;">' . $i . '. ' . $list['product_name'] . '</td>                        
                     </tr>';
+                $i++;
             }
             $table .= '</table>';
         }
@@ -65,7 +61,6 @@ class Trial extends My_controller {
                 '<br>
         <a style="background: #ed1b33 none repeat scroll 0 0;border-radius: 4px;color: #fff;display: inline-table;font-family: Roboto,sans-serif;font-size: 14px;font-weight: 400;height: 36px;line-height: 34px; padding-top:3px; padding-right:12px; padding-bottom:3px; padding-left:12px; text-align: center;text-decoration:none; width:156px; " href="' . $button_link . '">' . $button_label . '</a></div>
 ';
-
         $new_data = $this->dbcommon->mail_format($title, $content);
         $new_data = $this->parser->parse_string($new_data, $parser_data, '1');
         print_r($new_data);
