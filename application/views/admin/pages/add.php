@@ -75,8 +75,7 @@
                                             </div>
                                             <div class='form-group row'>                        
                                                 <div class='col-md-5'>
-                                                    <label>Icon</label>
-
+                                                    <label>Icon</label>                                                        
                                                     <select class="select2 form-control" name="select_icons">
                                                         <option value=''>No icon</option>
                                                         <?php foreach ($icons as $icon) { ?>
