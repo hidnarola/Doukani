@@ -41,6 +41,7 @@ class Allstores extends My_controller {
 
         $data = array_merge($data, $this->get_elements());
         $data['product_page'] = 'yes';
+//        $data['store_page'] = 'store_page';
         $__catagory_list = [];
 
         $wh_category_data = array('FIND_IN_SET(1, category_type) > 0');

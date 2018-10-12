@@ -1,39 +1,40 @@
 <?php
-	function isHTML($string){
-	 if($string != strip_tags($string)){
-	  // is HTML
-	  return true;
-	 }else{
-	  // not HTML
-	  return false;
-	 }
-	}
 
-	$is_html = 0;
-	
-	if(isset($_REQUEST) && !empty($_REQUEST)){		
-		foreach($_REQUEST as $k=>$v){				
-			if(isHTML($v)){
-				$is_html = 1;			
-			}			
-		}
-		
-		if($is_html == 1){			
-			$this->session->set_flashdata(array('err_msg' => '<font color="red">Oooops! No results found.</font>', 'class' => 'alert-danger'));
-			redirect(current_url());
-		}		
-	}
+function isHTML($string) {
+    if ($string != strip_tags($string)) {
+        // is HTML
+        return true;
+    } else {
+        // not HTML
+        return false;
+    }
+}
+
+$is_html = 0;
+
+if (isset($_REQUEST) && !empty($_REQUEST)) {
+    foreach ($_REQUEST as $k => $v) {
+        if (isHTML($v)) {
+            $is_html = 1;
+        }
+    }
+
+    if ($is_html == 1) {
+        $this->session->set_flashdata(array('err_msg' => '<font color="red">Oooops! No results found.</font>', 'class' => 'alert-danger'));
+        redirect(current_url());
+    }
+}
 ?>
 <header id="header" itemscope itemtype="https://schema.org/WPHeader">
     <meta itemprop="name" content="Doukani">
     <meta itemprop="description" content="Extreme offers for vehicles, real estates, electronics and other services. Buy/sell new and used products at lowest price on doukani.">
-	<?php if ($this->session->flashdata('err_msg') != '') {  ?>
-		<div class='alert  alert-danger myerr'>
-			<a class='close' data-dismiss='alert' href='#'> &times; </a>
-			<?php echo $this->session->flashdata('err_msg'); ?>
-		</div>
-	<?php }	?>        
-	
+    <?php if ($this->session->flashdata('err_msg') != '') { ?>
+        <div class='alert  alert-danger myerr'>
+            <a class='close' data-dismiss='alert' href='#'> &times; </a>
+            <?php echo $this->session->flashdata('err_msg'); ?>
+        </div>
+    <?php } ?>        
+
     <?php if ($this->session->flashdata('msg') != ''): ?>
         <div class='alert  alert-success'>
             <a class='close' data-dismiss='alert' href='#'> &times; </a>
@@ -50,7 +51,7 @@
         $doukani_logo = $doukani_loge_img['image_name'];
     } elseif (in_array('stores', array($this->uri->segment(1), $this->uri->segment(2))) ||
             in_array('store_search', array($this->uri->segment(1), $this->uri->segment(2))) ||
-            (isset($store_page) && $store_page == 'store_page')) {
+            ( (isset($store_page) && $store_page == 'store_page') || ($this->uri->segment(1) == 'allstores'))) {
 
         $logo_link = HTTPS . website_url . 'stores';
 
@@ -75,12 +76,12 @@
     else
         $doukani_logo = doukani_logo . 'original/' . $doukani_logo;
     ?>
-    <?php //if (in_array($this->uri->segment(1), array('stores', 'store_search')) || in_array($this->uri->segment(2), array('stores', 'store_search')) || (isset($store_page) && in_array($store_page, array('store_page', 'store_followers_page')))) echo 'classi-sub-head'; else  ?>
+    <?php //if (in_array($this->uri->segment(1), array('stores', 'store_search')) || in_array($this->uri->segment(2), array('stores', 'store_search')) || (isset($store_page) && in_array($store_page, array('store_page', 'store_followers_page')))) echo 'classi-sub-head'; else   ?>
     <div class="main-head <?php echo 'classi-sub-head'; ?>"  >
         <div class="logo" itemscope itemtype="https://schema.org/Organization">
             <a href="<?php echo $logo_link; ?>" style="text-decoration:none;" itemprop="url">
                 <img src="<?php echo HTTPS . website_url . $doukani_logo; ?>" alt="Doukani Logo" itemprop="logo"></a>
-                <!--<link href="<?php //echo HTTPS . website_url . $doukani_logo;  ?>"/>-->
+                <!--<link href="<?php //echo HTTPS . website_url . $doukani_logo;    ?>"/>-->
             <meta itemprop="name" content="Doukani" />
         </div>
         <div class="head-action" itemscope itemtype="https://schema.org/SiteNavigationElement">
@@ -92,11 +93,11 @@
                         ?>
                         <div class="search-wrap">
                             <div class="input-group store_search" style="width:75%">
-                                <form  method="get" action="<?php echo HTTPS . website_url . emirate_slug ; ?>store_search">
+                                <form  method="get" action="<?php echo HTTPS . website_url . emirate_slug; ?>store_search">
                                     <input type="text" class="form-control" aria-label="..." value="<?php if (isset($_REQUEST['search_value'])) echo $_REQUEST['search_value']; ?>" name="search_value" id="search_value" placeholder='Search Store'>
                                     <button type="submit" class="btn btn-link" >
-                                         <?php
-                                            $this->load->view('svg_html/search');
+                                        <?php
+                                        $this->load->view('svg_html/search');
                                         ?>  
                                     </button>
                                 </form>
@@ -114,13 +115,13 @@
                                 <input type="text" class="form-control" aria-label="..." value="<?php if (isset($_REQUEST['s'])) echo $_REQUEST['s']; ?>" name="s" id="search_value" placeholder='Search product in store'>
                                 <button type="submit" class="btn btn-link" >
                                     <?php
-                                        $this->load->view('svg_html/search');
+                                    $this->load->view('svg_html/search');
                                     ?>  
                                 </button>
                             </form>
                         </div>
                     </div>
-                <?php
+                    <?php
                 }
             } else {
                 ?>
@@ -148,16 +149,19 @@
                                         <li>
                                             <a href="<?php echo HTTPS . website_url . 'offers/?cat_id=' . $cat['category_id']; ?>"><?php echo str_replace('\n', " ", $cat['catagory_name']); ?></a>
                                         </li>
-        <?php endforeach;
-    } else {
-        ?>
+                                        <?php
+                                    endforeach;
+                                } else {
+                                    ?>
                                     <li><a href="<?php echo HTTPS . website_url . emirate_slug . 'search'; ?>">All Categories</a></li>
-        <?php foreach ($category as $cat): ?>
+                                    <?php foreach ($category as $cat): ?>
                                         <li>
                                             <a href="<?php echo HTTPS . website_url . emirate_slug . $cat['category_slug']; ?>"><?php echo str_replace('\n', " ", $cat['catagory_name']); ?></a>
                                         </li>
-                            <?php endforeach;
-                        } ?>
+                                    <?php
+                                    endforeach;
+                                }
+                                ?>
                             </ul>
                         </div>
                         <!-- /btn-group -->
@@ -194,7 +198,7 @@
                             <input type="hidden" class="form-control" aria-label="..." value="<?php echo @$_GET['view'] ? $_GET['view'] : ''; ?>" name="view">
                             <button type="submit" class="btn btn-link">
                                 <?php
-                                    $this->load->view('svg_html/search');
+                                $this->load->view('svg_html/search');
                                 ?>  
                             </button>
                         </form>
@@ -217,10 +221,10 @@
                                 $view_list = '';
                             ?>
                             <a href="<?php echo HTTPS . website_url . emirate_slug . 'advanced_search' . $view_list; ?>" class="adv-search" style="font-size:10px;" itemprop="url"><span class="plus_adv" >+</span> <span class="adv_header_lbl" itemprop="name"><b>ADVANCED SEARCH</b></span></a>
-                    <?php } ?>
+    <?php } ?>
                     </div>
                 </div>            
-                <?php } ?>
+<?php } ?>
 
             <ul class="sub-action">
                 <?php
@@ -270,9 +274,9 @@
                         }
                     }
                 }
-                elseif(isset($request_from) && in_array($request_from,array('store_page','search_store_page','store_item_details_page'))) {
-                   $cart_session_data = 'yes';
-                   $cart_count__ = 0;
+                elseif (isset($request_from) && in_array($request_from, array('store_page', 'search_store_page', 'store_item_details_page'))) {
+                    $cart_session_data = 'yes';
+                    $cart_count__ = 0;
                 }
 
                 if (isset($cart_session_data) && $cart_session_data == 'yes') {
@@ -284,12 +288,12 @@
                 }
                 ?>
 
-            <?php if ($this->session->userdata('gen_user')) { ?>
+<?php if ($this->session->userdata('gen_user')) { ?>
                     <li>
                         <a href="<?php echo HTTPS . website_url; ?>user/favorite" data-toggle="tooltip" data-placement="bottom" title="Favorites List" rel="nofollow"><i class="fa fa-star" aria-hidden="true"></i>
                         </a>
                     </li>                
-            <?php } else { ?>
+                <?php } else { ?>
                     <li><a href="<?php echo HTTPS . website_url; ?>login/index" data-toggle="tooltip" data-placement="bottom" title="Favorites List"><i class="fa fa-star" aria-hidden="true" rel="nofollow"></i></a></li>
             <?php } ?>
             </ul>
@@ -315,7 +319,7 @@
                             <li class="user-data">
                                 <p class="user-name"><?php echo $m_nm; ?><span class="free-ads"><?php echo $user->userAdsLeft; ?> Ads left</span></p>
                             </li>
-                            <li><a href="<?php echo HTTPS . website_url; ?>user/my_listing<?php echo (isset($_REQUEST['view'])) ? '?view='.$_REQUEST['view'] : ''; ?>" tabindex="-1" role="menuitem" rel="nofollow">My Ads</a></li>
+                            <li><a href="<?php echo HTTPS . website_url; ?>user/my_listing<?php echo (isset($_REQUEST['view'])) ? '?view=' . $_REQUEST['view'] : ''; ?>" tabindex="-1" role="menuitem" rel="nofollow">My Ads</a></li>
                             <li><a href="<?php echo HTTPS . website_url; ?>user/post_ads" tabindex="-1" role="menuitem" rel="nofollow"><i class="fa fa-plus"></i>Post Free Ad</a></li>						
                             <li role="presentation"><a href="<?php echo HTTPS . website_url; ?>user/index" tabindex="-1" role="menuitem" rel="nofollow">My Profile</a></li>
                             <?php if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') { ?>
