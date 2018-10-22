@@ -1,8 +1,8 @@
 <?php
 if (isset($_GET['userid']) && $_GET['userid'] != '')
-    $redirect_url = base_url() . 'admin/classifieds/listings_add/'.$this->uri->segment(4).'/'.$this->uri->segment(5).'/'.'?userid=' . $_GET['userid'];
+    $redirect_url = base_url() . 'admin/classifieds/listings_add/' . $this->uri->segment(4) . '/' . $this->uri->segment(5) . '/' . '?userid=' . $_GET['userid'];
 else
-    $redirect_url = base_url() . 'admin/classifieds/listings_add/'.$this->uri->segment(4).'/'.$this->uri->segment(5);
+    $redirect_url = base_url() . 'admin/classifieds/listings_add/' . $this->uri->segment(4) . '/' . $this->uri->segment(5);
 ?>
 <form  name="default_form" action='<?php echo $redirect_url; ?>' class='form form-horizontal validate-form default_form' accept-charset="UTF-8" method='post' enctype="multipart/form-data" id="form1">
     <h4><i class="fa fa-info-circle"></i>&nbsp;&nbsp;Item Details</h4>
@@ -28,21 +28,46 @@ else
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
-            <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;<?php echo price_zero_label; ?>
+                <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;<?php echo price_zero_label; ?>
             </div>
         </div>
     </div>
-    
+
     <?php //if(isset($user_role) && $user_role == 'storeUser')  { ?>
-    <div class='form-group total_stock_div' <?php if(isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?> >
+    <div class='form-group total_stock_div' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?> >
         <label class='col-md-2 control-label' for='inputText1'>Total Stock<span> *</span></label>
         <div class='col-md-5 controls'>
             <input class="form-control total_stock"  placeholder="Total Stock" name="total_stock" type="text" value="<?php echo set_value('total_stock'); ?>"  />
-            <input type="hidden" name="ad_type" id="form1_ad_type" value="<?php if(isset($user_role) && $user_role == 'storeUser') echo '1'; ?>">
+            <input type="hidden" name="ad_type" id="form1_ad_type" value="<?php if (isset($user_role) && $user_role == 'storeUser') echo '1'; ?>">
         </div>
     </div>
     <?php //} ?>
-    
+
+    <?php if (isset($user_category_id) && (int) $user_category_id > 0) { ?>
+        <div class="form-group delivery_option_section">                    
+            <label class='col-md-2 control-label' for='inputText1'>Delivery Option <span> *</span></label>
+            <div class="col-md-5 controls">
+                <select class="select2 form-control" name="delivery_option" id="delivery_option" data-rule-required='true' >
+                    <option value="">Select Delivery Option</option>
+                    <?php foreach ($delivery_options as $d): ?>                    
+                        <option value="<?php echo $d['id'] ?>"><?php echo $d['option_text'] ?></option>                    
+                    <?php endforeach; ?>                                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group product_weight_section">                    
+            <label class='col-md-2 control-label' for='inputText1'>Product Weight <span> *</span></label>
+            <div class="col-md-5 controls">
+                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
+                    <option value="">Select Product Weight</option>
+                    <?php foreach ($product_weights as $w): ?>                    
+                        <option value="<?php echo $w['id'] ?>"><?php echo $w['weight_text'] ?></option>                    
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    <?php } ?>
+
     <h4><i class="fa fa-home"></i>&nbsp;&nbsp;Contact Details</h4>
     <hr />
     <div class="form-group">                    
@@ -107,23 +132,24 @@ else
         <div class="col-md-2 col-sm-3">Upload Video</div>
         <div class="col-md-6 col-sm-8"><input type="text" class="form-control" id="video_form1" name="video" /></div>
     </div>
-    <?php 
-        $admin_permission =  $this->session->userdata('admin_modules_permission');
-             if($admin_permission == 'only_listing' ) {  ?>    
-               <input id="product_is_inappropriate" name="product_is_inappropriate" class="form-control" type="hidden" value="Unapprove">                 
-        <?php } else { ?>
-    <div class="form-group">
-        <label class='col-md-2 control-label' for='inputText1'>Product Is<span> *</span></label>
-        <div class='col-md-5 controls'>
-            <select id="product_is_inappropriate" name="product_is_inappropriate" class="form-control  select2"  data-rule-required='true'>
-                <option value="">Select</option>
-                <option value="NeedReview" <?php if (isset($_REQUEST['product_is_inappropriate']) && $_REQUEST['product_is_inappropriate'] == 'NeedReview') echo set_select('product_is_inappropriate', 'NeedReview'); ?> >NeedReview</option>
-                <option value="Approve" <?php if (isset($_REQUEST['product_is_inappropriate']) && $_REQUEST['product_is_inappropriate'] == 'Approve') echo set_select('product_is_inappropriate', 'Approve'); ?> >Approve</option>
-                <option value="Unapprove" <?php if (isset($_REQUEST['product_is_inappropriate']) && $_REQUEST['product_is_inappropriate'] == 'Unapprove') echo set_select('product_is_inappropriate', 'Unapprove'); ?> >Unapprove</option>
-                <option value="Inappropriate" <?php if (isset($_REQUEST['product_is_inappropriate']) && $_REQUEST['product_is_inappropriate'] == 'Inappropriate') echo set_select('product_is_inappropriate', 'Inappropriate'); ?>>Inappropriate</option>
-            </select>                     
+    <?php
+    $admin_permission = $this->session->userdata('admin_modules_permission');
+    if ($admin_permission == 'only_listing') {
+        ?>    
+        <input id="product_is_inappropriate" name="product_is_inappropriate" class="form-control" type="hidden" value="Unapprove">                 
+    <?php } else { ?>
+        <div class="form-group">
+            <label class='col-md-2 control-label' for='inputText1'>Product Is<span> *</span></label>
+            <div class='col-md-5 controls'>
+                <select id="product_is_inappropriate" name="product_is_inappropriate" class="form-control  select2"  data-rule-required='true'>
+                    <option value="">Select</option>
+                    <option value="NeedReview" <?php if (isset($_REQUEST['product_is_inappropriate']) && $_REQUEST['product_is_inappropriate'] == 'NeedReview') echo set_select('product_is_inappropriate', 'NeedReview'); ?> >NeedReview</option>
+                    <option value="Approve" <?php if (isset($_REQUEST['product_is_inappropriate']) && $_REQUEST['product_is_inappropriate'] == 'Approve') echo set_select('product_is_inappropriate', 'Approve'); ?> >Approve</option>
+                    <option value="Unapprove" <?php if (isset($_REQUEST['product_is_inappropriate']) && $_REQUEST['product_is_inappropriate'] == 'Unapprove') echo set_select('product_is_inappropriate', 'Unapprove'); ?> >Unapprove</option>
+                    <option value="Inappropriate" <?php if (isset($_REQUEST['product_is_inappropriate']) && $_REQUEST['product_is_inappropriate'] == 'Inappropriate') echo set_select('product_is_inappropriate', 'Inappropriate'); ?>>Inappropriate</option>
+                </select>                     
+            </div>
         </div>
-    </div>
     <?php } ?>
     <div class="form-actions form-actions-padding-sm btn-btm-css">
         <div class="row">
@@ -132,7 +158,7 @@ else
                     <i class="fa fa-floppy-o"></i>
                     Save
                 </button>
-                <a href='<?php echo site_url().'admin/classifieds/'.$this->uri->segment(4).'/'.$this->uri->segment(5); ?>' title="Cancel" class="btn">Cancel</a><input type="hidden" name="form1_images_arr" id="form1_images_arr"   class="form-control"  />
+                <a href='<?php echo site_url() . 'admin/classifieds/' . $this->uri->segment(4) . '/' . $this->uri->segment(5); ?>' title="Cancel" class="btn">Cancel</a><input type="hidden" name="form1_images_arr" id="form1_images_arr"   class="form-control"  />
             </div>
         </div>
     </div>

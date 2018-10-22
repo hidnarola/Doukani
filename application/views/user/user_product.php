@@ -296,6 +296,18 @@ $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ?
                                                                     <td><span>Posted On:</span></td>
                                                                     <td><?php echo $posted_on; ?></td>
                                                                 </tr>
+                                                                <?php if (isset($delivery_option_text) && !empty($delivery_option_text)) { ?>
+                                                                    <tr>
+                                                                        <th>Shipping Option</th>
+                                                                        <td><?php echo $delivery_option_text; ?></td>
+                                                                    </tr>
+                                                                <?php } ?>
+                                                                <?php if (isset($weight_text) && !empty($weight_text)) { ?>
+                                                                    <tr>
+                                                                        <th>Weight</th>
+                                                                        <td><?php echo $weight_text; ?></td>
+                                                                    </tr>
+                                                                <?php } ?>
                                                                 <tr>
                                                                     <th>Category</th>
                                                                     <td>
@@ -303,74 +315,74 @@ $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ?
                                                                         echo str_replace('\n', " ", $product[0]->catagory_name);
                                                                         if ($product[0]->sub_category_id != '' || $product[0]->sub_category_id != null) {
                                                                             ?>
-    <?php echo ' - ' . str_replace('\n', " ", $product[0]->sub_category_name); ?>
-                                                                <?php } ?>    
+                                                                            <?php echo ' - ' . str_replace('\n', " ", $product[0]->sub_category_name); ?>
+                                                                        <?php } ?>    
                                                                     </td>
                                                                 </tr>        
-<?php if (isset($product[0]->vehicle_features)) { ?>
-    <?php if ($product[0]->vehicle_features->bname != '') { ?>
+                                                                <?php if (isset($product[0]->vehicle_features)) { ?>
+                                                                    <?php if ($product[0]->vehicle_features->bname != '') { ?>
                                                                         <tr>
                                                                             <th>Brand</th>
                                                                             <td><?php echo $product[0]->vehicle_features->bname; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->vehicle_features->mname != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->vehicle_features->mname != '') { ?>
                                                                         <tr>
                                                                             <th>Model</th>
                                                                             <td><?php echo $product[0]->vehicle_features->mname; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->vehicle_features->mileagekm != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->vehicle_features->mileagekm != '') { ?>
                                                                         <tr>
                                                                             <th>Mileage</th>
                                                                             <td><?php echo $product[0]->vehicle_features->mileagekm; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->vehicle_features->colorname != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->vehicle_features->colorname != '') { ?>
                                                                         <tr>
                                                                             <th>Color</th>
                                                                             <td><?php echo $product[0]->vehicle_features->colorname; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->vehicle_features->type_of_car != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->vehicle_features->type_of_car != '') { ?>
                                                                         <tr>
                                                                             <th>Type Of Car</th>
                                                                             <td><?php echo $product[0]->vehicle_features->type_of_car; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->vehicle_features->year != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->vehicle_features->year != '') { ?>
                                                                         <tr>
                                                                             <th>Year</th>
                                                                             <td><?php echo $product[0]->vehicle_features->year; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->vehicle_features->make != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->vehicle_features->make != '') { ?>
                                                                         <tr>
                                                                             <th>Make</th>
                                                                             <td><?php echo $product[0]->vehicle_features->make; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->vehicle_features->vehicle_condition != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->vehicle_features->vehicle_condition != '') { ?>
                                                                         <tr>
                                                                             <th>Condition</th>
                                                                             <td><?php echo $product[0]->vehicle_features->vehicle_condition; ?></td>
                                                                         </tr>
                                                                     <?php } ?>
                                                                 <?php } ?>
-<?php if (isset($product[0]->realestate_features)) { ?>
-    <?php if ($product[0]->realestate_features->Emirates != '') { ?>
+                                                                <?php if (isset($product[0]->realestate_features)) { ?>
+                                                                    <?php if ($product[0]->realestate_features->Emirates != '') { ?>
                                                                         <tr>
                                                                             <th>Emirates</th>
                                                                             <td><?php echo $product[0]->realestate_features->Emirates; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->realestate_features->PropertyType != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->realestate_features->PropertyType != '') { ?>
                                                                         <tr>
                                                                             <th>Property Type</th>
                                                                             <td><?php echo $product[0]->realestate_features->PropertyType; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->realestate_features->Bedrooms != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->realestate_features->Bedrooms != '') { ?>
                                                                         <tr>
                                                                             <th>Bedrooms</th>
                                                                             <td><?php
@@ -381,8 +393,8 @@ $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ?
                                                                                 ?>
                                                                             </td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->realestate_features->Bathrooms != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->realestate_features->Bathrooms != '') { ?>
                                                                         <tr>
                                                                             <th>Bathrooms</th>
                                                                             <td><?php
@@ -393,26 +405,26 @@ $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ?
                                                                                 ?>
                                                                             </td>
                                                                         </tr>
-    <?php } ?>                                       
-    <?php if ($product[0]->realestate_features->Area != '') { ?>
+                                                                    <?php } ?>                                       
+                                                                    <?php if ($product[0]->realestate_features->Area != '') { ?>
                                                                         <tr>
                                                                             <th>Area</th>
                                                                             <td><?php echo $product[0]->realestate_features->Area; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->realestate_features->Amenities != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->realestate_features->Amenities != '') { ?>
                                                                         <tr>
                                                                             <th>Amenities</th>
                                                                             <td><?php echo $product[0]->realestate_features->Amenities; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->realestate_features->furnished != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->realestate_features->furnished != '') { ?>
                                                                         <tr>
                                                                             <th>Furnished</th>
                                                                             <td><?php echo ($product[0]->realestate_features->furnished != "0") ? ucfirst($product[0]->realestate_features->furnished) : '-'; ?></td>
                                                                         </tr>
-    <?php } ?>
-    <?php if ($product[0]->realestate_features->pets != '') { ?>
+                                                                    <?php } ?>
+                                                                    <?php if ($product[0]->realestate_features->pets != '') { ?>
                                                                         <tr>
                                                                             <th>Pets</th>
                                                                             <td><?php echo ($product[0]->realestate_features->pets) ? ucfirst($product[0]->realestate_features->pets) : '-'; ?></td>
@@ -420,35 +432,35 @@ $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ?
                                                                     <?php } ?>
                                                                 <?php } ?>
 
-<?php if (isset($product[0]->car_number)) { ?>
-    <?php if ($product[0]->car_number->car_number != '') { ?>
+                                                                <?php if (isset($product[0]->car_number)) { ?>
+                                                                    <?php if ($product[0]->car_number->car_number != '') { ?>
                                                                         <tr style="color:#ed1b33">
                                                                             <th >Car Number</th>
                                                                             <td><b><?php echo $product[0]->car_number->car_number; ?></b></td>
                                                                         </tr>
-    <?php } ?>                                            
-    <?php if ($product[0]->car_number->plate_source_name != '') { ?>
+                                                                    <?php } ?>                                            
+                                                                    <?php if ($product[0]->car_number->plate_source_name != '') { ?>
                                                                         <tr>
                                                                             <th>Plate Source</th>
                                                                             <td><?php echo $product[0]->car_number->plate_source_name; ?></td>
                                                                         </tr>
                                                                     <?php } ?>
 
-    <?php if ($product[0]->car_number->plate_prefix != '') { ?>
+                                                                    <?php if ($product[0]->car_number->plate_prefix != '') { ?>
                                                                         <tr>
                                                                             <th>Plate Prefix</th>
                                                                             <td><?php echo $product[0]->car_number->plate_prefix; ?></td>
                                                                         </tr>
                                                                     <?php } ?>
 
-    <?php if ($product[0]->car_number->plate_digit != '') { ?>
+                                                                    <?php if ($product[0]->car_number->plate_digit != '') { ?>
                                                                         <tr>
                                                                             <th>Plate Digit</th>
                                                                             <td><?php echo $product[0]->car_number->plate_digit; ?></td>
                                                                         </tr>
                                                                     <?php } ?>
 
-    <?php if ($product[0]->car_number->car_repeating_number != '') { ?>
+                                                                    <?php if ($product[0]->car_number->car_repeating_number != '') { ?>
                                                                         <tr>
                                                                             <th>Repeating Number</th>
                                                                             <td><?php echo $product[0]->car_number->car_repeating_number; ?></td>
@@ -456,34 +468,34 @@ $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ?
                                                                     <?php } ?>
                                                                 <?php } ?> 
 
-<?php if (isset($product[0]->mobile_number)) { ?>
-    <?php if ($product[0]->mobile_number->mobile_operator != '') { ?>
+                                                                <?php if (isset($product[0]->mobile_number)) { ?>
+                                                                    <?php if ($product[0]->mobile_number->mobile_operator != '') { ?>
                                                                         <tr>
                                                                             <th>Mobile Operator</th>
                                                                             <td><?php echo $product[0]->mobile_number->mobile_operator; ?></td>
                                                                         </tr>
                                                                     <?php } ?>
 
-    <?php if ($product[0]->mobile_number->car_repeating_number != '') { ?>
+                                                                    <?php if ($product[0]->mobile_number->car_repeating_number != '') { ?>
                                                                         <tr>
                                                                             <th>Repeating Number</th>
                                                                             <td><?php echo $product[0]->mobile_number->car_repeating_number; ?></td>
                                                                         </tr>
                                                                     <?php } ?>
 
-    <?php if ($product[0]->mobile_number->mobile_number != '') { ?>
+                                                                    <?php if ($product[0]->mobile_number->mobile_number != '') { ?>
                                                                         <tr style="color:#ed1b33">
                                                                             <th>Mobile Number</th>
                                                                             <td><b><?php echo $product[0]->mobile_number->mobile_number; ?><b></td>
                                                                                         </tr>
                                                                                     <?php } ?>                                           
-<?php } ?> 
-<?php if ($product[0]->address != '') { ?>
+                                                                                <?php } ?> 
+                                                                                <?php if ($product[0]->address != '') { ?>
                                                                                     <tr> 
                                                                                         <th>Address</th>                                                   
                                                                                         <td><?php echo $product[0]->address; ?></td>
                                                                                     </tr>
-<?php } ?>
+                                                                                <?php } ?>
                                                                                 </tbody>
                                                                                 </table>
                                                                                 </div>                      
@@ -513,7 +525,7 @@ $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ?
                                                                                 </div>
                                                                                 <!--//body-->                
                                                                                 <!--footer-->
-<?php $this->load->view('include/footer'); ?>
+                                                                                <?php $this->load->view('include/footer'); ?>
 
                                                                                 <div class="modal fade sure" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                                                     <div class="modal-dialog modal-sm" role="document">

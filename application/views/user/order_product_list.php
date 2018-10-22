@@ -114,6 +114,11 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Product </th>
+                                                                        <?php if ($order_details[0]->seller_id == $current_user['user_id']) { ?>                                                                            
+                                                                            <th class="ord-prod-qty-th">Weight</th>
+                                                                        <?php } else { ?>
+                                                                            <th class="ord-prod-qty-th">Shipping Option</th>
+                                                                        <?php } ?>
                                                                         <th class="ord-prod-qty-th">Quantity</th>
                                                                         <th class="ord-prod-price-th">Price</th>
                                                                     </tr>
@@ -133,6 +138,11 @@
                                                                                 <img src="<?php echo thumb_start_cart . $cover_image . thumb_end_cart; ?>"  alt="<?php echo $pro['product_name']; ?>" class="ord-img img-responsive" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'">
                                                                                 <?php echo $pro['product_name']; ?>
                                                                             </td>
+                                                                            <?php if ($order_details[0]->seller_id == $current_user['user_id']) { ?>                                                                                
+                                                                                <td class="ord-prod-qty-td"><?php echo $pro['weight_text']; ?></td>                                                                                
+                                                                            <?php } else { ?>
+                                                                                <td class="ord-prod-qty-td"><?php echo $pro['option_text']; ?></td>
+                                                                            <?php } ?>
                                                                             <td class="ord-prod-qty-td"><?php echo $pro['quantity']; ?></td>
                                                                             <td class="ord-prod-price-td">
                                                                                 <?php echo number_format($pro['price'], 2); ?></td>                                                                              

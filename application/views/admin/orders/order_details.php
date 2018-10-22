@@ -44,43 +44,47 @@
                                                 <div class=""></div>                      
                                             </div>
                                             <div class='box-content box-no-padding'>
-                                            <div class="responsive-table">
-                                                <div class="scrollable-area">
-                                                    <?php if (sizeof($products) > 0) { ?>
-                                                        <table style="margin-bottom:0;" class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Product </th>
-                                                                    <th>Quantity</th>
-                                                                    <th>Price</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <?php
-                                                                foreach ($products as $pro) {
-                                                                    ?>
+                                                <div class="responsive-table">
+                                                    <div class="scrollable-area">
+                                                        <?php if (sizeof($products) > 0) { ?>
+                                                            <table style="margin-bottom:0;" class="table">
+                                                                <thead>
                                                                     <tr>
-                                                                        <td>
-                                                                            <?php
-                                                                            if (!empty($pro['product_image']))
-                                                                                $cover_image = base_url() .product. 'small/' . $pro['product_image'];
-                                                                            else
-                                                                                $cover_image = base_url() . 'assets/upload/No_Image.png';
-                                                                            ?>
-                                                                            <img src="<?php echo thumb_start_cart . $cover_image . thumb_end_cart; ?>"  alt="Product Image" onerror="this.src='<?php echo thumb_start_grid.base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'">
-                                                                            <?php echo $pro['product_name']; ?>
-                                                                        </td>
-                                                                        <td><?php echo $pro['quantity']; ?></td>
-                                                                        <td><?php echo number_format($pro['price'],2); ?></td>                                                                          </tr>
+                                                                        <th>Product </th>
+                                                                        <th class="ord-prod-qty-th">Weight</th>
+                                                                        <th class="ord-prod-qty-th">Shipping Option</th>
+                                                                        <th>Quantity</th>
+                                                                        <th>Price</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
                                                                     <?php
-                                                                }
-                                                                ?>
-                                                            </tbody>
-                                                        </table>
-                                                    <?php } ?>
+                                                                    foreach ($products as $pro) {
+                                                                        ?>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <?php
+                                                                                if (!empty($pro['product_image']))
+                                                                                    $cover_image = base_url() . product . 'small/' . $pro['product_image'];
+                                                                                else
+                                                                                    $cover_image = base_url() . 'assets/upload/No_Image.png';
+                                                                                ?>
+                                                                                <img src="<?php echo thumb_start_cart . $cover_image . thumb_end_cart; ?>"  alt="Product Image" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'">
+                                                                                <?php echo $pro['product_name']; ?>
+                                                                            </td>
+                                                                            <td><?php echo $pro['weight_text']; ?></td>
+                                                                            <td><?php echo $pro['option_text']; ?></td>
+                                                                            <td><?php echo $pro['quantity']; ?></td>
+                                                                            <td><?php echo number_format($pro['price'], 2); ?></td>                                                                          </tr>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </tbody>
+                                                            </table>
+                                                        <?php } ?>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div></div></div>
+                                            </div></div></div>
                                 </div>
                                 <br><br>
                                 <div class="row most-viewed">
@@ -158,10 +162,10 @@
                                                                 <label>Store Name: </label>
                                                                 <?php echo $seller_details[0]->store_name; ?>
                                                             </div>      
-                                                            <?php if($seller_details[0]->store_is_inappropriate=='Approve' && $seller_details[0]->store_status==0) { ?>
-                                                            <div class="form-group col-sm-12">
-                                                                <a href="<?php echo HTTP . $seller_details[0]->store_domain . after_subdomain . remove_home; ?>" class="btn btn-primary">Visit Store</a>
-                                                            </div>       
+                                                            <?php if ($seller_details[0]->store_is_inappropriate == 'Approve' && $seller_details[0]->store_status == 0) { ?>
+                                                                <div class="form-group col-sm-12">
+                                                                    <a href="<?php echo HTTP . $seller_details[0]->store_domain . after_subdomain . remove_home; ?>" class="btn btn-primary">Visit Store</a>
+                                                                </div>       
                                                             <?php } ?>
                                                         </div>
                                                     </div>

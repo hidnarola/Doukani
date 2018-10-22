@@ -12,17 +12,17 @@
     <div class='form-group'>
         <div class="col-md-2 col-sm-3">Describe what makes your ad unique <span> *</span></div>					
         <div class='col-md-8 col-sm-8 '>
-           <textarea class='input-block-level wysihtml5 form-control' id='house_pro_desc' name="house_pro_desc" rows="10" placeholder="Description" data-rule-required='true'><?php echo set_value('house_pro_desc'); ?></textarea>
-            
+            <textarea class='input-block-level wysihtml5 form-control' id='house_pro_desc' name="house_pro_desc" rows="10" placeholder="Description" data-rule-required='true'><?php echo set_value('house_pro_desc'); ?></textarea>
+
         </div>
     </div>   
     <div class='form-group price_check'>
         <div class="col-md-2 col-sm-3 ">Price</div>						
         <div class="col-md-6 col-sm-8">
             <div class="input-group controls price-group">        
-            <span style="color: #333333;" class="input-group-addon">Dirham</span>
-            <input type="text" id="houses_price" name="houses_price" class="form-control price_txt"  value="<?php echo (isset($_POST['houses_price']) && !empty($_POST['houses_price'])) ? set_value('houses_price') : ''; ?>">
-            <span style="color: #333333;" class="input-group-addon">.00</span>
+                <span style="color: #333333;" class="input-group-addon">Dirham</span>
+                <input type="text" id="houses_price" name="houses_price" class="form-control price_txt"  value="<?php echo (isset($_POST['houses_price']) && !empty($_POST['houses_price'])) ? set_value('houses_price') : ''; ?>">
+                <span style="color: #333333;" class="input-group-addon">.00</span>
             </div>
             <div class="checkbox">
                 <label><input name="houses_free" type="checkbox" value="1"> Free</label>
@@ -34,7 +34,7 @@
         <div class="col-md-2 col-sm-3 "></div>
         <div class="col-md-4 col-sm-6">
             <div class="alert alert-info price_zero_lbl realestate_price">
-            <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
             </div>
         </div>
         <span for="houses_price" class="help-block has-error"></span>
@@ -142,6 +142,32 @@
             </select>                     
         </div>
     </div>
+
+    <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
+        <div class="form-group delivery_option_section">                    
+            <div class="col-md-2 col-sm-3">Delivery Option <span> *</span></div>
+            <div class="col-md-6 col-sm-8 controls">
+                <select class="select2 form-control" name="delivery_option" id="delivery_option" data-rule-required='true'>
+                    <option value="">Delivery Option</option>
+                    <?php foreach ($delivery_options as $d): ?>                    
+                        <option value="<?php echo $d['id'] ?>"><?php echo $d['option_text'] ?></option>                    
+                    <?php endforeach; ?>                                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group product_weight_section">                    
+            <div class="col-md-2 col-sm-3">Product Weight <span> *</span></div>
+            <div class="col-md-6 col-sm-8 controls">
+                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true'>
+                    <option value="">Product Weight</option>
+                    <?php foreach ($product_weights as $w): ?>                    
+                        <option value="<?php echo $w['id'] ?>"><?php echo $w['weight_text'] ?></option>                    
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    <?php } ?>
+
     <h4><i class="fa fa-home"></i>Contact Details</h4>
     <hr />
     <div class="form-group">                    

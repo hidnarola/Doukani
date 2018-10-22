@@ -498,9 +498,13 @@
                     <?php  }  ?>
                  
                     $('.total_stock_div').hide();
+                    
+                    $(document).find('.delivery_option_section').hide();
+                    $(document).find('.product_weight_section').hide();
                 }
-                else {                                            
-                        
+                else {
+                    $(document).find('.delivery_option_section').show();
+                    $(document).find('.product_weight_section').show();
                     $("#cat_id").val('<?php echo $user_category_id; ?>');
                     $("#sub_cat").val('<?php echo $user_sub_category_id; ?>');
 

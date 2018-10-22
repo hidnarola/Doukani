@@ -559,7 +559,7 @@ class Home extends My_controller {
 
         $data = array();
         $data = array_merge($data, $this->get_elements());
-        
+
         $data['slug'] = 'search';
         $data['is_logged'] = 0;
         $data['login_username'] = null;
@@ -721,7 +721,7 @@ class Home extends My_controller {
                 'description' => 'Search best products from catagory like ' . $seo_catagory . ' at doukani',
                 'keyword' => implode(', ', $__keywords) . ' classified, doukani, search'
             ];
-            
+
             $this->load->view('home/search', $data);
         }
     }
@@ -1884,6 +1884,10 @@ class Home extends My_controller {
                 $data['store_url'] = HTTP . $store[0]->store_domain . after_subdomain . '/';
 
                 if (!empty($store)) {
+
+                    $array = array('id' => $product->delivery_option);
+                    $delivery_opt = $this->dbcommon->getdetailsinfo('delivery_options', $array);
+                    $data['delivery_option_text'] = $delivery_opt->option_text;
 
                     $data['store_page'] = 'store_page';
                     $data['request_from'] = 'store_item_details_page';

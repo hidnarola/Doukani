@@ -436,7 +436,13 @@ class Payment extends My_controller {
                                         if (isset($arr) && !empty($arr) && isset($arr[0]) && isset($arr[1])) {
                                             $product_str .= $arr[0] . ',';
 
-                                            $this->db->query('update product set stock_availability= stock_availability - ' . $arr[1] . ' where product_id=' . $arr[0]);
+//                                            $this->db->query('update product set stock_availability= stock_availability - ' . $arr[1] . ' where product_id=' . $arr[0]);
+                                            $this->db->query('UPDATE product p 
+                                    LEFT JOIN product_orders po ON po.product_id = p.product_id
+                                    SET p.stock_availability = p.stock_availability - ' . $arr[1] . ' , 
+                                    po.delivery_option = p.delivery_option , po.weight = p.weight
+                                    WHERE p.product_id = ' . $arr[0] . ' AND po.order_id = ' . $order_id);
+                                            
                                         }
                                     }
 

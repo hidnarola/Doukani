@@ -342,6 +342,14 @@ class User extends My_controller {
         $mobile_operators = $this->dbcommon->select('mobile_operators');
         $data['mobile_operators'] = $mobile_operators;
 
+        $where = " 1=1";
+        $delivery_options = $this->dbcommon->filter('delivery_options', $where);
+        $data['delivery_options'] = $delivery_options;
+
+        $where = " 1=1";
+        $product_weight = $this->dbcommon->filter('product_weight', $where);
+        $data['product_weights'] = $product_weight;
+
         $data = array_merge($data, $this->get_elements());
 
         if ($current_user['user_role'] == 'generalUser' || ($current_user['user_role'] == 'storeUser' && $current_user['last_login_as'] == 'generalUser') || $current_user['user_role'] == 'offerUser') {
@@ -435,6 +443,8 @@ class User extends My_controller {
 
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE) {
@@ -494,6 +504,8 @@ class User extends My_controller {
                             if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                                 $data['stock_availability'] = $_POST['total_stock'];
                                 $data['total_stock'] = $_POST['total_stock'];
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -532,6 +544,8 @@ class User extends My_controller {
 
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE) {
@@ -589,6 +603,8 @@ class User extends My_controller {
                             if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                                 $data['stock_availability'] = $_POST['total_stock'];
                                 $data['total_stock'] = $_POST['total_stock'];
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -632,6 +648,8 @@ class User extends My_controller {
 
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE) {
@@ -691,6 +709,8 @@ class User extends My_controller {
                             if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                                 $data['stock_availability'] = $_POST['total_stock'];
                                 $data['total_stock'] = $_POST['total_stock'];
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -736,6 +756,8 @@ class User extends My_controller {
 
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE) {
@@ -789,13 +811,15 @@ class User extends My_controller {
                                 'address' => $this->input->post('address'),
                                 'latitude' => $this->input->post('latitude'),
                                 'longitude' => $this->input->post('longitude'),
-                                'stock_availability' => $_POST['total_stock'],
-                                'total_stock' => $_POST['total_stock']
+//                                'stock_availability' => $_POST['total_stock'],
+//                                'total_stock' => $_POST['total_stock']
                             );
 
                             if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                                 $data['stock_availability'] = $_POST['total_stock'];
                                 $data['total_stock'] = $_POST['total_stock'];
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -838,6 +862,8 @@ class User extends My_controller {
 
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -895,6 +921,8 @@ class User extends My_controller {
                             if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                                 $data['stock_availability'] = $_POST['total_stock'];
                                 $data['total_stock'] = $_POST['total_stock'];
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -940,6 +968,8 @@ class User extends My_controller {
 
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -997,6 +1027,8 @@ class User extends My_controller {
                             if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                                 $data['stock_availability'] = $_POST['total_stock'];
                                 $data['total_stock'] = $_POST['total_stock'];
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -1911,6 +1943,14 @@ class User extends My_controller {
             $mobile_operators = $this->dbcommon->select('mobile_operators');
             $data['mobile_operators'] = $mobile_operators;
 
+            $where = " 1=1";
+            $delivery_options = $this->dbcommon->filter('delivery_options', $where);
+            $data['delivery_options'] = $delivery_options;
+
+            $where = " 1=1";
+            $product_weight = $this->dbcommon->filter('product_weight', $where);
+            $data['product_weights'] = $product_weight;
+
             $data['page_title'] = 'Edit Post';
 
             $location = $this->dbcommon->select_orderby('country', 'country_name', 'asc');
@@ -2061,6 +2101,8 @@ class User extends My_controller {
 
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2130,6 +2172,9 @@ class User extends My_controller {
                             $data['total_stock'] = $_POST['total_stock'];
                             $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
+
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
                             else
@@ -2165,6 +2210,8 @@ class User extends My_controller {
 
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2238,6 +2285,9 @@ class User extends My_controller {
                             $data['total_stock'] = $_POST['total_stock'];
                             $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
+
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
                             else
@@ -2283,6 +2333,8 @@ class User extends My_controller {
 
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2355,6 +2407,9 @@ class User extends My_controller {
                             $data['total_stock'] = $_POST['total_stock'];
                             $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
+
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
                             else
@@ -2398,6 +2453,8 @@ class User extends My_controller {
 
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2468,6 +2525,9 @@ class User extends My_controller {
                             $data['total_stock'] = $_POST['total_stock'];
                             $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
+
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
                             else
@@ -2513,6 +2573,8 @@ class User extends My_controller {
 
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -2582,6 +2644,9 @@ class User extends My_controller {
                             $data['total_stock'] = $_POST['total_stock'];
                             $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
+
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
                             else
@@ -2642,6 +2707,8 @@ class User extends My_controller {
 
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2708,6 +2775,9 @@ class User extends My_controller {
 
                             $data['total_stock'] = $_POST['total_stock'];
                             $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
+
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
 
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
@@ -3363,7 +3433,15 @@ class User extends My_controller {
         $product = $this->dbcommon->getdetails_(' product.*, category.catagory_name, state.state_name, sub_category.sub_category_name, user.username, user.profile_picture, if(product.phone_no <> "", product.phone_no, user.phone ) AS phone, DATE_FORMAT(product.product_posted_time, "%d-%m-%Y") as posted_on, if(user.nick_name!="", user.nick_name, user.username) as username1, user.facebook_id, user.twitter_id, user.google_id,user.user_slug,state.latitude state_latitude,state.longitude state_longitude FROM `product` JOIN `category` ON `category`.`category_id` = `product`.`category_id` LEFT JOIN `sub_category` ON `sub_category`.`sub_category_id` = `product`.`sub_category_id` LEFT JOIN `state` ON `state`.`state_id` = `product`.`state_id` JOIN `user` ON `user`.`user_id` = `product`.`product_posted_by` WHERE `product`.`product_id` = "' . $pro_id . '" AND `product`.`is_delete` in (0,3,6) AND `product`.`product_is_inappropriate` in ("NeedReview","Approve","Unapprove") ' . $product_for . 'group by product.product_id');
 
         if (sizeof($product) > 0) {
+            if ($product[0]->product_for == 'store') {
+                $array = array('id' => $product[0]->delivery_option);
+                $delivery_opt = $this->dbcommon->getdetailsinfo('delivery_options', $array);
+                $data['delivery_option_text'] = $delivery_opt->option_text;
 
+                $array = array('id' => $product[0]->weight);
+                $weight_opt = $this->dbcommon->getdetailsinfo('product_weight', $array);
+                $data['weight_text'] = $weight_opt->weight_text;
+            }
             $que = ' where user_id=' . $product[0]->product_posted_by;
             $user_email = $this->dbcommon->getrowdetails('user', $que);
 

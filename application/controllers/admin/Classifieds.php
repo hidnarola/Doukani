@@ -1113,6 +1113,14 @@ class Classifieds extends CI_Controller {
             $state = $this->dbcommon->filter('state', $where);
             $data['state'] = $state;
 
+            $where = " 1=1";
+            $delivery_options = $this->dbcommon->filter('delivery_options', $where);
+            $data['delivery_options'] = $delivery_options;
+
+            $where = " 1=1";
+            $product_weight = $this->dbcommon->filter('product_weight', $where);
+            $data['product_weights'] = $product_weight;
+
             $where = " where user_id='" . $user[0]->user_id . "'";
 
             if (isset($_REQUEST['cat_id']))
@@ -1198,6 +1206,8 @@ class Classifieds extends CI_Controller {
 // if(isset($data['productowner_role']) && $data['productowner_role']=='storeUser') {
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1261,6 +1271,8 @@ class Classifieds extends CI_Controller {
                         if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                             $data['stock_availability'] = $_POST['total_stock'];
                             $data['total_stock'] = $_POST['total_stock'];
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
                         }
 
@@ -1301,6 +1313,8 @@ class Classifieds extends CI_Controller {
 
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1363,6 +1377,8 @@ class Classifieds extends CI_Controller {
                         if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                             $data['stock_availability'] = $_POST['total_stock'];
                             $data['total_stock'] = $_POST['total_stock'];
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
                         }
 
@@ -1406,6 +1422,8 @@ class Classifieds extends CI_Controller {
                     $this->form_validation->set_rules('address', 'Address', 'trim|required');
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1468,6 +1486,8 @@ class Classifieds extends CI_Controller {
                         if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                             $data['stock_availability'] = $_POST['total_stock'];
                             $data['total_stock'] = $_POST['total_stock'];
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
                         }
 
@@ -1514,6 +1534,8 @@ class Classifieds extends CI_Controller {
 
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1576,6 +1598,8 @@ class Classifieds extends CI_Controller {
                         if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                             $data['stock_availability'] = $_POST['total_stock'];
                             $data['total_stock'] = $_POST['total_stock'];
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
                         }
 
@@ -1620,6 +1644,8 @@ class Classifieds extends CI_Controller {
 
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1682,6 +1708,8 @@ class Classifieds extends CI_Controller {
                         if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                             $data['stock_availability'] = $_POST['total_stock'];
                             $data['total_stock'] = $_POST['total_stock'];
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
                         }
 
@@ -1728,6 +1756,8 @@ class Classifieds extends CI_Controller {
 
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                        $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1790,6 +1820,8 @@ class Classifieds extends CI_Controller {
                         if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                             $data['stock_availability'] = $_POST['total_stock'];
                             $data['total_stock'] = $_POST['total_stock'];
+                            $data['delivery_option'] = $_POST['delivery_option'];
+                            $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
                         }
 
@@ -2062,6 +2094,14 @@ class Classifieds extends CI_Controller {
             $mobile_operators = $this->dbcommon->select('mobile_operators');
             $data['mobile_operators'] = $mobile_operators;
 
+            $where = " 1=1";
+            $delivery_options = $this->dbcommon->filter('delivery_options', $where);
+            $data['delivery_options'] = $delivery_options;
+
+            $where = " 1=1";
+            $product_weight = $this->dbcommon->filter('product_weight', $where);
+            $data['product_weights'] = $product_weight;
+
             $product_type = 'default';
             $where = array('product_id' => $pro_id);
 
@@ -2216,6 +2256,8 @@ class Classifieds extends CI_Controller {
 // if(isset($productowner_role) && $productowner_role=='storeUser') {  
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2317,6 +2359,9 @@ class Classifieds extends CI_Controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
+
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
                                 else
@@ -2362,6 +2407,8 @@ class Classifieds extends CI_Controller {
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2463,6 +2510,9 @@ class Classifieds extends CI_Controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
+
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
                                 else
@@ -2530,6 +2580,8 @@ class Classifieds extends CI_Controller {
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2632,6 +2684,9 @@ class Classifieds extends CI_Controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
+
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
                                 else
@@ -2703,8 +2758,9 @@ class Classifieds extends CI_Controller {
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
-
 
                         if ($this->form_validation->run() == FALSE):
 
@@ -2805,6 +2861,9 @@ class Classifieds extends CI_Controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
+
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
                                 else
@@ -2868,6 +2927,8 @@ class Classifieds extends CI_Controller {
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
 
@@ -2969,6 +3030,9 @@ class Classifieds extends CI_Controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
 
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
+
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
                                 else
@@ -3037,6 +3101,8 @@ class Classifieds extends CI_Controller {
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
+                            $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                         }
 
 
@@ -3137,6 +3203,9 @@ class Classifieds extends CI_Controller {
 
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $avail_stock = $this->dbcommon->update_stock($_POST['total_stock'], $product[0]['total_stock'], $product[0]['stock_availability']);
+
+                                $data['delivery_option'] = $_POST['delivery_option'];
+                                $data['weight'] = $_POST['weight'];
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
@@ -3586,6 +3655,14 @@ class Classifieds extends CI_Controller {
 
             $mobile_operators = $this->dbcommon->select('mobile_operators');
             $data['mobile_operators'] = $mobile_operators;
+
+            $where = " 1=1";
+            $delivery_options = $this->dbcommon->filter('delivery_options', $where);
+            $data['delivery_options'] = $delivery_options;
+
+            $where = " 1=1";
+            $product_weight = $this->dbcommon->filter('product_weight', $where);
+            $data['product_weights'] = $product_weight;
 
             $product_type = 'default';
             $where = array('product_id' => $pro_id);

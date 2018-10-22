@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
-            <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
             </div>
         </div>
     </div>
@@ -33,6 +33,31 @@
                 <input class="form-control total_stock"  placeholder="Total Stock" name="total_stock" id="total_stock" type="text"  value="<?php echo (isset($_POST['total_stock']) && !empty($_POST['total_stock'])) ? set_value('total_stock') : '0'; ?>" data-rule-required='true' />
             </div>
         </div>	
+    <?php } ?>
+
+    <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
+        <div class="form-group delivery_option_section">                    
+            <div class="col-md-2 col-sm-3">Delivery Option <span> *</span></div>
+            <div class="col-md-6 col-sm-8 controls">
+                <select class="select2 form-control" name="delivery_option" id="delivery_option" data-rule-required='true'>
+                    <option value="">Delivery Option</option>
+                    <?php foreach ($delivery_options as $d): ?>                    
+                        <option value="<?php echo $d['id'] ?>"><?php echo $d['option_text'] ?></option>                    
+                    <?php endforeach; ?>                                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group product_weight_section">                    
+            <div class="col-md-2 col-sm-3">Product Weight <span> *</span></div>
+            <div class="col-md-6 col-sm-8 controls">
+                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true'>
+                    <option value="">Product Weight</option>
+                    <?php foreach ($product_weights as $w): ?>                    
+                        <option value="<?php echo $w['id'] ?>"><?php echo $w['weight_text'] ?></option>                    
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
     <?php } ?>
 
     <h4><i class="fa fa-home"></i>Contact Details</h4>

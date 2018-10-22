@@ -316,11 +316,14 @@ class Dbcart extends CI_Model {
         }
 
         $this->db->join('product p', 'p.product_id=po.product_id', 'left');
+        $this->db->join('delivery_options do', 'do.id = p.delivery_option', 'left');
+        $this->db->join('product_weight pw', 'pw.id = p.weight', 'left');
 
         $this->db->group_by('p.product_id');
         $query = $this->db->get('product_orders po');
 
-        return $query->result_array();
+        $result = $query->result_array();        
+        return $result;
     }
 
     function state_name($state_id) {

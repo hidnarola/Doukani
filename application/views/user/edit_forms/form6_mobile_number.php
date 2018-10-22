@@ -9,12 +9,12 @@
             <input placeholder='Product Name' class="form-control" name="pro_name" type='text'  maxlength="80" value="<?php if (isset($product[0]['product_name'])) echo $product[0]['product_name']; ?>" data-rule-required='true' />
         </div>
     </div>    
-	<div class='form-group'>
-		<div class="col-md-2 col-sm-3">Description<span> *</span></div>					
-		<div class='col-md-8 col-sm-8 '>			
-			<textarea class='input-block-level wysihtml5 form-control' id='mob_desc' name="mob_desc" rows="10" placeholder="Description" data-rule-required='true'><?php echo $product[0]['product_description']; ?></textarea>					
-		</div>
-	</div>     
+    <div class='form-group'>
+        <div class="col-md-2 col-sm-3">Description<span> *</span></div>					
+        <div class='col-md-8 col-sm-8 '>			
+            <textarea class='input-block-level wysihtml5 form-control' id='mob_desc' name="mob_desc" rows="10" placeholder="Description" data-rule-required='true'><?php echo $product[0]['product_description']; ?></textarea>					
+        </div>
+    </div>     
     <div class='form-group'>                        
         <div class="col-md-2 col-sm-3">Price</div>
         <div class='col-md-3 col-sm-4 controls'>
@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
-            <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
             </div>
         </div>
     </div>
@@ -65,6 +65,32 @@
             <input class="form-control"  placeholder="Mobile Number" name="mobile_number" type="text"   value="<?php if (isset($product[0]['mobile_number'])) echo $product[0]['mobile_number']; ?>" data-rule-required='true' />
         </div>
     </div>
+
+    <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
+        <div class="form-group delivery_option_section">                    
+            <div class="col-md-2 col-sm-3">Delivery Option <span> *</span></div>
+            <div class="col-md-6 col-sm-8 controls">
+                <select class="select2 form-control" name="delivery_option" id="delivery_option" data-rule-required='true' >
+                    <option value="">Select Delivery Option</option>
+                    <?php foreach ($delivery_options as $d): ?>                    
+                        <option value="<?php echo $d['id'] ?>" <?php echo ($product[0]['delivery_option'] == $d['id']) ? 'selected' : ''; ?>><?php echo $d['option_text'] ?></option>                    
+                    <?php endforeach; ?>                                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group product_weight_section">                    
+            <div class="col-md-2 col-sm-3">Product Weight <span> *</span></div>
+            <div class="col-md-6 col-sm-8 controls">
+                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
+                    <option value="">Select Product Weight</option>
+                    <?php foreach ($product_weights as $w): ?>                    
+                        <option value="<?php echo $w['id'] ?>" <?php echo ($product[0]['weight'] == $w['id']) ? 'selected' : ''; ?>><?php echo $w['weight_text'] ?></option>                    
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    <?php } ?>
+
     <h4><i class="fa fa-home"></i>Contact Details</h4>
     <hr />
     <div class="form-group">                    
@@ -139,7 +165,7 @@
             <div class="col-md-8 col-sm-7">
                 <button class='btn col-md-3' type='submit' id="form6_submit" name="mobile_number_submit" style="background-color:#ed1b33;color:#fff;padding:8px 33px;">
                     <i class='icon-save'></i>
-                    <?php echo ($product[0]['product_is_inappropriate']=='NeedReview' && $product[0]['product_image']==NULL) ? 'Repost' : 'Submit' ?>
+                    <?php echo ($product[0]['product_is_inappropriate'] == 'NeedReview' && $product[0]['product_image'] == NULL) ? 'Repost' : 'Submit' ?>
                 </button>
                 <a href='<?php echo base_url(); ?>user/my_listing' title="Cancel" class="btn btn-black  col-md-3" style="color:#fff;padding:8px 33px;">Cancel</a><input type="hidden" name="form6_images_arr" id="form6_images_arr"   class="form-control" /> 
             </div>

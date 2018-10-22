@@ -53,8 +53,6 @@
             position: absolute;
             top: 0;
             left: 0;
-            // width: 99px;
-            // height: 66px;
             width: 70px;
             height: 70px;
             /*padding-top:25px;*/
@@ -64,8 +62,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            // height: 100%;
+            width: 100%;            
             border: none;
         }
 
@@ -80,9 +77,7 @@
         .jssort01-99-66 .c {
             position: absolute;
             top: 0px;
-            left: 0px;
-            // width: 95px;
-            // height: 62px;
+            left: 0px;            
             width: 70px;
             height: 70px;
             /*border: #000 2px solid;*/
@@ -95,9 +90,7 @@
             top: 0px;
             _top: 0px;
             left: 0px;
-            _left: 0px;
-            // width: 95px;
-            // height: 62px;
+            _left: 0px;            
             width: 70px;
             height: 70px;
             /*            border: #000 0px solid;
@@ -800,7 +793,7 @@
                     <form id="cart_form" name="cart_form" method="post">
                         <div class="modal-body">
                             <div class="">
-                                <div class="col-sm-7">
+                                <div class="col-sm-6">
                                     <?php
                                     if (empty($cover_img)) {
                                         $cover_img = HTTPS . website_url . 'assets/upload/No_Image.png';
@@ -810,8 +803,14 @@
                                         <img src="<?php echo HTTP . website_url . product; ?>medium/<?php echo $cover_img; ?>" alt="<?php echo $product->product_name; ?>">
                                     <?php } ?>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <div class="quantity-popup-input">
+                                        <?php if (isset($delivery_option_text) && !empty($delivery_option_text)) { ?>
+                                            <div>
+                                                <label>Delivery Option : </label>  <?php echo $delivery_option_text; ?>
+                                            </div>
+                                        <?php } ?>
+                                        <br>
                                         <span class="span_error" id="span_error" style="color:red;"></span>
                                         <label>Quantity</label>
                                         <select class="form-control qunatity_dropdown" id="quantity" name="quantity">

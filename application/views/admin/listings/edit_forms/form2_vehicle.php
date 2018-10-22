@@ -136,7 +136,33 @@ else {
 <?php endforeach; ?>
             </select>       
         </div>
-    </div>											
+    </div>	
+    
+    <?php if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') { ?>
+        <div class="form-group delivery_option_section">                    
+            <label class='col-md-2 control-label' for='inputText1'>Delivery Option <span> *</span></label>
+            <div class="col-md-5 controls">
+                <select class="select2 form-control" name="delivery_option" id="delivery_option" data-rule-required='true' >
+                    <option value="">Select Delivery Option</option>
+                    <?php foreach ($delivery_options as $d): ?>                    
+                        <option value="<?php echo $d['id'] ?>" <?php echo ($product[0]['delivery_option'] == $d['id']) ? 'selected' : ''; ?>><?php echo $d['option_text'] ?></option>                    
+                    <?php endforeach; ?>                                   
+                </select>
+            </div>
+        </div>
+        <div class="form-group product_weight_section">                    
+            <label class='col-md-2 control-label' for='inputText1'>Product Weight <span> *</span></label>
+            <div class="col-md-5 controls">
+                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
+                    <option value="">Select Product Weight</option>
+                    <?php foreach ($product_weights as $w): ?>                    
+                        <option value="<?php echo $w['id'] ?>" <?php echo ($product[0]['weight'] == $w['id']) ? 'selected' : ''; ?>><?php echo $w['weight_text'] ?></option>                    
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    <?php } ?>
+    
     <h4><i class="fa fa-home"></i>&nbsp;&nbsp;Contact Details</h4>
     <hr />
     <div class="form-group">                    
