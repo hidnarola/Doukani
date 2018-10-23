@@ -1504,7 +1504,7 @@ html, body{max-width:100%;overflow-x:hidden;}
 .map_list .img-holder .sold > span{z-index:2 !important;}
 .map_list .img-holder .sold{z-index:2 !important;}
 .ord-action{text-align:center;}
-.store-products-list-wrapper .item-sell .price{width:90%;}
+/*.store-products-list-wrapper .item-sell .price{width:90%;}*/
 .store-related-items .item-sell .price{width:90%;}
 .contact-us-btn{padding:8px 43px;}
 .store-products-head .grid{float:right;padding-left:16px;padding-top:10px;padding-right:15px}

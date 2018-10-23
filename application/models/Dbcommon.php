@@ -645,7 +645,7 @@ class Dbcommon extends CI_Model {
         return $data;
     }
 
-    function get_product_by_categories($cat = NULL, $subcat = NULL, $current_pro_id = NULL, $limit = NULL, $start = NULL, $rand = NULL, $posted_by = NULL, $search = NULL, $latest = NULL) {
+    function get_product_by_categories($cat = NULL, $subcat = NULL, $current_pro_id = NULL, $limit = NULL, $start = NULL, $rand = NULL, $posted_by = NULL, $search = NULL, $latest = NULL, $user_role = NULL) {
 
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user) && !empty($current_user)) {
@@ -693,8 +693,14 @@ class Dbcommon extends CI_Model {
             $this->db->where('product.product_for', 'store');
             $this->db->where('product.product_posted_by', $posted_by);
         } else {
-            $this->db->where('product.product_for', 'classified');
 
+            if ($user_role != NULL && $user_role == 'storeUser') {
+                $this->db->select('store.store_domain');
+                $this->db->where('product.product_for', 'store');
+                $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+            } else {
+                $this->db->where('product.product_for', 'classified');
+            }
             if ($latest != NULL) {
                 
             } else
@@ -771,7 +777,7 @@ class Dbcommon extends CI_Model {
      * @NV
      */
 
-    function get_vehicle_products($cat = null, $subcat = null, $current_pro_id = null, $limit = null, $start = null, $user_id = NULL, $search = NULL) {
+    function get_vehicle_products($cat = null, $subcat = null, $current_pro_id = null, $limit = null, $start = null, $user_id = NULL, $search = NULL, $user_role = NULL) {
 
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user) && !empty($current_user)) {
@@ -833,7 +839,14 @@ class Dbcommon extends CI_Model {
             $this->db->where('product.product_posted_by', $user_id);
             $this->db->where('product.product_for', 'store');
         } else {
-            $this->db->where('product.product_for', 'classified');
+
+            if ($user_role != NULL && $user_role == 'storeUser') {
+                $this->db->select('store.store_domain');
+                $this->db->where('product.product_for', 'store');
+                $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+            } else {
+                $this->db->where('product.product_for', 'classified');
+            }
             $this->db->order_by('featured_ad', 'desc');
         }
 
@@ -940,7 +953,7 @@ class Dbcommon extends CI_Model {
         return $data;
     }
 
-    function get_real_estate_products($cat = NULL, $subcat = NULL, $current_pro_id = NULL, $limit = NULL, $start = NULL, $user_id = NULL, $search = NULL) {
+    function get_real_estate_products($cat = NULL, $subcat = NULL, $current_pro_id = NULL, $limit = NULL, $start = NULL, $user_id = NULL, $search = NULL, $user_role = NULL) {
 
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user) && !empty($current_user)) {
@@ -982,7 +995,14 @@ class Dbcommon extends CI_Model {
             $this->db->where('product.product_posted_by', $user_id);
             $this->db->where('product.product_for', 'store');
         } else {
-            $this->db->where('product.product_for', 'classified');
+
+            if ($user_role != NULL && $user_role == 'storeUser') {
+                $this->db->select('store.store_domain');
+                $this->db->where('product.product_for', 'store');
+                $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+            } else {
+                $this->db->where('product.product_for', 'classified');
+            }
             $this->db->order_by('featured_ad', 'desc');
         }
 
@@ -1278,7 +1298,7 @@ class Dbcommon extends CI_Model {
         return $img_arr;
     }
 
-    function get_my_listing($user_id = NULL, $start = NULL, $limit = NULL, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL) {
+    function get_my_listing($user_id = NULL, $start = NULL, $limit = NULL, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL) {
 
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user) && !empty($current_user)) {
@@ -1335,7 +1355,7 @@ class Dbcommon extends CI_Model {
 
         $this->db->where('product.product_deactivate IS NULL');
 
-        if (isset($user_id))
+        if (isset($user_id) && !is_null($user_id))
             $this->db->where('product.product_posted_by', $user_id);
 
         if ($search != NULL) {
@@ -1353,15 +1373,20 @@ class Dbcommon extends CI_Model {
         else
             $this->db->where_in('product.is_delete', array(0, 6));
 
-        if ($user_role != NULL && $user_role == 'storeUser')
+        if ($user_role != NULL && $user_role == 'storeUser') {
+            $this->db->select('store.store_domain');
             $this->db->where('product.product_for', 'store');
-        elseif ($user_role != NULL && $user_role == 'generalUser')
+            $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+        } elseif ($user_role != NULL && $user_role == 'generalUser')
             $this->db->where('product.product_for', 'classified');
 
         if ($request_from != NULL && $request_from == 'store' && in_array(state_id_selection, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain'))) {
             $selected_state_id = $this->state_id(state_id_selection);
             $this->db->where('product.state_id', $selected_state_id);
         }
+
+        if (!is_null($cat_id))
+            $this->db->where('product.category_id', $cat_id);
 
         $this->db->group_by("product.product_id");
 
@@ -1378,7 +1403,7 @@ class Dbcommon extends CI_Model {
         return $data;
     }
 
-    function get_my_listing_count($user_id, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL) {
+    function get_my_listing_count($user_id, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL) {
 
         $this->db->select('product.product_id');
         $this->db->from('product');
@@ -1392,7 +1417,8 @@ class Dbcommon extends CI_Model {
             $this->db->where('product.product_is_inappropriate', 'Approve');
 
         $this->db->where('product.product_deactivate IS NULL');
-        $this->db->where('product.product_posted_by', $user_id);
+        if (isset($user_id) && !is_null($user_id))
+            $this->db->where('product.product_posted_by', $user_id);
 
         if ($search != NULL) {
             if ($search == 'new')
@@ -1409,9 +1435,10 @@ class Dbcommon extends CI_Model {
         else
             $this->db->where_in('product.is_delete', array(0, 6));
 
-        if ($user_role != NULL && $user_role == 'storeUser')
+        if ($user_role != NULL && $user_role == 'storeUser') {
             $this->db->where('product.product_for', 'store');
-        elseif ($user_role != NULL && $user_role == 'generalUser')
+            $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+        } elseif ($user_role != NULL && $user_role == 'generalUser')
             $this->db->where('product.product_for', 'classified');
 
         if ($request_from != NULL && $request_from == 'store' && in_array(state_id_selection, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain'))) {
@@ -1435,7 +1462,10 @@ class Dbcommon extends CI_Model {
             $this->db->join('repeating_numbers rn', 'rn.id = cmn.repeating_number', 'left');
             $this->db->join('color', 'color.id=product_vehicles_extras.color', 'left');
         }
-
+        
+        if (!is_null($cat_id))
+            $this->db->where('product.category_id', $cat_id);
+        
         $this->db->group_by("product.product_id");
         $query = $this->db->get();
         $data = $query->num_rows();

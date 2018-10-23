@@ -3434,13 +3434,17 @@ class User extends My_controller {
 
         if (sizeof($product) > 0) {
             if ($product[0]->product_for == 'store') {
-                $array = array('id' => $product[0]->delivery_option);
-                $delivery_opt = $this->dbcommon->getdetailsinfo('delivery_options', $array);
-                $data['delivery_option_text'] = $delivery_opt->option_text;
 
-                $array = array('id' => $product[0]->weight);
-                $weight_opt = $this->dbcommon->getdetailsinfo('product_weight', $array);
-                $data['weight_text'] = $weight_opt->weight_text;
+                if (isset($product[0]->delivery_option) && !empty($product[0]->delivery_option)) {
+                    $array = array('id' => $product[0]->delivery_option);
+                    $delivery_opt = $this->dbcommon->getdetailsinfo('delivery_options', $array);
+                    $data['delivery_option_text'] = $delivery_opt->option_text;
+                }
+                if (isset($product[0]->weight) && !empty($product[0]->weight)) {
+                    $array = array('id' => $product[0]->weight);
+                    $weight_opt = $this->dbcommon->getdetailsinfo('product_weight', $array);
+                    $data['weight_text'] = $weight_opt->weight_text;
+                }
             }
             $que = ' where user_id=' . $product[0]->product_posted_by;
             $user_email = $this->dbcommon->getrowdetails('user', $que);

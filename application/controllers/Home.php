@@ -1884,11 +1884,11 @@ class Home extends My_controller {
                 $data['store_url'] = HTTP . $store[0]->store_domain . after_subdomain . '/';
 
                 if (!empty($store)) {
-
-                    $array = array('id' => $product->delivery_option);
-                    $delivery_opt = $this->dbcommon->getdetailsinfo('delivery_options', $array);
-                    $data['delivery_option_text'] = $delivery_opt->option_text;
-
+                    if (isset($product->delivery_option) && !empty($product->delivery_option)) {
+                        $array = array('id' => $product->delivery_option);
+                        $delivery_opt = $this->dbcommon->getdetailsinfo('delivery_options', $array);
+                        $data['delivery_option_text'] = $delivery_opt->option_text;
+                    }
                     $data['store_page'] = 'store_page';
                     $data['request_from'] = 'store_item_details_page';
                     $data['individual_store_id'] = $store[0]->store_id;
@@ -3183,6 +3183,7 @@ class Home extends My_controller {
             }
             $arr['product_view'] = $_POST['product_view'];
             $arr['listing'] = $products;
+            $arr['request_from'] = 'store_page';
             if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
                 $arr['html'] = $this->load->view('store/store_product_list_view', $arr, TRUE);
             } else {
@@ -3198,6 +3199,161 @@ class Home extends My_controller {
         } else {
             override_404();
         }
+    }
+
+    public function load_more_storelisting_for_home() {
+
+        $arr = array();
+        $filter_val = $this->input->post("value");
+
+        if (isset($filter_val)) {
+
+            $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page'");
+            $arr['between_banners'] = $between_banners;
+
+            $start = 15 * $filter_val;
+            $end = $start + 15;
+            $hide = "false";
+
+            if (isset($_POST['type']))
+                $search = $this->input->post('type', TRUE);
+            else
+                $search = NULL;
+
+            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+                $total_product = $this->dbcommon->get_products_by_cat_num(NULL, NULL, NULL, 'store');
+            } else {
+                $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store');
+            }
+
+            $cat_id = 0;
+
+            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+                if ($cat_id == 7)
+                    $products = $this->dbcommon->get_vehicle_products(NULL, NULL, NULL, 15, $start, NULL, $search, 'storeUser');
+                elseif ($cat_id == 8)
+                    $products = $this->dbcommon->get_real_estate_products(NULL, NULL, NULL, 15, $start, NULL, $search, 'storeUser');
+                else
+                    $products = $this->dbcommon->get_product_by_categories(NULL, NULL, NULL, 15, $start, NULL, NULL, $search, NULL, 'storeUser');
+            } else
+                $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store');
+
+//            echo $this->db->last_query();
+
+            $currentusr = $this->session->userdata('gen_user');
+
+            if ($this->session->userdata('gen_user') != '') {
+                $logged_in_user = $currentusr['username'];
+                $arr['is_logged'] = 1;
+                $arr['login_username'] = $logged_in_user;
+                $arr['loggedin_user'] = $currentusr['user_id'];
+            } else {
+                $arr['is_logged'] = 0;
+                $arr['login_username'] = NULL;
+                $arr['current_user'] = '';
+                $arr['loggedin_user'] = '';
+            }
+
+            if ($end >= $total_product) {
+                $hide = "true";
+            }
+            $arr['product_view'] = $_POST['product_view'];
+            $arr['listing'] = $products;
+
+            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+                $arr['html'] = $this->load->view('store/store_product_list_view', $arr, TRUE);
+            } else {
+                $arr['html'] = $this->load->view('store/product_store_grid_view', $arr, TRUE);
+            }
+
+            $arr['val'] = $hide;
+            $arr['total_product'] = $total_product;
+
+            echo json_encode($arr);
+
+            exit();
+        } else {
+            override_404();
+        }
+    }
+
+    function get_allstore_products() {
+
+        $main_data = array();
+        $current_user = $this->session->userdata('gen_user');
+
+        $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page'", NULL, NULL, NULL);
+        $main_data['between_banners'] = $between_banners;
+
+        $main_data['is_logged'] = 0;
+        $main_data['loggedin_user'] = '';
+
+        if ($this->session->userdata('gen_user') != '') {
+            $main_data['current_user'] = $current_user;
+            $logged_in_user = $current_user['user_id'];
+            $main_data['is_logged'] = 1;
+            $main_data['login_userid'] = $logged_in_user;
+            $main_data['loggedin_user'] = $current_user['user_id'];
+        } else {
+            $main_data['is_logged'] = 0;
+            $main_data['login_userid'] = NULL;
+            $main_data['current_user'] = '';
+            $main_data['loggedin_user'] = '';
+        }
+
+        $filter_val = $this->input->post('value', TRUE);
+
+        if (isset($_POST['type']))
+            $search = $this->input->post('type', TRUE);
+        else
+            $search = NULL;
+
+        $cat_id = $this->input->post('cat_id', TRUE);
+        $start = 0;
+        $hide = "false";
+
+        if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+            if ($cat_id > 0)
+                $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, NULL, NULL, 'store');
+            else
+                $total_product = $this->dbcommon->get_products_by_cat_num(NULL, NULL, NULL, 'store');
+        } else {
+            if ($cat_id > 0)
+                $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store', $cat_id);
+            else
+                $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store');
+        }
+
+        $main_data['hide'] = "false";
+        if ($total_product <= 15) {
+            $main_data['hide'] = "true";
+        }
+
+        $main_data['search'] = $search;
+        $main_data['product_view'] = $_POST['product_view'];
+
+        if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+            if ($cat_id == 7)
+                $products = $this->dbcommon->get_vehicle_products($cat_id, NULL, NULL, 15, NULL, NULL, $search, 'storeUser');
+            elseif ($cat_id == 8)
+                $products = $this->dbcommon->get_real_estate_products($cat_id, NULL, NULL, 15, NULL, NULL, $search, 'storeUser');
+            else {
+                if ($cat_id > 0)
+                    $products = $this->dbcommon->get_product_by_categories($cat_id, NULL, NULL, 15, NULL, NULL, NULL, $search, NULL, 'storeUser');
+                else
+                    $products = $this->dbcommon->get_product_by_categories(NULL, NULL, NULL, 15, NULL, NULL, NULL, $search, NULL, 'storeUser');
+            }
+        } else {
+            if ($cat_id > 0)
+                $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id);
+            else
+                $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store');
+        }
+        $main_data['listing'] = $products;
+        $main_data['html'] = $this->load->view('store/filter_store_products', $main_data, TRUE);
+
+        echo json_encode($main_data);
+        exit();
     }
 
     /*

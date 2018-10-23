@@ -2679,7 +2679,7 @@ FROM e_wallet_request_response e LEFT JOIN store s ON s.store_owner = e.store_ow
 
         $data['search'] = $search;
 
-        $per_page = 2;
+        $per_page = 10;
         $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
         $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
 

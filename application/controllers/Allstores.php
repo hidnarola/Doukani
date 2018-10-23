@@ -36,12 +36,17 @@ class Allstores extends My_controller {
     }
 
     function index() {
+
         $this->output->enable_profiler(TRUE);
         $data = array();
 
         $data = array_merge($data, $this->get_elements());
+        $data['store_landing_page'] = 'yes';
         $data['product_page'] = 'yes';
-//        $data['store_page'] = 'store_page';
+
+        $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page'", NULL, NULL, NULL, NULL);
+        $arr['between_banners'] = $between_banners;
+
         $__catagory_list = [];
 
         $wh_category_data = array('FIND_IN_SET(1, category_type) > 0');
@@ -69,7 +74,7 @@ class Allstores extends My_controller {
             'keyword' => implode(', ', $__keywords) . ' classified, doukani, store, shop , featured stores, seller'
         ];
 
-        $data['page_title'] = 'All Stores';
+        $data['page_title'] = 'Store Products';
         $data['is_following'] = 0;
 
         $current_user = $this->session->userdata('gen_user');
@@ -101,16 +106,19 @@ class Allstores extends My_controller {
         }
 
         $data['category'] = $category;
-        $per_page = 12;
-        $data['stores'] = $this->store->get_stores(NULL, 0, $per_page);
+        $per_page = 15;
+//        $data['stores'] = $this->store->get_stores(NULL, 0, $per_page);
 
-        $total_stores = $this->store->get_stores_count();
-
+        $listing = $this->dbcommon->get_my_listing(NULL, $start = 0, $limit = 15, NULL, 0, 'storeUser', 'store');
+//        echo $this->db->last_query();
+        $data['listing'] = $listing;
+        $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, 0, 'storeUser', 'store');
+        
         $data['hide'] = "false";
-        if ($total_stores <= $per_page) {
+        if ($total_product <= $per_page) {
             $data['hide'] = "true";
         }
-        
+
         $this->load->view('store/all_stores', $data);
         $this->output->enable_profiler(FALSE);
     }
