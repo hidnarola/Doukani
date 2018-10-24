@@ -16,17 +16,26 @@ if (!empty($products)) {
         }
         ?>
         <!--item1-->
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  <?php if ((isset($favorite_ads) && $favorite_ads == 'yes') || (isset($like_ads) && $like_ads == 'yes')) { ?> prod_<?php echo $pro['product_id']; } ?>" >
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  <?php if ((isset($favorite_ads) && $favorite_ads == 'yes') || (isset($like_ads) && $like_ads == 'yes')) { ?> prod_<?php
+            echo $pro['product_id'];
+        }
+        ?>" >
             <div class="list-item <?php if ((isset($home_page) && $home_page == 'yes') || (isset($latest_page) && $latest_page == 'yes')) echo 'home_items'; ?>">
                 <div class="col-sm-3 img-holder">
                     <?php if ($pro['product_is_sold'] == 1) { ?>
                         <div class="sold"><span>SOLD</span></div>
                     <?php } ?>
-                    <?php if (isset($pro['featured_ad']) && $pro['featured_ad'] > 0) {                        
-                            if (isset($latest_page) && $latest_page == 'yes') { } else {
-?>
-                        <div class="ribbon_main">
-                    <div class="red_ribbon"></div> <?php } } ?>
+                    <?php
+                    if (isset($pro['featured_ad']) && $pro['featured_ad'] > 0) {
+                        if (isset($latest_page) && $latest_page == 'yes') {
+                            
+                        } else {
+                            ?>
+                            <div class="ribbon_main">
+                                <div class="red_ribbon"></div> <?php
+                            }
+                        }
+                        ?>
                         <div class="img-holderInner">                    
                             <?php if (!empty($pro['product_image'])) { ?>
                                 <img src="<?php echo thumb_start_grid . base_url() . product . "medium/" . $pro['product_image'] . thumb_end_grid; ?>" class="img-responsive" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'" alt="<?php echo $pro['product_name']; ?>"/>
@@ -34,11 +43,17 @@ if (!empty($products)) {
                                 <img src="<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>" class="img-responsive" alt="<?php echo $pro['product_name']; ?>" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'"/>
                             <?php } ?>
                         </div>
-                        <?php if (isset($pro['featured_ad']) && $pro['featured_ad'] > 0) { 
-                            if (isset($latest_page) && $latest_page == 'yes') { } else {
-                            ?>
-                        </div>
-                        <?php } } ?>
+                        <?php
+                        if (isset($pro['featured_ad']) && $pro['featured_ad'] > 0) {
+                            if (isset($latest_page) && $latest_page == 'yes') {
+                                
+                            } else {
+                                ?>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
                     <div class="count-img">
                         <i class="fa fa-image"></i><span><?php echo $pro['MyTotal']; ?></span>
                     </div>
@@ -47,13 +62,13 @@ if (!empty($products)) {
                     <div class="row">
                         <div class="col-sm-8">
                             <?php
-                                if (isset($pro['product_for']) && $pro['product_for'] == 'store' && isset($pro['store_domain']) && !empty($pro['store_domain']))
-                                    $product_path = HTTP . $pro['store_domain'] . after_subdomain . '/' . $pro['product_slug'];
-                                elseif ((isset($my_listing) && $my_listing == 'yes') || (isset($my_deactivateads) && $my_deactivateads = 'yes'))
-                                    $product_path = base_url() . 'user/item_details/' . $pro['product_id'];
-                                else
-                                    $product_path = base_url() . $pro['product_slug'];
-                                ?>
+                            if (isset($pro['product_for']) && $pro['product_for'] == 'store' && isset($pro['store_domain']) && !empty($pro['store_domain']))
+                                $product_path = HTTP . $pro['store_domain'] . after_subdomain . '/' . $pro['product_slug'];
+                            elseif ((isset($my_listing) && $my_listing == 'yes') || (isset($my_deactivateads) && $my_deactivateads = 'yes'))
+                                $product_path = base_url() . 'user/item_details/' . $pro['product_id'];
+                            else
+                                $product_path = base_url() . $pro['product_slug'];
+                            ?>
                             <a style="text-decoration: none;" href="<?php echo $product_path; ?>"><h3 title="<?php echo $pro['product_name']; ?>"><?php echo $pro['product_name']; ?></h3></a>
                             <small><?php echo str_replace('\n', " ", $pro['catagory_name']); ?></small>
                         </div>
@@ -88,42 +103,43 @@ if (!empty($products)) {
                                                 <?php
                                             }
                                         }
-                                    if (!isset($favorite_ads)) {
-                                        if ($is_logged != 0) {
-                                            $like = (int) $pro['my_like'];
-                                            if (@$pro['product_total_likes'] != 0 && $like == 1) {
+                                        if (!isset($favorite_ads)) {
+                                            if ($is_logged != 0) {
+                                                $like = (int) $pro['my_like'];
+                                                if (@$pro['product_total_likes'] != 0 && $like == 1) {
+                                                    ?>
+                                                    <div class="newthumb thu"><a href="javascript:void(0);" id="<?php echo $pro['product_id']; ?>">
+                                                            <i class="fa fa-thumbs-up" id="<?php echo $pro['product_id']; ?>"></i>
+                                                        </a>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="newthumb" ><a href="javascript:void(0);">
+                                                            <i class="fa fa-thumbs-o-up" id="<?php echo $pro['product_id']; ?>"></i>
+                                                        </a>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            } else {
                                                 ?>
-                                                <div class="newthumb thu"><a href="javascript:void(0);" id="<?php echo $pro['product_id']; ?>">
-                                                        <i class="fa fa-thumbs-up" id="<?php echo $pro['product_id']; ?>"></i>
-                                                    </a>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="newthumb" ><a href="javascript:void(0);">
-                                                        <i class="fa fa-thumbs-o-up" id="<?php echo $pro['product_id']; ?>"></i>
+                                                <div class="newthumb" ><a href="<?php echo base_url() . 'login/index'; ?>">
+                                                        <i class="fa fa-thumbs-o-up"></i>
                                                     </a>
                                                 </div>
                                                 <?php
                                             }
-                                        } else {
-                                            ?>
-                                            <div class="newthumb" ><a href="<?php echo base_url() . 'login/index'; ?>">
-                                                    <i class="fa fa-thumbs-o-up"></i>
-                                                </a>
-                                            </div>
-                                            <?php
                                         }
-                                    }
                                     }
                                 }
                                 ?>                                                          
                             </div>
                             <?php if ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) { ?>
                                 <div class="price">
-                                    <h4><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : '';
-                    ;
-                                ?></h4>
+                                    <h4><?php
+                                        echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : '';
+                                        ;
+                                        ?></h4>
                                 </div>
-        <?php } ?>
+                            <?php } ?>
                         </div>
 
                     </div>
@@ -164,14 +180,14 @@ if (!empty($products)) {
                                     <div class="col-sm-4 col-md-3"><span>Emirates : </span><p><?php echo @$pro['Emirates']; ?></p></div>
                                 <?php } if (@$pro['PropertyType']) { ?>
                                     <div class="col-sm-4 col-md-3"><span>Property Type : </span><p><?php echo @$pro['PropertyType']; ?></p></div>
-                                        <?php } if (@$pro['Bedrooms']) { ?>
+                                <?php } if (@$pro['Bedrooms']) { ?>
                                     <div class="col-sm-4 col-md-3"><span>Bedrooms : </span><p><?php
                                             if (@$pro['Bedrooms'] == '-1')
                                                 echo 'More than 10';
                                             else
                                                 echo @$pro['Bedrooms'];
                                             ?></p></div>
-                                        <?php }if (@$pro['Bathrooms']) { ?>
+                                <?php }if (@$pro['Bathrooms']) { ?>
                                     <div class="col-sm-4 col-md-3"><span>Bathrooms : </span><p><?php
                                             if ($pro['Bathrooms'] == '-1')
                                                 echo 'More than 10';
@@ -195,12 +211,13 @@ if (!empty($products)) {
                             <div class="col-sm-4 col-md-3"><span>Repeating Number : </span><p><?php echo @$pro['car_repeating_number']; ?></p></div>      
                         <?php } if (@$pro['mobile_number']) { ?>
                             <div class="col-sm-4 col-md-3"><span>Mobile Number : </span><p><?php echo @$pro['mobile_number']; ?></p></div>
-                        <?php }
+                            <?php
+                        }
 
                         if (isset($pro['address']) && !empty(trim($pro['address']))) {
                             ?>  
                             <div class="col-sm-4 col-md-3"><span>Address : </span><p><?php echo @$pro['address']; ?></p></div>
-                    <?php } ?>
+                        <?php } ?>
 
                     </div>
                     <?php
@@ -209,26 +226,26 @@ if (!empty($products)) {
 
                     if ((isset($seller_listing_page) && $seller_listing_page == 'yes') || (isset($my_listing) && $my_listing == 'yes') || (isset($my_deactivateads) && $my_deactivateads == 'yes')) {
                         
-                    } else {                                                
-                            $view_req = '?view=list';
+                    } else {
+                        $view_req = '?view=list';
                         ?>
                         <div class="by-user">                                                        
                             <img src="<?php echo $profile_picture; ?>" class="img-responsive img-circle" onerror="this.src='<?php echo base_url() ?>assets/upload/avtar.png'" alt="Profile Image"/>
-                            <?php                            
+                            <?php
                             if (isset($pro['product_for']) && $pro['product_for'] == 'store' && isset($pro['store_domain']) && !empty($pro['store_domain']))
                                 $user_profile_pg = HTTP . $pro['store_domain'] . after_subdomain . remove_home;
                             else
-                                $user_profile_pg = base_url() . emirate_slug . $pro['user_slug'].$view_req;
+                                $user_profile_pg = base_url() . emirate_slug . $pro['user_slug'] . $view_req;
                             ?>
                             <a href="<?php echo $user_profile_pg; ?>"><?php echo $pro['username1']; ?></a>
                         </div>
-        <?php } ?>
+                    <?php } ?>
                     <div class="Viewouterbutton">
                         <a href="<?php echo $product_path; ?>" class="btn mybtn">View</a>
                     </div>
 
-        <?php if (isset($my_listing) && $my_listing == 'yes') { ?>                    
-            <?php if ($pro['product_is_sold'] != 1) { ?>
+                    <?php if (isset($my_listing) && $my_listing == 'yes') { ?>                    
+                        <?php if ($pro['product_is_sold'] != 1) { ?>
                             <div class="edit_option"><i class="fa fa-pencil-square-o"></i>
                                 <div class="tip">
                                     <i class="fa fa-caret-right"></i>
@@ -250,16 +267,16 @@ if (!empty($products)) {
                                         ?>
                                         <li id="mynew1<?php echo $pro['product_id']; ?>"><a href="javascript:void(0);" class="<?php echo $pro['product_id']; ?>" id="delet_user_ad"><i><img src="<?php echo site_url(); ?>assets/front/images/delete.png" alt="Image" ></i>Delete</a></li>
 
-                                            <?php if ((!isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve') && isset($pro['product_for']) && $pro['product_for'] == 'classified' && empty($pro['featured_ad'])) { ?>
+                                        <?php if ((!isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve') && isset($pro['product_for']) && $pro['product_for'] == 'classified' && empty($pro['featured_ad'])) { ?>
 
                                             <li><a href="javascript:void(0);" id="boost" class="<?php echo $pro['product_id']; ?>"><i><img src="<?php echo site_url(); ?>assets/front/images/boost.png" alt="Image" ></i>Promote My Item</a>
-                <?php } ?>
+                                            <?php } ?>
                                     </ul>
                                 </div>
                             </div> 
-            <?php } ?>
-        <?php } ?>
-        <?php if (isset($my_deactivateads) && $my_deactivateads == 'yes') { ?>
+                        <?php } ?>
+                    <?php } ?>
+                    <?php if (isset($my_deactivateads) && $my_deactivateads == 'yes') { ?>
                         <div class="edit_option"><i class="fa fa-pencil-square-o"></i>
                             <div class="tip">
                                 <i class="fa fa-caret-right"></i>
@@ -270,7 +287,7 @@ if (!empty($products)) {
                                 </ul>
                             </div>
                         </div>   
-        <?php } ?>            
+                    <?php } ?>            
                 </div>
             </div>
         </div>

@@ -147,7 +147,9 @@
                                                         <a href="javascript:void(0);" class="category_chk chk_others" data-id="<?php echo $cat['category_id']; ?>">
                                                             <div class="cate-block">
                                                                 <div class="cate-icn" style="color: <?php echo $cat['color']; ?>;"><i class="fa <?php echo $cat['icon']; ?>"></i></div>
-                                                                <h4 class="cate-name"><span><?php echo str_replace('\n', " ", $cat['catagory_name']); ?></span></h4>
+                                                                <h4 class="cate-name">                                                                    
+                                                                    <span><?php echo 'D. ' . str_replace('\n', " ", $cat['catagory_name']); ?></span>
+                                                                </h4>
                                                             </div>
                                                         </a> 
                                                     </li>         
@@ -245,7 +247,6 @@
                                                     $('.chk_others').prop('checked', false);
 
                                                     $('.category_chk').on('click', function (e) {
-                                                        console.log("Click Event");
                                                         $('#categories').val($(this).attr('data-id'));
                                                         var window_width = parseInt($(window).width());
                                                         if (window_width <= 1024) {
@@ -257,7 +258,6 @@
                                                     });
 
                                                     $('#filter').on('change', function (e) {
-                                                        console.log("Change Event");
                                                         get_data("filter");
                                                     });
 
@@ -266,8 +266,8 @@
                                                         var cat_id = $('#categories').val();
 
                                                         if (selection == "single") {
-                                                            $('li').removeClass('active');
-                                                            $('li.' + cat_id).addClass('active');
+                                                            $('.list-ul li').removeClass('active');
+                                                            $('.list-ul li.' + cat_id).addClass('active');
                                                         }
 
                                                         $('.loader_display').show();
@@ -288,7 +288,10 @@
                                                         var val1 = start;
                                                         var url = "<?php echo base_url(); ?>home/get_allstore_products";
                                                         var product_view = $('#product_view').val();
-                                                        $.post(url, {cat_id: cat_id, product_view: product_view, value: val1, filters: filters}, function (response)
+                                                        var type = $('#search').val();
+                                                        var val = $("#val").val();
+
+                                                        $.post(url, {cat_id: cat_id, product_view: product_view, value: val1, filters: filters, type: type, state_id_selection: state_id_selection}, function (response)
                                                         {
                                                             $('#reset_data').html('');
                                                             $('#reset_data').html(response.html);

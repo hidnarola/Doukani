@@ -246,7 +246,8 @@ class Home extends My_controller {
     public function show_sub_cat() {
         $filter_val = $this->input->post("value");
 
-        $query = "category_id= '" . $filter_val . "' AND FIND_IN_SET(0, sub_category_type) > 0";
+//        $query = "category_id= '" . $filter_val . "' AND FIND_IN_SET(0, sub_category_type) > 0";
+        $query = "category_id= '" . $filter_val . "' ORDER BY sub_cat_order ASC";
         $main_data['subcat'] = $this->dbcommon->filter('sub_category', $query);
         $main_data = array_merge($main_data, $this->get_elements());
         echo $this->load->view('include/sub_cat', $main_data, TRUE);
@@ -661,26 +662,25 @@ class Home extends My_controller {
         } else {
 
             if ($cat_id != "0" && $cat_id != '') {
-                $where1 = " category_id = $cat_id AND FIND_IN_SET(0, category_type) > 0";
+//                $where1 = " category_id = $cat_id AND FIND_IN_SET(0, category_type) > 0";
+                $where1 = " category_id = $cat_id";
                 $category = $this->dbcommon->filter('category', $where1);
                 $data['category_name'] = $category[0]['catagory_name'];
 
-                $where1 = " category_id = $cat_id AND FIND_IN_SET(0, sub_category_type) > 0";
+//                $where1 = " category_id = $cat_id AND FIND_IN_SET(0, sub_category_type) > 0";
+                $where1 = " category_id = $cat_id";
                 $data['sub_category'] = $this->dbcommon->filter('sub_category', $where1);
             }
 
             $between_banners = $this->dbcommon->getBanner_forCategory('between', "'content_page','all_page'", null, null);
             $data['between_banners'] = $between_banners;
 
-            $query1 .= $where . ' and product_for = "classified" group by p.product_id';
+            $query1 .= $where . ' and product_for IN("classified", "store") group by p.product_id';
 
             $prod = $this->db->query($query1);
             $total_product = $prod->num_rows($prod);
-//            if ($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
-//                echo $this->db->last_query();
-//            }
 
-            $where .= " and product_for='classified' group by p.product_id";
+            $where .= " and product_for IN('classified', 'store') group by p.product_id";
             $where .= " order by featured_ad desc,product_posted_time desc limit 0,12";
 
             $query .= $where;
@@ -696,8 +696,8 @@ class Home extends My_controller {
 
             $__catagory_list = [];
 
-            $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
-            $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
+//            $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
+            $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
             $data['category1'] = $category;
 
             foreach ($data['category1'] as $a => $b) {
@@ -719,7 +719,7 @@ class Home extends My_controller {
 
             $data['seo'] = [
                 'description' => 'Search best products from catagory like ' . $seo_catagory . ' at doukani',
-                'keyword' => implode(', ', $__keywords) . ' classified, doukani, search'
+                'keyword' => implode(', ', $__keywords) . ' classified, store, doukani, search'
             ];
 
             $this->load->view('home/search', $data);
@@ -762,7 +762,7 @@ class Home extends My_controller {
         $query1 = $str[0];
         $query = $str[0];
 
-        $query1 .= $where . ' and product_for = "classified" group by p.product_id';
+        $query1 .= $where . ' and product_for IN("classified", "store") group by p.product_id';
 
         $prod = $this->db->query($query1);
         $total_product = $prod->num_rows($prod);
@@ -783,7 +783,7 @@ class Home extends My_controller {
         $offset = ($page == 0) ? 0 : ($page - 1) * $config["per_page"];
         $data["links"] = $this->pagination->create_links();
 
-        $where .= " and product_for='classified' group by product_id";
+        $where .= " and product_for IN('classified', 'store') group by product_id";
         $where .= " order by featured_ad desc,product_posted_time desc limit " . $offset . "," . $config["per_page"];
 
         $query .= $where;
@@ -800,8 +800,8 @@ class Home extends My_controller {
 
         $__catagory_list = [];
 
-        $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
-        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
+//        $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
+        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
         $data['category1'] = $category;
 
         foreach ($data['category1'] as $a => $b) {
@@ -823,7 +823,7 @@ class Home extends My_controller {
 
         $data['seo'] = [
             'description' => 'Search best products from catagory like ' . $seo_catagory . ' at doukani',
-            'keyword' => implode(', ', $__keywords) . ' classified, doukani, search'
+            'keyword' => implode(', ', $__keywords) . ' classified, store, doukani, search'
         ];
 
         $this->load->view('home/category_map', $data);
@@ -967,19 +967,21 @@ class Home extends My_controller {
             $end = $start + 12;
             $hide = "false";
 
-            $query1 .= $where . ' and product_for="classified" group by p.product_id';
+            $query1 .= $where . ' and product_for IN("classified", "store") group by p.product_id';
 
             $prod = $this->db->query($query1);
             $total_product = $prod->num_rows($prod);
 
-            $where .= " and product_for='classified'  group by p.product_id";
+            $where .= " and product_for IN('classified', 'store')  group by p.product_id";
             $where .= " order by featured_ad desc,product_posted_time desc limit " . $start . ",12";
 
             $query .= ' ' . $where;
 
             $product = $this->dbcommon->get_distinct($query);
             $data['products'] = $product;
-
+//            if ($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+//                echo $this->db->last_query();
+//            }
             $data['hide'] = "false";
             if ($end >= $total_product) {
                 $hide = "true";
@@ -1049,8 +1051,8 @@ class Home extends My_controller {
 
         $__catagory_list = [];
 
-        $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
-        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
+//        $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
+        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
         $data['category1'] = $category;
 
         foreach ($data['category1'] as $a => $b) {
@@ -1072,7 +1074,7 @@ class Home extends My_controller {
 
         $data['seo'] = [
             'description' => 'Search best products from catagory like ' . $seo_catagory . ' at doukani',
-            'keyword' => implode(', ', $__keywords) . ' classified, doukani, search'
+            'keyword' => implode(', ', $__keywords) . ' store, classified, doukani, search'
         ];
 
         $where = '';
@@ -1125,14 +1127,14 @@ class Home extends My_controller {
              left join product_realestate_extras r on r.product_id=p.product_id             
              left join featureads fe on fe.product_id=p.product_id
              " . $like_fav_sql . $sql_list . "
-            where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for='classified'  $where ";
+            where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for IN('classified', 'store')  $where ";
 
             $prod = $this->db->query($query1);
             $total_product = $prod->num_rows($prod);
 
             $where .= " order by featured_ad desc,product_posted_time desc limit 12";
 
-            $query = "SELECT p.product_id,p.category_id,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,c.catagory_name, u.username, u.profile_picture,u.facebook_id,u.twitter_id,u.google_id,p.product_is_sold,p.product_total_likes ,p.product_slug,u.user_slug,
+            $query = "SELECT p.product_id,p.product_for,p.category_id,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,c.catagory_name, u.username, u.profile_picture,u.facebook_id,u.twitter_id,u.google_id,p.product_is_sold,p.product_total_likes ,p.product_slug,u.user_slug, store.store_domain,
               (IF(p.product_image IS NULL OR p.product_image='',0,1) +
                IF(p.youtube_link IS NULL  OR p.youtube_link='',0,1) +
                IF(p.video_name IS NULL  OR p.video_name='',0,1) +
@@ -1146,8 +1148,9 @@ class Home extends My_controller {
              left join car_mobile_numbers cmn on cmn.product_id=p.product_id   
              left join products_images pi on p.product_id = pi.product_id
              left join featureads fe on fe.product_id=p.product_id
+             left join store on store.store_owner = p.product_posted_by
              " . $like_fav_sql . $sql_list . "
-             where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for='classified'  " . $where;
+             where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for IN('classified', 'store') " . $where;
 //            /left join (select count(*) count_image, product_id sub_product_id from products_images pm group by pm.product_id) k on p.product_id=sub_product_id
             $product = $this->dbcommon->get_distinct($query);
 
@@ -1230,8 +1233,8 @@ class Home extends My_controller {
 
         $__catagory_list = [];
 
-        $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
-        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
+//        $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
+        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
         $data['category1'] = $category;
 
         foreach ($data['category1'] as $a => $b) {
@@ -1285,7 +1288,7 @@ class Home extends My_controller {
              left join car_mobile_numbers cmn on cmn.product_id=p.product_id
              left join featureads fe on fe.product_id=p.product_id
              " . $like_fav_sql . "
-            where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for='classified'  $where ";
+            where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for IN('classified', 'store')  $where ";
 
             $prod = $this->db->query($query1);
 //            echo $this->db->last_query();
@@ -1300,7 +1303,7 @@ class Home extends My_controller {
 
             $where .= " order by featured_ad desc,product_posted_time desc limit " . $offset . "," . $config["per_page"];
 
-            $query = "SELECT p.product_id,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,c.catagory_name, u.username, u.profile_picture,u.facebook_id,u.twitter_id,u.google_id,p.product_is_sold,p.product_total_likes ,p.product_slug,u.user_slug,
+            $query = "SELECT p.product_id,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,c.catagory_name, u.username, u.profile_picture,u.facebook_id,u.twitter_id,u.google_id,p.product_is_sold,p.product_total_likes ,p.product_slug,u.user_slug,p.product_for, store.store_domain,
               (IF(p.product_image IS NULL OR p.product_image='',0,1) +
                IF(p.youtube_link IS NULL  OR p.youtube_link='',0,1) +
                IF(p.video_name IS NULL  OR p.video_name='',0,1) +
@@ -1316,8 +1319,9 @@ class Home extends My_controller {
              left join car_mobile_numbers cmn on cmn.product_id=p.product_id   
              left join products_images pi on p.product_id = pi.product_id
              left join featureads fe on fe.product_id=p.product_id
+             left join store on store.store_owner = p.product_posted_by
              " . $like_fav_sql . "
-             where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for='classified'  " . $where;
+             where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for IN('classified', 'store')  " . $where;
 
             $product = $this->dbcommon->get_distinct($query);
 
@@ -1483,10 +1487,10 @@ class Home extends My_controller {
                     left join product_vehicles_extras as v on v.product_id=p.product_id
                     left join product_realestate_extras r  on r.product_id=p.product_id
                     left join car_mobile_numbers cmn on cmn.product_id=p.product_id
-                    left join featureads fe on fe.product_id=p.product_id
+                    left join featureads fe on fe.product_id=p.product_id                    
                     " . $like_fav_sql . $sql_list . "
                     where
-                    p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and product_for='classified' $where ";
+                    p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for IN('classified', 'store') $where ";
 
         $filter_val = $this->input->post("value");
         $start = 12 * $filter_val;
@@ -1499,7 +1503,7 @@ class Home extends My_controller {
         //$where .= " order by `admin_modified_at` desc limit $start,12";
         $where .= " order by featured_ad desc,product_posted_time desc limit $start,12";
 
-        $query = "SELECT p.product_id,p.category_id,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,p.product_is_sold,c.catagory_name, u.username, u.profile_picture, u.facebook_id,u.twitter_id,u.google_id,p.product_total_likes,p.product_slug,u.user_slug,
+        $query = "SELECT p.product_id,p.category_id,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite, p.product_for, store.store_domain, if(u.nick_name!='',u.nick_name,u.username) as username1,p.product_is_sold,c.catagory_name, u.username, u.profile_picture, u.facebook_id,u.twitter_id,u.google_id,p.product_total_likes,p.product_slug,u.user_slug,
                 (IF(p.product_image IS NULL OR p.product_image='',0,1) +
                 IF(p.youtube_link IS NULL  OR p.youtube_link='',0,1) +
                 IF(p.video_name IS NULL  OR p.video_name='',0,1) +
@@ -1513,9 +1517,10 @@ class Home extends My_controller {
                     left join car_mobile_numbers cmn on cmn.product_id=p.product_id
                     left join products_images pi on p.product_id = pi.product_id
                     left join featureads fe on fe.product_id=p.product_id
+                    left join store on store.store_owner = p.product_posted_by
                     " . $like_fav_sql . $sql_list . "
                     where 
-                    p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and product_for='classified' $where ";
+                    p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for IN('classified', 'store') $where ";
 
         $product_data = $this->dbcommon->get_distinct($query);
 
@@ -1818,6 +1823,7 @@ class Home extends My_controller {
             else {
                 $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12, $start);
             }
+
             $data['products'] = $product;
             $data['is_logged'] = 0;
             $data['loggedin_user'] = '';
@@ -2549,7 +2555,8 @@ class Home extends My_controller {
 
     public function show_sub_category() {
         $filter_val = $this->input->post("value");
-        $query = "category_id= '" . $filter_val . "' AND FIND_IN_SET(0, sub_category_type) > 0 order by sub_cat_order";
+//        $query = "category_id= '" . $filter_val . "' AND FIND_IN_SET(0, sub_category_type) > 0 order by sub_cat_order";
+        $query = "category_id= '" . $filter_val . "' order by sub_cat_order";
         $main_data['subcat'] = $this->dbcommon->filter('sub_category', $query);
 
         echo $this->load->view('user/sub_cat', $main_data, TRUE);
@@ -3208,9 +3215,9 @@ class Home extends My_controller {
 
         if (isset($filter_val)) {
 
-            $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page'");
+            $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page', 'store_page_content'");
             $arr['between_banners'] = $between_banners;
-
+            $cat_id = $this->input->post('cat_id', TRUE);
             $start = 15 * $filter_val;
             $end = $start + 15;
             $hide = "false";
@@ -3221,23 +3228,35 @@ class Home extends My_controller {
                 $search = NULL;
 
             if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
-                $total_product = $this->dbcommon->get_products_by_cat_num(NULL, NULL, NULL, 'store');
+                if ($cat_id > 0)
+                    $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, NULL, NULL, 'store');
+                else
+                    $total_product = $this->dbcommon->get_products_by_cat_num(NULL, NULL, NULL, 'store');
             } else {
-                $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store');
-            }
 
-            $cat_id = 0;
+                if ($cat_id > 0)
+                    $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store', $cat_id);
+                else
+                    $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store');
+            }
 
             if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
                 if ($cat_id == 7)
-                    $products = $this->dbcommon->get_vehicle_products(NULL, NULL, NULL, 15, $start, NULL, $search, 'storeUser');
+                    $products = $this->dbcommon->get_vehicle_products($cat_id, NULL, NULL, 15, $start, NULL, $search, 'storeUser');
                 elseif ($cat_id == 8)
-                    $products = $this->dbcommon->get_real_estate_products(NULL, NULL, NULL, 15, $start, NULL, $search, 'storeUser');
+                    $products = $this->dbcommon->get_real_estate_products($cat_id, NULL, NULL, 15, $start, NULL, $search, 'storeUser');
+                else {
+                    if ($cat_id > 0)
+                        $products = $this->dbcommon->get_product_by_categories($cat_id, NULL, NULL, 15, $start, NULL, NULL, $search, NULL, 'storeUser');
+                    else
+                        $products = $this->dbcommon->get_product_by_categories(NULL, NULL, NULL, 15, NULL, NULL, NULL, $search, NULL, 'storeUser');
+                }
+            } else {
+                if ($cat_id > 0)
+                    $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id);
                 else
-                    $products = $this->dbcommon->get_product_by_categories(NULL, NULL, NULL, 15, $start, NULL, NULL, $search, NULL, 'storeUser');
-            } else
-                $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store');
-
+                    $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store');
+            }
 //            echo $this->db->last_query();
 
             $currentusr = $this->session->userdata('gen_user');
@@ -3282,7 +3301,7 @@ class Home extends My_controller {
         $main_data = array();
         $current_user = $this->session->userdata('gen_user');
 
-        $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page'", NULL, NULL, NULL);
+        $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page', 'store_page_content'", NULL, NULL, NULL);
         $main_data['between_banners'] = $between_banners;
 
         $main_data['is_logged'] = 0;

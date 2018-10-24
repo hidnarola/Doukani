@@ -44,7 +44,7 @@ class Allstores extends My_controller {
         $data['store_landing_page'] = 'yes';
         $data['product_page'] = 'yes';
 
-        $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page'", NULL, NULL, NULL, NULL);
+        $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page', 'store_page_content'", NULL, NULL, NULL, NULL);
         $arr['between_banners'] = $between_banners;
 
         $__catagory_list = [];
@@ -70,8 +70,8 @@ class Allstores extends My_controller {
         }
 
         $data['seo'] = [
-            'description' => 'Browse best seller stores for products from catagory like ' . $seo_catagory . ' at doukani',
-            'keyword' => implode(', ', $__keywords) . ' classified, doukani, store, shop , featured stores, seller'
+            'description' => 'Browse best seller products from catagory like ' . $seo_catagory . ' at doukani',
+            'keyword' => implode(', ', $__keywords) . ' store products, classified, doukani, store, shop , featured stores, seller'
         ];
 
         $data['page_title'] = 'Store Products';
@@ -113,7 +113,7 @@ class Allstores extends My_controller {
 //        echo $this->db->last_query();
         $data['listing'] = $listing;
         $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, 0, 'storeUser', 'store');
-        
+
         $data['hide'] = "false";
         if ($total_product <= $per_page) {
             $data['hide'] = "true";

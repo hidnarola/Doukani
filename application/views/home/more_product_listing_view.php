@@ -102,12 +102,13 @@ if (!empty($product_data)) {
                                 }
                                 ?>                                                          
                             </div>
-                            <?php if($pro['product_price'] != '' && (int) $pro['product_price'] != 0) { ?>
-                            <div class="price">
-                                <h4><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : '';
-                        ; ?></h4>
-                            </div>
-                            <?php } ?>
+                            <?php if ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) { ?>
+                                <div class="price">
+                                    <h4><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : '';
+                    ;
+                                ?></h4>
+                                </div>
+        <?php } ?>
                         </div>
 
                     </div>
@@ -194,9 +195,9 @@ if (!empty($product_data)) {
                     } else {
                         ?>
                         <div class="by-user">                                            
-            <?php //echo base_url() . profile . "original/" . $pro['profile_picture'];       ?>
+            <?php //echo base_url() . profile . "original/" . $pro['profile_picture'];        ?>
                             <img src="<?php echo $profile_picture; ?>" class="img-responsive img-circle" onerror="this.src='<?php echo base_url() ?>assets/upload/avtar.png'" alt="Profile Image"/>
-                            <a href="<?php echo base_url() . emirate_slug. $pro['user_slug']; ?>"><?php echo $pro['username1']; ?></a>                                           
+                            <a href="<?php echo base_url() . emirate_slug . $pro['user_slug']; ?>"><?php echo $pro['username1']; ?></a>                                           
                         </div>
         <?php } ?>
                     <div class="Viewouterbutton">

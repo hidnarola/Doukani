@@ -90,7 +90,7 @@
             <select class="form-control" name="cat" onchange="show_sub_cat__(this.value);">
                 <option value="0">Property for Sale</option>
                 <?php
-                foreach ($category as $cat):
+                foreach ($left_side_category as $cat):
                     if ($cat['category_id'] == @$_REQUEST['cat']) {
                         ?>
                         <option value="<?php echo $cat['category_id']; ?>" <?php echo set_select('cat', @$_REQUEST['cat'], TRUE) ?> ><?php echo str_replace('\n', " ", $cat['catagory_name']); ?></option>

@@ -15,13 +15,22 @@ class My_controller extends CI_Controller {
     }
 
     public function get_elements() {
-        
+
         $data = array();
 //        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
-                
+
+        $left_side_category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
+        foreach ($left_side_category as $key => $value) {
+            $where = " 1=1 order by sub_cat_order asc";
+            $sub_categories = $this->dbcommon->filter('sub_category', $where);
+            $left_side_category[$key]['sub_categories'] = $sub_categories;
+        }
+
+        $data['left_side_category'] = $left_side_category;
+
         $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
         $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
-        
+
         foreach ($category as $key => $value) {
             $where = " category_id=" . $value['category_id'] . " AND FIND_IN_SET(0, sub_category_type) > 0 order by sub_cat_order asc";
             $sub_categories = $this->dbcommon->filter('sub_category', $where);
@@ -35,7 +44,7 @@ class My_controller extends CI_Controller {
         $where = " country_id=4 order by sort_order";
         $state = $this->dbcommon->filter('state', $where);
         $data['state'] = $state;
-        
+
         $pages_fields = ' page_id, page_title, slug_url, parent_page_id,direct_url ';
         $array = array('page_state' => 1,
             'show_in_header' => 1);
@@ -54,22 +63,22 @@ class My_controller extends CI_Controller {
 
             $footer_menu[$key]['sub_menu'] = $footer_sub_menu;
         }
-        
-        $emirate =  $this->uri->segment(1);
-        if(!empty($emirate) && !in_array(strtolower($emirate),array('abudhabi','ajman','dubai','fujairah','ras-al-khaimah','sharjah','umm-al-quwain')))
+
+        $emirate = $this->uri->segment(1);
+        if (!empty($emirate) && !in_array(strtolower($emirate), array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
             $this->session->unset_userdata('request_for_statewise');
-        
+
         $data['request_state'] = '';
         if ($this->session->userdata('request_for_statewise') != '') {
-            $array = array('state_slug' =>$this->session->userdata('request_for_statewise'));
+            $array = array('state_slug' => $this->session->userdata('request_for_statewise'));
             $state = $this->dbcommon->get_row('state', $array);
-            
-            if (!empty($state)) {                
+
+            if (!empty($state)) {
                 $data['request_state'] = $state->state_name;
             }
         }
-        
-        
+
+
 
         $data['footer_menu'] = $footer_menu;
         $data['fb_login_url'] = $this->facebook->get_login_url();

@@ -173,8 +173,7 @@ if (isset($store_url) && $store_url != '') {
 
                     if (response.val == 'success') {
                         $(document).find('.subscription_msg').html('<p class="alert-success" style="background:#cbcbcb;color: #05a846;"><b>Thank You For Subscribe!</b></p>');
-                    }
-                    else {
+                    } else {
                         $(document).find('#email').val('');
                         $(document).find('.subscription_msg').html('<p class="alert-danger" style="background:#cbcbcb;color:red;"><b>Email already subscribed</b></p>');
                     }
@@ -242,8 +241,7 @@ else
 
                                 var replace_emirate = request_emirate.replace(old_state, '/' + resp);
                                 replace_emirate = replace_emirate.replace('//', '/');
-                            }
-                            else {
+                            } else {
                                 var replace_emirate = request_emirate;
                             }
                             var href = '<?php echo HTTP . $_SERVER["HTTP_HOST"]; ?>' + replace_emirate;
@@ -257,7 +255,7 @@ else
                                 var href = '<?php echo HTTP . $_SERVER["HTTP_HOST"]; ?>' + replace_emirate;
                             }
                         }
-<?php
+    <?php
 } elseif (isset($product_details_page) && $product_details_page = 'yes') {
     if (isset($category_slug_details)) {
         ?>
@@ -265,7 +263,7 @@ else
     <?php } else { ?>
                             var href = '<?php echo HTTP . $_SERVER["HTTP_HOST"]; ?>' + '/' + resp;
     <?php } ?>
-    <?php } else {
+<?php } else {
     ?>
                         var href = '<?php echo HTTP . "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>';
 <?php } ?>
@@ -452,7 +450,7 @@ if (isset($is_logged) && $is_logged != 0) {
 <?php } ?>
     });
 
-      //Tawk to Chatting Tool
+    //Tawk to Chatting Tool
 
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
     (function () {
@@ -465,7 +463,7 @@ if (isset($is_logged) && $is_logged != 0) {
     })();
 
 <?php if (isset($_REQUEST['cat'])) { ?>
-        //show_sub_cat("<?php //echo $_REQUEST['cat'];  ?>");
+        //show_sub_cat("<?php //echo $_REQUEST['cat'];        ?>");
 <?php } ?>
     function show_sub_cat__(val) {
 
@@ -576,27 +574,23 @@ if (strpos($mypath_, after_subdomain) !== false) {
                         setTimeout(function () {
                             window.location.href = href;
                         }, 1000);
-                    }
-                    else {
+                    } else {
                         if (response == "not_agree") {
                             href = '<?php echo HTTPS . website_url . 'login/agree'; ?>';
                             setTimeout(function () {
                                 window.location.href = href;
                             }, 1000);
-                        }
-                        else if (response == "user_role") {
+                        } else if (response == "user_role") {
                             href = '<?php echo HTTPS . website_url . 'login/user_role'; ?>';
                             setTimeout(function () {
                                 window.location.href = href;
                             }, 1000);
-                        }
-                        else if (response == "create_store") {
+                        } else if (response == "create_store") {
                             href = '<?php echo HTTPS . website_url . 'user/store'; ?>';
                             setTimeout(function () {
                                 window.location.href = href;
                             }, 1000);
-                        }
-                        else {
+                        } else {
                             $('#alert_box').show();
                             $('#alert_msg').show();
                             console.log(response);
@@ -655,7 +649,7 @@ if (isset($current_user) && isset($show_user_popup)) {
     });
 
     function call_app() {
-        //window.location.href = '<?php //echo doukani_app;          ?>';	
+        //window.location.href = '<?php //echo doukani_app;                ?>';	
         window.open('<?php echo doukani_app; ?>', '_blank');
     }
 
@@ -678,73 +672,72 @@ if (isset($current_user) && isset($show_user_popup)) {
             }
         });
     });
-    
-    $(document).on('click', '#create_store_btn', function (){
+
+    $(document).on('click', '#create_store_btn', function () {
         $('#store_name_status').html('');
         var store_name = $('#store_name').val();
-        if(store_name == ''){
+        if (store_name == '') {
             $('#store_name_status').html('<font color="#b94a48">Please enter store name!</font>');
             return false;
         }
         $.ajax({
-            url:'<?php echo base_url(); ?>/registration/create_session_store',
+            url: '<?php echo base_url(); ?>/registration/create_session_store',
             type: 'POST',
             context: this,
             data: {'store_name_create': store_name},
-            success: function (res){
-                if(res == 'success'){
-                    window.location.href='<?php echo base_url(); ?>registration';
-                }else{
+            success: function (res) {
+                if (res == 'success') {
+                    window.location.href = '<?php echo base_url(); ?>registration';
+                } else {
                     $('#store_name_status').html('<font color="#b94a48">Something went wrong. Please try again!</font>');
                 }
             }
         });
         return false;
     });
-    
-    $(document).on('change', '#registration #user_role', function (){
-        if($(this).val() == 'storeUser'){
+
+    $(document).on('change', '#registration #user_role', function () {
+        if ($(this).val() == 'storeUser') {
             $('.store_hide_show_div').show();
-        }else{
+        } else {
             $('.store_hide_show_div').hide();
         }
     });
-    
-    
+
+
     $(document).on("change", "#store_name", function (e) {
         var store_name = $(this).val();
-        if(store_name) {
+        if (store_name) {
             $.ajax({
-            type: 'post',
-            url: '<?php echo site_url().'home/check_store_name' ?>',
-            data: {
-                store_name:store_name
-            },
-            success: function (response) {
-                if(response=="OK") {
-                   $('.store_name_status').html('');
-                   flag1 = 0;
-                   return true;
-                } else {
-                    flag1 = 1;
-                    $('.store_name_status').html('<font color="#b94a48">'+response+'</font>');
-                    return false;                               
+                type: 'post',
+                url: '<?php echo site_url() . 'home/check_store_name' ?>',
+                data: {
+                    store_name: store_name
+                },
+                success: function (response) {
+                    if (response == "OK") {
+                        $('.store_name_status').html('');
+                        flag1 = 0;
+                        return true;
+                    } else {
+                        flag1 = 1;
+                        $('.store_name_status').html('<font color="#b94a48">' + response + '</font>');
+                        return false;
+                    }
                 }
-              }
             });
-        }
-        else {
-           $( '.store_name_status' ).html("");
-           return false;
+        } else {
+            $('.store_name_status').html("");
+            return false;
         }
     });
-    
+
     $(document).on("keyup", "#store_domain", function (e) {
         var code_k = e.keyCode;
-        if(code_k != 13 && code_k != 27){
-            if($('#store_domain').val() == ''){
+        if (code_k != 13 && code_k != 27) {
+            if ($('#store_domain').val() == '') {
                 $('#full_domain').html('store_name.doukani.com');
-            }else{
+            } else {
                 $('#full_domain').html($('#store_domain').val() + '.doukani.com');
             }
         }
@@ -752,30 +745,28 @@ if (isset($current_user) && isset($show_user_popup)) {
 
     $(document).on("change", "#store_domain", function (e) {
         var store_domain = $(this).val();
-        if(store_domain) {
+        if (store_domain) {
             $.ajax({
-            type: 'post',
-            url: '<?php echo site_url().'home/check_store_domain' ?>',
-            data: {
-                store_domain:store_domain
-            },
-            success: function (response) {                  
-                if(response=="OK") {
-                   $('.store_domain_status').html('');
-                   flag2 = 0;
-                   return true;
+                type: 'post',
+                url: '<?php echo site_url() . 'home/check_store_domain' ?>',
+                data: {
+                    store_domain: store_domain
+                },
+                success: function (response) {
+                    if (response == "OK") {
+                        $('.store_domain_status').html('');
+                        flag2 = 0;
+                        return true;
+                    } else {
+                        flag2 = 1;
+                        $('.store_domain_status').html('<font color="#b94a48">' + response + '</font>');
+                        return false;
+                    }
                 }
-               else {
-                    flag2 = 1;
-                    $('.store_domain_status').html('<font color="#b94a48">'+response+'</font>');
-                    return false;                               
-                }
-              }
             });
-        }
-        else {
-           $( '.store_domain_status' ).html("");
-           return false;
+        } else {
+            $('.store_domain_status').html("");
+            return false;
         }
     });
 </script>

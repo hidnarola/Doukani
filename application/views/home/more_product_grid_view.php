@@ -54,10 +54,10 @@ if (!empty($product_data)) {
                                 <div class="sold"><span>SOLD</span></div>
                             <?php } ?>
                             <?php if (!empty($pro['product_image'])) { ?>
-                                <a href="<?php echo $product_path; ?>"><img src="<?php echo thumb_start_grid . base_url() . product . "medium/" . $pro['product_image'] . thumb_end_grid; ?>" class="img-responsive" onerror="this.src='<?php echo thumb_start_grid.base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'" alt="<?php echo $pro['product_name']; ?>" /></a>
+                                <a href="<?php echo $product_path; ?>"><img src="<?php echo thumb_start_grid . base_url() . product . "medium/" . $pro['product_image'] . thumb_end_grid; ?>" class="img-responsive" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'" alt="<?php echo $pro['product_name']; ?>" /></a>
                             <?php } else { ?>                                           
-                                <a href="<?php echo $product_path; ?>"><img src="<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>" class="img-responsive" alt="<?php echo $pro['product_name']; ?>" onerror="this.src='<?php echo thumb_start_grid.base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'" /></a>
-                        <?php } ?>
+                                <a href="<?php echo $product_path; ?>"><img src="<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>" class="img-responsive" alt="<?php echo $pro['product_name']; ?>" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'" /></a>
+                            <?php } ?>
                         </div>
                         <?php
                         if ((isset($featured_data) && $featured_data == 'yes') || (isset($pro['featured_ad']) && $pro['featured_ad'] > 0)) {
@@ -76,14 +76,14 @@ if (!empty($product_data)) {
                         if ($loggedin_user != $pro['product_posted_by']) {
                             if ($pro['product_is_sold'] != 1) {
                                 if ($is_logged != 0) {
-                                    $favi = (int)$pro['my_favorite'];
+                                    $favi = (int) $pro['my_favorite'];
                                     if (@$pro['product_total_favorite'] != 0 && $favi == 1) {
                                         ?>
                                         <div class="star fav" ><a href="javascript:void(0);" id="<?php echo $pro['product_id']; ?>">
                                                 <i class="fa fa-star" id="<?php echo $pro['product_id']; ?>"></i>
                                             </a>
                                         </div>
-                    <?php } else { ?>
+                                    <?php } else { ?>
                                         <div class="star" ><a href="javascript:void(0);">
                                                 <i class="fa fa-star-o" id="<?php echo $pro['product_id']; ?>"></i>
                                             </a>
@@ -99,15 +99,15 @@ if (!empty($product_data)) {
                                     <?php
                                 }
                                 if (!isset($favorite_ads)) {
-                                    if ($is_logged != 0) {                                        
-                                        $like = (int)$pro['my_like'];
+                                    if ($is_logged != 0) {
+                                        $like = (int) $pro['my_like'];
                                         if (@$pro['product_total_likes'] != 0 && $like == 1) {
                                             ?>
                                             <div class="newthumb thu"><a href="javascript:void(0);" id="<?php echo $pro['product_id']; ?>">
                                                     <i class="fa fa-thumbs-up" id="<?php echo $pro['product_id']; ?>"></i>
                                                 </a>
                                             </div>
-                        <?php } else { ?>
+                                        <?php } else { ?>
                                             <div class="newthumb" ><a href="javascript:void(0);">
                                                     <i class="fa fa-thumbs-o-up" id="<?php echo $pro['product_id']; ?>"></i>
                                                 </a>
@@ -136,7 +136,7 @@ if (!empty($product_data)) {
                             echo 'title="' . htmlentities($pro['product_name']) . '"';
                         }
                         ?> >
-        <?php echo $pro['product_name']; ?>
+                                <?php echo $pro['product_name']; ?>
                         </h4>
                     </a>
                     <?php
@@ -148,11 +148,11 @@ if (!empty($product_data)) {
                         echo 'title="' . htmlentities($str) . '"';
                     }
                     ?>>
-        <?php echo $str; ?>
+                            <?php echo $str; ?>
                     </small>
 
                     <?php if (isset($my_listing) && $my_listing == 'yes') { ?>
-            <?php if ($pro['product_is_sold'] != 1) { ?>
+                        <?php if ($pro['product_is_sold'] != 1) { ?>
                             <div class="edit_option"><i class="fa fa-pencil-square-o"></i>
                                 <div class="tip">
                                     <i class="fa fa-caret-right"></i>
@@ -173,19 +173,19 @@ if (!empty($product_data)) {
                                         }
                                         ?>												
                                         <li id="mynew1<?php echo $pro['product_id']; ?>"><a href="javascript:void(0);" class="<?php echo $pro['product_id']; ?>" id="delet_user_ad" ><i><img src="<?php echo site_url(); ?>assets/front/images/delete.png" alt="Image" ></i>Delete</a></li>
-                                        
-                                        
-                <?php if((!isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve') && isset($pro['product_for']) && $pro['product_for']=='classified' && empty($pro['featured_ad'])) { ?>
-                                            <li><a href="javascript:void(0);" id="boost" class="<?php echo $pro['product_id']; ?>" ><i><img src="<?php  echo site_url(); ?>assets/front/images/boost.png" alt="Image" ></i>Promote My Item</a>
+
+
+                                        <?php if ((!isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve') && isset($pro['product_for']) && $pro['product_for'] == 'classified' && empty($pro['featured_ad'])) { ?>
+                                            <li><a href="javascript:void(0);" id="boost" class="<?php echo $pro['product_id']; ?>" ><i><img src="<?php echo site_url(); ?>assets/front/images/boost.png" alt="Image" ></i>Promote My Item</a>
                                                 <!-- Boost<font color="white">(Coming Soon)</font> --></li>
-                <?php } ?>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             </div> 
                         <?php } ?>
                     <?php } ?>
 
-        <?php if (isset($my_deactivateads) && $my_deactivateads == 'yes') { ?>
+                    <?php if (isset($my_deactivateads) && $my_deactivateads == 'yes') { ?>
                         <div class="edit_option"><i class="fa fa-pencil-square-o"></i>
                             <div class="tip">
                                 <i class="fa fa-caret-right"></i>
@@ -196,7 +196,7 @@ if (!empty($product_data)) {
                                 </ul>
                             </div>
                         </div>   
-        <?php } ?>    
+                    <?php } ?>    
                 </div>
                 <div class="cat_grid">
                     <?php
@@ -218,7 +218,7 @@ if (!empty($product_data)) {
                             ?>
                             <a href="<?php echo $user_profile_pg; ?>" title="<?php echo $pro['username1']; ?>"><?php echo $pro['username1']; ?></a>                                            
                         </div> 
-        <?php } ?>
+                    <?php } ?>
                     <div class=" price">
 
                         <span title=" <?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?>"><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?></span>
