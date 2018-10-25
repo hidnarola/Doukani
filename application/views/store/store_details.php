@@ -134,7 +134,7 @@ $mypath_ = $store_url;
 
                         $('#load_product').prop('disabled', false);
                         $("#load_product").html('Load More');
-                        $(window).bind('scroll', bindScroll);
+//                        $(window).bind('scroll', bindScroll);
 
                     }, "json");
                 }

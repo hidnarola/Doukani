@@ -30,7 +30,7 @@
                                                         <label>Category</label>
                                                         <select class="select2 form-control" id="cat_id" name="cat_id" onchange="show_sub_cat(this.value);">
                                                             <option value="">--All Category--</option>
-                                                            <?php foreach ($category as $cat): ?>
+                                                            <?php foreach ($all_category_ as $cat): ?>
                                                                 <option value="<?php echo $cat['category_id']; ?>"><?php echo str_replace('\n', " ", $cat['catagory_name']); ?></option>
                                                             <?php endforeach; ?>
                                                         </select>

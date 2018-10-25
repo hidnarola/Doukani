@@ -229,6 +229,7 @@ class Home extends My_controller {
                     elseif ($return_data->val == 'prod_slug')
                         $this->item_details($slug);
                     else {
+
                         override_404();
                     }
                 } else {
@@ -428,27 +429,20 @@ class Home extends My_controller {
             $between_banners = $this->dbcommon->getBanner_forCategory('between', "'content_page','all_page'", $cat_id, $subcat_id);
             $data['between_banners'] = $between_banners;
 
-//            if (isset($_GET['view']) && $_GET['view'] == 'list') {
-//                // checking if the category is vehicle or real estate
-//                if ($cat_id == 7)
-//                    $product = $this->dbcommon->get_vehicle_products($cat_id, $subcat_id, null, 12);
-//                elseif ($cat_id == 8)
-//                    $product = $this->dbcommon->get_real_estate_products($cat_id, $subcat_id, null, 12);
-//                else
-//                    $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12);
-//            } else
-//                $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12);
+            if (isset($_GET['view']) && $_GET['view'] == 'list') {
+                // checking if the category is vehicle or real estate
+                if ($cat_id == 7)
+                    $product = $this->dbcommon->get_vehicle_products($cat_id, $subcat_id, null, 12);
+                elseif ($cat_id == 8)
+                    $product = $this->dbcommon->get_real_estate_products($cat_id, $subcat_id, null, 12);
+                else
+                    $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12);
+            } else
+                $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12);
 
-            if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
-                $product = $this->dbcommon->get_my_listing(NULL, 0, 12, NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
-                $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
-            } else {
-                $product = $this->dbcommon->get_my_listing(NULL, 0, 12, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
-                $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
-            }
             $data['products'] = $product;
 
-//            $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, $subcat_id);
+            $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, $subcat_id);
             // functionality for load more product
             $data['hide'] = "false";
             if ($total_product <= 12) {
@@ -684,7 +678,6 @@ class Home extends My_controller {
             $query1 .= $where . ' and product_for IN("classified", "store") group by p.product_id';
 
             $prod = $this->db->query($query1);
-//            echo $this->db->last_query();
             $total_product = $prod->num_rows($prod);
 
             $where .= " and product_for IN('classified', 'store') group by p.product_id";
@@ -1672,12 +1665,7 @@ class Home extends My_controller {
 
             $data['order_option'] = $order_option;
 
-            if (isset($_REQUEST['s']) && !empty($_REQUEST['s']))
-                $count = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
-            else
-                $count = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
-
-//            $count = $this->dbcommon->get_products_by_cat_num($cat_id, $subcat_id);
+            $count = $this->dbcommon->get_products_by_cat_num($cat_id, $subcat_id);
             $total_product = $count;
             $search_text = '';
             if (isset($_GET['s']) && !empty($_GET['s']))
@@ -1693,12 +1681,7 @@ class Home extends My_controller {
             $page = (isset($_GET['page'])) ? $_GET['page'] : 0;
             $offset = ($page == 0) ? 0 : ($page - 1) * $config["per_page"];
 
-            if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
-                $product = $this->dbcommon->get_my_listing(NULL, $offset, $config["per_page"], NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
-            } else
-                $product = $this->dbcommon->get_my_listing(NULL, $offset, $config["per_page"], NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
-
-//            $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, NULL, $config["per_page"], $offset);
+            $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, NULL, $config["per_page"], $offset);
             $data['products'] = $product;
             $data['hide'] = "false";
 
@@ -1817,13 +1800,8 @@ class Home extends My_controller {
             $between_banners = $this->dbcommon->getBanner_forCategory('between', "'content_page','all_page'", $cat_id, $subcat_id);
             $data['between_banners'] = $between_banners;
 
-//            $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, $subcat_id);
+            $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, $subcat_id);
 
-            if (isset($_REQUEST['s']) && !empty($_REQUEST['s']))
-                $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
-            else                
-                $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
-            
             $filter_val = $this->input->post("value");
 
             $start = 12 * $filter_val;
@@ -1833,25 +1811,20 @@ class Home extends My_controller {
                 $hide = "true";
             }
 
-            if (isset($_REQUEST['s']) && !empty($_REQUEST['s']))
-                $product = $this->dbcommon->get_my_listing(NULL, $start, 12, NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
-            else
-                $product = $this->dbcommon->get_my_listing(NULL, $start, 12, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
+
+            if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'list') {
+                if ($cat_id == 7)
+                    $product = $this->dbcommon->get_vehicle_products($cat_id, $subcat_id, null, 12, $start);
+                elseif ($cat_id == 8)
+                    $product = $this->dbcommon->get_real_estate_products($cat_id, $subcat_id, null, 12, $start);
+                else
+                    $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12, $start);
+            }
+            else {
+                $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12, $start);
+            }
 
             $data['products'] = $product;
-
-//            if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'list') {
-//                if ($cat_id == 7)
-//                    $product = $this->dbcommon->get_vehicle_products($cat_id, $subcat_id, null, 12, $start);
-//                elseif ($cat_id == 8)
-//                    $product = $this->dbcommon->get_real_estate_products($cat_id, $subcat_id, null, 12, $start);
-//                else
-//                    $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12, $start);
-//            }
-//            else {
-//                $product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, null, 12, $start);
-//            }
-
             $data['is_logged'] = 0;
             $data['loggedin_user'] = '';
 
@@ -3172,22 +3145,36 @@ class Home extends My_controller {
             $end = $start + 15;
             $hide = "false";
 
+            $where = " where user_id ='" . $user_id . "'";
+            $store_user = $this->dbcommon->getdetails('user', $where);
+
             if (isset($_POST['type']))
                 $search = $this->input->post('type', TRUE);
             else
                 $search = NULL;
 
+//            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+//                $total_product = $this->dbcommon->get_products_by_cat_num(NULL, NULL, $user_id, 'store');
+//            } else {
+            $total_product = $this->dbcommon->get_my_listing_count($user_id, $search, $user_status, $store_user[0]->user_role, 'store');
+//            }
+
             $cat_id = $store_det->category_id;
 
+//            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+//                if ($cat_id == 7)
+//                    $products = $this->dbcommon->get_vehicle_products(NULL, NULL, NULL, 15, $start, $store_det->store_owner, $search, 'store');
+//                elseif ($cat_id == 8)
+//                    $products = $this->dbcommon->get_real_estate_products(NULL, NULL, NULL, 15, $start, $store_det->store_owner, $search, 'store');
+//                else {
+//                    $products = $this->dbcommon->get_product_by_categories(NULL, NULL, NULL, 15, $start, NULL, $store_det->store_owner, $search, NULL, 'store');
+//                    
+//                }
+//            } else
             if ($cat_id > 0)
-                $total_product = $this->dbcommon->get_my_listing_count($user_id, $search, $user_status, 'storeUser', 'store', $cat_id);
+                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, $store_user[0]->user_role, 'store', $cat_id);
             else
-                $total_product = $this->dbcommon->get_my_listing_count($user_id, $search, $user_status, 'storeUser', 'store');
-
-            if ($cat_id > 0)
-                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, 'storeUser', 'store', $cat_id);
-            else
-                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, 'storeUser', 'store');
+                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, $store_user[0]->user_role, 'store');
 
             $currentusr = $this->session->userdata('gen_user');
 
@@ -3245,13 +3232,36 @@ class Home extends My_controller {
             else
                 $search = NULL;
 
-            if ($cat_id > 0) {
+//            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+//                if ($cat_id > 0)
+//                    $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, NULL, NULL, 'store');
+//                else
+//                    $total_product = $this->dbcommon->get_products_by_cat_num(NULL, NULL, NULL, 'store');
+//            } else {
+
+            if ($cat_id > 0)
                 $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store', $cat_id);
-                $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id);
-            } else {
+            else
                 $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store');
+//            }
+//            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+//                if ($cat_id == 7)
+//                    $products = $this->dbcommon->get_vehicle_products($cat_id, NULL, NULL, 15, $start, NULL, $search, 'storeUser');
+//                elseif ($cat_id == 8)
+//                    $products = $this->dbcommon->get_real_estate_products($cat_id, NULL, NULL, 15, $start, NULL, $search, 'storeUser');
+//                else {
+//                    if ($cat_id > 0)
+//                        $products = $this->dbcommon->get_product_by_categories($cat_id, NULL, NULL, 15, $start, NULL, NULL, $search, NULL, 'storeUser');
+//                    else
+//                        $products = $this->dbcommon->get_product_by_categories(NULL, NULL, NULL, 15, NULL, NULL, NULL, $search, NULL, 'storeUser');
+//                }
+//            } else {
+            if ($cat_id > 0)
+                $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id);
+            else
                 $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store');
-            }
+//            }
+//            echo $this->db->last_query();
 
             $currentusr = $this->session->userdata('gen_user');
 
@@ -3325,10 +3335,17 @@ class Home extends My_controller {
         $start = 0;
         $hide = "false";
 
+//        if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+//            if ($cat_id > 0)
+//                $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, NULL, NULL, 'store');
+//            else
+//                $total_product = $this->dbcommon->get_products_by_cat_num(NULL, NULL, NULL, 'store');
+//        } else {
         if ($cat_id > 0)
             $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store', $cat_id);
         else
             $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store');
+//        }
 
         $main_data['hide'] = "false";
         if ($total_product <= 15) {
@@ -3338,11 +3355,23 @@ class Home extends My_controller {
         $main_data['search'] = $search;
         $main_data['product_view'] = $_POST['product_view'];
 
+//        if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+//            if ($cat_id == 7)
+//                $products = $this->dbcommon->get_vehicle_products($cat_id, NULL, NULL, 15, NULL, NULL, $search, 'storeUser');
+//            elseif ($cat_id == 8)
+//                $products = $this->dbcommon->get_real_estate_products($cat_id, NULL, NULL, 15, NULL, NULL, $search, 'storeUser');
+//            else {
+//                if ($cat_id > 0)
+//                    $products = $this->dbcommon->get_product_by_categories($cat_id, NULL, NULL, 15, NULL, NULL, NULL, $search, NULL, 'storeUser');
+//                else
+//                    $products = $this->dbcommon->get_product_by_categories(NULL, NULL, NULL, 15, NULL, NULL, NULL, $search, NULL, 'storeUser');
+//            }
+//        } else {
         if ($cat_id > 0)
             $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id);
         else
             $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store');
-
+//        }
         $main_data['listing'] = $products;
         $main_data['html'] = $this->load->view('store/filter_store_products', $main_data, TRUE);
 
@@ -3365,6 +3394,9 @@ class Home extends My_controller {
 
             $query = ' where store_owner=' . (int) $user_id;
             $store_data = $this->dbcommon->getrowdetails('store', $query, $offset = '0', $limit = '1');
+
+            $where = " where user_id ='" . $user_id . "'";
+            $store_user = $this->dbcommon->getdetails('user', $where);
 
             $user_status = 0;
             if ($store_data->store_status == 0)
@@ -3409,10 +3441,11 @@ class Home extends My_controller {
             $start = 0;
             $hide = "false";
 
-            if ($cat_id > 0)
-                $total_product = $this->dbcommon->get_my_listing_count($user_id, $search, $user_status, 'storeUser', 'store', $cat_id);
-            else
-                $total_product = $this->dbcommon->get_my_listing_count($user_id, $search, $user_status, 'storeUser', 'store');
+//            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+//                $total_product = $this->dbcommon->get_products_by_cat_num(NULL, NULL, $user_id, 'store');
+//            } else {
+            $total_product = $this->dbcommon->get_my_listing_count($user_id, $search, $user_status, $store_user[0]->user_role, 'store');
+//            }
 
             $main_data['hide'] = "false";
             if ($total_product <= 15) {
@@ -3422,11 +3455,19 @@ class Home extends My_controller {
             $main_data['search'] = $search;
             $main_data['product_view'] = $_POST['product_view'];
 
+//            if (isset($_POST['product_view']) && $_POST['product_view'] == 'list') {
+//                if ($cat_id == 7)
+//                    $products = $this->dbcommon->get_vehicle_products(NULL, NULL, NULL, 15, NULL, $store_data->store_owner, $search, $store_user[0]->user_role);
+//                elseif ($cat_id == 8)
+//                    $products = $this->dbcommon->get_real_estate_products(NULL, NULL, NULL, 15, NULL, $store_data->store_owner, $search, $store_user[0]->user_role);
+//                else
+//                    $products = $this->dbcommon->get_product_by_categories(NULL, NULL, NULL, 15, NULL, NULL, $store_data->store_owner, $search, NULL, $store_user[0]->user_role);
+//            } else
             if ($cat_id > 0)
-                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, 'storeUser', 'store', $cat_id);
+                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, $store_user[0]->user_role, 'store', $cat_id);
             else
-                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, 'storeUser', 'store');
-//            echo $this->db->last_query();
+                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, $store_user[0]->user_role, 'store');
+
             $main_data['listing'] = $products;
             $main_data['html'] = $this->load->view('store/store_products', $main_data, TRUE);
 
@@ -3455,14 +3496,14 @@ class Home extends My_controller {
             $store_user = $this->dbcommon->getdetails('user', $where_store);
             $store_arr['store_user'] = $store_user;
 
-            if (isset($store_user[0]->contact_number) && !empty($store_user[0]->contact_number))
+            if ($store_user[0]->contact_number != '')
                 $store_arr['contact_no'] = $store_user[0]->contact_number;
-            elseif (isset($store_user[0]->phone) && !empty($store_user[0]->phone))
+            elseif ($store_user[0]->phone != '')
                 $store_arr['contact_no'] = $store_user[0]->phone;
             else
                 $store_arr['contact_no'] = '-';
 
-            if (isset($store_user[0]->nick_name) && !empty($store_user[0]->nick_name))
+            if (!empty($store_user[0]->nick_name))
                 $store_arr['seller_name'] = $store_user[0]->nick_name;
             else
                 $store_arr['seller_name'] = $store_user[0]->username;

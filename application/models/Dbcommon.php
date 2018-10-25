@@ -693,7 +693,6 @@ class Dbcommon extends CI_Model {
             $this->db->where('product.product_for', 'store');
             $this->db->where('product.product_posted_by', $posted_by);
         } else {
-
             if ($user_role != NULL && $user_role == 'storeUser') {
                 $this->db->select('store.store_domain');
                 $this->db->where('product.product_for', 'store');
@@ -701,11 +700,12 @@ class Dbcommon extends CI_Model {
             } else {
                 $this->db->where('product.product_for', 'classified');
             }
-            if ($latest != NULL) {
-                
-            } else
-                $this->db->order_by('featured_ad', 'desc');
         }
+
+        if ($latest != NULL) {
+            
+        } else
+            $this->db->order_by('featured_ad', 'desc');
 
         if (in_array(state_id_selection, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain'))) {
             $selected_state_id = $this->state_id(state_id_selection);
@@ -727,7 +727,7 @@ class Dbcommon extends CI_Model {
                 OR category.catagory_name LIKE '%" . addslashes($arr) . "%'
                 OR user.username LIKE '%" . addslashes($arr) . "%'
                 OR user.nick_name LIKE '%" . addslashes($arr) . "%'
-                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  AND ";
+                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  OR ";
             }
 
             $where_ = substr($query_string, 0, -4) . ') ';
@@ -838,17 +838,17 @@ class Dbcommon extends CI_Model {
         if ($user_id != NULL) {
             $this->db->where('product.product_posted_by', $user_id);
             $this->db->where('product.product_for', 'store');
-        } else {
-
-            if ($user_role != NULL && $user_role == 'storeUser') {
-                $this->db->select('store.store_domain');
-                $this->db->where('product.product_for', 'store');
-                $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
-            } else {
-                $this->db->where('product.product_for', 'classified');
-            }
-            $this->db->order_by('featured_ad', 'desc');
         }
+
+        if ($user_role != NULL && $user_role == 'storeUser') {
+            $this->db->select('store.store_domain');
+            $this->db->where('product.product_for', 'store');
+            $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+        } else {
+            $this->db->where('product.product_for', 'classified');
+        }
+        $this->db->order_by('featured_ad', 'desc');
+
 
         if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
 
@@ -865,7 +865,7 @@ class Dbcommon extends CI_Model {
                 OR category.catagory_name LIKE '%" . addslashes($arr) . "%'
                 OR user.username LIKE '%" . addslashes($arr) . "%'
                 OR user.nick_name LIKE '%" . addslashes($arr) . "%'
-                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  AND ";
+                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  OR ";
             }
 
             $where_ = substr($query_string, 0, -4) . ') ';
@@ -994,17 +994,17 @@ class Dbcommon extends CI_Model {
         if ($user_id != NULL) {
             $this->db->where('product.product_posted_by', $user_id);
             $this->db->where('product.product_for', 'store');
-        } else {
-
-            if ($user_role != NULL && $user_role == 'storeUser') {
-                $this->db->select('store.store_domain');
-                $this->db->where('product.product_for', 'store');
-                $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
-            } else {
-                $this->db->where('product.product_for', 'classified');
-            }
-            $this->db->order_by('featured_ad', 'desc');
         }
+
+        if ($user_role != NULL && $user_role == 'storeUser') {
+            $this->db->select('store.store_domain');
+            $this->db->where('product.product_for', 'store');
+            $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+        } else {
+            $this->db->where('product.product_for', 'classified');
+        }
+        $this->db->order_by('featured_ad', 'desc');
+
 
         if (in_array(state_id_selection, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'rak', 'sharjah', 'uaq'))) {
             $selected_state_id = $this->state_id(state_id_selection);
@@ -1042,7 +1042,7 @@ class Dbcommon extends CI_Model {
                 OR category.catagory_name LIKE '%" . addslashes($arr) . "%'
                 OR user.username LIKE '%" . addslashes($arr) . "%'
                 OR user.nick_name LIKE '%" . addslashes($arr) . "%'
-                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  AND ";
+                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  OR ";
             }
 
             $where_ = substr($query_string, 0, -4) . ') ';
@@ -1236,12 +1236,6 @@ class Dbcommon extends CI_Model {
             $this->db->where('product.sub_category_id', $subcat);
         }
 
-        if ($product_for != NULL) {
-            $this->db->where('product.product_for', 'store');
-        } else {
-            $this->db->where('product.product_for', 'classified');
-        }
-
         if ($user_id != NULL) {
             $this->db->where('product.product_posted_by', $user_id);
         }
@@ -1271,12 +1265,18 @@ class Dbcommon extends CI_Model {
                 OR category.catagory_name LIKE '%" . addslashes($arr) . "%'
                 OR user.username LIKE '%" . addslashes($arr) . "%'
                 OR user.nick_name LIKE '%" . addslashes($arr) . "%'
-                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  AND ";
+                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  OR ";
             }
 
             $where_ = substr($query_string, 0, -4) . ') ';
 
             $this->db->where($where_);
+
+            $this->db->where_in('product.product_for', array('classified', 'store'));
+        } elseif ($product_for != NULL) {
+            $this->db->where('product.product_for', 'store');
+        } else {
+            $this->db->where('product.product_for', 'classified');
         }
 
         $query = $this->db->get('product');
@@ -1298,7 +1298,7 @@ class Dbcommon extends CI_Model {
         return $img_arr;
     }
 
-    function get_my_listing($user_id = NULL, $start = NULL, $limit = NULL, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL) {
+    function get_my_listing($user_id = NULL, $start = NULL, $limit = NULL, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL, $sub_cat_id = NULL) {
 
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user) && !empty($current_user)) {
@@ -1314,6 +1314,7 @@ class Dbcommon extends CI_Model {
         $this->db->from('product');
 
         $this->db->join('category', 'category.category_id = product.category_id', 'left');
+        $this->db->join('sub_category', 'sub_category.sub_category_id = product.sub_category_id', 'left');
         $this->db->join('state', 'state.state_id = product.state_id', 'left');
         $this->db->join('user', 'user.user_id = product.product_posted_by', 'left');
         $this->db->join('featureads', 'featureads.product_id = product.product_id', 'left');
@@ -1321,7 +1322,7 @@ class Dbcommon extends CI_Model {
 //        $this->db->join('(select count(*) count_image, product_id sub_product_id  from products_images pm group by pm.product_id) k', 'product.product_id=sub_product_id', 'left');
         $this->db->join('products_images pi', 'product.product_id = pi.product_id', 'left');
 
-        if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'list') {
+        if ((isset($_REQUEST['view']) && $_REQUEST['view'] == 'list') || (isset($_REQUEST['product_view']) && $_REQUEST['product_view'] == 'list')) {
             $this->db->select('ps.plate_source_name');
             $this->db->select('product_realestate_extras.Emirates, product_realestate_extras.PropertyType, product_realestate_extras.Bathrooms, product_realestate_extras.Bedrooms, product_realestate_extras.Area, product_realestate_extras.Amenities, product_realestate_extras.neighbourhood,product_realestate_extras.furnished, product_realestate_extras.pets, product_realestate_extras.broker_fee, product_realestate_extras.free_status, product_realestate_extras.ad_language, product_vehicles_extras.model, product_vehicles_extras.millage, product_vehicles_extras.color, product_vehicles_extras.type_of_car, product_vehicles_extras.year, product_vehicles_extras.make, product_vehicles_extras.vehicle_condition,if(user.nick_name!="",user.nick_name,user.username) as username1,user.nick_name,product.product_is_sold,mileage.name mileagekm,color.name colorname,user.facebook_id,user.twitter_id,user.google_id,brand.name bname,model.name mname', FALSE);
             $this->db->select('cmn.*,if(cmn.plate_prefix="-1","Other",if(cmn.plate_prefix="","-",ppx.prefix))  as plate_prefix', FALSE);
@@ -1384,9 +1385,34 @@ class Dbcommon extends CI_Model {
             $selected_state_id = $this->state_id(state_id_selection);
             $this->db->where('product.state_id', $selected_state_id);
         }
+                
+        if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
 
+            $search_value = trim($_REQUEST['s']);
+            $impl = explode(" ", $search_value);
+
+            $remove_index = array_filter($impl);
+            $reset_arr = array_values($remove_index);
+
+            $query_string = ' ( ';
+            foreach ($reset_arr as $arr) {
+
+                $query_string .= " ( product.product_name LIKE '%" . addslashes($arr) . "%'
+                OR category.catagory_name LIKE '%" . addslashes($arr) . "%'
+                OR user.username LIKE '%" . addslashes($arr) . "%'
+                OR user.nick_name LIKE '%" . addslashes($arr) . "%'
+                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  OR ";
+            }
+
+            $where_ = substr($query_string, 0, -4) . ') ';
+            $this->db->where($where_);
+        }
+                
         if (!is_null($cat_id))
             $this->db->where('product.category_id', $cat_id);
+
+        if (!is_null($sub_cat_id))
+            $this->db->where('product.sub_category_id', $sub_cat_id);
 
         $this->db->group_by("product.product_id");
 
@@ -1403,23 +1429,13 @@ class Dbcommon extends CI_Model {
         return $data;
     }
 
-    function get_my_listing_count($user_id, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL) {
+    function get_my_listing_count($user_id, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL, $sub_cat_id = NULL) {
 
         $this->db->select('product.product_id');
         $this->db->from('product');
         $this->db->join('user', 'user.user_id = product.product_posted_by', 'left');
-
-        if (isset($_REQUEST['val']) && $_REQUEST['val'] == 'Unapprove')
-            $this->db->where('product.product_is_inappropriate', 'Unapprove');
-        elseif (isset($_REQUEST['val']) && $_REQUEST['val'] == 'NeedReview')
-            $this->db->where('product.product_is_inappropriate', 'NeedReview');
-        else
-            $this->db->where('product.product_is_inappropriate', 'Approve');
-
-        $this->db->where('product.product_deactivate IS NULL');
-        if (isset($user_id) && !is_null($user_id))
-            $this->db->where('product.product_posted_by', $user_id);
-
+        $this->db->join('category', 'category.category_id = product.category_id', 'left');
+        $this->db->join('sub_category', 'sub_category.sub_category_id = product.sub_category_id', 'left');
         if ($search != NULL) {
             if ($search == 'new')
                 $this->db->order_by('product.admin_modified_at', 'desc');
@@ -1435,18 +1451,7 @@ class Dbcommon extends CI_Model {
         else
             $this->db->where_in('product.is_delete', array(0, 6));
 
-        if ($user_role != NULL && $user_role == 'storeUser') {
-            $this->db->where('product.product_for', 'store');
-            $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
-        } elseif ($user_role != NULL && $user_role == 'generalUser')
-            $this->db->where('product.product_for', 'classified');
-
-        if ($request_from != NULL && $request_from == 'store' && in_array(state_id_selection, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain'))) {
-            $selected_state_id = $this->state_id(state_id_selection);
-            $this->db->where('product.state_id', $selected_state_id);
-        }
-
-        if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'list') {
+        if ((isset($_REQUEST['view']) && $_REQUEST['view'] == 'list') || (isset($_REQUEST['product_view']) && $_REQUEST['product_view'] == 'list')) {
 
             $this->db->join('product_realestate_extras', 'product_realestate_extras.product_id = product.product_id', 'left');
             $this->db->join('product_vehicles_extras', 'product_vehicles_extras.product_id = product.product_id', 'left');
@@ -1462,10 +1467,56 @@ class Dbcommon extends CI_Model {
             $this->db->join('repeating_numbers rn', 'rn.id = cmn.repeating_number', 'left');
             $this->db->join('color', 'color.id=product_vehicles_extras.color', 'left');
         }
+
+        if (isset($_REQUEST['val']) && $_REQUEST['val'] == 'Unapprove')
+            $this->db->where('product.product_is_inappropriate', 'Unapprove');
+        elseif (isset($_REQUEST['val']) && $_REQUEST['val'] == 'NeedReview')
+            $this->db->where('product.product_is_inappropriate', 'NeedReview');
+        else
+            $this->db->where('product.product_is_inappropriate', 'Approve');
+
+        $this->db->where('product.product_deactivate IS NULL');
+        if (isset($user_id) && !is_null($user_id))
+            $this->db->where('product.product_posted_by', $user_id);
+
+        if ($user_role != NULL && $user_role == 'storeUser') {
+            $this->db->where('product.product_for', 'store');
+            $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+        } elseif ($user_role != NULL && $user_role == 'generalUser')
+            $this->db->where('product.product_for', 'classified');
+
+        if ($request_from != NULL && $request_from == 'store' && in_array(state_id_selection, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain'))) {
+            $selected_state_id = $this->state_id(state_id_selection);
+            $this->db->where('product.state_id', $selected_state_id);
+        }
+        
+        if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
+
+            $search_value = trim($_REQUEST['s']);
+            $impl = explode(" ", $search_value);
+
+            $remove_index = array_filter($impl);
+            $reset_arr = array_values($remove_index);
+
+            $query_string = ' ( ';
+            foreach ($reset_arr as $arr) {
+
+                $query_string .= " ( product.product_name LIKE '%" . addslashes($arr) . "%'
+                OR category.catagory_name LIKE '%" . addslashes($arr) . "%'
+                OR user.username LIKE '%" . addslashes($arr) . "%'
+                OR user.nick_name LIKE '%" . addslashes($arr) . "%'
+                OR sub_category.sub_category_name LIKE '%" . addslashes($arr) . "%' )  OR ";
+            }
+
+            $where_ = substr($query_string, 0, -4) . ') ';
+            $this->db->where($where_);
+        }
         
         if (!is_null($cat_id))
             $this->db->where('product.category_id', $cat_id);
-        
+        if (!is_null($sub_cat_id))
+            $this->db->where('product.sub_category_id', $sub_cat_id);
+
         $this->db->group_by("product.product_id");
         $query = $this->db->get();
         $data = $query->num_rows();
@@ -4104,7 +4155,7 @@ class Dbcommon extends CI_Model {
                 OR c.catagory_name LIKE '%" . addslashes($arr) . "%'
                 OR u.username LIKE '%" . addslashes($arr) . "%'
                 OR u.nick_name LIKE '%" . addslashes($arr) . "%'
-                OR sc.sub_category_name LIKE '%" . addslashes($arr) . "%' )  AND ";
+                OR sc.sub_category_name LIKE '%" . addslashes($arr) . "%' )  OR ";
             }
 
             $where .= substr($query_string, 0, -4) . ') and p.is_delete=0 ';

@@ -19,14 +19,14 @@ class My_controller extends CI_Controller {
         $data = array();
 //        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
 
-        $left_side_category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
-        foreach ($left_side_category as $key => $value) {
+        $all_category_ = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
+        foreach ($all_category_ as $key => $value) {
             $where = " 1=1 order by sub_cat_order asc";
             $sub_categories = $this->dbcommon->filter('sub_category', $where);
-            $left_side_category[$key]['sub_categories'] = $sub_categories;
+            $all_category_[$key]['sub_categories'] = $sub_categories;
         }
 
-        $data['left_side_category'] = $left_side_category;
+        $data['all_category_'] = $all_category_;
 
         $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
         $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);

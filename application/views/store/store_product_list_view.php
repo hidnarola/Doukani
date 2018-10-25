@@ -115,57 +115,61 @@
                                     <?php if ($pro['category_id'] == 7 || $pro['category_id'] == 8) { ?>
 
                                         <?php if ($pro['category_id'] == 7) { ?>
-                                            <?php if (@$pro['year'] != "") { ?>
+                                            <?php if (isset($pro['year']) && !empty($pro['year'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Year :</span><p><?php echo @$pro['year']; ?></p></div>
-                                            <?php } if (@$pro['colorname']) { ?>
+                                            <?php } if (isset($pro['colorname']) && !empty($pro['colorname'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Color : </span><p><?php echo @$pro['colorname']; ?></p></div>
-                                            <?php } if (@$pro['mileagekm']) { ?>
+                                            <?php } if (isset($pro['mileagekm']) && !empty($pro['mileagekm'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>KM : </span><p><?php echo @$pro['mileagekm']; ?></p></div>
-                                            <?php } if (@$pro['bname']) { ?>
+                                            <?php } if (isset($pro['bname']) && !empty($pro['bname'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Brand : </span><p><?php echo @$pro['bname']; ?></p></div>
-                                            <?php }if (@$pro['mname']) { ?>
+                                            <?php }if (isset($pro['mname']) && !empty($pro['mname'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Model :</span><p> <?php echo @$pro['mname']; ?></p></div>
-                                            <?php } if (@$pro['type_of_car']) { ?>
+                                            <?php } if (isset($pro['type_of_car']) && !empty($pro['type_of_car'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Type : </span><p><?php echo @$pro['type_of_car']; ?></p></div>
-                                            <?php }if (@$pro['make']) { ?>
+                                            <?php }if (isset($pro['make']) && !empty($pro['make'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Make : </span><p><?php echo @$pro['make']; ?></p></div>
-                                            <?php }if (@$pro['car_number'] && @$pro['sub_category_id'] == '144') { ?>
+                                            <?php }if (isset($pro['car_number']) && !empty($pro['car_number']) && @$pro['sub_category_id'] == '144') { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Car Number : </span><p><?php echo @$pro['car_number']; ?></p></div>
-                                            <?php }if (@$pro['plate_source_name'] && @$pro['sub_category_id'] == '144') { ?>
+                                            <?php }if (isset($pro['plate_source_name']) && !empty($pro['plate_source_name']) && @$pro['sub_category_id'] == '144') { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Plate Source : </span><p><?php echo @$pro['plate_source_name']; ?></p></div>
-                                            <?php }if (@$pro['plate_prefix'] && @$pro['sub_category_id'] == '144') { ?>
+                                            <?php }if (isset($pro['plate_prefix']) && !empty($pro['plate_prefix']) && @$pro['sub_category_id'] == '144') { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Plate Prefix : </span><p><?php echo @$pro['plate_prefix']; ?></p></div>
-                                            <?php }if (@$pro['plate_digit'] && @$pro['sub_category_id'] == '144') { ?>
+                                            <?php }if (isset($pro['plate_digit']) && !empty($pro['plate_digit']) && @$pro['sub_category_id'] == '144') { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Plate Digit : </span><p><?php echo @$pro['plate_digit']; ?></p></div>                                                    
-                                            <?php }if (@$pro['car_repeating_number'] && @$pro['sub_category_id'] == '144') { ?>
+                                            <?php }if (isset($pro['car_repeating_number']) && !empty($pro['car_repeating_number']) && @$pro['sub_category_id'] == '144') { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Repeating Number : </span><p><?php echo @$pro['car_repeating_number']; ?></p></div>
                                             <?php } ?>
 
                                         <?php } else if ($pro['category_id'] == 8) { ?>
-                                            <?php if (@$pro['Country'] != "") { ?>
+                                            <?php if (isset($pro['Country']) && !empty($pro['Country'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Country : </span><p><?php echo @$pro['Country']; ?></p></div>
-                                            <?php } if (@$pro['Emirates']) { ?>
+                                            <?php } if (isset($pro['Emirates']) && !empty($pro['Emirates'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Emirates : </span><p><?php echo @$pro['Emirates']; ?></p></div>
-                                            <?php } if (@$pro['PropertyType']) { ?>
+                                            <?php } if (isset($pro['PropertyType']) && !empty($pro['PropertyType'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Property Type : </span><p><?php echo @$pro['PropertyType']; ?></p></div>
-                                            <?php } if (@$pro['Bedrooms']) { ?>
+                                            <?php } if (isset($pro['Bedrooms']) && !empty($pro['Bedrooms'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Bedrooms : </span><p><?php
                                                         if (@$pro['Bedrooms'] == '-1')
                                                             echo 'More than 10';
                                                         else
                                                             echo @$pro['Bedrooms'];
                                                         ?></p></div>
-                                            <?php }if (@$pro['Bathrooms']) { ?>
+                                            <?php }if (isset($pro['Bathrooms']) && !empty($pro['Bathrooms'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Bathrooms : </span><p><?php
                                                         if ($pro['Bathrooms'] == '-1')
                                                             echo 'More than 10';
                                                         else
                                                             echo @$pro['Bathrooms'];
                                                         ?></p></div>                                                    
-                                            <?php } if (@$pro['Area']) { ?>
+                                            <?php } if (isset($pro['Area']) && !empty($pro['Area'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Area : </span><p><?php echo @$pro['Area']; ?></p></div>
-                                            <?php } if (@$pro['Amenities']) { ?>
+                                            <?php } if (isset($pro['Amenities']) && !empty($pro['Amenities'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Amenities : </span><p><?php echo @$pro['Amenities']; ?></p></div>
+                                            <?php } if (isset($pro['pets']) && !empty($pro['pets'])) { ?>
+                                                <div class="col-sm-4 col-md-3"><span>Pets : </span><p><?php echo ucfirst($pro['pets']); ?></p></div>
+                                            <?php } if (isset($pro['broker_fee']) && !empty($pro['broker_fee'])) { ?>
+                                                <div class="col-sm-4 col-md-3"><span>Broker Fee : </span><p><?php echo ucfirst($pro['broker_fee']); ?></p></div>
                                             <?php } ?>
                                         <?php } ?>
                                         <?php

@@ -1812,8 +1812,6 @@ class User extends My_controller {
 
         $listing = $this->dbcommon->get_my_listing($current_user['user_id'], $offset, $config["per_page"], NULL, $user_status, $last_login_as);
 
-
-
         if (isset($_REQUEST['val']) && $_REQUEST['val'] == 'Unapprove')
             $title = 'Unapprove';
         elseif (isset($_REQUEST['val']) && $_REQUEST['val'] == 'NeedReview')
