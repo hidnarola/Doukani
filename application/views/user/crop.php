@@ -434,7 +434,7 @@ function myFunction() {
 				$("#dummyModal").modal('hide');
 				//$(".modal-open").css('display','none');
 				$(".imgareaselect-outer").css('display','none');
-				console.log(response);
+//				console.log(response);
 				if(response=='success')
 				{	
 					
@@ -503,11 +503,11 @@ $(document).ready(function(){
 
 	function processJson(data) {    
 		alert("it worked" + data);
-		console.log("respose: " + data);
+//		console.log("respose: " + data);
 	}
 	function showRequest(formData, jqForm, options) {    
 		var queryString = $.param(formData);
-		console.log('About to submit: \n' + queryString + '\n');
+//		console.log('About to submit: \n' + queryString + '\n');
 		return true;
 	} 
 	
@@ -530,7 +530,7 @@ $(document).ready(function(){
 			$.post(url, {x1: x1, y1: y1,x2:x2,y2:y2,w:w,h:h,myfilename:myfilename}, function(response)
 			{    
 			$("#send-message-popup").modal('hide');
-				console.log(response);
+//				console.log(response);
 				if(response=='success')
 				{	
 					

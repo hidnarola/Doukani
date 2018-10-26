@@ -663,7 +663,7 @@
                     previewCrop: true,
                     success: function (response) {
                         $("#error_img").html("");
-                        console.log(response.files[0].name);
+//                        console.log(response.files[0].name);
                         var table_content = $(".table .table-striped").html();
                         if (table_content != '') {
                             $("#update_div").show();
@@ -681,7 +681,7 @@
                         //$("input[name='images_arr']").val(img_arr);              
                     },
                     error: function () {
-                        console.log("Error");
+//                        console.log("Error");
                     }
                 }).on('fileuploadadd', function (e, data) {
                     $("#error_img").html("");
@@ -852,7 +852,7 @@
                     },
                     previewCrop: true,
                     success: function (response) {
-                        console.log(response.files[0].name);
+//                        console.log(response.files[0].name);
                         $("#error_span").html("");
                         var table_content = $(".table .table-striped").html();
                         if (table_content != '') {
@@ -873,7 +873,7 @@
                     },
                     error: function () {
                         //alert("here");
-                        console.log("Error");
+//                        console.log("Error");
                     }
                 }).on('fileuploadadd', function (e, data) {
                     $("#error_span").html("");

@@ -81,7 +81,7 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
         <div class="logo" itemscope itemtype="https://schema.org/Organization">
             <a href="<?php echo $logo_link; ?>" style="text-decoration:none;" itemprop="url">
                 <img src="<?php echo HTTPS . website_url . $doukani_logo; ?>" alt="Doukani Logo" itemprop="logo"></a>
-                <!--<link href="<?php //echo HTTPS . website_url . $doukani_logo;    ?>"/>-->
+                <!--<link href="<?php //echo HTTPS . website_url . $doukani_logo;               ?>"/>-->
             <meta itemprop="name" content="Doukani" />
         </div>
         <div class="head-action" itemscope itemtype="https://schema.org/SiteNavigationElement">
@@ -92,15 +92,8 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
                     if (in_array($this->uri->segment(1), array('stores', 'store_search')) || in_array($this->uri->segment(2), array('stores', 'store_search'))) {
                         ?>
                         <div class="search-wrap">
-                            <div class="input-group store_search" style="width:75%">
-                                <form  method="get" action="<?php echo HTTPS . website_url . emirate_slug; ?>store_search">
-                                    <input type="text" class="form-control" aria-label="..." value="<?php if (isset($_REQUEST['search_value'])) echo $_REQUEST['search_value']; ?>" name="search_value" id="search_value" placeholder='Search Store'>
-                                    <button type="submit" class="btn btn-link" >
-                                        <?php
-                                        $this->load->view('svg_html/search');
-                                        ?>  
-                                    </button>
-                                </form>
+                            <div class="input-group store_search">
+                                <?php $this->load->view('include/search_box'); ?>
                             </div>
                         </div>
                         <?php
@@ -110,15 +103,8 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
                 } else {
                     ?>
                     <div class="search-wrap">
-                        <div class="input-group store_search"  style="width:75%">
-                            <form  method="get" action="<?php echo $store_url . emirate_slug; ?>search">                                <!-- /btn-group -->
-                                <input type="text" class="form-control" aria-label="..." value="<?php if (isset($_REQUEST['s'])) echo $_REQUEST['s']; ?>" name="s" id="search_value" placeholder='Search product in store'>
-                                <button type="submit" class="btn btn-link" >
-                                    <?php
-                                    $this->load->view('svg_html/search');
-                                    ?>  
-                                </button>
-                            </form>
+                        <div class="input-group store_search">
+                            <?php $this->load->view('include/search_box'); ?>
                         </div>
                     </div>
                     <?php
@@ -127,83 +113,9 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
                 ?>
                 <div class="search-wrap">
                     <div class="input-group store_search">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">                             
-                                <?php
-                                if (isset($category_name))
-                                    echo $category_name . '&nbsp;';
-                                else
-                                    echo 'Categories';
-                                ?>
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu">
-                                <?php
-                                if (in_array($this->uri->segment(1), array('alloffers', 'offers', 'companies')) ||
-                                        (isset($offer_detail) && $offer_detail == 'yes') ||
-                                        (isset($offer_company_page) && $offer_company_page == 'yes') ||
-                                        (isset($company_followers_page) && $company_followers_page == 'yes')
-                                ) {
-                                    ?>
-                                    <li><a href="<?php echo HTTPS . website_url . 'offers'; ?>">All Categories</a></li>
-                                    <?php foreach ($category as $cat): ?>
-                                        <li>
-                                            <a href="<?php echo HTTPS . website_url . 'offers/?cat_id=' . $cat['category_id']; ?>"><?php echo str_replace('\n', " ", $cat['catagory_name']); ?></a>
-                                        </li>
-                                        <?php
-                                    endforeach;
-                                } else {
-                                    ?>
-                                    <li><a href="<?php echo HTTPS . website_url . emirate_slug . 'search'; ?>">All Categories</a></li>
-                                    <?php foreach ($category as $cat): ?>
-                                        <li>
-                                            <a href="<?php echo HTTPS . website_url . emirate_slug . $cat['category_slug']; ?>"><?php echo str_replace('\n', " ", $cat['catagory_name']); ?></a>
-                                        </li>
-                                    <?php
-                                    endforeach;
-                                }
-                                ?>
-                            </ul>
-                        </div>
-                        <!-- /btn-group -->
                         <?php
-                        if (in_array($this->uri->segment(1), array('alloffers', 'offers', 'companies')) ||
-                                (isset($offer_detail) && $offer_detail == 'yes') ||
-                                (isset($offer_company_page) && $offer_company_page == 'yes') ||
-                                (isset($company_followers_page) && $company_followers_page == 'yes')
-                        ) {
-                            $search_path_ = HTTPS . website_url . 'offers';
-                        } else {
-                            if (isset($category_name) && isset($category_slug))
-                                $search_path_ = HTTPS . website_url . emirate_slug . $category_slug;
-                            else
-                                $search_path_ = HTTPS . website_url . emirate_slug . 'search';
-                        }
-                        ?>                    
-                        <form  method="get" id="search_bar_frm" action="<?php echo $search_path_; ?>"> 
-                            <script type="application/ld+json">
-                                {
-                                "@context": "https://schema.org",
-                                "@type": "WebSite",
-                                "url": "<?php echo HTTPS . website_url; ?>",
-                                "name" : "Doukani",
-                                "potentialAction": {
-                                "@type": "SearchAction",
-                                "target": "https://doukani.com/search/?s={s}",
-                                "query-input": "required name=s"
-                                }
-                                }
-                            </script>
-                            <input type="text" class="form-control" aria-label="..." value="<?php echo @$search_value ? strip_tags($search_value) : @strip_tags($_GET['s']); ?>" name="s" id="s">
-                            <input type="hidden" class="form-control" aria-label="..." value="<?php echo @$_GET['cat_id'] ? $_GET['cat_id'] : ''; ?>" name="cat_id">
-                            <input type="hidden" class="form-control" aria-label="..." value="<?php echo @$_GET['view'] ? $_GET['view'] : ''; ?>" name="view">
-                            <button type="submit" class="btn btn-link">
-                                <?php
-                                $this->load->view('svg_html/search');
-                                ?>  
-                            </button>
-                        </form>
+                        $this->load->view('include/search_box');
 
-                        <?php
                         if (in_array($this->uri->segment(1), array('alloffers', 'offers', 'companies')) ||
                                 (isset($offer_detail) && $offer_detail == 'yes') ||
                                 (isset($offer_company_page) && $offer_company_page == 'yes') ||
@@ -221,10 +133,10 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
                                 $view_list = '';
                             ?>
                             <a href="<?php echo HTTPS . website_url . emirate_slug . 'advanced_search' . $view_list; ?>" class="adv-search" style="font-size:10px;" itemprop="url"><span class="plus_adv" >+</span> <span class="adv_header_lbl" itemprop="name"><b>ADVANCED SEARCH</b></span></a>
-    <?php } ?>
+                        <?php } ?>
                     </div>
                 </div>            
-<?php } ?>
+            <?php } ?>
 
             <ul class="sub-action">
                 <?php
@@ -288,14 +200,14 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
                 }
                 ?>
 
-<?php if ($this->session->userdata('gen_user')) { ?>
+                <?php if ($this->session->userdata('gen_user')) { ?>
                     <li>
                         <a href="<?php echo HTTPS . website_url; ?>user/favorite" data-toggle="tooltip" data-placement="bottom" title="Favorites List" rel="nofollow"><i class="fa fa-star" aria-hidden="true"></i>
                         </a>
                     </li>                
                 <?php } else { ?>
                     <li><a href="<?php echo HTTPS . website_url; ?>login/index" data-toggle="tooltip" data-placement="bottom" title="Favorites List"><i class="fa fa-star" aria-hidden="true" rel="nofollow"></i></a></li>
-            <?php } ?>
+                <?php } ?>
             </ul>
             <?php
             if (isset($current_user) && $current_user != '') {
@@ -341,12 +253,12 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
                         </ul>
                     </div>
                 </div>
-<?php } else { ?>
+            <?php } else { ?>
                 <div class="btn-group log-wrap" role="group" aria-label="...">
                     <a href="javascript:void(0);" onclick="load_page();" class="btn log-btn" rel="nofollow">Login</a>
                     <a href="<?php echo HTTPS . website_url; ?>registration" class="btn sign-btn" rel="nofollow" itemprop="url"><span itemprop="name">Sign up</span></a>
                 </div>
-<?php } ?>
+            <?php } ?>
         </div>
     </div>
 </header>

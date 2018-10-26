@@ -156,7 +156,7 @@
         var checkedValues = $('.individual_'+buyer_id+"_"+product_owner+"_"+product_id +':checked').map(function () {
             return this.value;
         }).get();
-        console.log(checkedValues);
+//        console.log(checkedValues);
         
         if(checkedValues!='') {
             

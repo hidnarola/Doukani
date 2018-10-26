@@ -147,7 +147,13 @@ foreach ($products as $key => $val) {
             }
         }
     }
-    ?></div><div class="price"><h4><?php echo $product_price; ?></h4></div> </div><div class="by-user col-sm-6 padding5"><img src="<?php echo $profile_picture; ?>" alt="Profile Image" class="img-responsive img-circle" ' + imgproerr + ' /><a href="<?php echo base_url() . emirate_slug . $val['user_slug'] . '?view=map'; ?>"><?php echo $val['username1']; ?></a></div><div class="Viewouterbutton"><a href="<?php echo $product_path; ?>" class="btn mybtn">View</a></div></div></div>';
+
+
+    if (isset($val['product_for']) && $val['product_for'] == 'store' && isset($val['store_domain']) && !empty($val['store_domain']))
+        $user_profile_pg = HTTP . $val['store_domain'] . after_subdomain . remove_home;
+    else
+        $user_profile_pg = base_url() . emirate_slug . $val['user_slug'] . '?view=map';
+    ?></div><div class="price"><h4><?php echo $product_price; ?></h4></div> </div><div class="by-user col-sm-6 padding5"><img src="<?php echo $profile_picture; ?>" alt="Profile Image" class="img-responsive img-circle" ' + imgproerr + ' /><a href="<?php echo $user_profile_pg; ?>"><?php echo $val['username1']; ?></a></div><div class="Viewouterbutton"><a href="<?php echo $product_path; ?>" class="btn mybtn">View</a></div></div></div>';
 
                     var html = '';
     <?php
@@ -166,7 +172,7 @@ foreach ($products as $key => $val) {
                         data.push({
                             lon: <?= $product_longitude; ?>,
                             lat: <?= $product_latitude; ?>,
-                            h: "<?php //echo $val['product_name'];        ?>",
+                            h: "<?php //echo $val['product_name'];             ?>",
                             d: ans
                         });
     <?php } ?>
@@ -229,7 +235,7 @@ foreach ($products as $key => $val) {
                                         <h3>Search Result</h3>
                                         <div class="content-top-option">                                                                                        <?php $this->load->view('home/advanced_search_common'); ?>
                                         </div>
-                                    <?php
+                                        <?php
                                     } elseif (isset($my_listing) && $my_listing == 'yes') {
                                         $this->load->view('user/listings_common');
                                     } elseif (isset($my_deactivateads) && $my_deactivateads == 'yes') {
@@ -243,33 +249,33 @@ foreach ($products as $key => $val) {
                                     } else {
                                         ?>
                                         <div class="content-top-option">
-                                        <?php $this->load->view('home/category_common'); ?>
+                                            <?php $this->load->view('home/category_common'); ?>
                                         </div>
-                                            <?php $this->load->view('home/category_description'); ?>
-                                        <?php } ?>
+                                        <?php $this->load->view('home/category_description'); ?>
+                                    <?php } ?>
 
                                     <?php if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) { ?>
 
-                                    <?php
+                                        <?php
                                     } else {
                                         if (isset($subcat) && sizeof($subcat) > 0) {
                                             ?>
                                             <div class="TagsList">
                                                 <div class="subcats cat_desc_div">
                                                     <div class="col-sm-12 no-padding-xs">
-        <?php
-        $cat_inc = 0;
-        $count_cats = count($subcat);
-        foreach ($subcat as $sub) {
-            if ($cat_inc < 9) {
-                ?>
+                                                        <?php
+                                                        $cat_inc = 0;
+                                                        $count_cats = count($subcat);
+                                                        foreach ($subcat as $sub) {
+                                                            if ($cat_inc < 9) {
+                                                                ?>
                                                                 <div class="col-sm-6 col-md-6 col-lg-4">
                                                                     <a href="<?php echo base_url() . emirate_slug . $sub['sub_category_slug'] . '/?view=map' . $order_option; ?>" rel="nofollow"><?php echo $sub['name']; ?> <span class="count">(<?php echo $sub['total']; ?>)</span></a>
                                                                 </div>
-                <?php
-            } else {
-                if ($cat_inc == 10) {
-                    ?>
+                                                                <?php
+                                                            } else {
+                                                                if ($cat_inc == 10) {
+                                                                    ?>
                                                                     <div class="col-sm-12 text-center" id="load_more1">
                                                                         <button class="btn btn-blue cat_more_page" onclick="load_more_subcategories();" id="load_more_subcategories" value="0">Show More</button><br><br>
                                                                         <br/>
@@ -278,23 +284,26 @@ foreach ($products as $key => $val) {
                                                                         <button class="btn btn-blue cat_more_page" onclick="load_less_subcategories();" id="load_less_subcategories" value="0">Show Less</button><br><br>
                                                                         <br/>
                                                                     </div>
-                    <?php
-                }
-            }
-            $cat_inc++;
-        }
-        ?>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            $cat_inc++;
+                                                        }
+                                                        ?>
                                                     </div>
                                                 </div>
                                             </div>
-    <?php }
-} ?>                                    
+                                            <?php
+                                        }
+                                    }
+                                    ?>                                    
                                 </div>	
                                 <div class="row">
                                     <div class="col-sm-12 catlist">
                                         <?php if (isset($subcat_name) || isset($category_name)) { ?>
                                             <h3><?php echo str_replace('\n', " ", @$subcat_name ? @$subcat_name : @$category_name); ?></h3>                                        
-                                        <?php }
+                                            <?php
+                                        }
                                         if (!empty($products)) {
                                             ?>
                                             <div class="col-sm-12">
@@ -332,9 +341,11 @@ foreach ($products as $key => $val) {
                                                                 <tr>
                                                                     <td style="padding-left:20px"><a href="<?php echo $product_path; ?>"><?php echo $flag . ". " . $pro['product_name']; ?></a></td>
 
-                                                                    <td> <?php if (isset($pro['product_price']) && !empty($pro['product_price'])) {
-                                                            echo 'AED ' . number_format($pro['product_price']);
-                                                        } ?></td>                                                                    
+                                                                    <td> <?php
+                                                                        if (isset($pro['product_price']) && !empty($pro['product_price'])) {
+                                                                            echo 'AED ' . number_format($pro['product_price']);
+                                                                        }
+                                                                        ?></td>                                                                    
                                                                 </tr>
                                                                 <?php
                                                                 $flag++;
@@ -366,45 +377,45 @@ foreach ($products as $key => $val) {
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/front/javascripts/owl.carousel.js"></script>
         <script>
 <?php if (isset($latest_page) && $latest_page == 'yes') { ?>
-                                                                            $(document).ready(function () {
-                                                                                //featured ads
-                                                                                var owl2 = $("#owl-demo2");
-                                                                                owl2.owlCarousel({
-                                                                                    autoPlay: 2000,
-                                                                                    items: 4,
-                                                                                    itemsDesktop: [1000, 2],
-                                                                                    itemsDesktopSmall: [900, 2],
-                                                                                    itemsTablet: [600, 1],
-                                                                                    itemsMobile: false,
-                                                                                    stopOnHover: true
-                                                                                });
+                                                            $(document).ready(function () {
+                                                                //featured ads
+                                                                var owl2 = $("#owl-demo2");
+                                                                owl2.owlCarousel({
+                                                                    autoPlay: 2000,
+                                                                    items: 4,
+                                                                    itemsDesktop: [1000, 2],
+                                                                    itemsDesktopSmall: [900, 2],
+                                                                    itemsTablet: [600, 1],
+                                                                    itemsMobile: false,
+                                                                    stopOnHover: true
+                                                                });
 
-                                                                                $("#demo2_next").click(function () {
-                                                                                    owl2.trigger('owl.next');
-                                                                                })
-                                                                                $("#demo2_prev").click(function () {
-                                                                                    owl2.trigger('owl.prev');
-                                                                                })
+                                                                $("#demo2_next").click(function () {
+                                                                    owl2.trigger('owl.next');
+                                                                })
+                                                                $("#demo2_prev").click(function () {
+                                                                    owl2.trigger('owl.prev');
+                                                                })
 
 
-                                                                                var owl1 = $("#owl-demo1");
-                                                                                owl1.owlCarousel({
-                                                                                    autoPlay: 2000,
-                                                                                    items: 4,
-                                                                                    itemsDesktop: [1000, 2],
-                                                                                    itemsDesktopSmall: [900, 2],
-                                                                                    itemsTablet: [600, 1],
-                                                                                    itemsMobile: false,
-                                                                                    stopOnHover: true
-                                                                                });
+                                                                var owl1 = $("#owl-demo1");
+                                                                owl1.owlCarousel({
+                                                                    autoPlay: 2000,
+                                                                    items: 4,
+                                                                    itemsDesktop: [1000, 2],
+                                                                    itemsDesktopSmall: [900, 2],
+                                                                    itemsTablet: [600, 1],
+                                                                    itemsMobile: false,
+                                                                    stopOnHover: true
+                                                                });
 
-                                                                                $("#demo1_next").click(function () {
-                                                                                    owl1.trigger('owl.next');
-                                                                                })
-                                                                                $("#demo1_prev").click(function () {
-                                                                                    owl1.trigger('owl.prev');
-                                                                                });
-                                                                            });
+                                                                $("#demo1_next").click(function () {
+                                                                    owl1.trigger('owl.next');
+                                                                })
+                                                                $("#demo1_prev").click(function () {
+                                                                    owl1.trigger('owl.prev');
+                                                                });
+                                                            });
 <?php } ?>
         </script>
     </body>

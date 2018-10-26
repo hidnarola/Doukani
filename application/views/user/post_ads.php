@@ -1079,7 +1079,7 @@ function loadimage11(input,a)
 				
 				var imgcon	=	$("#blah1"+a)[0];				
 				var img = imgcon;				
-				console.log(img);
+//				console.log(img);
 				var pic_real_width, pic_real_height;
 				$("<img/>") 
 					.attr("src", $(img).attr("src"))
@@ -1120,7 +1120,7 @@ function loadimage22(input,a)
 				
 				var imgcon	=	$("#blah2"+a)[0];				
 				var img = imgcon;				
-				console.log(img);
+//				console.log(img);
 				var pic_real_width, pic_real_height;
 				$("<img/>") 
 					.attr("src", $(img).attr("src"))
@@ -1162,7 +1162,7 @@ function loadimage33(input,a)
 				
 				var imgcon	=	$("#blah3"+a)[0];				
 				var img = imgcon;				
-				console.log(img);
+//				console.log(img);
 				var pic_real_width, pic_real_height;
 				$("<img/>") 
 					.attr("src", $(img).attr("src"))
@@ -1204,7 +1204,7 @@ function loadimage44(input,a)
 				
 				var imgcon	=	$("#blah4"+a)[0];				
 				var img = imgcon;				
-				console.log(img);
+//				console.log(img);
 				var pic_real_width, pic_real_height;
 				$("<img/>") 
 					.attr("src", $(img).attr("src"))
@@ -1249,7 +1249,7 @@ $('#blah3').hide();
 					.height(hei);				
 					
 					var img = $("#blah")[0];
-						console.log(img);
+//						console.log(img);
 						var pic_real_width, pic_real_height;
 						$("<img/>") 
 						   .attr("src", $(img).attr("src"))
@@ -1288,7 +1288,7 @@ $('#blah3').hide();
 					.width(wid)
 					.height(hei);
 						var img = $("#blah1")[0];
-						console.log(img);
+//						console.log(img);
 						var pic_real_width, pic_real_height;
 						$("<img/>") 
 						   .attr("src", $(img).attr("src"))
@@ -1324,7 +1324,7 @@ $('#blah3').hide();
 					.width(wid)
 					.height(hei);
 						var img = $("#blah2")[0];
-						console.log(img);
+//						console.log(img);
 						var pic_real_width, pic_real_height;
 						$("<img/>") 
 						   .attr("src", $(img).attr("src"))
@@ -1361,7 +1361,7 @@ $('#blah3').hide();
 					.width(wid)
 					.height(hei);
 						var img = $("#blah3")[0];
-						console.log(img);
+//						console.log(img);
 						var pic_real_width, pic_real_height;
 						$("<img/>") 
 						   .attr("src", $(img).attr("src"))

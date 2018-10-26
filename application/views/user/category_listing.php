@@ -255,7 +255,7 @@
             var url = "<?php echo base_url() ?>home/add_to_favorites";
             var fav = 0;
             var id = $("div.star a i").attr('id');
-            console.log(id);
+//            console.log(id);
 			
              if($("#"+id).hasClass('fa-star-o')){
                   $("#"+id).closest('div').addClass('fav');

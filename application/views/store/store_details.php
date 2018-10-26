@@ -236,7 +236,7 @@ if (!empty($store_address)) {
         var window_height = parseInt($( window ).height());
         var window_width = parseInt($( window ).width());
         var get_height = parseInt(window_height) - parseInt(sum);
-        console.log(header_section + "==" + header_second +"====" + sum +"====" + window_height + "===" + get_height);
+//        console.log(header_section + "==" + header_second +"====" + sum +"====" + window_height + "===" + get_height);
         $('#website_load').height(get_height);
         $('#website_load').width('100%');
         var resizeId;
@@ -253,7 +253,7 @@ if (!empty($store_address)) {
             var get_height = parseInt(window_height) - parseInt(sum);
             $('#website_load').height(get_height);
             $('#website_load').width('100%');
-            console.log(header_section + "==" + header_second +"====" + sum +"====" + window_height + "===" + get_height);
+//            console.log(header_section + "==" + header_second +"====" + sum +"====" + window_height + "===" + get_height);
         });
         
         $('#loader_display').hide();

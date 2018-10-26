@@ -65,7 +65,7 @@
         var id = jQuery(this).attr('data-id');        
         var for_ = jQuery(this).attr('data-for');        
         var data_length = jQuery(this).attr('data-length');
-        console.log(id+ "==" + for_ + "==" + data_length);
+//        console.log(id+ "==" + for_ + "==" + data_length);
         if (id !== null) {
             $(document).find('.device_div').hide();
             $(document).find('.send_to_all').remove();      

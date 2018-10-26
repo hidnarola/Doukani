@@ -84,14 +84,14 @@
             start: function(event, ui) {
                 // 0 based array, add one
                 start = ui.item.prevAll().length + 1;
-                console.log(ui.item.prevAll());
-                console.log(start);
+//                console.log(ui.item.prevAll());
+//                console.log(start);
             },
             update: function(event, ui) {
                 // 0 based array, add one                            
                 end = ui.item.prevAll().length + 1;
-                console.log(ui.item.prevAll());
-                console.log(end);
+//                console.log(ui.item.prevAll());
+//                console.log(end);
                 var state = '';
                 if (start > end) {
                     state = 'up';
@@ -103,7 +103,7 @@
                 var newOrder = $(this).sortable('toArray');
                 var menu = $(this).attr('id');
                 //        alert(newOrder);
-                console.log(newOrder);
+//                console.log(newOrder);
                 $.post("<?php echo base_url() ?>admin/pages/order_pages", {order: newOrder});
                 var id = ui.item.context.innerHTML;
             }
@@ -114,14 +114,14 @@
         start: function(event, ui) {
                 // 0 based array, add one
                 start = ui.item.prevAll().length + 1;
-                console.log(ui.item.prevAll());
-                console.log(start);
+//                console.log(ui.item.prevAll());
+//                console.log(start);
             },
             update: function(event, ui) {
                 // 0 based array, add one                            
                 end = ui.item.prevAll().length + 1;
-                console.log(ui.item.prevAll());
-                console.log(end);
+//                console.log(ui.item.prevAll());
+//                console.log(end);
                 var state = '';
                 if (start > end) {
                     state = 'up';
@@ -133,7 +133,7 @@
                 var newOrder = $(this).sortable('toArray');
                 var menu = $(this).attr('id');
                 //        alert(newOrder);
-                console.log(newOrder);
+//                console.log(newOrder);
                 $.post("<?php echo base_url() ?>admin/pages/order_pages", {order: newOrder});
                 var id = ui.item.context.innerHTML;
             }

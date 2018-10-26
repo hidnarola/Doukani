@@ -42,7 +42,7 @@
                                                     if(isset($_REQUEST['cat_id']))
                                                         $cat_id = $_REQUEST['cat_id'];
                                                     
-                                                    foreach ($category as $cat) { ?>
+                                                    foreach ($offer_category as $cat) { ?>
                                                     <li class="li_<?php echo $cat['category_id']; ?> category_li  <?php echo (isset($cat_id) && $cat_id==$cat['category_id'])? 'active' : ''; ?>"> <!-- active  -->
                                                         <a href="javascript:void(0);" data-id="<?php echo $cat['category_id']; ?>" class="off_category">
                                                             <div class="cate-block">

@@ -227,7 +227,7 @@
                 var page = $(this).data('page');
                 $.post("<?php echo base_url() ?>admin/pages/set_location", {location: id, page_id: page, value: location_val}, function (response)
                 {
-                    console.log(response);
+//                    console.log(response);
 
 
                 });

@@ -180,7 +180,7 @@ if (isset($store_url) && $store_url != '') {
 
                     $(document).find("#subscribe").html('Subscribe');
 
-                    console.log(response.val);
+//                    console.log(response.val);
                 }, "json");
                 return false;
 //                form.submit();
@@ -553,7 +553,7 @@ if (isset($is_logged) && $is_logged != 0) {
                 },
                 success: function (response)
                 {
-                    console.log(response);
+//                    console.log(response);
 
                     var json = response,
                             obj = JSON.parse(json);
@@ -593,7 +593,7 @@ if (strpos($mypath_, after_subdomain) !== false) {
                         } else {
                             $('#alert_box').show();
                             $('#alert_msg').show();
-                            console.log(response);
+//                            console.log(response);
                             $("#alert_msg").html('<br><div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + ' ! <a class="close" data-dismiss="alert" href="javascript:void(0);">&times; </a></div>');
                             $("#login_submit").html('&nbsp; Log In');
                         }

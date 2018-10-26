@@ -445,14 +445,14 @@ $suffixUrl = $queryString;
             });
             $(document).find('#per_page1').on('change', function () {
                 var per_page = $(this).val();
-                console.log(per_page);
+//                console.log(per_page);
                 $('#per_page').val(per_page);
                 $(document).find('#submit').click();
             });
             $(document).on("click", "#update_status", function (e) {
                 var data_path = $(document).find(this).attr('data-path');
                 var data_id = $(document).find(this).attr('data-id');
-                console.log(data_id);
+//                console.log(data_id);
                 $(".sure .modal-sm .modal-header").css({"background": "#337ab7"});
                 $("#deleteConfirm").modal('show');
                 $(document).on("click", ".yes_i_want_delete", function (e) {

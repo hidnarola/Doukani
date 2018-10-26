@@ -209,7 +209,7 @@
 <script type="text/javascript">
     $(document).find('#per_page1').on('change', function () {
         var per_page = $(this).val();
-        console.log(per_page);
+//        console.log(per_page);
         $('#per_page').val(per_page);
         $(document).find('#submit').click();
     });

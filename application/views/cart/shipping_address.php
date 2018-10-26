@@ -128,10 +128,10 @@
                         $('.form-control').val('');
                         $('#shipping_form').hide();
 
-                        if (response == 'success')
-                            console.log('success');
-                        else
-                            console.log('failed to add/update');
+//                        if (response == 'success')
+//                            console.log('success');
+//                        else
+//                            console.log('failed to add/update');
                     });
                 }
             });

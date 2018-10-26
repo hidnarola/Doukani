@@ -644,7 +644,7 @@
 
                     $('#checked_values').val(checkedValues);
 
-                    console.log("===" + $('#checked_values').val());
+//                    console.log("===" + $('#checked_values').val());
                     if ($('#checked_values').val() == '' || $('#checked_values').val() == undefined)
                     {
                         $("#alert").modal('show');

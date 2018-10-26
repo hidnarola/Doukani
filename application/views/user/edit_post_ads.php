@@ -802,7 +802,7 @@
                     previewCrop: true,
                     success: function(response) {
                     $("#error_img").html("");
-                            console.log(response.files[0].name); var table_content = $(".table .table-striped").html();
+//                            console.log(response.files[0].name); var table_content = $(".table .table-striped").html();
                             if (table_content != '') {
                     $("#update_div").show();
                             $("#chk_del").show();

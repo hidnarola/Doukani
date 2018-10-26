@@ -831,7 +831,7 @@ if (!empty($product_images)) {
                     var url = "<?php echo base_url() ?>home/add_to_favorites";
                     var fav = 0;
                     var id = $(this).attr('id');
-                    console.log(id);
+//                    console.log(id);
                     if ($(this).hasClass('fa-star-o')) {
                         $(this).closest('div').addClass('fav');
                         $(this).removeClass("fa-star-o");
@@ -845,7 +845,7 @@ if (!empty($product_images)) {
                     }
 
                     $.post(url, {value: fav, product_id: id}, function (response) {
-                        console.log(response);
+//                        console.log(response);
                         if (response != 'Success' && response != 'failure')
                         {
                             $('#err_div').show();

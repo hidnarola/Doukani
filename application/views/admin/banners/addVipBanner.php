@@ -558,17 +558,17 @@
                         var st_cust = document.getElementById("st_cust");
                         if (st_now.checked) {
                             var start = '<?php echo date('Y-m-d'); ?>';
-                            console.log("start immediately");
+//                            console.log("start immediately");
                         } else {
                             if (st_cust.checked) {
                                 var start = $("#start_date").val();
-                                console.log("custom_date");
+//                                console.log("custom_date");
                             }
                         }
 
                         var end = $("#end_date").val();
                         if (end < start) {
-                            console.log("if part");
+//                            console.log("if part");
                             $("#lbl_dbo").show();
                             $("#lbl_dbo").text("Last Date Must be greater than Start Date");
                             return false;

@@ -25,7 +25,7 @@
                                     <ul class="list-ul boxes wide" itemscope itemtype="https://schema.org/BreadcrumbList">                              
                                         <?php 
                                             $link_pos = 1;
-                                            foreach ($category as $cat) { ?>
+                                            foreach ($offer_category as $cat) { ?>
                                             <li class="li_<?php echo $cat['category_id']; ?> category_li" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" > <!-- -active -->
                                                 
                                                 <a href="javascript:void(0);" data-id="<?php echo $cat['category_id']; ?>" class="off_category" itemprop="item">                                                    

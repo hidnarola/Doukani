@@ -1974,8 +1974,8 @@ div.price-group.controls{max-width:200px;float:left;}
 .classi-sub-head .head-action .search-wrap{max-width:600px;float:left;width:98%;}
 .classi-sub-head .search-wrap .input-group-btn .btn{padding:9px 15px;color:#bbb;font-size:14px;font-weight:700;border:solid 1px #ccc;border-right:transparent;margin:0;background:none;}
 .classi-sub-head .search-wrap .input-group .form-control, .classi-sub-head .search-wrap .input-group .form-control:focus{height:46px;border-left:transparent;box-shadow:none;}
-.store-pages .classi-sub-head .search-wrap .input-group .form-control, .store-pages .classi-sub-head .search-wrap .input-group .form-control:focus{border-left:solid 1px #ccc;}
-.store-page .classi-sub-head .search-wrap .input-group .form-control, .store-page .classi-sub-head .search-wrap .input-group .form-control:focus{border-left:solid 1px #ccc;}
+.store-pages .classi-sub-head .search-wrap .input-group .form-control, .store-pages .classi-sub-head .search-wrap .input-group .form-control:focus{/*border-left:solid 1px #ccc;*/ border-left: transparent;}
+.store-page .classi-sub-head .search-wrap .input-group .form-control, .store-page .classi-sub-head .search-wrap .input-group .form-control:focus{/*border-left:solid 1px #ccc;*/ border-left: transparent;}
 .classi-sub-head .search-wrap .input-group-btn > .btn:hover, .classi-sub-head .search-wrap .input-group-btn > .btn:focus, .classi-sub-head .search-wrap .input-group-btn > .btn:active{color:#999;border:solid 1px #ccc;border-right:transparent;background:none;box-shadow:none;}
 .classi-sub-head .search-wrap .input-group .btn-link{padding:0;height:47px;width:48px;top:-1px;right:-1px;background: #ed1b33;color:#FFF;}
 .classi-sub-head .search-wrap .input-group .btn-link img{width:100%;}

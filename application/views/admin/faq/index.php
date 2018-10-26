@@ -226,7 +226,7 @@
                 var page = $(this).data('page');
                 $.post("<?php echo base_url() ?>admin/faq/set_location", {location: id, faq_id: page, value: location_val}, function (response)
                 {
-                    console.log(response);
+//                    console.log(response);
                 });
             });
 

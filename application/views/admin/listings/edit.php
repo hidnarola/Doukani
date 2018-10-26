@@ -760,7 +760,7 @@ function isNumber1(evt) {
             previewCrop: true,
             success: function(response) {						
 				$("#error_img").html("");				
-				console.log(response.files[0].name);						  
+//				console.log(response.files[0].name);						  
 				var table_content	=	$(".table .table-striped").html();
 				if(table_content!='') {
 					$("#update_div").show();
@@ -944,7 +944,7 @@ function isNumber1(evt) {
 			},
             previewCrop: true,
             success: function(response) {							
-				console.log(response.files[0].name);
+//				console.log(response.files[0].name);
 				$("#error_span").html("");				
 				var table_content	=	$(".table .table-striped").html();
 				if(table_content!='') {

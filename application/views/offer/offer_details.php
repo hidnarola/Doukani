@@ -411,7 +411,7 @@
     <script type="text/javascript">
                                                             $(function () {
                                                                 $(".data-lightbox-custom").each(function () {
-                                                                    console.log($(this).find("img").attr("alt"));
+//                                                                    console.log($(this).find("img").attr("alt"));
                                                                     $(this).attr("title", $(this).find("img").attr("alt"));
                                                                     $('.lb-image').attr("alt", $(this).find("img").attr("alt"));
                                                                 });
@@ -439,7 +439,7 @@ if (isset($check_offer_slug['company_number']) && !empty($check_offer_slug['comp
                                                             });
 
                                                             $(document).on("click", "#reply_to_ad_link", function (e) {
-                                                                console.log("herere");
+//                                                                console.log("herere");
 <?php if ($is_logged == 0) { ?>
                                                                     $("#ifLoginModal").modal('show');
 <?php } else { ?>

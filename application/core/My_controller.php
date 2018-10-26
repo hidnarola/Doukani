@@ -19,6 +19,17 @@ class My_controller extends CI_Controller {
         $data = array();
 //        $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
 
+        $wh_category_data = array('FIND_IN_SET(2, category_type) > 0');
+        $offer_category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
+
+        foreach ($offer_category as $key => $value) {
+            $where = " category_id=" . $value['category_id'] . " AND FIND_IN_SET(2, sub_category_type) > 0 order by sub_cat_order asc";
+            $sub_categories = $this->dbcommon->filter('sub_category', $where);
+            $offer_category[$key]['sub_categories'] = $sub_categories;
+        }
+
+        $data['offer_category'] = $offer_category;
+        
         $all_category_ = $this->dbcommon->select_orderby('category', 'cat_order', 'asc');
         foreach ($all_category_ as $key => $value) {
             $where = " 1=1 order by sub_cat_order asc";
@@ -28,6 +39,7 @@ class My_controller extends CI_Controller {
 
         $data['all_category_'] = $all_category_;
 
+        
         $wh_category_data = array('FIND_IN_SET(0, category_type) > 0');
         $category = $this->dbcommon->select_orderby('category', 'cat_order', 'asc', $wh_category_data, true);
 

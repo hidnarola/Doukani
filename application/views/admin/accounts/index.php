@@ -251,14 +251,14 @@
     <script>
         $(document).find('#per_page1').on('change', function () {
             var per_page = $(this).val();
-            console.log(per_page);
+//            console.log(per_page);
             $('#per_page').val(per_page);
             $(document).find('#submit').click();
         });
 
         $(document).on("click", "#delete_admin", function (e) {
             var data_path = $(document).find(this).attr('data-path');
-            console.log(data_path);
+//            console.log(data_path);
             $('#alert_message_action').html('Are you sure want to delete Admin User Account(s)?');
 
             $("#deleteConfirm").modal('show');

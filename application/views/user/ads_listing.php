@@ -116,7 +116,7 @@
              var url = "<?php echo base_url() ?>user/add_to_favorites";
             var fav = 0;
             var id = $(this).attr('id');
-            console.log(id);
+//            console.log(id);
             if($(this).hasClass('fa-star-o')){
                   $(this).closest('div').addClass('fav');
                  $(this).removeClass("fa-star-o");
@@ -131,7 +131,7 @@
             
              $.post(url, {value: fav,product_id:id}, function(response)
             {   
-                console.log(response);
+//                console.log(response);
 
             });
             

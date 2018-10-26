@@ -456,20 +456,8 @@ class Home extends My_controller {
             } else
                 $data['load_data'] = 'yes';
 
-            //Category Total
-            $array = array(
-                'category_id' => $cat_id,
-                'product.product_is_inappropriate' => 'Approve',
-                'product.product_deactivate' => null,
-                'is_delete' => 0,
-                'product_for' => 'classified'
-            );
-
-            if (in_array($emirate_sel, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
-                $array['state_id'] = $this->dbcommon->state_id($emirate_sel);
-
-            $total = $this->dashboard->get_specific_count('product', $array);
-            $data['total'] = $total;
+//            $data['total'] = $total;
+            $data['total'] = $total_product;
 
             $data['category_id'] = $cat_id;
             $data['sub_category_id'] = $subcat_id;
@@ -683,7 +671,7 @@ class Home extends My_controller {
 
             $query1 .= $where . ' and product_for IN("classified", "store") group by p.product_id';
 
-            $prod = $this->db->query($query1);
+            $prod = $this->db->query($query1);            
 //            echo $this->db->last_query();
             $total_product = $prod->num_rows($prod);
 
@@ -775,9 +763,9 @@ class Home extends My_controller {
         $total_product = $prod->num_rows($prod);
 
         $emirate_sel = $this->uri->segment(1);
-        if (in_array($emirate_sel, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
-            $url = base_url() . $emirate_sel . '/' . $_SERVER['REQUEST_URI'];
-        else
+//        if (in_array($emirate_sel, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
+//            $url = base_url() . $emirate_sel . '/' . $_SERVER['REQUEST_URI'];
+//        else
             $url = base_url() . $_SERVER['REQUEST_URI'];
 
         if (isset($_REQUEST['page'])) {
@@ -986,9 +974,7 @@ class Home extends My_controller {
 
             $product = $this->dbcommon->get_distinct($query);
             $data['products'] = $product;
-//            if ($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
-//                echo $this->db->last_query();
-//            }
+            
             $data['hide'] = "false";
             if ($end >= $total_product) {
                 $hide = "true";
@@ -1193,10 +1179,10 @@ class Home extends My_controller {
         }
 
         $emirate_sel = $this->uri->segment(1);
-        if (in_array($emirate_sel, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
-            $url = base_url() . $emirate_sel . '/' . $_SERVER['REQUEST_URI'];
-        else
-            $url = base_url() . $_SERVER['REQUEST_URI'];
+//        if (in_array($emirate_sel, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
+//            $url = base_url() . $emirate_sel . '/' . $_SERVER['REQUEST_URI'];
+//        else
+        $url = base_url() . $_SERVER['REQUEST_URI'];
 
         if (isset($_REQUEST['page'])) {
             $url = str_replace('?page=' . $_REQUEST['page'], '', $url);
@@ -1706,22 +1692,7 @@ class Home extends My_controller {
                 $data['hide'] = "true";
             }
 
-            //Category Total
-            $array = array(
-                'category_id' => $cat_id,
-                'product.product_is_inappropriate' => 'Approve',
-                'product.product_deactivate' => null,
-                'product.is_delete' => 0,
-                'product.product_for' => 'classified'
-            );
-
-//            if ($this->session->userdata('request_for_statewise') != '')
-            if (in_array($emirate_sel, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
-                $array['product.state_id'] = $this->dbcommon->state_id($emirate_sel);
-
-            $total = $this->dashboard->get_specific_count('product', $array);
-            $data['total'] = $total;
-
+            $data['total'] = $total_product;
             $data['category_name'] = $category[0]['catagory_name'];
             $data['category_id'] = $cat_id;
             $data['sub_category_id'] = $subcat_id;
@@ -1821,9 +1792,9 @@ class Home extends My_controller {
 
             if (isset($_REQUEST['s']) && !empty($_REQUEST['s']))
                 $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
-            else                
+            else
                 $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
-            
+
             $filter_val = $this->input->post("value");
 
             $start = 12 * $filter_val;

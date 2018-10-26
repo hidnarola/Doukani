@@ -1309,7 +1309,7 @@ class Dbcommon extends CI_Model {
         }
 
         $this->db->select('product.product_id,product.product_posted_by,product.product_posted_time,product.product_name,product.product_image,product.product_price,product.product_status,product.product_is_inappropriate,product.product_total_views,product.product_total_favorite,category.category_id,category.catagory_name,user.username, user.profile_picture,if(user.nick_name!="",user.nick_name,user.username) as username1,user.nick_name,product.product_is_sold,user.facebook_id,user.twitter_id,user.google_id,product.product_slug,product.product_total_likes,user.user_slug,product.stock_availability,state.latitude state_latitude,state.longitude state_longitude,product.product_for,if(featureads.product_id IS NOT NULL and (CONVERT_TZ(NOW(),"+00:00","' . ASIA_DUBAI_OFFSET . '") between featureads.dateFeatured and featureads.dateExpire),1,"") as featured_ad,state.state_name,product.latitude,product.longitude,state.latitude state_latitude, state.longitude state_longitude,product.address');
-
+        $this->db->select('store.store_domain');
         $this->gallery_count('product');
         $this->db->from('product');
 
@@ -1346,6 +1346,7 @@ class Dbcommon extends CI_Model {
             $this->db->join('repeating_numbers rn', 'rn.id = cmn.repeating_number', 'left');
             $this->db->join('color', 'color.id=product_vehicles_extras.color', 'left');
         }
+        $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
 
         if (isset($_REQUEST['val']) && $_REQUEST['val'] == 'Unapprove')
             $this->db->where('product.product_is_inappropriate', 'Unapprove');
@@ -1359,15 +1360,23 @@ class Dbcommon extends CI_Model {
         if (isset($user_id) && !is_null($user_id))
             $this->db->where('product.product_posted_by', $user_id);
 
-        if ($search != NULL) {
-            if ($search == 'new')
-                $this->db->order_by('product.admin_modified_at', 'desc');
-            elseif ($search == 'popular')
-                $this->db->order_by('product.product_total_views', 'desc');
-            else
+        if (isset($_REQUEST['order']) && $_REQUEST['order'] != '' && $_REQUEST['order'] == 'lh')
+            $this->db->order_by('product.product_price', 'asc');
+        elseif (isset($_REQUEST['order']) && $_REQUEST['order'] != '' && $_REQUEST['order'] == 'hl')
+            $this->db->order_by('product.product_price', 'desc');
+        else {
+            if ($search != NULL) {
+                if ($search == 'new')
+                    $this->db->order_by('product.admin_modified_at', 'desc');
+                elseif ($search == 'popular')
+                    $this->db->order_by('product.product_total_views', 'desc');
+                else
+                    $this->db->order_by('product.product_posted_time', 'desc');
+            }
+            else {
                 $this->db->order_by('product.product_posted_time', 'desc');
-        } else
-            $this->db->order_by('product.product_posted_time', 'desc');
+            }
+        }
 
         if ($user_status == 1)
             $this->db->where('product.is_delete', 3);
@@ -1375,9 +1384,7 @@ class Dbcommon extends CI_Model {
             $this->db->where_in('product.is_delete', array(0, 6));
 
         if ($user_role != NULL && $user_role == 'storeUser') {
-            $this->db->select('store.store_domain');
             $this->db->where('product.product_for', 'store');
-            $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
         } elseif ($user_role != NULL && $user_role == 'generalUser')
             $this->db->where('product.product_for', 'classified');
 
@@ -1385,7 +1392,7 @@ class Dbcommon extends CI_Model {
             $selected_state_id = $this->state_id(state_id_selection);
             $this->db->where('product.state_id', $selected_state_id);
         }
-                
+
         if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
 
             $search_value = trim($_REQUEST['s']);
@@ -1407,7 +1414,7 @@ class Dbcommon extends CI_Model {
             $where_ = substr($query_string, 0, -4) . ') ';
             $this->db->where($where_);
         }
-                
+
         if (!is_null($cat_id))
             $this->db->where('product.category_id', $cat_id);
 
@@ -1489,7 +1496,7 @@ class Dbcommon extends CI_Model {
             $selected_state_id = $this->state_id(state_id_selection);
             $this->db->where('product.state_id', $selected_state_id);
         }
-        
+
         if (isset($_REQUEST['s']) && !empty($_REQUEST['s'])) {
 
             $search_value = trim($_REQUEST['s']);
@@ -1511,7 +1518,7 @@ class Dbcommon extends CI_Model {
             $where_ = substr($query_string, 0, -4) . ') ';
             $this->db->where($where_);
         }
-        
+
         if (!is_null($cat_id))
             $this->db->where('product.category_id', $cat_id);
         if (!is_null($sub_cat_id))

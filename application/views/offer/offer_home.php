@@ -37,7 +37,7 @@
                                         <ul class="list-ul">
                                             <?php
                                             $cat_count = 1;
-                                            foreach ($category as $cat) {
+                                            foreach ($offer_category as $cat) {
                                                 if ($cat_count <= 9) {
                                                     ?>
                                                     <li>

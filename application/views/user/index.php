@@ -725,7 +725,7 @@
 
                                                                     // separate out the mime component
                                                                     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-                                                                    console.log()
+//                                                                    console.log()
                                                                     // write the bytes of the string to an ArrayBuffer
                                                                     var ab = new ArrayBuffer(byteString.length);
                                                                     var ia = new Uint8Array(ab);

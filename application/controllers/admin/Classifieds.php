@@ -1153,8 +1153,10 @@ class Classifieds extends CI_Controller {
                         $data['user_category_id'] = $check_getuser['category_id'];
                         $data['user_sub_category_id'] = $check_getuser['sub_category_id'];
                         $data['user_store_status'] = $check_getuser['store_status'];
-                    } else
+                    } else {
+                        $this->session->set_flashdata('msg', 'Sorry, No ads remaining for this user.');                        
                         redirect('admin/home');
+                    }
                 }
                 else {
                     redirect('admin/home');
