@@ -125,14 +125,10 @@ class Home extends My_controller {
 
                     $product = $this->dbcommon->get_products(12);
                     $data['latest_product'] = $product;
-//                    if ($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
-//                        echo $this->db->last_query();
-//                    }
+
                     $featured_product = $this->dbcommon->get_featured_ads(null, 12);
                     $data['f_products'] = $featured_product;
-//                    if ($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
-//                        echo $this->db->last_query();
-//                    }
+
                     // functionality for loading more products
                     $total_product = $this->dbcommon->get_products_count();
                     $data['hide'] = "false";
@@ -143,9 +139,7 @@ class Home extends My_controller {
 
                     $start = 0;
                     $most_viewed_product = $this->dbcommon->get_most_viewed_products($start);
-//                    if ($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
-//                        echo $this->db->last_query();
-//                    }
+
                     $data['products'] = $most_viewed_product;
                     $data['home_page'] = 'yes';
                     $data['product_page'] = 'yes';
@@ -447,7 +441,7 @@ class Home extends My_controller {
                 $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
             }
             $data['products'] = $product;
-
+            
 //            $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, $subcat_id);
             // functionality for load more product
             $data['hide'] = "false";
@@ -669,17 +663,18 @@ class Home extends My_controller {
             $between_banners = $this->dbcommon->getBanner_forCategory('between', "'content_page','all_page'", null, null);
             $data['between_banners'] = $between_banners;
 
-            $query1 .= $where . ' and product_for IN("classified", "store") group by p.product_id';
+            $query1 .= $where . ' and p.product_for IN("classified", "store") group by p.product_id';
 
-            $prod = $this->db->query($query1);            
-//            echo $this->db->last_query();
+            $prod = $this->db->query($query1);
+
             $total_product = $prod->num_rows($prod);
 
-            $where .= " and product_for IN('classified', 'store') group by p.product_id";
+            $where .= " and p.product_for IN('classified', 'store') group by p.product_id";
             $where .= " order by featured_ad desc,product_posted_time desc limit 0,12";
 
             $query .= $where;
             $product = $this->dbcommon->get_distinct($query);
+
             $data['products'] = $product;
             $data['hide'] = "false";
             if ($total_product <= 12) {
@@ -766,7 +761,7 @@ class Home extends My_controller {
 //        if (in_array($emirate_sel, array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
 //            $url = base_url() . $emirate_sel . '/' . $_SERVER['REQUEST_URI'];
 //        else
-            $url = base_url() . $_SERVER['REQUEST_URI'];
+        $url = base_url() . $_SERVER['REQUEST_URI'];
 
         if (isset($_REQUEST['page'])) {
             $url = str_replace('?page=' . $_REQUEST['page'], '', $url);
@@ -904,14 +899,14 @@ class Home extends My_controller {
 
                 $prod = $this->db->query($query1);
                 $total_product = $prod->num_rows($prod);
-//                echo $this->db->last_query();   
+
                 $where .= " and product_for ='store'  group by p.product_id";
                 $where .= " order by `product_posted_time` desc limit " . $start . ",15";
 
                 $query .= ' and product_posted_by=' . $store[0]->store_owner . ' ' . $where;
 
                 $product = $this->dbcommon->get_distinct($query);
-//                echo $this->db->last_query();   
+
                 $data['product'] = $product;
                 $data['hide'] = "false";
 
@@ -962,19 +957,19 @@ class Home extends My_controller {
             $end = $start + 12;
             $hide = "false";
 
-            $query1 .= $where . ' and product_for IN("classified", "store") group by p.product_id';
+            $query1 .= $where . ' and p.product_for IN("classified", "store") group by p.product_id';
 
             $prod = $this->db->query($query1);
             $total_product = $prod->num_rows($prod);
 
-            $where .= " and product_for IN('classified', 'store')  group by p.product_id";
+            $where .= " and p.product_for IN('classified', 'store')  group by p.product_id";
             $where .= " order by featured_ad desc,product_posted_time desc limit " . $start . ",12";
 
             $query .= ' ' . $where;
 
             $product = $this->dbcommon->get_distinct($query);
             $data['products'] = $product;
-            
+
             $data['hide'] = "false";
             if ($end >= $total_product) {
                 $hide = "true";
@@ -1284,7 +1279,7 @@ class Home extends My_controller {
             where p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate is null and p.product_for IN('classified', 'store')  $where ";
 
             $prod = $this->db->query($query1);
-//            echo $this->db->last_query();
+
             $total_product = $prod->num_rows($prod);
 
             $config = $this->dbcommon->pagination_front($total_product, $url);
@@ -1808,7 +1803,7 @@ class Home extends My_controller {
                 $product = $this->dbcommon->get_my_listing(NULL, $start, 12, NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
             else
                 $product = $this->dbcommon->get_my_listing(NULL, $start, 12, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
-
+            
             $data['products'] = $product;
 
 //            if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'list') {
@@ -3397,7 +3392,7 @@ class Home extends My_controller {
                 $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, 'storeUser', 'store', $cat_id);
             else
                 $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, 'storeUser', 'store');
-//            echo $this->db->last_query();
+
             $main_data['listing'] = $products;
             $main_data['html'] = $this->load->view('store/store_products', $main_data, TRUE);
 

@@ -132,7 +132,7 @@ if (isset($_REQUEST) && !empty($_REQUEST)) {
                             else
                                 $view_list = '';
                             ?>
-                            <a href="<?php echo HTTPS . website_url . emirate_slug . 'advanced_search' . $view_list; ?>" class="adv-search" style="font-size:10px;" itemprop="url"><span class="plus_adv" >+</span> <span class="adv_header_lbl" itemprop="name"><b>ADVANCED SEARCH</b></span></a>
+                            <!--<a href="<?php echo HTTPS . website_url . emirate_slug . 'advanced_search' . $view_list; ?>" class="adv-search" style="font-size:10px;" itemprop="url"><span class="plus_adv" >+</span> <span class="adv_header_lbl" itemprop="name"><b>ADVANCED SEARCH</b></span></a>-->
                         <?php } ?>
                     </div>
                 </div>            

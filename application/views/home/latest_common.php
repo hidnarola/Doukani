@@ -4,7 +4,7 @@
     $view_active2 = '';
     $view_active3 = '';
     
-    if (!isset($_GET['view']) || (isset($_GET['view']) && $_GET['view'] == 'grid'))
+    if (!isset($_GET['view']) || (isset($_GET['view']) && ($_GET['view'] == 'grid' || empty($_GET['view']))))
         $view_active1 = 'view-active';
     elseif (isset($_GET['view']) && $_GET['view'] == 'list')
         $view_active2 = 'view-active';

@@ -753,7 +753,7 @@ ul.thumbs video{height:100% !important;}
 .form-control:focus{border-color:#66afe9;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;outline:0 none;}
 .UserTabing .profile{background:#fff;display:inline-block;vertical-align:top;width:100%;}
 .profile-tabs{position:relative;}
-.postadBG{background:#fff;display:inline-block;padding:25px 10px 20px;width:100%;vertical-align:top;margin:0 0 25px;}
+.postadBG{background:#fff;display:inline-block;padding:25px 10px 20px;width:100%;vertical-align:top;margin:0 0 25px;z-index: 9;}
 .home_sidebar_banner a img{height:230px;}
 .info-holder .by-user{width:50%;}
 .Viewouterbutton{float:right;width:auto;}

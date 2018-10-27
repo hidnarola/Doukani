@@ -8,7 +8,7 @@
     $emirate = $this->uri->segment(1);
     $cate_path = $slug;
 
-    if (!isset($_GET['view']) || (isset($_GET['view']) && $_GET['view'] == 'grid')) {
+    if (!isset($_GET['view']) || (isset($_GET['view']) && ($_GET['view'] == 'grid' || empty($_GET['view'])))) {
         if (in_array(strtolower($emirate), array('abudhabi', 'ajman', 'dubai', 'fujairah', 'ras-al-khaimah', 'sharjah', 'umm-al-quwain')))
             $cate_path = $emirate . '/' . $slug . '?view=grid';
         else
@@ -53,8 +53,7 @@
             <span class="caret"></span>
         </button>
         <ul id="price_sort" role="menu" class="dropdown-menu" aria-labelledby="dropdownMenu6">
-            <li role="presentation"><a role="menuitem" data-state="" tabindex="-1" 
-                                       href="<?php echo site_url() . $cate_path; ?>"  rel="nofollow" >Default</a></li>
+            <li role="presentation"><a role="menuitem" data-state="" tabindex="-1" href="<?php echo site_url() . $cate_path; ?>"  rel="nofollow" >Default</a></li>
             <li role="presentation"><a role="menuitem" data-state="L_H" tabindex="-1" href="<?php echo site_url() . $cate_path . '&order=lh'; ?>"  rel="nofollow" >Price Low To High</a></li>
             <li role="presentation"><a role="menuitem" data-state="H_L" tabindex="-1" href="<?php echo site_url() . $cate_path . '&order=hl'; ?>"  rel="nofollow" >Price High To Low</a></li>
         </ul>

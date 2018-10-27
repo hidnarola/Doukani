@@ -72,3 +72,14 @@ if (in_array($this->uri->segment(1), array('alloffers', 'offers', 'companies')) 
         ?>  
     </button>
 </form>
+<?php
+if (isset($_GET['view']) && $_GET['view'] == 'list')
+    $view_list = '?view=list';
+elseif (isset($_GET['view']) && $_GET['view'] == 'map')
+    $view_list = '?view=map';
+elseif (isset($_GET['view']) && $_GET['view'] == 'grid')
+    $view_list = '?view=grid';
+else
+    $view_list = '';
+?>
+<a href="<?php echo HTTPS . website_url . emirate_slug . 'advanced_search' . $view_list; ?>" class="adv-search" style="font-size:10px;" itemprop="url"><span class="plus_adv" >+</span> <span class="adv_header_lbl" itemprop="name"><b>ADVANCED SEARCH</b></span></a>

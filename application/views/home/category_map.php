@@ -84,7 +84,7 @@
                 }
 //                var mcOptions = {gridSize: 50, maxZoom: 13, imagePath: ''};
 //                var markerCluster = new MarkerClusterer(map, googleMarkers, mcOptions);
-                var markerCluster = new MarkerClusterer(map, markers, {imagePath: '<?php echo site_url() . "assets/front/images/m1.png"; ?>'});
+//                var markerCluster = new MarkerClusterer(map, googleMarkers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
                 map.fitBounds(bounds);
                 window.map = map;
                 window.oms = oms;
@@ -97,7 +97,7 @@
 foreach ($products as $key => $val) {
     ?>
                 var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({'address': '<?php echo ($val['address'] != '') ? $val["address"] : $val['state_name']; ?>'}, function (results, status) {
+                geocoder.geocode({'address': "<?php echo ($val['address'] != '') ? $val["address"] : $val['state_name']; ?>"}, function (results, status) {
 
                     var imgerr = "onerror=this.src='<?php echo thumb_start_grid_map . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid_map; ?>'";
     <?php
