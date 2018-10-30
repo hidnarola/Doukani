@@ -1041,7 +1041,7 @@ class Classifieds extends CI_Controller {
     			where p.category_id=c.category_id  and product_for='" . $product_for . "' and p.product_id not in (select productid from repost where p.product_id=repost.productid group by productid) " . $query;
 
             $product = $this->dbcommon->get_distinct($wh);
-
+            
             $data['product'] = $product;
             $data['mystatus'] = $listing_oth_status;
             $data['search'] = $search;

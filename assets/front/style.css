@@ -2268,6 +2268,8 @@ img.img-responsive.center-block {float: right;}
 .sold_message i {color: #034694;font-weight: bold;font-size: 34px !important;}
 .payment_method_or {padding: 10px 0px;text-align: center;font-size: x-large;}
 .cart-wrap #paytabs {margin-top:0px !important;}
+#bottom footer .container .row .col-sm-12 {display: flex;align-items: center;flex-wrap: wrap;}
+#cc_images{display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;-ms-flex-wrap: wrap;flex-wrap: wrap;width: 80px;margin-left: 10px !important;}
 
 @media(min-width:768px){
     .header-banner.store_img_logo{}

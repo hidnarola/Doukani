@@ -219,7 +219,7 @@ define('update_deactivate_ads', 90);
 
 define('ios_app_id', '985499336');
 define('android_app_id', 'com.showup.makemevip');
-define('year', '2017');
+define('year', date('Y'));
 
 define('home_title', 'UAE leading online free classifieds platform');
 
