@@ -3987,8 +3987,8 @@ class Classifieds extends CI_Controller {
 
             $check_getuser = $this->db->query('select * from user 
                                 left join store on store.store_owner=user.user_id
-                                where user_id=' . (int) $_POST['userid'] . ' and is_delete in(0,3) GROUP BY user.user_id limit 1')->row_array();
-
+                                where user_id=' . (int) $_POST['userid'] . ' GROUP BY user.user_id limit 1')->row_array();
+            //and is_delete in(0,3) 
             $chkuser_id = (int) $check_getuser['user_id'];
 
             if ($chkuser_id > 0) {

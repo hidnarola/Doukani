@@ -546,7 +546,7 @@
         format: "yyyy",
         startView: 1,
         minViewMode: 2,
-        endDate: '+0d'
+        endDate: '+1y'
     });
 
     $(".total_stock").keydown(function (e) {

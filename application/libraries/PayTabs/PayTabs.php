@@ -195,8 +195,10 @@ class PayTabs {
         }
 
         if ($fields != null) {
-            $curl = new Curl();
+            $curl = new Curl();            
+            $fields['merchant_email'] = $this->merchant_email;            
             $curl->post($url, $fields);
+            
             if ($curl->error) {
                 exit('Error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
             } else {

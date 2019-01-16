@@ -530,7 +530,7 @@ $(".real_estate").hide();
         format: "yyyy",
         startView: 1,
         minViewMode: 2,
-        endDate: '+0d'
+        endDate: '+1y'
     });
 function goBack()
             {

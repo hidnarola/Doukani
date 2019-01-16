@@ -19,8 +19,6 @@ class Paytabs_payment extends My_controller {
     public function get_url() {
 //        die();
         $secret_key = $this->paytab->check_secret_key();
-//        print_r($secret_key);
-//        die();
         if (isset($secret_key) && is_object($secret_key)) {
             if ($secret_key->result == 'valid' && $secret_key->response_code == PAY_TABS_VALID_SECRET_KEY) {
                 $product_arry = explode(",", $this->session->userdata('doukani_products'));

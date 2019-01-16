@@ -173,7 +173,7 @@ class Pages extends My_controller {
                         'direct_url' => $_POST['direct_url'],
                         'color' => $_POST['color'],
                         'page_meta_keyword' => $_POST['page_meta_keyword'],
-                        'slug_url' => strtolower(str_replace(" ", "-", $_POST['page_title'])),
+//                        'slug_url' => strtolower(str_replace(" ", "-", $_POST['page_title'])),
                     );
                     if ($_POST['select_icons'] != '')
                         $data['icon'] = $_POST['select_icons'];
