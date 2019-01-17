@@ -1950,7 +1950,11 @@ class Home extends My_controller {
             else {
 
                 $data['category_slug_details'] = $subcategory[0]['sub_category_slug'];
-                $related_product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, $pro_id, 8, '', $rand);
+                $related_product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, $pro_id, 8, '', $rand, NULL, NULL, NULL, NULL, 'yes');
+                if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                    echo $this->db->last_query();
+                }
+                    
                 $feature_banners = $this->dbcommon->getBanner_forCategory('sidebar', "'all_page','content_page'", $cat_id, $subcat_id);
 
                 $breadcrumb = array(

@@ -729,7 +729,15 @@
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div class="item-disc">
-                                                                                                                    <a style="text-decoration: none;" href="<?php echo base_url() . $pro['product_slug']; ?>">
+                                                                                                                            <?php
+                                                                                                                            if (isset($pro['product_for']) && $pro['product_for'] == 'store' && isset($pro['store_domain']) && !empty($pro['store_domain']))
+                                                                                                                                $product_path = HTTP . $pro['store_domain'] . after_subdomain . '/' . $pro['product_slug'];
+                                                                                                                            elseif ((isset($my_listing) && $my_listing == 'yes') || (isset($my_deactivateads) && $my_deactivateads = 'yes'))
+                                                                                                                                $product_path = base_url() . 'user/item_details/' . $pro['product_id'];
+                                                                                                                            else
+                                                                                                                                $product_path = base_url() . $pro['product_slug'];
+                                                                                                                            ?>
+                                                                                                                    <a style="text-decoration: none;" href="<?php echo $product_path; ?>">
                                                                                                                         <?php $len = strlen($pro['product_name']); ?>	
                                                                                                                         <h4 <?php
                                                                                                                         if ($len > 21) {

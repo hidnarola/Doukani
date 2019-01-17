@@ -645,7 +645,7 @@ class Dbcommon extends CI_Model {
         return $data;
     }
 
-    function get_product_by_categories($cat = NULL, $subcat = NULL, $current_pro_id = NULL, $limit = NULL, $start = NULL, $rand = NULL, $posted_by = NULL, $search = NULL, $latest = NULL, $user_role = NULL) {
+    function get_product_by_categories($cat = NULL, $subcat = NULL, $current_pro_id = NULL, $limit = NULL, $start = NULL, $rand = NULL, $posted_by = NULL, $search = NULL, $latest = NULL, $user_role = NULL, $both_type_products = NULL) {
 
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user) && !empty($current_user)) {
@@ -698,7 +698,12 @@ class Dbcommon extends CI_Model {
                 $this->db->where('product.product_for', 'store');
                 $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
             } else {
-                $this->db->where('product.product_for', 'classified');
+                if (!is_null($both_type_products)) {
+                    $this->db->select('store.store_domain');
+                    $this->db->where_in('product.product_for', array('store', 'classified'));
+                    $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
+                } else
+                    $this->db->where('product.product_for', 'classified');
             }
         }
 
