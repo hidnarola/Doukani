@@ -658,7 +658,7 @@ class Dbcommon extends CI_Model {
 
         $this->db->select('mo.operator_name as mobile_operator,cmn.mobile_number');
 
-        $this->db->select('product.latitude,product.longitude,product.address,product.stock_availability,product.product_id,product.category_id,product.sub_category_id,product.product_posted_time,product.product_name,product.product_image,product.product_price,product.product_status,product.product_is_inappropriate,product.product_total_views,product.product_total_likes,product.product_total_favorite,product.product_posted_by,product.state_id,state.state_name,category.catagory_name,user.username, user.profile_picture,if(user.nick_name!="",user.nick_name,user.username) as username1,product.product_is_sold,user.facebook_id,user.twitter_id,user.google_id,product.product_slug,user.user_slug,state.latitude state_latitude,state.longitude state_longitude,product.stock_availability,if(featureads.product_id IS NOT NULL and (CONVERT_TZ(NOW(),"+00:00","' . ASIA_DUBAI_OFFSET . '") between featureads.dateFeatured and featureads.dateExpire),1,"") as featured_ad');
+        $this->db->select('product.latitude,product.longitude,product.product_for,product.address,product.stock_availability,product.product_id,product.category_id,product.sub_category_id,product.product_posted_time,product.product_name,product.product_image,product.product_price,product.product_status,product.product_is_inappropriate,product.product_total_views,product.product_total_likes,product.product_total_favorite,product.product_posted_by,product.state_id,state.state_name,category.catagory_name,user.username, user.profile_picture,if(user.nick_name!="",user.nick_name,user.username) as username1,product.product_is_sold,user.facebook_id,user.twitter_id,user.google_id,product.product_slug,user.user_slug,state.latitude state_latitude,state.longitude state_longitude,product.stock_availability,if(featureads.product_id IS NOT NULL and (CONVERT_TZ(NOW(),"+00:00","' . ASIA_DUBAI_OFFSET . '") between featureads.dateFeatured and featureads.dateExpire),1,"") as featured_ad');
 
         $this->gallery_count('product');
 
@@ -700,10 +700,11 @@ class Dbcommon extends CI_Model {
             } else {
                 if (!is_null($both_type_products)) {
                     $this->db->select('store.store_domain');
-                    $this->db->where_in('product.product_for', array('store', 'classified'));
+                    $this->db->where_in('product.product_for', array('classified','store' ));
                     $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
-                } else
+                } else{
                     $this->db->where('product.product_for', 'classified');
+                }
             }
         }
 
@@ -1303,7 +1304,7 @@ class Dbcommon extends CI_Model {
         return $img_arr;
     }
 
-    function get_my_listing($user_id = NULL, $start = NULL, $limit = NULL, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL, $sub_cat_id = NULL) {
+    function get_my_listing($user_id = NULL, $start = NULL, $limit = NULL, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL, $sub_cat_id = NULL, $random_data = NULL) {
 
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user) && !empty($current_user)) {
@@ -1376,10 +1377,18 @@ class Dbcommon extends CI_Model {
                 elseif ($search == 'popular')
                     $this->db->order_by('product.product_total_views', 'desc');
                 else
-                    $this->db->order_by('product.product_posted_time', 'desc');
+                    if (!is_null($random_data)){
+                        $this->db->order_by("RAND()");
+                    }else{
+                        $this->db->order_by('product.product_posted_time', 'desc');
+                    }
             }
             else {
-                $this->db->order_by('product.product_posted_time', 'desc');
+                if (!is_null($random_data)){
+                    $this->db->order_by("RAND()");
+                }else{
+                    $this->db->order_by('product.product_posted_time', 'desc');
+                }
             }
         }
 
@@ -1425,7 +1434,8 @@ class Dbcommon extends CI_Model {
 
         if (!is_null($sub_cat_id))
             $this->db->where('product.sub_category_id', $sub_cat_id);
-
+        
+       
         $this->db->group_by("product.product_id");
 
         if ($limit != null) {

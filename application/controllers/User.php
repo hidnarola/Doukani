@@ -437,6 +437,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required');
                         $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required|max_length[650]');
+                       // $this->form_validation->set_rules('original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('city', 'Emirate', 'trim|required');
@@ -487,6 +488,7 @@ class User extends My_controller {
                                 'product_is_inappropriate' => 'NeedReview',
                                 'product_description' => $_POST['pro_desc1'],
                                 'product_price' => str_replace(",", "", $_POST['pro_price']),
+                                'original_price' => str_replace(",", "", $_POST['original_price']),
                                 'product_posted_time' => date('y-m-d H:i:s', time()),
                                 'product_brand' => 0,
                                 'product_posted_by' => $user_id,
@@ -530,6 +532,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('title', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required');
                         $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[650]');
+                         // $this->form_validation->set_rules('original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('vehicle_pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('pro_brand', 'Brand', 'trim|required');
                         $this->form_validation->set_rules('vehicle_pro_model', 'Model', 'trim|required');
@@ -587,6 +590,7 @@ class User extends My_controller {
                                 'product_brand' => $_POST['pro_brand'],
                                 'product_description' => str_replace(",", "", $_POST['vehicle_pro_desc']),
                                 'product_price' => str_replace(",", "", $_POST['vehicle_pro_price']),
+                                'original_price' => str_replace(",", "", $_POST['vehicle_original_price']),
                                 'product_posted_time' => date('y-m-d H:i:s', time()),
                                 'product_posted_by' => $user_id,
                                 'country_id' => $_POST['location'],

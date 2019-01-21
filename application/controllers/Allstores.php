@@ -109,7 +109,7 @@ class Allstores extends My_controller {
         $per_page = 15;
 //        $data['stores'] = $this->store->get_stores(NULL, 0, $per_page);
 
-        $listing = $this->dbcommon->get_my_listing(NULL, $start = 0, $limit = 15, NULL, 0, 'storeUser', 'store');
+        $listing = $this->dbcommon->get_my_listing(NULL, $start = 0, $limit = 15, NULL, 0, 'storeUser', 'store',NULL,NULL,'yes');
 //        echo $this->db->last_query();
         $data['listing'] = $listing;
         $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, 0, 'storeUser', 'store');

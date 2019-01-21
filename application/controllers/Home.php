@@ -1950,10 +1950,8 @@ class Home extends My_controller {
             else {
 
                 $data['category_slug_details'] = $subcategory[0]['sub_category_slug'];
-                $related_product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, $pro_id, 8, '', $rand, NULL, NULL, NULL, NULL, 'yes');
-                if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
-                    echo $this->db->last_query();
-                }
+                $related_product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, $pro_id, 8, '', $rand, NULL, NULL, NULL, NULL,'yes');
+               
                     
                 $feature_banners = $this->dbcommon->getBanner_forCategory('sidebar', "'all_page','content_page'", $cat_id, $subcat_id);
 
@@ -3309,9 +3307,9 @@ class Home extends My_controller {
         $main_data['product_view'] = $_POST['product_view'];
 
         if ($cat_id > 0)
-            $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id);
+            $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id,NULL,'yes');
         else
-            $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store');
+            $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store',NULL,NULL,'yes');
 
         $main_data['listing'] = $products;
         $main_data['html'] = $this->load->view('store/filter_store_products', $main_data, TRUE);

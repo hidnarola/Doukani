@@ -1,4 +1,4 @@
-<form  name="default_form" action='<?php echo base_url() . 'user/post_ads' ?>' class='form form-horizontal validate-form default_form' accept-charset="UTF-8" method='post' enctype="multipart/form-data" id="form1">   
+<form name="default_form" action='<?php echo base_url() . 'user/post_ads' ?>' class='form form-horizontal validate-form default_form' accept-charset="UTF-8" method='post' enctype="multipart/form-data" id="form1">   
     <h4><i class="fa fa-info-circle"></i>Item Details</h4>
     <hr />
     <div class='form-group'>                                            
@@ -16,7 +16,18 @@
         </div>        
     </div>    									
     <div class='form-group'>     
-        <div class="col-md-2 col-sm-3">Price</div>
+        <div class="col-md-2 col-sm-3">Original Price</div>
+        <div class='col-md-3 col-sm-4 controls'>
+            <input class="form-control original_price"  placeholder="Price" name="original_price" type="text" value="<?php  echo (isset($_POST['original_price']) && !empty($_POST['original_price'])) ? set_value('original_price') : ''; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+    <div class='form-group'>     
+        <div class="col-md-2 col-sm-3">Discounted Price</div>
         <div class='col-md-3 col-sm-4 controls'>
             <input class="form-control price_txt"  placeholder="Price" name="pro_price" type="text" value="<?php echo (isset($_POST['pro_price']) && !empty($_POST['pro_price'])) ? set_value('pro_price') : ''; ?>" />            
         </div>
@@ -128,4 +139,18 @@
         </div>
     </div>
 </form>
-
+<script type="text/javascript">
+$(document).ready(function(){
+$('.price_txt').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('.price_txt').val();
+    var oprice = $('.original_price').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('.price_txt').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+        }              
+}   
+});
+</script>

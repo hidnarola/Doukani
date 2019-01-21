@@ -729,7 +729,7 @@
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div class="item-disc">
-                                                                                                                            <?php
+                                                                                                                            <?php     
                                                                                                                             if (isset($pro['product_for']) && $pro['product_for'] == 'store' && isset($pro['store_domain']) && !empty($pro['store_domain']))
                                                                                                                                 $product_path = HTTP . $pro['store_domain'] . after_subdomain . '/' . $pro['product_slug'];
                                                                                                                             elseif ((isset($my_listing) && $my_listing == 'yes') || (isset($my_deactivateads) && $my_deactivateads = 'yes'))
@@ -737,7 +737,7 @@
                                                                                                                             else
                                                                                                                                 $product_path = base_url() . $pro['product_slug'];
                                                                                                                             ?>
-                                                                                                                    <a style="text-decoration: none;" href="<?php echo $product_path; ?>">
+                                                                                                                    <a  class="hello123" style="text-decoration: none;" href="<?php echo $product_path; ?>">
                                                                                                                         <?php $len = strlen($pro['product_name']); ?>	
                                                                                                                         <h4 <?php
                                                                                                                         if ($len > 21) {
@@ -768,7 +768,13 @@
                                                                                                                         ?>
 
                                                                                                                         <img src="<?php echo $profile_picture; ?>" class="img-responsive img-circle" onerror="this.src='<?php echo base_url() ?>assets/upload/avtar.png'" alt="Profile Image"  />
-                                                                                                                        <a href="<?php echo base_url() . emirate_slug . $pro['user_slug']; ?>" title="<?php echo $pro['username1']; ?>"><?php echo $pro['username1']; ?></a>                                            
+                                                                                                                        <?php
+                                                                                                                                if (isset($pro['product_for']) && $pro['product_for'] == 'store' && isset($pro['store_domain']) && !empty($pro['store_domain']))
+                                                                                                                                    $user_profile_pg = HTTP . $pro['store_domain'] . after_subdomain . remove_home;
+                                                                                                                                else
+                                                                                                                                    $user_profile_pg = base_url() . emirate_slug . $pro['user_slug'];
+                                                                                                                                ?>
+                                                                                                                        <a href="<?php echo $user_profile_pg; ?>" title="<?php echo $pro['username1']; ?>"><?php echo $pro['username1']; ?></a>                                            
                                                                                                                     </div>
 
                                                                                                                     <div class=" price">                                                                                                          <span title=" <?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?>"><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?></span>
