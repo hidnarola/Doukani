@@ -488,7 +488,6 @@ class User extends My_controller {
                                 'product_is_inappropriate' => 'NeedReview',
                                 'product_description' => $_POST['pro_desc1'],
                                 'product_price' => str_replace(",", "", $_POST['pro_price']),
-                                'original_price' => str_replace(",", "", $_POST['original_price']),
                                 'product_posted_time' => date('y-m-d H:i:s', time()),
                                 'product_brand' => 0,
                                 'product_posted_by' => $user_id,
@@ -508,6 +507,7 @@ class User extends My_controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['original_price']);
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -532,7 +532,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('title', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required');
                         $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[650]');
-                         // $this->form_validation->set_rules('original_price', 'Price', 'trim|required');
+                         // $this->form_validation->set_rules('vehicle_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('vehicle_pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('pro_brand', 'Brand', 'trim|required');
                         $this->form_validation->set_rules('vehicle_pro_model', 'Model', 'trim|required');
@@ -590,7 +590,6 @@ class User extends My_controller {
                                 'product_brand' => $_POST['pro_brand'],
                                 'product_description' => str_replace(",", "", $_POST['vehicle_pro_desc']),
                                 'product_price' => str_replace(",", "", $_POST['vehicle_pro_price']),
-                                'original_price' => str_replace(",", "", $_POST['vehicle_original_price']),
                                 'product_posted_time' => date('y-m-d H:i:s', time()),
                                 'product_posted_by' => $user_id,
                                 'country_id' => $_POST['location'],
@@ -609,6 +608,7 @@ class User extends My_controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['vehicle_original_price']);
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -715,6 +715,7 @@ class User extends My_controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['house_original_price']);
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -824,6 +825,7 @@ class User extends My_controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['shared_original_price']);
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -856,6 +858,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('car_desc', 'Description', 'trim|required');
                         $this->form_validation->set_rules('car_desc', 'Description', 'trim|required|max_length[650]');
+                         //                    $this->form_validation->set_rules('car_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('car_number', 'Car Number', 'trim|required');
                         $this->form_validation->set_rules('plate_source', 'Plate Source', 'trim|required');
@@ -927,6 +930,7 @@ class User extends My_controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['car_original_price']);
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -963,6 +967,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required');
                         $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required|max_length[650]');
+                          //                    $this->form_validation->set_rules('mobile_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('mobile_operators', 'Mobile Operator', 'trim|required');
                         $this->form_validation->set_rules('repeating_numbers_mobile', 'Repeating Number', 'trim|required');
@@ -1033,6 +1038,7 @@ class User extends My_controller {
                                 $data['total_stock'] = $_POST['total_stock'];
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['mobile_original_price']);
                             }
 
                             $result = $this->dbcommon->insert('product', $data);
@@ -2097,6 +2103,7 @@ class User extends My_controller {
                     $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('pro_desc', 'Description', 'trim|required');
                     $this->form_validation->set_rules('pro_desc', 'Description', 'trim|required|max_length[650]');
+                    // $this->form_validation->set_rules('original_price', 'Price', 'trim|required');
 //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('location', 'Country', 'trim|required');
                     $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
@@ -2155,7 +2162,7 @@ class User extends My_controller {
                             //'sub_category_id' => $_POST['sub_cat'],
                             'product_is_inappropriate' => 'NeedReview',
                             'product_description' => $_POST['pro_desc'],
-                            'product_price' => str_replace(",", "", $_POST['pro_price']),
+                            'product_price' => str_replace(",", "", $_POST['pro_price']),                            
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'product_brand' => 0,
                             'state_id' => $_POST['state'],
@@ -2176,6 +2183,7 @@ class User extends My_controller {
 
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
+                            $data['original_price'] = str_replace(",", "", $_POST['original_price']);
 
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
@@ -2200,6 +2208,7 @@ class User extends My_controller {
                     $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required');
                     $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[650]');
 //                    $this->form_validation->set_rules('vehicle_pro_price', 'Price', 'trim|required');
+                     // $this->form_validation->set_rules('vehicle_original_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('pro_brand', 'Brand', 'trim|required');
                     $this->form_validation->set_rules('vehicle_pro_model', 'Model', 'trim|required');
                     $this->form_validation->set_rules('vehicle_pro_type_of_car', 'Type Of Car', 'trim|required');
@@ -2270,7 +2279,7 @@ class User extends My_controller {
                             'product_is_inappropriate' => 'NeedReview',
                             'product_brand' => $_POST['pro_brand'],
                             'product_description' => $_POST['vehicle_pro_desc'],
-                            'product_price' => str_replace(",", "", $_POST['vehicle_pro_price']),
+                            'product_price' => str_replace(",", "", $_POST['vehicle_pro_price']),                            
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'product_modified_by' => $user['user_id'],
                             'youtube_link' => $youtube,
@@ -2289,6 +2298,7 @@ class User extends My_controller {
 
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
+                            $data['original_price'] = str_replace(",", "", $_POST['vehicle_original_price']);
 
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
@@ -2391,7 +2401,7 @@ class User extends My_controller {
                             'product_image' => (isset($img_name) && $img_name != '') ? $img_name : $product[0]['product_image'],
                             'product_is_inappropriate' => 'NeedReview',
                             'product_description' => $_POST['house_pro_desc'],
-                            'product_price' => str_replace(",", "", $_POST['houses_price']),
+                            'product_price' => str_replace(",", "", $_POST['houses_price']),                            
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'state_id' => $_POST['state'],
                             'product_modified_by' => $user['user_id'],
@@ -2411,6 +2421,7 @@ class User extends My_controller {
 
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
+                            $data['original_price'] = str_replace(",", "", $_POST['house_original_price']);
 
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
@@ -2529,6 +2540,7 @@ class User extends My_controller {
 
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
+                            $data['original_price'] = str_replace(",", "", $_POST['shared_original_price']);
 
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
@@ -2566,6 +2578,7 @@ class User extends My_controller {
                     $this->form_validation->set_rules('car_desc', 'Description', 'trim|required');
                     $this->form_validation->set_rules('car_desc', 'Description', 'trim|required|max_length[650]');
 //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
+                    //                    $this->form_validation->set_rules('car_original_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('car_number', 'Car Number', 'trim|required');
                     $this->form_validation->set_rules('plate_source', 'Plate Source', 'trim|required');
                     $this->form_validation->set_rules('plate_digit', 'Plate Digit', 'trim|required');
@@ -2627,7 +2640,7 @@ class User extends My_controller {
                             'product_name' => $_POST['pro_name'],
                             'product_description' => $_POST['car_desc'],
                             'product_is_inappropriate' => 'NeedReview',
-                            'product_price' => str_replace(",", "", $_POST['pro_price']),
+                            'product_price' => str_replace(",", "", $_POST['pro_price']),                            
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'state_id' => $_POST['state'],
                             'country_id' => $_POST['location'],
@@ -2648,6 +2661,7 @@ class User extends My_controller {
 
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
+                            $data['original_price'] = str_replace(",", "", $_POST['car_original_price']);
 
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;
@@ -2700,6 +2714,7 @@ class User extends My_controller {
                     $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required');
                     $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required|max_length[650]');
+                      //                    $this->form_validation->set_rules('mobile_original_price', 'Price', 'trim|required');
 //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('mobile_operators', 'Mobile Operator', 'trim|required');
                     $this->form_validation->set_rules('repeating_numbers_mobile', 'Repeating Number', 'trim|required');
@@ -2759,7 +2774,7 @@ class User extends My_controller {
                             'product_image' => (isset($img_name) && $img_name != '') ? $img_name : $product[0]['product_image'],
                             'product_is_inappropriate' => 'NeedReview',
                             'product_description' => $_POST['mob_desc'],
-                            'product_price' => str_replace(",", "", $_POST['pro_price']),
+                            'product_price' => str_replace(",", "", $_POST['pro_price']),                            
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'product_brand' => 0,
                             'state_id' => $_POST['state'],
@@ -2780,6 +2795,7 @@ class User extends My_controller {
 
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
+                            $data['original_price'] = str_replace(",", "", $_POST['mobile_original_price']);
 
                             if ($avail_stock != '')
                                 $avail_stock = $avail_stock;

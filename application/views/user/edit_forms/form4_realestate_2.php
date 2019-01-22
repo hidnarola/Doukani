@@ -16,6 +16,36 @@
             <textarea class='input-block-level wysihtml5 form-control' id='shared_pro_desc' name="shared_pro_desc" rows="10" placeholder="Description" data-rule-required='true'><?php echo $product[0]['product_description']; ?></textarea>			
         </div>
     </div>   
+    <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
+    <div class='form-group'>     
+        <div class="col-md-2 col-sm-3">Original Price</div>
+        <div class='col-md-3 col-sm-4 controls'>
+            <input class="form-control shared_original_price" id="form_org_price4"  placeholder="Price" name="shared_original_price" type="text" value="<?php  echo $product[0]['original_price']; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+    <div class='form-group'>                        
+        <div class="col-md-2 col-sm-3">Discounted Price</div>                                                
+        <div class="col-md-6 col-sm-8">
+            <div class="input-group controls price-group">
+                <span class="input-group-addon">Dirham</span>
+                <input type="text" value="<?php echo $product[0]['product_price']; ?>" id="shared_price" name="shared_price" class="form-control price_txt" >
+                <span class="input-group-addon">.00</span>
+            </div>
+            <div class="checkbox col-md-2">
+                <label>
+                    <input type="checkbox" <?php echo ($product[0]['free_status'] == 1) ? 'checked' : ''; ?> name="shared_free" value="1">
+                    Free
+                </label>
+            </div>						  
+        </div>
+        <span for="shared_price" class="help-block has-error"></span>
+    </div>
+    <?php } else{ ?>
     <div class='form-group'>                        
         <div class="col-md-2 col-sm-3">Price</div>                                                
         <div class="col-md-6 col-sm-8">
@@ -33,6 +63,7 @@
         </div>
         <span for="shared_price" class="help-block has-error"></span>
     </div>
+    <?php } ?>
     <div class='form-group'>
         <div class="col-md-2 col-sm-3 "></div>
         <div class="col-md-4 col-sm-6">
@@ -173,3 +204,24 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form4 #shared_price').focusout(function(){
+    validateForm();   
+});
+$('#form4 #form_org_price4').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form4 #shared_price').val();
+    var oprice = $('#form4 #form_org_price4').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form4 .for_share_price').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form4 #form_org_price4').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>

@@ -15,10 +15,11 @@
             <textarea class='input-block-level wysihtml5 form-control' id='vehicle_pro_desc' name="vehicle_pro_desc" rows="10" placeholder="Description" data-rule-required='true'><?php echo set_value('vehicle_pro_desc'); ?></textarea>            
         </div>
     </div>  
+    <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
     <div class='form-group'>     
         <div class="col-md-2 col-sm-3">Original Price</div>
         <div class='col-md-3 col-sm-4 controls'>
-            <input class="form-control original_price"  placeholder="Price" name="original_price" type="text" value="<?php  echo (isset($_POST['original_price']) && !empty($_POST['original_price'])) ? set_value('original_price') : ''; ?>" />            
+            <input class="form-control original_price"  id="form_org_price2" placeholder="Price" name="vehicle_original_price" type="text" value="<?php  echo (isset($_POST['vehicle_original_price']) && !empty($_POST['vehicle_original_price'])) ? set_value('vehicle_original_price') : ''; ?>" />            
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
@@ -27,9 +28,9 @@
         </div>
     </div>
     <div class='form-group'>                        
-        <div class='col-md-2 col-sm-3'>Price</div>
+        <div class='col-md-2 col-sm-3'>Discounted Price</div>
         <div class='col-md-3 col-sm-4 controls'>
-            <input class="form-control price_txt"  placeholder="Price" name="vehicle_pro_price" id="vehicle_pro_price" type="text"  value="<?php echo (isset($_POST['vehicle_pro_price']) && !empty($_POST['vehicle_pro_price'])) ? set_value('vehicle_pro_price') : ''; ?>" />
+            <input class="form-control price_txt" id="form_pro_price2"  placeholder="Price" name="vehicle_pro_price" id="vehicle_pro_price" type="text"  value="<?php echo (isset($_POST['vehicle_pro_price']) && !empty($_POST['vehicle_pro_price'])) ? set_value('vehicle_pro_price') : ''; ?>" />
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
@@ -37,6 +38,19 @@
             </div>
         </div>
     </div>
+    <?php } else{ ?>
+     <div class='form-group'>                        
+        <div class='col-md-2 col-sm-3'>Price</div>
+        <div class='col-md-3 col-sm-4 controls'>
+            <input class="form-control price_txt" placeholder="Price" name="vehicle_pro_price" id="vehicle_pro_price" type="text"  value="<?php echo (isset($_POST['vehicle_pro_price']) && !empty($_POST['vehicle_pro_price'])) ? set_value('vehicle_pro_price') : ''; ?>" />
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+            <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+    <?php    }?>
 
     <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
         <div class='form-group'>     
@@ -232,16 +246,22 @@
 </form>
 <script type="text/javascript">
 $(document).ready(function(){
-$('.price_txt').focusout(function(){
+$('#form2 #form_pro_price2').focusout(function(){
+    validateForm();   
+});
+$('#form2 #form_org_price2').focusout(function(){
     validateForm();   
 });
 function validateForm(){
-    var price = $('.price_txt').val();
-    var oprice = $('.original_price').val();
+    var price = $('#form2 #form_pro_price2').val();
+    var oprice = $('#form2 #form_org_price2').val();
      $('.error').hide();
         if(price >= oprice){
-            $('.price_txt').after('<label for="pro_name" class="error">Price less than to original price.</label>');
-        }              
+            $('#form2 #form_pro_price2').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form2 #form_org_price2').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
 }   
 });
 </script>

@@ -653,17 +653,25 @@
                                                                                                                     <div class="ribbon_main">
                                                                                                                         <div class="red_ribbon"></div> <?php } ?>
                                                                                                                     <div class="item-img">
+                                                                                                                           <?php     
+                                                                                                                            if (isset($pro['product_for']) && $pro['product_for'] == 'store' && isset($pro['store_domain']) && !empty($pro['store_domain']))
+                                                                                                                                $product_path = HTTP . $pro['store_domain'] . after_subdomain . '/' . $pro['product_slug'];
+                                                                                                                            elseif ((isset($my_listing) && $my_listing == 'yes') || (isset($my_deactivateads) && $my_deactivateads = 'yes'))
+                                                                                                                                $product_path = base_url() . 'user/item_details/' . $pro['product_id'];
+                                                                                                                            else
+                                                                                                                                $product_path = base_url() . $pro['product_slug'];
+                                                                                                                            ?>
                                                                                                                         <?php if ($pro['product_is_sold'] == 1) { ?>
                                                                                                                             <div class="sold"><span>SOLD</span></div>
                                                                                                                             <?php
                                                                                                                         }
                                                                                                                         if (isset($pro['product_image']) && $pro['product_image'] != '') {
                                                                                                                             ?>
-                                                                                                                            <a href="<?php echo base_url() . $pro['product_slug']; ?>">
+                                                                                                                            <a href="<?php echo $product_path; ?>">
                                                                                                                                 <img src="<?php echo thumb_start_grid . base_url() . product . "medium/" . $pro['product_image'] . thumb_end_grid; ?>" class="img-responsive" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'" alt="<?php echo $product->product_name; ?>"  />
                                                                                                                             </a>
                                                                                                                         <?php } else { ?>
-                                                                                                                            <a href="<?php echo base_url() . $pro['product_slug']; ?>"><img src="<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>" class="img-responsive" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'" alt="<?php echo $product->product_name; ?>"  /></a>
+                                                                                                                            <a href="<?php echo $product_path; ?>"><img src="<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>" class="img-responsive" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'" alt="<?php echo $product->product_name; ?>"  /></a>
                                                                                                                         <?php } ?>
                                                                                                                     </div>
                                                                                                                     <?php

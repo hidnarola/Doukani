@@ -16,6 +16,30 @@
             <textarea class='input-block-level wysihtml5 form-control' id='pro_desc' name="pro_desc" rows="10" placeholder="Description" data-rule-required='true'><?php echo $product[0]['product_description']; ?></textarea>			
         </div>
     </div>    
+     <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
+    <div class='form-group'>     
+        <div class="col-md-2 col-sm-3">Original Price</div>
+        <div class='col-md-3 col-sm-4 controls'>
+            <input class="form-control original_price" id="form_org_price1"  placeholder="Price" name="original_price" type="text" value="<?php echo $product[0]['original_price']; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+    <div class='form-group'>                        
+        <div class="col-md-2 col-sm-3">Discounted Price</div>
+        <div class='col-md-3 col-sm-4 controls'>
+            <input class="form-control price_txt" id="form_pro_price1"  placeholder="Price" value="<?php echo $product[0]['product_price']; ?>" name="pro_price" type="text" />
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+     <?php } else{ ?>
     <div class='form-group'>                        
         <div class="col-md-2 col-sm-3">Price</div>
         <div class='col-md-3 col-sm-4 controls'>
@@ -27,7 +51,7 @@
             </div>
         </div>
     </div>
-
+     <?php } ?>
     <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
         <div class='form-group'>                        
             <div class="col-md-2 col-sm-3">Total Stock<span> *</span></div>
@@ -144,3 +168,24 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form1 #form_pro_price1').focusout(function(){
+    validateForm();   
+});
+$('#form1 #form_org_price1').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form1 #form_pro_price1').val();
+    var oprice = $('#form1 #form_org_price1').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form1 #form_pro_price1').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form1 #form_org_price1').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>
