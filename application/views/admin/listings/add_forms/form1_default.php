@@ -20,11 +20,24 @@ else
         <div class='col-md-8 col-sm-8'>
             <textarea class='input-block-level wysihtml5 form-control' id="pro_desc" placeholder="Description" name="pro_desc" rows="10" data-rule-required='true' ><?php echo set_value('pro_desc'); ?></textarea>
         </div>
-    </div>   
-    <div class='form-group'>                        
+    </div>
+   <?php if(isset($user_role) && $user_role == 'storeUser')  { ?>
+    <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
+         <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
+        <div class='col-md-3 controls'>
+            <input class="form-control original_price" id="form_org_price1"  placeholder="Price" name="original_price" type="text" value="<?php  echo (isset($_POST['original_price']) && !empty($_POST['original_price'])) ? set_value('original_price') : ''; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+    <?php } ?>
+    <div class='form-group' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>
         <div class='col-md-3 controls'>
-            <input class="form-control price_txt"  placeholder="Price" name="pro_price" type="text"   value="<?php echo (isset($_POST['pro_price']) && !empty($_POST['pro_price'])) ? set_value('pro_price') : ''; ?>" />
+            <input class="form-control price_txt" <?php if (isset($user_role) && $user_role != 'storeUser'){ echo ''; }else{ echo 'id="form_pro_price1"'; } ?> placeholder="Price" name="pro_price" type="text"   value="<?php echo (isset($_POST['pro_price']) && !empty($_POST['pro_price'])) ? set_value('pro_price') : ''; ?>" />
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
@@ -32,7 +45,7 @@ else
             </div>
         </div>
     </div>
-
+ 
     <?php //if(isset($user_role) && $user_role == 'storeUser')  { ?>
     <div class='form-group total_stock_div' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?> >
         <label class='col-md-2 control-label' for='inputText1'>Total Stock<span> *</span></label>
@@ -163,3 +176,24 @@ else
         </div>
     </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form1 #form_pro_price1').focusout(function(){
+    validateForm();   
+});
+$('#form1 #form_org_price1').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form1 #form_pro_price1').val();
+    var oprice = $('#form1 #form_org_price1').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form1 #form_pro_price1').after('<label for="pro_name" class="error cls_pro">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form1 #form_org_price1').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>

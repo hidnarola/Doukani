@@ -26,11 +26,24 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
         <div class='col-md-8 col-sm-8 '>
             <textarea class='input-block-level wysihtml5 form-control' id="car_desc" placeholder="Description" name="car_desc" rows="6"  data-rule-required='true'><?php if (isset($product[0]['product_description'])) echo $product[0]['product_description']; ?></textarea>
         </div>
-    </div>	
+    </div>
+    <?php if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') { ?>
+     <div class='form-group original_price_section'>     
+        <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
+        <div class='col-md-3 col-sm-4 controls'>
+            <input class="form-control car_original_price" id="form_org_price5"  placeholder="Price" name="car_original_price" type="text" value="<?php if (isset($product[0]['original_price'])) echo $product[0]['original_price']; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+    <?php } ?>
     <div class='form-group'>                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>
         <div class='col-md-3 controls'>
-            <input class="form-control price_txt"  placeholder="Price" value="<?php if (isset($product[0]['product_price'])) echo $product[0]['product_price']; ?>" name="pro_price" type="text" />
+            <input class="form-control price_txt"  id="form_pro_price5" placeholder="Price" value="<?php if (isset($product[0]['product_price'])) echo $product[0]['product_price']; ?>" name="pro_price" type="text" />
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
@@ -250,3 +263,24 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
         </div>
     </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form5 #form_pro_price5').focusout(function(){
+    validateForm();   
+});
+$('#form5 #form_org_price5').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form5 #form_pro_price5').val();
+    var oprice = $('#form5 #form_org_price5').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form5 #form_pro_price5').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form5 #form_org_price5').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>

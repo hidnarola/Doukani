@@ -20,11 +20,24 @@ else
         <div class='col-md-8 col-sm-8 '>
             <textarea class='input-block-level wysihtml5 form-control' placeholder="Description" name="house_pro_desc" rows="10" data-rule-required='true'><?php echo set_value('house_pro_desc'); ?></textarea>
         </div>
-    </div>    
-    <div class='form-group'>                        
+    </div>  
+    <?php if(isset($user_role) && $user_role == 'storeUser')  { ?>
+    <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
+        <label class='col-md-2 control-label' for='inputText1' >Original Price</label>
+        <div class='col-md-3 controls'>
+            <input class="form-control house_original_price" id="form_org_price3"  placeholder="Price" name="house_original_price" type="text" value="<?php  echo (isset($_POST['house_original_price']) && !empty($_POST['house_original_price'])) ? set_value('house_original_price') : ''; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+     <?php } ?>
+    <div class='form-group' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>                        
         <label class='col-md-2 control-label' for='inputText1' >Price</label>
 
-        <div class="input-group col-md-5 controls price_cont">
+        <div class="input-group col-md-5 controls price_cont sell_grp">
             <span class="input-group-addon">Dirham</span>
             <input type="text" id="houses_price" name="houses_price" class="form-control price_txt" value="<?php echo (isset($_POST['houses_price']) && !empty($_POST['houses_price'])) ? set_value('houses_price') : ''; ?>">
             <span class="input-group-addon">.00</span>
@@ -265,3 +278,24 @@ else
         </div>
     </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form3 #houses_price').focusout(function(){
+    validateForm();   
+});
+$('#form3 #form_org_price3').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form3 #houses_price').val();
+    var oprice = $('#form3 #form_org_price3').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form3 .sell_grp').after('<label for="pro_name" class="error cls_pro">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form3 #form_org_price3').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>

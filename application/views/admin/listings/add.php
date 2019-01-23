@@ -498,6 +498,9 @@
                     <?php  }  ?>
                  
                     $('.total_stock_div').hide();
+                    $('.original_price_section').hide();
+                    $('.cls_pro').hide();
+                    $('.discount_Section').show();
                     
                     $(document).find('.delivery_option_section').hide();
                     $(document).find('.product_weight_section').hide();
@@ -516,6 +519,8 @@
                     <?php  }  ?>
 
                     $('.total_stock_div').show();
+                     $('.original_price_section').show();
+                     $('.discount_Section').hide();
                 }
 
                 show_sub_cat_load('<?php echo $user_category_id; ?>');

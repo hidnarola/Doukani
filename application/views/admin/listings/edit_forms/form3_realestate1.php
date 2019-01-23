@@ -28,9 +28,22 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
             <textarea class='input-block-level wysihtml5 form-control' placeholder="Description" name="house_pro_desc" rows="6"  data-rule-required='true' ><?php if (isset($product[0]['product_description'])) echo $product[0]['product_description']; ?></textarea>
         </div>
     </div>    
+     <?php if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') { ?>
+    <div class='form-group original_price_section'>     
+        <label class='col-md-2 control-label' for='inputText1' >Original Price</label>
+        <div class='col-md-3 controls'>
+            <input class="form-control house_original_price" id="form_org_price3"  placeholder="Price" name="house_original_price" type="text" value="<?php if (isset($product[0]['original_price'])) echo $product[0]['original_price']; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+     <?php } ?>
     <div class='form-group'>                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>   
-        <div class="input-group col-md-5 controls price_cont">
+        <div class="input-group col-md-5 controls price_cont sell_grp">
             <span class="input-group-addon">Dirham</span>
             <input type="text" value="<?php if (isset($product[0]['product_price'])) echo $product[0]['product_price']; ?>" id="houses_price" name="houses_price" class="form-control price_txt" >
             <span class="input-group-addon">.00</span>
@@ -276,3 +289,24 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
         </div>
     </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form3 #houses_price').focusout(function(){
+    validateForm();   
+});
+$('#form3 #form_org_price3').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form3 #houses_price').val();
+    var oprice = $('#form3 #form_org_price3').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form3 .sell_grp').after('<label for="pro_name" class="error cls_pro">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form3 #form_org_price3').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>

@@ -437,7 +437,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required');
                         $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required|max_length[650]');
-                       // $this->form_validation->set_rules('original_price', 'Price', 'trim|required');
+                       
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('city', 'Emirate', 'trim|required');

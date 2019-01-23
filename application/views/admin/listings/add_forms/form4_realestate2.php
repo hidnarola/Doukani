@@ -21,7 +21,20 @@ else
             <textarea class='input-block-level wysihtml5 form-control' placeholder="Description" name="shared_pro_desc" rows="10"  data-rule-required='true' ><?php echo set_value('shared_pro_desc'); ?></textarea>
         </div>
     </div>    
-    <div class='form-group'>                        
+     <?php if(isset($user_role) && $user_role == 'storeUser')  { ?>
+    <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
+        <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
+        <div class='col-md-3 controls'>
+            <input class="form-control shared_original_price" id="form_org_price4"  placeholder="Price" name="shared_original_price" type="text" value="<?php  echo (isset($_POST['shared_original_price']) && !empty($_POST['shared_original_price'])) ? set_value('shared_original_price') : ''; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+      <?php } ?>
+    <div class='form-group'  <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>    
         <div class="input-group col-md-5 controls price_cont">
             <span class="input-group-addon">Dirham</span>
@@ -39,7 +52,7 @@ else
                 <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;<?php echo price_zero_label; ?>
             </div>
         </div>
-        <span for="shared_price" class="help-block has-error col-md-offset-2 col-xs-10"></span>
+        <span for="shared_price" class="help-block has-error col-md-offset-2 col-xs-10 for_share_price"></span>
     </div>
 
 
@@ -190,3 +203,24 @@ else
         </div>
     </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form4 #shared_price').focusout(function(){
+    validateForm();   
+});
+$('#form4 #form_org_price4').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form4 #shared_price').val();
+    var oprice = $('#form4 #form_org_price4').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form4 .for_share_price').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form4 #form_org_price4').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>

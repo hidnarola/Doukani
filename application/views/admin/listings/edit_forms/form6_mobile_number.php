@@ -26,10 +26,23 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
             <textarea class='input-block-level wysihtml5 form-control' id="mob_desc" placeholder="Description" name="mob_desc" rows="10"   data-rule-required='true' ><?php if (isset($product[0]['product_description'])) echo $product[0]['product_description']; ?></textarea>
         </div>
     </div>    
+    <?php if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') { ?>
+    <div class='form-group original_price_section'>     
+         <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
+        <div class='col-md-3 col-sm-4 controls'>
+            <input class="form-control mobile_original_price" id="form_org_price6"  placeholder="Price" name="mobile_original_price" type="text" value="<?php if (isset($product[0]['original_price'])) echo $product[0]['original_price']; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+    <?php } ?>
     <div class='form-group'>                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>
         <div class='col-md-3 controls'>
-            <input class="form-control price_txt"  placeholder="Price" name="pro_price" type="text"   value="<?php if (isset($product[0]['product_price'])) echo $product[0]['product_price']; ?>" />
+            <input class="form-control price_txt" id="form_pro_price6" placeholder="Price" name="pro_price" type="text"   value="<?php if (isset($product[0]['product_price'])) echo $product[0]['product_price']; ?>" />
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
@@ -212,3 +225,24 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
         </div>
     </div>
 </form>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form6 #form_pro_price6').focusout(function(){
+    validateForm();   
+});
+$('#form6 #form_org_price6').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form6 #form_pro_price6').val();
+    var oprice = $('#form6 #form_org_price6').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form6 #form_pro_price6').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form6 #form_org_price6').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>

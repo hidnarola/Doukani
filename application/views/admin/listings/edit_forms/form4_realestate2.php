@@ -27,6 +27,19 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
             <textarea class='input-block-level wysihtml5 form-control' placeholder="Description" name="shared_pro_desc" rows="6"  data-rule-required='true' ><?php if (isset($product[0]['product_description'])) echo $product[0]['product_description']; ?></textarea>
         </div>
     </div>    
+     <?php if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') { ?>
+    <div class='form-group original_price_section'>     
+        <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
+        <div class='col-md-3 controls'>
+            <input class="form-control shared_original_price" id="form_org_price4"  placeholder="Price" name="shared_original_price" type="text" value="<?php if (isset($product[0]['original_price'])) echo $product[0]['original_price']; ?>" />            
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <div class="alert alert-info price_zero_lbl">
+                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+            </div>
+        </div>
+    </div>
+     <?php } ?>
     <div class='form-group'>                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>
         <div class="input-group col-md-5 price_cont">
@@ -45,7 +58,7 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
                 <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;<?php echo price_zero_label; ?>
             </div>
         </div>
-        <span for="shared_price" class="help-block has-error col-md-offset-2 col-xs-10"></span>
+        <span for="shared_price" class="help-block has-error col-md-offset-2 col-xs-10 for_share_price"></span>
     </div>
 
     <?php if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') { ?>
@@ -213,3 +226,24 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
         </div>
     </div>
 </form>	
+<script type="text/javascript">
+$(document).ready(function(){
+$('#form4 #shared_price').focusout(function(){
+    validateForm();   
+});
+$('#form4 #form_org_price4').focusout(function(){
+    validateForm();   
+});
+function validateForm(){
+    var price = $('#form4 #shared_price').val();
+    var oprice = $('#form4 #form_org_price4').val();
+     $('.error').hide();
+        if(price >= oprice){
+            $('#form4 .for_share_price').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+        } 
+        if(oprice <= price){
+            $('#form4 #form_org_price4').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+        }
+}   
+});
+</script>

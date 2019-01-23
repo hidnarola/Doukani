@@ -1276,6 +1276,7 @@ class Classifieds extends CI_Controller {
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
+                            $data['original_price'] = str_replace(",", "", $_POST['original_price']);
                         }
 
                         $result = $this->dbcommon->insert('product', $data);
@@ -1382,6 +1383,7 @@ class Classifieds extends CI_Controller {
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
+                            $data['original_price'] = str_replace(",", "", $_POST['vehicle_original_price']);
                         }
 
                         $result = $this->dbcommon->insert('product', $data);
@@ -1491,6 +1493,7 @@ class Classifieds extends CI_Controller {
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
+                            $data['original_price'] = str_replace(",", "", $_POST['house_original_price']);
                         }
 
                         $result = $this->dbcommon->insert('product', $data);
@@ -1603,6 +1606,7 @@ class Classifieds extends CI_Controller {
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
+                            $data['original_price'] = str_replace(",", "", $_POST['shared_original_price']);
                         }
 
                         $result = $this->dbcommon->insert('product', $data);
@@ -1713,6 +1717,7 @@ class Classifieds extends CI_Controller {
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
+                            $data['original_price'] = str_replace(",", "", $_POST['car_original_price']);
                         }
 
                         $result = $this->dbcommon->insert('product', $data);
@@ -1825,6 +1830,7 @@ class Classifieds extends CI_Controller {
                             $data['delivery_option'] = $_POST['delivery_option'];
                             $data['weight'] = $_POST['weight'];
                             $data['product_for'] = 'store';
+                            $data['original_price'] = str_replace(",", "", $_POST['mobile_original_price']);
                         }
 
                         $result = $this->dbcommon->insert('product', $data);
@@ -2363,6 +2369,7 @@ class Classifieds extends CI_Controller {
 
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['original_price']);
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
@@ -2514,6 +2521,7 @@ class Classifieds extends CI_Controller {
 
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['vehicle_original_price']);
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
@@ -2584,6 +2592,7 @@ class Classifieds extends CI_Controller {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
                             $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $data['original_price'] = str_replace(",", "", $_POST['house_original_price']);
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2762,6 +2771,7 @@ class Classifieds extends CI_Controller {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
                             $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                             $data['original_price'] = str_replace(",", "", $_POST['shared_original_price']);
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2865,6 +2875,7 @@ class Classifieds extends CI_Controller {
 
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                               
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
@@ -3034,6 +3045,7 @@ class Classifieds extends CI_Controller {
 
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['car_original_price']);
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
@@ -3208,6 +3220,7 @@ class Classifieds extends CI_Controller {
 
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
+                                $data['original_price'] = str_replace(",", "", $_POST['mobile_original_price']);
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
