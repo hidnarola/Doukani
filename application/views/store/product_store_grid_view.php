@@ -81,6 +81,14 @@ if (!empty($listing)) {
                                     </div>
                                     <?php
                                 }
+                                if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') { ?>
+                                    <div class="addtocart" >
+                                        <a class="add_to_cart_cus" id="add_to_cart_button" quantity="1" proid="<?php echo $pro['product_id']; ?>">
+                                            <i class="fa fa-shopping-cart <?php echo $pro['product_id']; ?>"></i>
+                                        </a>
+                                    </div>
+                                <?php 
+                                }
                             }
                         }
                         ?>                                                          

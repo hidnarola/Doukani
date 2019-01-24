@@ -1093,6 +1093,7 @@ select.form-control{border:1px solid #ccc;box-shadow:none;}
 .item-sell:hover .function-icon a{position:relative;}
 .item-sell:hover .function-icon .star{background:#fff;}
 .item-sell:hover .function-icon .newthumb{background:#fff;}
+.item-sell:hover .function-icon .addtocart{background:#fff;cursor:pointer;}
 .list-icons01{float:right;}
 .list-icons01 a{color:#ed1b33;display:inline-block;font-size:16px;line-height:16px;padding:0;margin:2px 5px;vertical-align:top;text-align:center;-webkit-border-radius:1px;-moz-border-radius:1px;border-radius:1px;}
 .list-icons01 a i{vertical-align:top;padding:0;}
