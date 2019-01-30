@@ -403,68 +403,7 @@
                                                         $('.loader_display').hide();
                                                     }, "json");
                                                 });
-                                                //add to cart button
-                                                $('.add_to_cart_cus').click(function () {
-                                                   var proid= $(this).attr('proid');
-                                                   var qat=  $(this).attr('quantity');
-                                                   console.log(proid);
-                                                   console.log(qat);
-                                                    check_product_quantity(proid,qat);
-                                                    $("i."+proid).removeClass('fa-shopping-cart');
-                                                    $("i."+proid).addClass('fa-check');
-                                                });
-
-
-                                                function check_product_quantity(proid,qat) {
-
-                                                    var product_id = $('#cart_product_id').val();
-                                                    var quantity = $('#quantity').val();
-
-                                                    var url = "<?php echo $store_url; ?>home/check_product_and_quantity";
-
-                                                    $.post(url, {quantity: qat, product_id: proid}, function (response)
-                                                    {
-                                                        if (response == 'success') {
-                                                            $('#span_error').hide();
-
-                                                            var url = "<?php echo $store_url; ?>cart/add_to_cart";
-                                                            var quantity = $('#quantity').val();
-                                                            var cart_product_id = $('#cart_product_id').val();
-
-                                                            $.post(url, {quantity: qat, cart_product_id: proid}, function (response)
-                                                            {
-                                                                //                                    $('#cart_count').text(response);
-                                                                $('.total-no').text(response);
-                                                                $('.cart-li').show();
-                                                            });
-                                                          //  $("#quantity_popup").modal('hide');
-                                                        } else {
-                                                            if (response == 'Out of stock' || response == 'Not Available') {
-                                                             //   $('#span_error').show();
-                                                               // $('#span_error').text('* ' + response);
-                                                                return 0;
-                                                            } else
-                                                            {
-                                                             //   $('#span_error').show();
-                                                             //   $('#span_error').text('* ' + response + ' Available in Stock');
-
-                                                                //reset dropdown
-                                                                var availability = parseInt(response);
-                                                                var i = 1;
-                                                                var concat_str = '';
-
-                                                                while (i <= availability) {
-                                                                    concat_str = concat_str + '<option value="' + i + '">' + i + '</option>';
-                                                                    i++;
-                                                                }
-
-                                                                $("#quantity").html(concat_str);
-                                                                return 0;
-                                                            }
-
-                                                        }
-                                                    });
-                                                }
+                                                
         </script>
     </body>
 </html>

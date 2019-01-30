@@ -55,6 +55,11 @@
         <?php $this->load->view('include/googleAnalytics'); ?>
 
     </head>
+    <style type="text/css">
+        .addtocart button#add_to_cart_button i {vertical-align: text-top;padding-right: 0;}
+.addtocart button#add_to_cart_button {background-color: transparent;padding: 0;border-width: 0px;margin: 0;font-size: 16px;color: #ed1b33;}
+.item-sell:hover .function-icon .addtocart{background: #fff;}
+        </style>
     <body>
         <?php $this->load->view('include/google_tab_manager_body'); ?>
         <div class="container-fluid">

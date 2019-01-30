@@ -2272,6 +2272,10 @@ img.img-responsive.center-block {float: right;}
 #bottom footer .container .row .col-sm-12 {display: flex;align-items: center;flex-wrap: wrap;}
 #cc_images{display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;-ms-flex-wrap: wrap;flex-wrap: wrap;width: 80px;margin-left: 10px !important;}
 
+.addtocart button#add_to_cart_button i {vertical-align: text-top;padding-right: 0;}
+.addtocart button#add_to_cart_button {background-color: transparent;padding: 0;border-width: 0px;margin: 0;font-size: 16px;color: #ed1b33;}
+.addtocart.listview {display: inline-block;vertical-align: top;}
+
 @media(min-width:768px){
     .header-banner.store_img_logo{}
     .offer-wrap .right-side{float:right;}

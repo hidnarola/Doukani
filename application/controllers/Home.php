@@ -545,7 +545,6 @@ class Home extends My_controller {
 
     //serach from left menu at Front End or find product from store	
     public function search() {
-
         $data = array();
         $data = array_merge($data, $this->get_elements());
 
@@ -577,7 +576,7 @@ class Home extends My_controller {
         //$this->load->library("security");
         $search_value = $this->input->get_post("s");
         //$search_value = $this->security->xss_clean($this->input->get_post("s"));
-
+        
         $str = explode('==', $this->dbcommon->search_query($cat_id, $sub_cat_id, $city_id, $location, $min_amount, $max_amount, $search_value));
         $where = $str[1];
         $query1 = $str[0];
@@ -633,8 +632,8 @@ class Home extends My_controller {
                 $query .= ' and product_posted_by=' . $store[0]->store_owner . ' ' . $where;
 
                 $product = $this->dbcommon->get_distinct($query);
-
                 $data['listing'] = $product;
+                
                 $data['hide'] = "false";
 
                 if ($total_product <= 15) {
@@ -674,7 +673,6 @@ class Home extends My_controller {
 
             $query .= $where;
             $product = $this->dbcommon->get_distinct($query);
-
             $data['products'] = $product;
             $data['hide'] = "false";
             if ($total_product <= 12) {

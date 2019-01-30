@@ -642,6 +642,7 @@ class Dbcommon extends CI_Model {
 
         $query = $this->db->get();
         $data = $query->result_array();
+
         return $data;
     }
 
@@ -700,9 +701,9 @@ class Dbcommon extends CI_Model {
             } else {
                 if (!is_null($both_type_products)) {
                     $this->db->select('store.store_domain');
-                    $this->db->where_in('product.product_for', array('classified','store' ));
+                    $this->db->where_in('product.product_for', array('classified', 'store'));
                     $this->db->join('store', 'store.store_owner = product.product_posted_by', 'left');
-                } else{
+                } else {
                     $this->db->where('product.product_for', 'classified');
                 }
             }
@@ -1377,16 +1378,15 @@ class Dbcommon extends CI_Model {
                 elseif ($search == 'popular')
                     $this->db->order_by('product.product_total_views', 'desc');
                 else
-                    if (!is_null($random_data)){
-                        $this->db->order_by("RAND()");
-                    }else{
-                        $this->db->order_by('product.product_posted_time', 'desc');
-                    }
-            }
-            else {
-                if (!is_null($random_data)){
+                if (!is_null($random_data)) {
                     $this->db->order_by("RAND()");
-                }else{
+                } else {
+                    $this->db->order_by('product.product_posted_time', 'desc');
+                }
+            } else {
+                if (!is_null($random_data)) {
+                    $this->db->order_by("RAND()");
+                } else {
                     $this->db->order_by('product.product_posted_time', 'desc');
                 }
             }
@@ -1434,8 +1434,8 @@ class Dbcommon extends CI_Model {
 
         if (!is_null($sub_cat_id))
             $this->db->where('product.sub_category_id', $sub_cat_id);
-        
-       
+
+
         $this->db->group_by("product.product_id");
 
         if ($limit != null) {
@@ -4216,12 +4216,13 @@ class Dbcommon extends CI_Model {
 		if(cmn.number_for="car_number" and cmn.repeating_number="-1","More than 5",if(cmn.number_for="mobile_number" and cmn.repeating_number="-1","More than 8",rn.rep_number)) as car_repeating_number,mo.operator_name as mobile_operator,cmn.mobile_number ';
         }
 
-        $more_str = "SELECT p.product_id, p.product_for, p.category_id,p.stock_availability,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,u.facebook_id,u.twitter_id,u.google_id,c.catagory_name, u.username, u.profile_picture,p.product_is_sold,p.product_total_likes,p.product_slug,u.user_slug,s.state_name,p.latitude,p.longitude,s.latitude state_latitude, s.longitude state_longitude,p.address,
+        $more_str = "SELECT p.product_for, p.category_id,p.stock_availability,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,u.facebook_id,u.twitter_id,u.google_id,c.catagory_name, u.username, u.profile_picture,p.product_is_sold,p.product_total_likes,p.product_slug,u.user_slug,s.state_name,p.latitude,p.longitude,s.latitude state_latitude, s.longitude state_longitude,p.address,
             store.store_domain, (IF(p.product_image IS NULL OR p.product_image='',0,1) +
              IF(p.youtube_link IS NULL  OR p.youtube_link='',0,1) +
              IF(p.video_name IS NULL  OR p.video_name='',0,1) +
              (COUNT(DISTINCT pi.product_image_id))) as MyTotal,
-             IF(fe.product_id IS NOT NULL and (CONVERT_TZ(NOW(),'+00:00','" . ASIA_DUBAI_OFFSET . "') between fe.dateFeatured and fe.dateExpire),1,'') as featured_ad " . $like_fav_field . $field_list . "
+             IF(fe.product_id IS NOT NULL and (CONVERT_TZ(NOW(),'+00:00','" . ASIA_DUBAI_OFFSET . "') between fe.dateFeatured and fe.dateExpire),1,'') as featured_ad " . $like_fav_field . $field_list . ",
+                p.product_id
                 FROM product  p
                 left join state s on s.state_id=p.state_id
                 left join category c on c.category_id=p.category_id 
@@ -4232,6 +4233,7 @@ class Dbcommon extends CI_Model {
                 left join store on store.store_owner = p.product_posted_by
                 " . $like_fav_sql . $sql_list . "
                 where  p.category_id=c.category_id and p.sub_category_id=sc.sub_category_id and u.user_id = p.product_posted_by and p.is_delete = 0 and p.product_is_inappropriate='Approve' and p.product_deactivate IS NULL";
+
         //
         //left join (select count(*) count_image, pm.product_id sub_product_id from products_images pm group by pm.product_id) k on p.product_id=sub_product_id
         return $more_str . '==' . $where;
