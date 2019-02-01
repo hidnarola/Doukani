@@ -212,6 +212,18 @@ if (isset($_REQUEST['request_for']) && $_REQUEST['request_for'] == 'user' && iss
                 </select>                       
             </div>
         </div>
+           <?php   if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') { ?>
+        <div class='form-group'>
+                                                <label class='col-md-2 control-label' for='inputText1'>Active/Hold Status<span>*</span></label>
+                                                <div class='col-md-3 controls'>
+                                                    <select name="pr_status" id="pr_status" data-rule-required='true' class="form-control">    
+                                                        <option value="">Select</option>
+                                                        <option value="0" <?php if ($product[0]['is_delete'] == 0) echo 'selected'; ?>>Active</option>
+                                                        <option value="3" <?php if ($product[0]['is_delete'] == 3) echo 'selected'; ?>>Hold</option>
+                                                    </select>                
+                                                </div>
+                                            </div>
+    <?php } ?>
 <?php } ?>
     <div class="form-actions form-actions-padding-sm btn-btm-css">
         <div class="row">

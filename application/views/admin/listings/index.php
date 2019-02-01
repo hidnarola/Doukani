@@ -240,7 +240,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-3">
                                         <div class="box bordered-box orange-border" style="margin-bottom:0;">
                                             <div class="box-header orange-background">

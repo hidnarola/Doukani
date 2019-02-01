@@ -1305,7 +1305,7 @@ class Dbcommon extends CI_Model {
         return $img_arr;
     }
 
-    function get_my_listing($user_id = NULL, $start = NULL, $limit = NULL, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL, $sub_cat_id = NULL, $random_data = NULL) {
+    function get_my_listing($user_id = NULL, $start = NULL, $limit = NULL, $search = NULL, $user_status = NULL, $user_role = NULL, $request_from = NULL, $cat_id = NULL, $sub_cat_id = NULL, $random_data = NULL, $both = NULL) {
 
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user) && !empty($current_user)) {
@@ -1315,7 +1315,7 @@ class Dbcommon extends CI_Model {
             $this->db->select('if(lp.product_id=product.product_id and lp.user_id=' . $current_user['user_id'] . ',1,0) my_like,if(fp.product_id=product.product_id and fp.user_id=' . $current_user['user_id'] . ',1,0) my_favorite', FALSE);
         }
 
-        $this->db->select('product.product_id,product.product_posted_by,product.product_posted_time,product.product_name,product.product_image,product.product_price,product.product_status,product.product_is_inappropriate,product.product_total_views,product.product_total_favorite,category.category_id,category.catagory_name,user.username, user.profile_picture,if(user.nick_name!="",user.nick_name,user.username) as username1,user.nick_name,product.product_is_sold,user.facebook_id,user.twitter_id,user.google_id,product.product_slug,product.product_total_likes,user.user_slug,product.stock_availability,state.latitude state_latitude,state.longitude state_longitude,product.product_for,if(featureads.product_id IS NOT NULL and (CONVERT_TZ(NOW(),"+00:00","' . ASIA_DUBAI_OFFSET . '") between featureads.dateFeatured and featureads.dateExpire),1,"") as featured_ad,state.state_name,product.latitude,product.longitude,state.latitude state_latitude, state.longitude state_longitude,product.address');
+        $this->db->select('product.product_id,product.product_posted_by,product.product_posted_time,product.product_name,product.product_image,product.product_price,product.product_status,product.product_is_inappropriate,product.product_total_views,product.product_total_favorite,category.category_id,category.catagory_name,user.username, user.profile_picture,if(user.nick_name!="",user.nick_name,user.username) as username1,user.nick_name,product.product_is_sold,user.facebook_id,user.twitter_id,user.google_id,product.product_slug,product.product_total_likes,user.user_slug,product.stock_availability,state.latitude state_latitude,state.longitude state_longitude,product.product_for,if(featureads.product_id IS NOT NULL and (CONVERT_TZ(NOW(),"+00:00","' . ASIA_DUBAI_OFFSET . '") between featureads.dateFeatured and featureads.dateExpire),1,"") as featured_ad,state.state_name,product.latitude,product.longitude,state.latitude state_latitude, state.longitude state_longitude,product.address,product.is_delete');
         $this->db->select('store.store_domain');
         $this->gallery_count('product');
         $this->db->from('product');
@@ -1394,6 +1394,8 @@ class Dbcommon extends CI_Model {
 
         if ($user_status == 1)
             $this->db->where('product.is_delete', 3);
+        elseif (isset($both) && $both == 'yes')
+            $this->db->where_in('product.is_delete', array(0, 3));
         else
             $this->db->where_in('product.is_delete', array(0, 6));
 

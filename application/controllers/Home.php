@@ -50,8 +50,6 @@ class Home extends My_controller {
      * function to load the home page.
      */
     public function index($slug = NULL, $load_data = NULL) {
-
-
         $current_user = $this->session->userdata('gen_user');
         if (isset($current_user)) {
             $ret_repsonse = $this->dbcommon->select('order_success_msg where user_id=' . $current_user['user_id']);
@@ -819,7 +817,6 @@ class Home extends My_controller {
 
     //load search products using ajax
     public function more_search() {
-
         $current_user = $this->session->userdata('gen_user');
 
         $cat_id = $this->input->get_post("cat1");

@@ -187,6 +187,42 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade sure" id="ActiveConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">  
+                        <h4 class="modal-title"><i class="fa fa-check-square-o"></i>Confirmation
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </h4>                   
+                    </div>
+                    <div class="modal-body">                  
+                        <p>Are you sure want active this Ad?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default yes_active" value="yes">Yes, I want</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="modal fade sure" id="HoldConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">  
+                        <h4 class="modal-title"><i class="fa fa-check-square-o"></i>Confirmation
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </h4>                   
+                    </div>
+                    <div class="modal-body">                  
+                        <p>Are you sure want hold this Ad?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default yes_hold" value="yes">Yes, I want</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="loading" style="text-align:center" class="loader_display">
             <img id="loading-image" src="<?php echo base_url() ?>assets/front/images/ajax-loader.gif" alt="Loading..." />
         </div>
@@ -276,7 +312,35 @@
                 }
             });
         });
+        $(document).on("click", "#active_pr", function (e) {
+            var product_id = $(document).find(this).attr('class');
+            $("#ActiveConfirm").modal('show');
+            $(document).on("click", ".yes_active", function (e) {
+                var val = $(this).val();
+                if (val == 'yes') {
+                    var url = "<?php echo base_url(); ?>user/updateproduct";
+                    $.post(url, {prod_id: product_id}, function (data) {
+                        window.location = "<?php echo site_url().$_SERVER['REQUEST_URI']; ?>";
+                    });
 
+                }
+            });
+        });
+        $(document).on("click", "#hold_pr", function (e) {
+            var product_id = $(document).find(this).attr('class');
+            $("#HoldConfirm").modal('show');
+            $(document).on("click", ".yes_hold", function (e) {
+                var val = $(this).val();
+                if (val == 'yes') {
+                    var url = "<?php echo base_url(); ?>user/update_hold_product";
+                    $.post(url, {prod_id: product_id}, function (data) {
+                        window.location = "<?php echo site_url().$_SERVER['REQUEST_URI']; ?>";
+                    });
+
+                }
+            });
+        });
+        
     </script>
     <!--container-->
 </body>

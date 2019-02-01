@@ -638,7 +638,7 @@
                                                                                     </div>
                                                                                     <div class="row most-viewed">
                                                                                         <div class="catlist">
-                                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 MostViewsHedding">
+                                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 MostViewsHedding ss1">
                                                                                                 <h3>Related Items</h3>
                                                                                             </div>
                                                                                             <?php
@@ -731,9 +731,22 @@
                                                                                                                                     </div>
                                                                                                                                     <?php
                                                                                                                                 }
+                                                                                                                                
                                                                                                                             }
                                                                                                                         }
-                                                                                                                        ?>                                                          
+                                                                                                                         
+                                                                                                                        if ((int) $pro['stock_availability'] != 0) {
+                                                                                                                                if (isset($pro['product_for']) && $pro['product_for'] == 'store'){
+                                                                                                                                            ?>
+                                                                                                                                                <div class="addtocart" >
+                                                                                                                                                        <button data-toggle="tooltip" title="Add To Cart" class="add_to_cart_cus" type="button" id="add_to_cart_button" quantity="1" proid="<?php echo $pro['product_id']; ?>">
+                                                                                                                                                            <i class="fa fa-shopping-cart <?php echo $pro['product_id']; ?>"></i>
+                                                                                                                                                        </button>
+                                                                                                                                                    </div>
+
+                                                                                                                                            <?php
+                                                                                                                                      }
+                                                                                                                        }     ?>      
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div class="item-disc">
@@ -1177,6 +1190,71 @@
 //                                                                                                    console.log('alt', alt);
 //                                                                                                });
                                                                                     </script>
+                                                                                    <script type="text/javascript">
+      $('[data-toggle="tooltip"]').tooltip();
+            //add to cart button
+                                                $('.add_to_cart_cus').click(function () {
+                                                   var proid= $(this).attr('proid');
+                                                   var qat=  $(this).attr('quantity');
+                                                   console.log(proid);
+                                                   console.log(qat);
+                                                    check_product_quantity(proid,qat);
+                                                    $("i."+proid).removeClass('fa-shopping-cart');
+                                                    $("i."+proid).addClass('fa-check');
+                                                });
+
+
+                                                function check_product_quantity(proid,qat) {
+
+                                                    var product_id = $('#cart_product_id').val();
+                                                    var quantity = $('#quantity').val();
+
+                                                    var url = "<?php echo $store_url; ?>home/check_product_and_quantity";
+
+                                                    $.post(url, {quantity: qat, product_id: proid}, function (response)
+                                                    {
+                                                        if (response == 'success') {
+                                                            $('#span_error').hide();
+
+                                                            var url = "<?php echo $store_url; ?>cart/add_to_cart";
+                                                            var quantity = $('#quantity').val();
+                                                            var cart_product_id = $('#cart_product_id').val();
+
+                                                            $.post(url, {quantity: qat, cart_product_id: proid}, function (response)
+                                                            {
+                                                                //                                    $('#cart_count').text(response);
+                                                                $('.total-no').text(response);
+                                                                $('.cart-li').show();
+                                                            });
+                                                          //  $("#quantity_popup").modal('hide');
+                                                        } else {
+                                                            if (response == 'Out of stock' || response == 'Not Available') {
+                                                             //   $('#span_error').show();
+                                                               // $('#span_error').text('* ' + response);
+                                                                return 0;
+                                                            } else
+                                                            {
+                                                             //   $('#span_error').show();
+                                                             //   $('#span_error').text('* ' + response + ' Available in Stock');
+
+                                                                //reset dropdown
+                                                                var availability = parseInt(response);
+                                                                var i = 1;
+                                                                var concat_str = '';
+
+                                                                while (i <= availability) {
+                                                                    concat_str = concat_str + '<option value="' + i + '">' + i + '</option>';
+                                                                    i++;
+                                                                }
+
+                                                                $("#quantity").html(concat_str);
+                                                                return 0;
+                                                            }
+
+                                                        }
+                                                    });
+                                                }
+            </script>
                                                                                     <script src="<?php echo site_url(); ?>assets/googleMap.js"></script>
                                                                                     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCc-XPpHskmvNVI5zH7T52Kvgja829p6Ek&libraries=places&callback=initAutocomplete"
                                                                                     async defer></script>

@@ -3,9 +3,14 @@
         <?php
         if ($product->stock_availability > 0 && !in_array($product->sub_category_id, array(12, 37, 60, 61, 13, 40, 53, 54, 55, 56, 57))) {
             ?>
-            <div class="btn-wrap">
+            <div class="btn-wrap pro_inf_btn">
                 <a href="javascript:void(0);" class="btn red-btn buy_link" id="buy_now">Buy Now</a>
                 <a href="javascript:void(0);" class="btn cart-btn buy_link" id="add_to_cart">Add to cart</a>
+                <?php
+                if (isset($product->product_for) && $product->product_for == 'store'){
+                  ?>
+                 <a href="<?php echo HTTPS . website_url; ?>/allstores" class="btn red-btn continue_ship" >Continue Shipping</a>
+                    <?php }?>
             </div>
         <?php } ?>
 

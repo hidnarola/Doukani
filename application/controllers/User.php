@@ -437,7 +437,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required');
                         $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required|max_length[650]');
-                       
+
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('city', 'Emirate', 'trim|required');
@@ -532,7 +532,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('title', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required');
                         $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[650]');
-                         // $this->form_validation->set_rules('vehicle_original_price', 'Price', 'trim|required');
+                        // $this->form_validation->set_rules('vehicle_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('vehicle_pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('pro_brand', 'Brand', 'trim|required');
                         $this->form_validation->set_rules('vehicle_pro_model', 'Model', 'trim|required');
@@ -858,7 +858,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('car_desc', 'Description', 'trim|required');
                         $this->form_validation->set_rules('car_desc', 'Description', 'trim|required|max_length[650]');
-                         //                    $this->form_validation->set_rules('car_original_price', 'Price', 'trim|required');
+                        //                    $this->form_validation->set_rules('car_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('car_number', 'Car Number', 'trim|required');
                         $this->form_validation->set_rules('plate_source', 'Plate Source', 'trim|required');
@@ -967,7 +967,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required');
                         $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required|max_length[650]');
-                          //                    $this->form_validation->set_rules('mobile_original_price', 'Price', 'trim|required');
+                        //                    $this->form_validation->set_rules('mobile_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('mobile_operators', 'Mobile Operator', 'trim|required');
                         $this->form_validation->set_rules('repeating_numbers_mobile', 'Repeating Number', 'trim|required');
@@ -1744,7 +1744,11 @@ class User extends My_controller {
         else
             $last_login_as = NULL;
 
-        $listing = $this->dbcommon->get_my_listing($current_user['user_id'], $start = 0, $limit = 12, NULL, $user_status, $last_login_as);
+        if (isset($_REQUEST['val']) && $_REQUEST['val'] == 'Approve')
+            $listing = $this->dbcommon->get_my_listing($current_user['user_id'], $start = 0, $limit = 12, NULL, $user_status, $last_login_as, NULL, NULL, NULL, NULL, 'yes');
+        else {
+            $listing = $this->dbcommon->get_my_listing($current_user['user_id'], $start = 0, $limit = 12, NULL, $user_status, $last_login_as, NULL, NULL, NULL, NULL);
+        }
 
         $total_product = $this->dbcommon->get_my_listing_count($current_user['user_id'], NULL, $user_status, $last_login_as);
 
@@ -2162,7 +2166,7 @@ class User extends My_controller {
                             //'sub_category_id' => $_POST['sub_cat'],
                             'product_is_inappropriate' => 'NeedReview',
                             'product_description' => $_POST['pro_desc'],
-                            'product_price' => str_replace(",", "", $_POST['pro_price']),                            
+                            'product_price' => str_replace(",", "", $_POST['pro_price']),
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'product_brand' => 0,
                             'state_id' => $_POST['state'],
@@ -2208,7 +2212,7 @@ class User extends My_controller {
                     $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required');
                     $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[650]');
 //                    $this->form_validation->set_rules('vehicle_pro_price', 'Price', 'trim|required');
-                     // $this->form_validation->set_rules('vehicle_original_price', 'Price', 'trim|required');
+                    // $this->form_validation->set_rules('vehicle_original_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('pro_brand', 'Brand', 'trim|required');
                     $this->form_validation->set_rules('vehicle_pro_model', 'Model', 'trim|required');
                     $this->form_validation->set_rules('vehicle_pro_type_of_car', 'Type Of Car', 'trim|required');
@@ -2279,7 +2283,7 @@ class User extends My_controller {
                             'product_is_inappropriate' => 'NeedReview',
                             'product_brand' => $_POST['pro_brand'],
                             'product_description' => $_POST['vehicle_pro_desc'],
-                            'product_price' => str_replace(",", "", $_POST['vehicle_pro_price']),                            
+                            'product_price' => str_replace(",", "", $_POST['vehicle_pro_price']),
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'product_modified_by' => $user['user_id'],
                             'youtube_link' => $youtube,
@@ -2401,7 +2405,7 @@ class User extends My_controller {
                             'product_image' => (isset($img_name) && $img_name != '') ? $img_name : $product[0]['product_image'],
                             'product_is_inappropriate' => 'NeedReview',
                             'product_description' => $_POST['house_pro_desc'],
-                            'product_price' => str_replace(",", "", $_POST['houses_price']),                            
+                            'product_price' => str_replace(",", "", $_POST['houses_price']),
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'state_id' => $_POST['state'],
                             'product_modified_by' => $user['user_id'],
@@ -2640,7 +2644,7 @@ class User extends My_controller {
                             'product_name' => $_POST['pro_name'],
                             'product_description' => $_POST['car_desc'],
                             'product_is_inappropriate' => 'NeedReview',
-                            'product_price' => str_replace(",", "", $_POST['pro_price']),                            
+                            'product_price' => str_replace(",", "", $_POST['pro_price']),
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'state_id' => $_POST['state'],
                             'country_id' => $_POST['location'],
@@ -2714,7 +2718,7 @@ class User extends My_controller {
                     $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required');
                     $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required|max_length[650]');
-                      //                    $this->form_validation->set_rules('mobile_original_price', 'Price', 'trim|required');
+                    //                    $this->form_validation->set_rules('mobile_original_price', 'Price', 'trim|required');
 //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('mobile_operators', 'Mobile Operator', 'trim|required');
                     $this->form_validation->set_rules('repeating_numbers_mobile', 'Repeating Number', 'trim|required');
@@ -2774,7 +2778,7 @@ class User extends My_controller {
                             'product_image' => (isset($img_name) && $img_name != '') ? $img_name : $product[0]['product_image'],
                             'product_is_inappropriate' => 'NeedReview',
                             'product_description' => $_POST['mob_desc'],
-                            'product_price' => str_replace(",", "", $_POST['pro_price']),                            
+                            'product_price' => str_replace(",", "", $_POST['pro_price']),
                             'product_reposted_time' => date('y-m-d H:i:s', time()),
                             'product_brand' => 0,
                             'state_id' => $_POST['state'],
@@ -2947,6 +2951,13 @@ class User extends My_controller {
     //update isdelete for product while delete
     public function removeproduct() {
         $this->db->query('update product set is_delete=1 where product_id=' . $_POST['prod_id'] . ' and product_posted_by=' . session_userid . ' and is_delete in (0,3,6)');
+    }
+    public function updateproduct() {
+        $this->db->query('update product set is_delete=0 where product_id=' . $_POST['prod_id'] . ' and product_posted_by=' . session_userid . ' and is_delete in (0,3,6)');
+    }
+    
+    public function update_hold_product() {
+        $this->db->query('update product set is_delete=3 where product_id=' . $_POST['prod_id'] . ' and product_posted_by=' . session_userid . ' and is_delete in (0,3,6)');
     }
 
     //delete existing images

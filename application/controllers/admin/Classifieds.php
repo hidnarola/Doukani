@@ -876,6 +876,12 @@ class Classifieds extends CI_Controller {
             } else {
                 $filter_val = 0;
             }
+            //Hold
+             if (isset($_REQUEST['is_hold'])) {
+                $is_hold = $_REQUEST['is_hold'];
+            } else {
+                $is_hold = 0;
+            }
 //country
             if (isset($_REQUEST['con']) && $_REQUEST['con'] != 0) {
                 $listing_country = $_REQUEST['con'];
@@ -922,8 +928,10 @@ class Classifieds extends CI_Controller {
                 $listing_date = 0;
             }
 
-            $spam_query = " and p.is_delete=0";
-
+          
+           
+                $spam_query = " and p.is_delete=0";
+           
             if ($filter_val == '0') {
                 $query .= '' . $spam_query;
                 $url .= '&filter=' . $filter_val;
@@ -1027,7 +1035,6 @@ class Classifieds extends CI_Controller {
             $offset = ($page == 0) ? 0 : ($page - 1) * $per_page;
 
             $query = $query . "   group by p.product_id order by p.product_id desc limit  " . $offset . "," . $per_page;
-
 //            /left join repost r on r.productid<>p.product_id
             $wh = "	select 
                         u.user_id,u.user_role,u.device_type, if(u.nick_name!='',u.nick_name,u.username) user_name,if(p.phone_no!='',p.phone_no,if(u.contact_number !='',u.contact_number,if(u.phone!='',u.phone,'-'))) as user_contact_number, u.email_id, p.product_id,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate,p.product_is_sold,p.product_deactivate,p.product_posted_by,c.catagory_name,if((CONVERT_TZ(NOW(),'+00:00','" . ASIA_DUBAI_OFFSET . "') between f.dateFeatured and f.dateExpire) and p.product_is_inappropriate='Approve' ,'f_ad','') as my_status,st.store_id                        
@@ -2266,6 +2273,7 @@ class Classifieds extends CI_Controller {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
                             $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('pr_status', 'Active / Hold Status', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2370,6 +2378,7 @@ class Classifieds extends CI_Controller {
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
                                 $data['original_price'] = str_replace(",", "", $_POST['original_price']);
+                                $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
@@ -2418,6 +2427,7 @@ class Classifieds extends CI_Controller {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
                             $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('pr_status', 'Active / Hold Status', 'trim|required');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2522,6 +2532,7 @@ class Classifieds extends CI_Controller {
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
                                 $data['original_price'] = str_replace(",", "", $_POST['vehicle_original_price']);
+                                $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
@@ -2571,7 +2582,8 @@ class Classifieds extends CI_Controller {
                             }
 //exit;
                         endif;
-                    } elseif (isset($_POST['real_estate_houses_submit'])) {
+                    }
+                    elseif (isset($_POST['real_estate_houses_submit'])) {
                         $img1 = $this->dbcommon->get_images($pro_id);
                         $where = " where category_id='" . $_POST['cat_id'] . "'";
                         $cat_name = $this->dbcommon->getdetails('category', $where);
@@ -2587,12 +2599,14 @@ class Classifieds extends CI_Controller {
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
                         $this->form_validation->set_rules('address', 'Address', 'trim|required');
+                        $this->form_validation->set_rules('pr_status', 'Active / Hold Status', 'trim|required');
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
                             $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                             $data['original_price'] = str_replace(",", "", $_POST['house_original_price']);
+                            $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2766,12 +2780,15 @@ class Classifieds extends CI_Controller {
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
                         $this->form_validation->set_rules('address', 'Address', 'trim|required');
+                        $this->form_validation->set_rules('pr_status', 'Active / Hold Status', 'trim|required');
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
                             $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
                              $data['original_price'] = str_replace(",", "", $_POST['shared_original_price']);
+                             $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
+                             
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2937,11 +2954,13 @@ class Classifieds extends CI_Controller {
                         $this->form_validation->set_rules('repeating_numbers_car', 'Repeating Number', 'trim|required');
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
+                        $this->form_validation->set_rules('pr_status', 'Active / Hold Status', 'trim|required');
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
                             $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
                         }
 
 
@@ -3112,11 +3131,13 @@ class Classifieds extends CI_Controller {
                         $this->form_validation->set_rules('mobile_number', 'Mobile Number', 'trim|required');
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
+                        $this->form_validation->set_rules('pr_status', 'Active / Hold Status', 'trim|required');
 
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
                             $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
                         }
 
 

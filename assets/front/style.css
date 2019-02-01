@@ -2275,6 +2275,22 @@ img.img-responsive.center-block {float: right;}
 .addtocart button#add_to_cart_button i {vertical-align: text-top;padding-right: 0;}
 .addtocart button#add_to_cart_button {background-color: transparent;padding: 0;border-width: 0px;margin: 0;font-size: 16px;color: #ed1b33;}
 .addtocart.listview {display: inline-block;vertical-align: top;}
+.addtocart.listview.map_loc {margin-left: 5px;vertical-align: bottom;}
+.prod-info .continue_ship {margin: 10px;}
+.cart_pro_inf a.btn.red-btn.continue_ship {margin: 0 0 0 20px;}
+.prod-info.cart_pro_inf {margin-right: 20px;}
+
+.inner_wrap_hd{display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;
+align-items: center;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-content: space-between;margin: 0 0 40px;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;}
+.inner_wrap_hd .inner_hd_right{display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;}
+.inner_wrap_hd .inner_hd_right .btn{font-size: 13px;}
+.cart-wrap .inner_wrap_hd .cart-title , .cart-wrap .inner_wrap_hd .forward{margin-bottom: 0;}
+.pro_inf_btn{ display: -webkit-box;display: -ms-flexbox;display: flex; -ms-flex-wrap: wrap;
+                flex-wrap: wrap;}
+.pro_inf_btn .continue_ship {margin: inherit;}
+
 
 @media(min-width:768px){
     .header-banner.store_img_logo{}
@@ -2425,7 +2441,12 @@ img.img-responsive.center-block {float: right;}
     .offer-block.wide .offer-img{width:100%;float:none;}
     .offer-block.wide .offer-detail{margin-left:0;}
     .offer-block.wide .offer-img a{height:180px;}
+	.prod-info.cart_pro_inf {margin-right: 20px;}
+	.inner_wrap_hd .inner_hd_right .cart_pro_inf a.btn.red-btn.continue_ship {margin: 20px 0;}
+	.inner_wrap_hd {margin: 0 0 20px;}
+	.pro_inf_btn a {width: 100% !important;min-width: 100% !important;}
 }
+
 @media(max-width:450px){
     .store-list .store-category-head .wrap-title{float:none;margin:0 0 5px;text-align:center;}
     .store-list .store-category-head .search-by-div{float:none;text-align:center;}

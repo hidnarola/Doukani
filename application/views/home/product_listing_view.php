@@ -26,6 +26,12 @@ if (!empty($products)) {
                     <?php if ($pro['product_is_sold'] == 1) { ?>
                         <div class="sold"><span>SOLD</span></div>
                     <?php } ?>
+                            <?php 
+                            if (isset($pro['product_for']) && $pro['product_for'] == 'store' && !isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve' && isset($pro['is_delete']) && $pro['is_delete'] == '3') { 
+                            ?>
+                                <div class="sold"><span>HOLD</span></div>
+                            <?php
+                            }?>
                     <?php
                     if (isset($pro['featured_ad']) && $pro['featured_ad'] > 0) {
                         if (isset($latest_page) && $latest_page == 'yes') {
@@ -270,6 +276,18 @@ if (!empty($products)) {
                                         <?php if (!isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve' || $_REQUEST['val'] == 'NeedReview'): ?>
                                             <li id="edit<?php echo $pro['product_id']; ?>"><a href="<?php echo site_url() . 'user/listings_edit/' . $pro['product_id']; ?>"><i><img src="<?php echo site_url(); ?>assets/front/images/edit.png" alt="Image" ></i>Edit</a></li>
                                         <?php endif; ?>
+                                            <?php 
+                                         if (isset($pro['product_for']) && $pro['product_for'] == 'store' && !isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve' && isset($pro['is_delete']) && $pro['is_delete'] == '3') { 
+                                            ?>
+                                            <li id="edit<?php echo $pro['product_id']; ?>"><a href="javascript:void(0);" id="active_pr" class="<?php echo $pro['product_id']; ?>"><i><img src="<?php echo site_url(); ?>assets/front/images/active2.png" alt="Image" ></i>Active</a></li>
+                                            <?php
+                                         }?>
+                                         <?php 
+                                         if (isset($pro['product_for']) && $pro['product_for'] == 'store' && !isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve' && isset($pro['is_delete']) && $pro['is_delete'] == '0') { 
+                                            ?>
+                                            <li id="edit<?php echo $pro['product_id']; ?>"><a href="javascript:void(0);" id="hold_pr" class="<?php echo $pro['product_id']; ?>"><i><img src="<?php echo site_url(); ?>assets/front/images/hold.png" alt="Image" ></i>Hold</a></li>
+                                            <?php
+                                         }?>
 
                                         <?php
                                         if (!isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve') {
