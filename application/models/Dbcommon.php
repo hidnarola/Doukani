@@ -156,8 +156,13 @@ class Dbcommon extends CI_Model {
         }
     }
 
-    function select($table) {
-        $sql = "select * from $table ";
+    function select($table,$where = NULL) {
+        if(!is_null($where) && isset($where)){
+            $sql = "select * from $table where $where";
+        }
+        else{
+            $sql = "select * from $table ";   
+        }
         $query = $this->db->query($sql);
         return $query->result_array();
     }

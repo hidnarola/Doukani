@@ -919,6 +919,34 @@ class Systems extends My_controller {
         $this->load->view('admin/settings/index', $data);
     }
 
+    public function shipping_cost() {
+        $data = array();
+        $data['page_title'] = 'Shipping Cost';
+        $shipping = $this->dbcommon->select('shipping_cost');
+        $data['shipping'] = $shipping;
+        if (!empty($_POST)) {
+            $i = 1;
+            $current_user = $this->session->userdata('gen_user');
+            //echo $current_user['user_id'];
+            foreach ($_POST as $key => $value) {
+               // if (isset($_POST['price_' . $i]) && !empty($_POST['price_' . $i])) {
+                    $data = array(
+                        'price' => $_POST['price_' . $i],
+                        'modified_by'=> $current_user['user_id'],
+                        'modify_date'=> date('y-m-d H:i:s', time())
+                    );
+                    $array = array('id' => $i);
+                    $result = $this->dbcommon->update('shipping_cost', $array, $data);
+                    //echo $this->db->last_query();
+                    $i++;
+               // }
+            }
+            $this->session->set_flashdata(array('msg' => 'Shipping cost updated successfully'));
+            redirect('admin/systems/shipping_cost');
+        }
+        $this->load->view('admin/settings/shipping_cost', $data);
+    }
+
     function nationality() {
 
         $data = array();

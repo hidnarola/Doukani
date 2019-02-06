@@ -735,6 +735,18 @@ if ($user_type == 'offerUser') {
                                     <span>Settings</span>
                                 </a>
                             </li>
+                            
+                            <li class='<?php
+                            if ($action == 'shipping_cost') {
+                                echo 'active';
+                            }
+                            ?>'>
+                                <a href='<?php echo base_url(); ?>admin/systems/shipping_cost'>
+                                    <i class='fa fa-ambulance'></i>
+                                    <span>Shipping Cost</span>
+                                </a>
+                            </li>
+                           
                             <li class='<?php
                             if ($action == 'featuredad_price') {
                                 echo 'active';

@@ -15,12 +15,18 @@
                                 <h1 class='pull-left'>
                                     <i class='icon-building'></i>
                                     <span>Stores</span>
-                                </h1>				
+                                </h1>
+                                <?php if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') { ?>
+                                <div class='pull-right'>
+                                    <i class='fa fa-ambulance'></i>
+                                    <a href="<?php echo base_url(); ?>admin/users/store_shipping_cost/<?php echo $old_store_details[0]->store_id; ?>" class="edit_ship_cost">Edit Shipping Cost</a>
+                                </div>	
+                                <?php } ?>
                             </div>
                             <hr>
                             <?php if (validation_errors() != false) { ?>
                                 <div class='alert alert-info text-center'>
-                                    <a class='close' data-dismiss='alert' href='#'>&times;</a>
+                                    <a class='close' data-dismiss='alert' href='<?php echo base_url(); ?>/'>&times;</a>
                                     <?php echo validation_errors(); ?>                              
                                 </div>                          
                             <?php } ?>
