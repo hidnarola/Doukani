@@ -133,6 +133,7 @@ $route['classifiedRegistration'] = 'ClassifiedRegistration/index';
 $route['storeRegistration'] = 'StoreRegistration/index';
 
 $route['allstores'] = 'allstores/index';
+$route['allstores/(:any)'] = 'allstores/index';
 //$route['allstores'] = 'stores/index';
 $route['alloffers'] = 'alloffers/index';
 $route['offers'] = 'alloffers/offers';

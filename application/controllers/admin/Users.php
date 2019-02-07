@@ -1990,7 +1990,7 @@ class Users extends CI_Controller {
                         'store_is_inappropriate' => $_POST['store_is_inappropriate']
                     );
 
-                    $array = array('store_id' => $old_store_details[0]->store_id);                    
+                    $array = array('store_id' => $old_store_details[0]->store_id);
                     /*
                       original Store table
                      */
@@ -2074,32 +2074,51 @@ class Users extends CI_Controller {
             redirect('admin/users/index/storeUser' . $redirect);
         endif;
     }
+
     public function store_shipping_cost($store_id) {
         $data = array();
         $data['page_title'] = 'Store Shipping Cost';
         $where = " store_id = '" . $store_id . "' ";
-        $shipping = $this->dbcommon->select('store_shipping_cost',$where);
+        $shipping = $this->dbcommon->select('store_shipping_cost', $where);
         $data['shipping'] = $shipping;
-//        if (!empty($_POST)) {
-//            $i = 1;
-//            $current_user = $this->session->userdata('gen_user');
-//            //echo $current_user['user_id'];
-//            foreach ($_POST as $key => $value) {
-//               // if (isset($_POST['price_' . $i]) && !empty($_POST['price_' . $i])) {
-//                    $data = array(
-//                        'price' => $_POST['price_' . $i],
-//                        'modified_by'=> $current_user['user_id'],
-//                        'modify_date'=> date('y-m-d H:i:s', time())
-//                    );
-//                    $array = array('id' => $i);
-//                    $result = $this->dbcommon->update('shipping_cost', $array, $data);
-//                    //echo $this->db->last_query();
-//                    $i++;
-//               // }
-//            }
-//            $this->session->set_flashdata(array('msg' => 'Shipping cost updated successfully'));
-//            redirect('admin/systems/store_shipping_cost');
-//        }
+        if (!empty($_POST)) {
+            pr($_POST);
+            $current_user = $this->session->userdata('gen_user');
+            $i = 1;
+            foreach ($_POST as $key => $value) {
+                //code to check store shipping cost exist or not
+                //where 
+                $where = " store_id = '" . $store_id . "' AND label_id = " . $i;
+                $store_shipping = $this->dbcommon->select('store_shipping_cost', $where);
+                if (isset($store_shipping) && sizeof($store_shipping) > 0) {
+                    $data = array(
+                        'price' => $value,
+                        'modified_by' => $current_user['user_id'],
+                        'modify_date' => date('y-m-d H:i:s', time())
+                    );
+                    $array = array('label_id' => $i , 'store_id'=> $store_id);
+                    $result = $this->dbcommon->update('store_shipping_cost', $array, $data);
+
+                } else {
+                    //add
+                     $data = array(
+                            'price' => $value,
+                            'modified_by'=> $current_user['user_id'],
+                            'modify_date'=> date('y-m-d H:i:s', time()),
+                            'created_date'=> date('y-m-d H:i:s', time()),
+                            'label_id' => $i,
+                            'store_id' => $store_id
+                                
+                        );
+                        $this->dbcommon->insert('store_shipping_cost', $data);
+                }
+                
+                $i++;
+            }
+           
+            $this->session->set_flashdata(array('msg' => 'Shipping cost updated successfully'));
+            redirect("admin/users/store_shipping_cost/$store_id");
+        }
         $this->load->view('admin/stores/shipping_cost', $data);
     }
 
