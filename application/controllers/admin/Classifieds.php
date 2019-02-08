@@ -1141,7 +1141,7 @@ class Classifieds extends CI_Controller {
             $data['user_category_id'] = '';
             $data['user_sub_category_id'] = '';
             $data['user_store_status'] = '';
-            $data['user_role'] = '';
+            $data['user_role'] = 'generalUser';
             $data['productowner_role'] = '';
             $productowner_role = '';
 

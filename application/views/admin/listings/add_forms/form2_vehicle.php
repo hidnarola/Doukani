@@ -34,7 +34,8 @@ else
         </div>
     </div>
     <?php } ?>
-    <div class='form-group' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>                        
+    <?php //if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>
+    <div class='form-group' >                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>
         <div class='col-md-3 controls'>
             <input class="form-control price_txt" <?php if (isset($user_role) && $user_role != 'storeUser'){ echo ''; }else{ echo 'id="form_pro_price2"'; } ?> placeholder="Price" name="vehicle_pro_price" id="vehicle_pro_price" type="text"   value="<?php echo (isset($_POST['vehicle_pro_price']) && !empty($_POST['vehicle_pro_price'])) ? set_value('vehicle_pro_price') : ''; ?>" />

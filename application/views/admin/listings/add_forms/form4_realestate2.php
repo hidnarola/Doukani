@@ -34,7 +34,8 @@ else
         </div>
     </div>
       <?php } ?>
-    <div class='form-group'  <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>                        
+    <?php //  if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>
+    <div class='form-group'  >                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>    
         <div class="input-group col-md-5 controls price_cont">
             <span class="input-group-addon">Dirham</span>
