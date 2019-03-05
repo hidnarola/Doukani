@@ -20,7 +20,7 @@
                                     </tr>
                                     <tr>
                                         <td>Shipping Cost</td>
-                                        <td id="shipping_cost_value"><?php echo 'AED ' . $seller_total_cost; ?></td>
+                                        <td id="shipping_cost_value"><?php echo 'AED ' . number_format($shipping_total, 2); ?></td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
@@ -98,6 +98,7 @@
         if (address_id != '') {
             var url = "<?php echo site_url() . 'cart/place_order'; ?>";
             $.post(url, {address_id: address_id, success: 'success'}, function (response) {
+//                console.log(response); return false;
                 if (response == 'success')
                     window.location = "<?php echo site_url() . 'cart/success'; ?>";
                 else

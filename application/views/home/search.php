@@ -58,9 +58,9 @@
                                         <?php } ?>	
                                         
                                         <?php 
-                                            if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'list')
+                                            if(isset($_REQUEST['view']) && $_REQUEST['view'] == 'list'){
                                                 $this->load->view('home/product_listing_view');
-                                            else                                        
+                                            }else                                        
                                                 $this->load->view('home/product_grid_view'); 
                                         ?>
 

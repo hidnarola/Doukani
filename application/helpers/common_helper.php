@@ -25,4 +25,15 @@ function init_pagination() {
     return $config;
 }
 
+function get_offer_image_first($offer_id){
+    $ci = &get_instance();
+    $con = 'is_active = 1 AND offer_id = ' . $offer_id;
+    $ci->db->where($con);
+    $ci->db->limit(1);
+    $query = $ci->db->get('offer_images');
+//    echo $ci->db->last_query();
+//    $query = $ci->db->result_array();
+    return $query->row_array();
+}
+
 ?>

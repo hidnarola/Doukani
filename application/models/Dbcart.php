@@ -28,11 +28,13 @@ class Dbcart extends CI_Model {
             }
         }
 
-        $this->db->select('s.*,p.*, if(is_delete!=0 or product_deactivate!=1 or product_is_inappropriate<>"Approve","* Not Available",if(stock_availability<=0,"* Out of stock","")) as session_product_status', FALSE);
+        $this->db->select('s.*,p.*, s.store_id as store, d.id as timeline_id, d.option_text as delivery_timeline, if(is_delete!=0 or product_deactivate!=1 or product_is_inappropriate<>"Approve","* Not Available",if(stock_availability<=0,"* Out of stock","")) as session_product_status', FALSE);
 
         $this->db->where_in('p.product_id', $product_ids);
 
         $this->db->join('store s', 's.store_owner = p.product_posted_by', 'left');
+        $this->db->join('delivery_options d', 'd.id = p.delivery_option', 'left');
+//        $this->db->join('shipping_costs_admin a', 'a.store_id = s.store_id', 'left') //a.max_weight as max_shipping_weight, a.cost, a.cost_per_extra_kg, ;
 
         $this->db->order_by('', 'ASC');
         $this->db->order_by('p.product_posted_by', 'asc');

@@ -55,7 +55,10 @@ if (!empty($products)) {
                                 <div class="sold"><span>SOLD</span></div>
                             <?php } ?>
                                  <?php 
-                                         if (isset($pro['product_for']) && $pro['product_for'] == 'store' && !isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve' && isset($pro['is_delete']) && $pro['is_delete'] == '3') { 
+                                        if($_SERVER['REMOTE_ADDR'] == '203.109.68.198'){
+//                                            pr($pro); exit;
+                                        }
+                                         if ((isset($pro['product_for']) && $pro['product_for'] == 'store') && (!isset($_REQUEST['val']) || $_REQUEST['val'] == 'Approve') && (isset($pro['is_delete']) && $pro['is_delete'] == '3')) { 
                                             ?>
                                             <div class="sold"><span>HOLD</span></div>
                                             <?php

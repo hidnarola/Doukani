@@ -60,7 +60,7 @@
 .addtocart button#add_to_cart_button {background-color: transparent;padding: 0;border-width: 0px;margin: 0;font-size: 16px;color: #ed1b33;}
 .item-sell:hover .function-icon .addtocart{background: #fff;}
         </style>
-    <body>
+    <body sss="hello123">
         <?php $this->load->view('include/google_tab_manager_body'); ?>
         <div class="container-fluid">
 
@@ -347,6 +347,16 @@
                                             </div>
                                         <?php } ?>
                                     </div>
+                                    <?php
+//                                    if (@$hide == "false") {
+//                                        $total_pages = ceil($total_product/100);
+//                                        $initial_pages = 10;
+//                                        if($total_pages < $initial_pages){
+//                                            $initial_pages = $total_pages;
+//                                        }
+                                    ?>
+                                    <!--<div id="page-selection" style="text-align: center;"></div>-->
+                                    <?php // } ?>
                                     <!--End Most Viewed product items-->
                                 </div>
                                 <!--//content-->

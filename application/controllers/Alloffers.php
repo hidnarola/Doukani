@@ -201,6 +201,11 @@ class Alloffers extends My_controller {
         $user_id = $check_user_slug->user_id;
 
         $check_offer_slug = $this->offer->offers_list(NULL, NULL, NULL, $user_id, NULL, NULL, $offer_slug, NULL, 'yes');
+//        if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+            $con = 'is_active = 1 AND offer_id = ' . $check_offer_slug['offer_id'];
+            $data['offer_images'] = $this->dbcommon->select('offer_images', $con);
+            
+//        }
         $current_user = $this->session->userdata('gen_user');
 
         if ($user_slug != NULL && isset($check_user_slug) && !empty($check_user_slug)) {

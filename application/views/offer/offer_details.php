@@ -81,6 +81,34 @@
                                         <div class="row">
                                             <div class="col-sm-12 col-md-8">
                                                 <div class="offer-disp">
+                                                    
+                                                    <?php
+                                                    if(!empty($offer_images)){
+                                                    ?>
+                                                    <div class="offer-img">
+                                                        <a class="data-lightbox-custom" data-lightbox='flatty' href='<?php echo base_url() . offers . "offer_detail/" .  $offer_images[0]['file_path']; ?>' >
+                                                                <img src="<?php echo base_url() . offers . "offer_detail/" . $offer_images[0]['file_path']; ?>" onerror="this.src='<?php echo base_url(); ?>assets/upload/No_Image.png'" alt="<?php echo $check_offer_slug['offer_title']; ?>">
+                                                        </a>
+                                                        <div class="offer_other_images">
+                                                            <?php
+                                                            foreach ($offer_images as $oi_key => $oi_data):
+                                                                if($oi_key > 0){
+                                                            ?>
+                                                            <div class="col-md-2">
+                                                                <a class="data-lightbox-custom" data-lightbox='flatty' href='<?php echo base_url() . offers . "offer_detail/" . $oi_data['file_path']; ?>' >
+                                                                    <img src="<?php echo base_url() . offers . "offer_detail/" . $oi_data['file_path']; ?>" onerror="this.src='<?php echo base_url(); ?>assets/upload/No_Image.png'" alt="<?php echo $check_offer_slug['offer_title']; ?>" style="max-width: 100%;">
+                                                                </a>
+                                                            </div>
+                                                            <?php
+                                                                }
+                                                            endforeach;
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <?php
+                                                    }else{
+                                                    ?>
                                                     <div class="offer-img">
                                                         <?php if (isset($check_offer_slug['offer_image']) && !empty($check_offer_slug['offer_image'])) { ?>
                                                             <a class="data-lightbox-custom" data-lightbox='flatty' href='<?php echo base_url() . offers . "offer_detail/" . $check_offer_slug["offer_image"]; ?>' >
@@ -90,6 +118,12 @@
                                                             <img src="<?php echo base_url(); ?>assets/upload/No_Image.png" onerror="this.src='<?php echo base_url(); ?>assets/upload/No_Image.png'" alt="<?php echo $check_offer_slug['offer_title']; ?>">
                                                         <?php } ?>
                                                     </div>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    
+                                                    
+                                                    
                                                     <?php if (isset($updated_views_count) && !empty($updated_views_count)) { ?>
                                                         <p class="views-offer"><span><i class="fa fa-eye" aria-hidden="true"></i> <?php echo $updated_views_count; ?> Views </span></p>
                                                     <?php } ?>
@@ -406,7 +440,7 @@
         </div>
 
         <?php $this->load->view('include/footer'); ?>
-        <script src="<?php echo base_url(); ?>assets/admin/javascripts/plugins/lightbox/lightbox.min.js" type="text/javascript"></script> 
+        <!--<script src="<?php echo base_url(); ?>assets/admin/javascripts/plugins/lightbox/lightbox.min.js" type="text/javascript"></script>--> 
     </body>
     <script type="text/javascript">
                                                             $(function () {

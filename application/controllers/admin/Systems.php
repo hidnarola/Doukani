@@ -922,30 +922,135 @@ class Systems extends My_controller {
     public function shipping_cost() {
         $data = array();
         $data['page_title'] = 'Shipping Cost';
-        $shipping = $this->dbcommon->select('shipping_cost');
-        $data['shipping'] = $shipping;
+//        if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+            $condition_select = 'is_active = 1 AND store_id = 0';
+            $shipping = $this->dbcommon->select('shipping_costs_admin', $condition_select);
+//        }else{
+//            $condition_select = '';
+//            $shipping = $this->dbcommon->select('shipping_cost', $condition_select);
+//        }
+        $data['shipping'] = $shipping[0];
         if (!empty($_POST)) {
-            $i = 1;
-            $current_user = $this->session->userdata('gen_user');
-            //echo $current_user['user_id'];
-            foreach ($_POST as $key => $value) {
-               // if (isset($_POST['price_' . $i]) && !empty($_POST['price_' . $i])) {
-                    $data = array(
-                        'price' => $_POST['price_' . $i],
-                        'modified_by'=> $current_user['user_id'],
-                        'modify_date'=> date('y-m-d H:i:s', time())
-                    );
-                    $array = array('id' => $i);
-                    $result = $this->dbcommon->update('shipping_cost', $array, $data);
-                    //echo $this->db->last_query();
-                    $i++;
-               // }
-            }
+            
+//            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                $condition_select = 'is_active = 1 AND store_id = 0';
+                $shipping_cost = $this->dbcommon->select('shipping_costs_admin', $condition_select);
+                
+                $save_shipping['max_weight'] = $this->input->post('max_weight');
+                $save_shipping['cost'] = $this->input->post('cost');
+                $save_shipping['cost_per_extra_kg'] = $this->input->post('cost_per_extra_kg');
+                
+                if(empty($shipping_cost)){
+                    $save_shipping['created'] = date('Y-m-d H:i:s');
+                    $ship_db_save = $this->dbcommon->insert('shipping_costs_admin', $save_shipping);
+                }else{
+                    $save_shipping['modified'] = date('Y-m-d H:i:s');
+//                    pr($shipping_cost); exit;
+                    $condition['id'] = $shipping_cost[0]['id'];
+                    $ship_db_save = $this->dbcommon->update('shipping_costs_admin', $condition, $save_shipping);
+                }
+                if($ship_db_save > 0){
+                    $this->session->set_flashdata(array('msg' => 'Shipping cost updated successfully'));
+                }else{
+                    $this->session->set_flashdata(array('msg' => 'Something went wrong. Shipping cost was not updated!'));
+                }
+                redirect('admin/systems/shipping_cost');
+//            }else{
+//            
+//                $i = 1;
+//                $current_user = $this->session->userdata('gen_user');
+//                //echo $current_user['user_id'];
+//                foreach ($_POST as $key => $value) {
+//                   // if (isset($_POST['price_' . $i]) && !empty($_POST['price_' . $i])) {
+//                        $data = array(
+//                            'price' => $_POST['price_' . $i],
+//                            'modified_by'=> $current_user['user_id'],
+//                            'modify_date'=> date('y-m-d H:i:s', time())
+//                        );
+//                        $array = array('id' => $i);
+//                        $result = $this->dbcommon->update('shipping_cost', $array, $data);
+//                        //echo $this->db->last_query();
+//                        $i++;
+//                   // }
+//                }
+//        }
             $this->session->set_flashdata(array('msg' => 'Shipping cost updated successfully'));
             redirect('admin/systems/shipping_cost');
         }
         $this->load->view('admin/settings/shipping_cost', $data);
     }
+    
+    /*
+     * Function to add shipping cost according to shipping days defined into datbase
+     * @author: SG
+     */
+    function shipping_method_cost(){
+        $data = array();
+        $data['page_title'] = 'Shipping Cost';
+        
+        $where = " 1=1";
+        $delivery_options = $this->dbcommon->filter('delivery_options', $where);
+        $data['delivery_options'] = $delivery_options;
+        
+        $condition_select = 'is_active = 1 AND store_id = 0';
+        $shipping = $this->dbcommon->select('shipping_option_wise_cost', $condition_select);
+        $data['shipping'] = $shipping;
+        
+        $find_shipping_method_con = 'is_active = 1 AND store_id = 0';
+        $find_existing_method_cost = $this->dbcommon->select('shipping_option_wise_cost', $con);
+        $cost_method_wise = array();
+        if(!empty($find_existing_method_cost)){
+            foreach ($find_existing_method_cost as $cost_id => $cost_data):
+                $cost_method_wise[$cost_data['option_id']] = $cost_data['cost'];
+            endforeach;
+        }
+        $data['find_existing_method_cost'] = $cost_method_wise;
+        
+        if($this->input->post()){
+            $post_data = $this->input->post();
+            $save_count = 0;
+            foreach ($post_data['cost'] as $cid => $cdata):
+                $con = 'is_active = 1 AND store_id = 0 AND option_id = ' . $cid;
+                $find_existing_cost = $this->dbcommon->select('shipping_option_wise_cost', $con);
+//                pr($find_existing_cost);
+                if(empty($find_existing_cost)){
+                    $add_data['store_id'] = 0;
+                    $add_data['option_id'] = $cid;
+                    if($cdata != ''){
+                        $add_data['cost'] = $cdata;
+                    }else{
+                        $add_data['cost'] = NULL;
+                    }
+                    $add_data['is_active'] = 1;
+                    $add_data['created'] = date('Y-m-d H:i:s');
+                    $save_cost = $this->dbcommon->insert('shipping_option_wise_cost', $add_data);
+                    $save_count++;
+                }else{
+                    $cons['id'] = $find_existing_cost[0]['id'];
+                    $cons['option_id'] = $find_existing_cost[0]['option_id'];
+                    $update_data['cost'] = $cdata;
+                    $update_data['modified'] = date('Y-m-d H:i:s');
+//                    pr($update_data);
+                    $save_cost = $this->dbcommon->update('shipping_option_wise_cost', $cons, $update_data);
+//                    echo $this->db->last_query() . '<br>';
+                    $save_count++;
+                }
+            endforeach;
+//            exit;
+            
+            if($save_count > 0){
+                $this->session->set_flashdata(array('msg' => 'Shipping costs updated successfully', 'class' => 'alert-success'));
+                redirect('admin/systems/shipping_method_cost');
+            }
+            
+//            pr($this->input->post());
+//            exit;
+        }
+        
+        $this->load->view('admin/settings/shipping_method_cost', $data);
+    }
+            
+    
 
     function nationality() {
 

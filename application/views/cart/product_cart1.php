@@ -3,6 +3,7 @@
     <head>
         <?php $this->load->view('include/head'); ?>
         <?php $this->load->view('include/google_tab_manager_head'); ?>
+        <link href="<?php echo base_url(); ?>assets/front/custom.css?v=<?php echo time(); ?>" rel="stylesheet">
     </head>
     <body>
         <?php $this->load->view('include/google_tab_manager_body'); ?>
@@ -26,7 +27,7 @@
                                 <?php   if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {?>
                                 <div class="prod-info cart_pro_inf" >
                                     <div class="btn-wrap">
-                                         <a href="<?php echo HTTPS . website_url; ?>/allstores" class="btn red-btn continue_ship" >Continue Shipping</a>
+                                         <a href="<?php echo HTTPS . website_url; ?>/allstores" class="btn red-btn continue_ship" >Continue Shopping</a>
                                     </div>
                                 </div>
                                 <?php } ?> 
@@ -186,7 +187,15 @@
                                                             <input type="hidden" value="<?php echo $sub_total; ?>" name="stotal" id="stotal" >
                                                         </td>
                                                         <td id="sub_total"><?php if (isset($sub_total)) echo 'AED ' . number_format($sub_total, 2); ?></td>
-                                                    </tr>                      
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Shipping Cost</td>
+                                                        <td id="ship_total"><?php if (isset($shipping_total)) echo 'AED ' . number_format($shipping_total, 2); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total</td>
+                                                        <td id="ship_total"><?php echo 'AED ' . number_format($sub_total + $shipping_total, 2); ?></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                             <form id="place_order_form">

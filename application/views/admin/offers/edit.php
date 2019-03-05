@@ -136,27 +136,63 @@
                                                     <input  placeholder="Url to redirect" class="form-control" name='offer_url'type='url' value="<?php echo $offers[0]->offer_url; ?>" />		                  
                                                 </div>
                                             </div>
-                                            <div class='form-group'>                        
-                                                <label class='col-md-2 control-label' for='inputText1'>Offer Image</label>
-                                                <div class='col-md-12'>
-                                                    <input title="Search for file" name='offer_image_0' type='file' id='offer_image' onchange="javascript:loadimage(this);">
-                                                    <label class='control-label' for='inputText1'>Minimum Size: 300*300</label>
-                                                </div>                                                
-                                            </div>
-                                            <div class='form-group'>
-                                                <label class='col-md-2 control-label'></label>
-                                                <div class='col-md-9'>
-                                                    <img alt="Offer Image" src="" id="blah1">
-                                                </div>
-                                            </div>
-<?php if (!empty($offers[0]->offer_image)): ?>
+                                            <?php
+//                                            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                                            ?>
                                                 <div class='form-group'>
-                                                    <div class="col-md-2"></div>
-                                                    <div class='col-md-5 form-group'>
-                                                        <img alt="offers Image" src="<?php echo base_url() . offers . "medium/" . $offers[0]->offer_image; ?>" onError="this.src='<?php echo base_url() . 'assets/upload/No_Image.png' ?>'" />
-                                                    </div>
+                                                    <label class='col-md-2 control-label' for='inputText1'>Offer Image</label>
+                                                    <div class='col-md-12'>
+                                                        <input title="Search for file" name='offer_image_0[]' type='file' id="offer_image" onchange="javascript:checkimage(this);" multiple="">
+                                                        <label class='control-label' for='inputText1'>Minimum Size: 300*300</label>
+                                                    </div>                                                
                                                 </div>
-                                            <?php endif; ?>
+                                            <?php
+                                                if(isset($offer_images) && !empty($offer_images)){
+                                            ?>
+                                                    <div class='form-group'>
+                                                        <div class='col-md-10 col-md-offset-2 offer_imgs'>
+                                                            <?php
+                                                            foreach ($offer_images as $im_key => $im_data):
+                                                            ?>
+                                                            <div class="col-md-2 offer_img_div">
+                                                                <img alt="offers Image" class="offer_image_class" src="<?php echo base_url() . offers . "medium/" . $im_data['file_path']; ?>" onError="this.src='<?php echo base_url() . 'assets/upload/No_Image.png' ?>'" style="width: 100%;" />
+                                                                <span class="remove_img" data-imgid="<?php echo $im_data['id']; ?>"><i class="icon-trash"></i></span>
+                                                            </div>
+                                                            <?php
+                                                            endforeach;
+                                                            ?>
+                                                            
+                                                        </div>
+                                                    </div>
+                                            <?php
+                                                }
+//                                            }else{
+                                            ?>
+<!--                                                <div class='form-group'>                        
+                                                    <label class='col-md-2 control-label' for='inputText1'>Offer Image</label>
+                                                    <div class='col-md-12'>
+                                                        <input title="Search for file" name='offer_image_0' type='file' id='offer_image' onchange="javascript:loadimage(this);">
+                                                        <label class='control-label' for='inputText1'>Minimum Size: 300*300</label>
+                                                    </div>                                                
+                                                </div>-->
+<!--                                                <div class='form-group'>
+                                                    <label class='col-md-2 control-label'></label>
+                                                    <div class='col-md-9'>
+                                                        <img alt="Offer Image" src="" id="blah1">
+                                                    </div>
+                                                </div>-->
+    <?php // if (!empty($offers[0]->offer_image)): ?>
+<!--                                                    <div class='form-group'>
+                                                        <div class="col-md-2"></div>
+                                                        <div class='col-md-5 form-group'>
+                                                            <img alt="offers Image" src="<?php echo base_url() . offers . "medium/" . $offers[0]->offer_image; ?>" onError="this.src='<?php echo base_url() . 'assets/upload/No_Image.png' ?>'" />
+                                                        </div>
+                                                    </div>-->
+                                                <?php // endif; ?>
+                                            <?php
+//                                            }
+                                            ?>
+                                            
                                             <?php if ($admin_permission == 'only_listing') { ?>    
                                                 <input id="product_is_inappropriate" name="product_is_inappropriate" class="form-control" type="hidden" value="unapprove">                 
                                             <?php } else { ?>
@@ -316,6 +352,68 @@
                                                                 reader.readAsDataURL(input.files[0]);
                                                             }
                                                         }
+                                                        
+                                                        function checkimage(input){
+                                                            var existing_imgs = $('.offer_image_class').length;
+                                                            var img_error_cnt = 0;
+                                                            var _URL = window.URL || window.webkitURL;
+                                                            var total_files_selected = input.files.length;
+                                                            if(total_files_selected + total_files_selected > 15){
+                                                                alert('You can not upload more than 15 images');
+                                                                $(input).val('');
+                                                                return false;
+                                                            }
+
+                                                            var file, img;
+                                                            for (var i = 0; i < total_files_selected; i++){
+                                                                if((file = input.files[i])){
+                                                                    img = new Image();
+                                                                    img.src = _URL.createObjectURL(file);
+                                                                    console.log(img.width);
+                                                                    img.onload = function () {
+                                                                        if(this.complete){
+                                                                            if(this.width < 300 || this.height < 300){
+                                                                                img_error_cnt = img_error_cnt + 1;
+                                                                                console.log(img_error_cnt);
+                                                                            }
+                                                                        }
+                                                                    };
+
+                                                                }
+
+                                                            }
+                                                            console.log('Outside ', img_error_cnt);
+
+
+                                                            if(img_error_cnt > 0){
+                                                                alert('Offer Image size should be minimum of 300px*300px');
+                                                                return false;
+                                                            }
+                                                        }
+                                                        
+                                                        
+                                                        $(document).on('click', '.remove_img', function(){
+                                                            var cnf = confirm('Are you sure want to delete this image?');
+                                                            if(cnf){
+                                                                var offer_img_id = $(this).attr('data-imgid');
+                                                                
+                                                                $.ajax({
+                                                                    url: '<?php echo base_url(); ?>admin/offers/delete_offer_image',
+                                                                    type: 'POST',
+                                                                    context: this,
+                                                                    data:{
+                                                                        image_id: offer_img_id,
+                                                                        offer_id: '<?php echo $this->uri->segment(4); ?>'
+                                                                    },
+                                                                    success: function(res){
+                                                                        if(res == 'success'){
+                                                                            $(this).parent('.offer_img_div').remove();
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                            
+                                                        });
         </script>
     </body>
 </html>

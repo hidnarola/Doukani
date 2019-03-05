@@ -25,10 +25,17 @@
                     <div class="red_ribbon"></div>
                 <?php } ?>
                     <div class="offer-img">
+                        <?php
+                            $img_get = get_offer_image_first($list['offer_id']);
+                            $offer_first_image = $list['offer_image'];
+                            if(!empty($img_get)){
+                                $offer_first_image = $img_get['file_path'];
+                            }
+                        ?>
                         <a href="<?php echo site_url().$list['user_slug'].'/'.$list['offer_slug']; ?>">
                             <?php
-                            if (isset($list['offer_image']) && !empty($list['offer_image'])) { ?>
-                                <img src="<?php echo thumb_start_grid_offer . base_url() . offers . "medium/" . $list['offer_image'] . thumb_end_grid_offer; ?>" onerror="this.src='<?php echo thumb_start_grid_offer.base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid_offer; ?>'" alt="<?php echo $list['offer_title']; ?>">
+                            if (isset($list) && !empty($list)) { ?>
+                                <img src="<?php echo thumb_start_grid_offer . base_url() . offers . "medium/" . $offer_first_image . thumb_end_grid_offer; ?>" onerror="this.src='<?php echo thumb_start_grid_offer.base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid_offer; ?>'" alt="<?php echo $list['offer_title']; ?>">
                             <?php } else { ?>
                                 <img src="<?php echo thumb_start_grid_offer.base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid_offer; ?>" onerror="this.src='<?php echo thumb_start_grid_offer.base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid_offer; ?>'" alt="<?php echo $list['offer_title']; ?>">
         <?php } ?>

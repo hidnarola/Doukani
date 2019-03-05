@@ -107,12 +107,22 @@ class Allstores extends My_controller {
 
         $data['category'] = $category;
         $per_page = 15;
+        
+        if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+            $per_page = 100;
+        }
+        
 //        $data['stores'] = $this->store->get_stores(NULL, 0, $per_page);
 
-        $listing = $this->dbcommon->get_my_listing(NULL, $start = 0, $limit = 15, NULL, 0, 'storeUser', 'store',NULL,NULL,'yes');
+        if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+            $listing = $this->dbcommon->get_my_listing(NULL, $start = 0, $limit = 100, NULL, 0, 'storeUser', 'store',NULL,NULL,'yes');
+        }else{
+            $listing = $this->dbcommon->get_my_listing(NULL, $start = 0, $limit = 15, NULL, 0, 'storeUser', 'store',NULL,NULL,'yes');
+        }
 //        echo $this->db->last_query();
         $data['listing'] = $listing;
         $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, 0, 'storeUser', 'store');
+        $data['total_product'] = $total_product;
 
         $data['hide'] = "false";
         if ($total_product <= $per_page) {

@@ -172,17 +172,28 @@
                                     </ul>
                                 </div>
                             </div>                            
+                            
                             <div class="catlist">
                                 <div class="store-products-list-wrapper" id="reset_data">
                                     <?php $this->load->view('store/product_store_grid_view'); ?>
                                     <!--item1-->
                                     <input type="hidden" name="load_more_status" id="load_more_status" value="<?php echo (isset($hide)) ? $hide : ''; ?>">
-                                    <?php if (@$hide == "false") { ?>
-                                        <div class="col-sm-12 text-center" id="load_more">
-                                            <button class="btn btn-blue" onclick="load_more_data();" id="load_product" value="0">Load More</button><br><br><br>
-                                        </div>
-                                    <?php } ?>
                                 </div>
+                                <?php
+                                if (@$hide == "false") {
+                                    $total_pages = ceil($total_product/100);
+                                    $initial_pages = 10;
+                                    if($total_pages < $initial_pages){
+                                        $initial_pages = $total_pages;
+                                    }
+                                    
+                                    $display_pagination = " display: none;";
+                                    if($total_pages > 0){
+                                        $display_pagination = "";
+                                    }
+                                ?>
+                                <div id="page-selection" style="text-align: center;<?php echo $display_pagination; ?>"></div>
+                                <?php } ?>
                             </div>
                         </div>   
                     </div>
@@ -196,7 +207,34 @@
 
 
         <script src="<?php echo base_url(); ?>assets/admin/javascripts/plugins/common/moment.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/front/javascripts/owl.carousel.js"></script>    
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/front/javascripts/owl.carousel.js"></script>
+        
+        <script src="<?php echo base_url(); ?>assets/admin/javascripts/jquery.twbsPagination.js" type="text/javascript"></script>
+        <script>
+                
+                $('#page-selection').twbsPagination({
+                    totalPages: <?php echo $total_pages; ?>,
+                    visiblePages: <?php echo $initial_pages; ?>,
+                    onPageClick: function (event, page) {
+                        $('.loader_display').show();
+                        var url = "<?php echo site_url(); ?>home/load_more_storelisting_for_home/";
+                        var start = page;
+                        var product_view = $('#product_view').val();
+                        var type = $('#search').val();
+                        var val = $("#val").val();
+                        var val1 = ((start - 1) * 100) + 1;
+                        var cat_id = $('#categories').val();
+                        $.post(url, {cat_id: cat_id, value: val1, product_view: product_view, type: type, val: val, state_id_selection: state_id_selection}, function (response)
+                        {
+                            $('.loader_display').hide();
+                            $('#load_more_status').val(response.val);
+                            $(".store-products-list-wrapper").html(response.html);
+                            if (response.val == "true")
+                                $("#load_product").hide();
+                        }, "json");
+                    }
+                });
+        </script>
         <script>
 
                                                 var owl = $("#owl-demo1");

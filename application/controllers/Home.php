@@ -671,6 +671,9 @@ class Home extends My_controller {
 
             $query .= $where;
             $product = $this->dbcommon->get_distinct($query);
+            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198'){
+//                pr($product); exit;
+            }
             $data['products'] = $product;
             $data['hide'] = "false";
             if ($total_product <= 12) {
@@ -3058,10 +3061,15 @@ class Home extends My_controller {
             $data['description_'] = $meta_description . ' at doukani';
             $data['keyword_'] = implode(', ', $__keywords) . ' doukani, store, shop ,seller, storeuser,' . $store[0]->store_name . ',' . $store[0]->store_domain . ',' . $store_user[0]->username . ',' . $store_user[0]->nick_name . '';
 
-            $listing = $this->dbcommon->get_my_listing($store[0]->store_owner, $start = 0, $limit = 15, NULL, $user_status, $store_user[0]->user_role, 'store');
+//            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                $listing = $this->dbcommon->get_my_listing($store[0]->store_owner, $start = 0, $limit = 100, NULL, $user_status, $store_user[0]->user_role, 'store');
+//            }else{
+//                $listing = $this->dbcommon->get_my_listing($store[0]->store_owner, $start = 0, $limit = 15, NULL, $user_status, $store_user[0]->user_role, 'store');
+//            }
             $data['listing'] = $listing;
 
             $total_product = $this->dbcommon->get_my_listing_count($store[0]->store_owner, NULL, $user_status, $store_user[0]->user_role, 'store');
+            $data['total_product'] = $total_product;
 
             $data['hide'] = "false";
             if ($total_product <= 15) {
@@ -3131,8 +3139,12 @@ class Home extends My_controller {
             $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page','specific_store_page'", NULL, NULL, NULL, $store_det->store_id);
             $arr['between_banners'] = $between_banners;
 
-            $start = 15 * $filter_val;
-            $end = $start + 15;
+//            $start = 15 * $filter_val;
+//            $end = $start + 15;
+            
+            $start = $filter_val;
+            $end = $start + 100;
+            
             $hide = "false";
 
             if (isset($_POST['type']))
@@ -3148,9 +3160,9 @@ class Home extends My_controller {
                 $total_product = $this->dbcommon->get_my_listing_count($user_id, $search, $user_status, 'storeUser', 'store');
 
             if ($cat_id > 0)
-                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, 'storeUser', 'store', $cat_id);
+                $products = $this->dbcommon->get_my_listing($user_id, $start, 100, $search, $user_status, 'storeUser', 'store', $cat_id);
             else
-                $products = $this->dbcommon->get_my_listing($user_id, $start, 15, $search, $user_status, 'storeUser', 'store');
+                $products = $this->dbcommon->get_my_listing($user_id, $start, 100, $search, $user_status, 'storeUser', 'store');
 
             $currentusr = $this->session->userdata('gen_user');
 
@@ -3199,8 +3211,15 @@ class Home extends My_controller {
             $between_banners = $this->dbcommon->getBanner_forCategory('between', "'store_all_page', 'store_page_content'");
             $arr['between_banners'] = $between_banners;
             $cat_id = $this->input->post('cat_id', TRUE);
-            $start = 15 * $filter_val;
-            $end = $start + 15;
+//            $start = 15 * $filter_val;
+//            $end = $start + 15;
+            
+            $start = $filter_val;
+            $end = $start + 100;
+//            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+//                $start = $filter_val;
+//                $end = $start + 100;
+//            }
             $hide = "false";
 
             if (isset($_POST['type']))
@@ -3210,10 +3229,10 @@ class Home extends My_controller {
 
             if ($cat_id > 0) {
                 $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store', $cat_id);
-                $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id);
+                $products = $this->dbcommon->get_my_listing(NULL, $start, 100, $search, 0, 'storeUser', 'store', $cat_id);
             } else {
                 $total_product = $this->dbcommon->get_my_listing_count(NULL, $search, 0, 'storeUser', 'store');
-                $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store');
+                $products = $this->dbcommon->get_my_listing(NULL, $start, 100, $search, 0, 'storeUser', 'store');
             }
 
             $currentusr = $this->session->userdata('gen_user');

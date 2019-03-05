@@ -148,9 +148,13 @@ class Dbcommon extends CI_Model {
         }
     }
 
-    function insert($table_name, $data) {
+    function insert($table_name, $data, $ret = null) {
         if ($this->db->insert($table_name, $data)) {
-            return true;
+            if($ret == null){
+                return true;
+            }else{
+                return $this->db->insert_id();
+            }
         } else {
             return false;
         }
@@ -4223,7 +4227,7 @@ class Dbcommon extends CI_Model {
 		if(cmn.number_for="car_number" and cmn.repeating_number="-1","More than 5",if(cmn.number_for="mobile_number" and cmn.repeating_number="-1","More than 8",rn.rep_number)) as car_repeating_number,mo.operator_name as mobile_operator,cmn.mobile_number ';
         }
 
-        $more_str = "SELECT p.product_for, p.category_id,p.stock_availability,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,u.facebook_id,u.twitter_id,u.google_id,c.catagory_name, u.username, u.profile_picture,p.product_is_sold,p.product_total_likes,p.product_slug,u.user_slug,s.state_name,p.latitude,p.longitude,s.latitude state_latitude, s.longitude state_longitude,p.address,
+        $more_str = "SELECT p.is_delete,p.product_for, p.category_id,p.stock_availability,p.product_posted_by,p.product_name,p.product_image,p.product_price,p.product_status,p.product_is_inappropriate ,p.product_total_views, p.product_total_favorite,if(u.nick_name!='',u.nick_name,u.username) as username1,u.facebook_id,u.twitter_id,u.google_id,c.catagory_name, u.username, u.profile_picture,p.product_is_sold,p.product_total_likes,p.product_slug,u.user_slug,s.state_name,p.latitude,p.longitude,s.latitude state_latitude, s.longitude state_longitude,p.address,
             store.store_domain, (IF(p.product_image IS NULL OR p.product_image='',0,1) +
              IF(p.youtube_link IS NULL  OR p.youtube_link='',0,1) +
              IF(p.video_name IS NULL  OR p.video_name='',0,1) +

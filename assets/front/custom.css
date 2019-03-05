@@ -1,0 +1,15 @@
+.Header_Left {width: 40%;}
+.Header_Right{width: 60%;}
+.offer-disp .offer-img {margin: 0 0 130px;text-align: center;}
+.cart-view .totle-count table.table tr td{font-weight: 500;font-size: 14px;}
+.cart-view .totle-count .table tr:last-child td {font-size: 16px;font-weight: 600;background: #f2f2f2;}
+
+@media (max-width: 1200px) and (min-width: 1025px){
+.Header_Left {width: 40%;}
+.Header_Right{width: 60%;}
+}
+
+@media (max-width: 1367px) and (min-width: 1201px){
+.Header_Left {width: 45%;}
+.Header_Right{width: 55%;}
+}

@@ -736,6 +736,58 @@ if ($user_type == 'offerUser') {
                                 </a>
                             </li>
                             
+                            <?php
+                            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                            ?>
+                            <li class='<?php echo ($action == 'shipping_cost' || $action == 'shipping_method_cost') ? 'active' : '' ?>'>
+                                <a class="dropdown-collapse" href="#">
+                                    <i class='fa fa-ambulance'></i>
+                                    <span class="has-tooltip" data-placement="top" data-original-title="Shipping Cost">Shipping Cost</span>
+                                    <i class='icon-angle-down angle-down'></i>
+                                </a>
+                                <?php
+                                $action_normal_ship = '';
+                                $action_method_ship = '';
+                                if($action == 'shipping_cost'){
+                                    $action_normal_ship = 'active';
+                                    $action_method_ship = '';
+                                }elseif($action == 'shipping_method_cost'){
+                                    $action_normal_ship = '';
+                                    $action_method_ship = 'active';
+                                }
+                                ?>
+                                <ul class='<?php echo ($action == 'shipping_cost' || $action == 'shipping_method_cost') ? 'in' : '' ?> nav nav-stacked'>
+                                    <?php
+                                        $basic_active = '';
+                                        $method_active = '';
+                                        if($action == 'shipping_cost'){
+                                            $basic_active = 'active';
+                                            $method_active = '';
+                                        }
+                                        if($action == 'shipping_method_cost'){
+                                            $basic_active = '';
+                                            $method_active = 'active';
+                                        }
+                                        ?>
+                                    <li class="<?php echo $basic_active; ?>">
+                                        <a href='<?php echo base_url(); ?>admin/systems/shipping_cost'>
+                                            <i class='icon-caret-right'></i>
+                                            Basic Shipping Cost
+                                        </a>
+                                    </li>
+                                    <li class="<?php echo $method_active; ?>">
+                                        <a href='#'>
+                                        <!--<a href='<?php echo base_url(); ?>admin/systems/shipping_method_cost'>-->
+                                            <i class='icon-caret-right'></i>
+                                            Shipping method wise cost
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <?php
+                            }else{
+                            ?>
+                            
                             <li class='<?php
                             if ($action == 'shipping_cost') {
                                 echo 'active';
@@ -746,6 +798,9 @@ if ($user_type == 'offerUser') {
                                     <span>Shipping Cost</span>
                                 </a>
                             </li>
+                            <?php
+                            }
+                            ?>
                            
                             <li class='<?php
                             if ($action == 'featuredad_price') {

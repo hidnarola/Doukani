@@ -436,7 +436,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('sub_cat', 'Sub category', 'required');
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required');
-                        $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required|max_length[650]');
+                        $this->form_validation->set_rules('pro_desc1', 'Description', 'trim|required|max_length[2000]');
 
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
@@ -531,7 +531,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('sub_cat', 'Sub-category', 'trim|required');
                         $this->form_validation->set_rules('title', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required');
-                        $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[650]');
+                        $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[2000]');
                         // $this->form_validation->set_rules('vehicle_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('vehicle_pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('pro_brand', 'Brand', 'trim|required');
@@ -644,7 +644,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('sub_cat', 'Subcategory', 'required');
                         $this->form_validation->set_rules('houses_ad_title', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('house_pro_desc', 'Description', 'trim|required');
-                        $this->form_validation->set_rules('house_pro_desc', 'Description', 'trim|required|max_length[650]');
+                        $this->form_validation->set_rules('house_pro_desc', 'Description', 'trim|required|max_length[2000]');
                         $this->form_validation->set_rules('pro_square_meters', 'Square Meters', 'trim|required');
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('city', 'Emirate', 'trim|required');
@@ -754,7 +754,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('sub_cat', 'Sub-category', 'trim|required');
                         $this->form_validation->set_rules('shared_ad_title', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('shared_pro_desc', 'Description', 'trim|required');
-                        $this->form_validation->set_rules('shared_pro_desc', 'Description', 'trim|required|max_length[650]');
+                        $this->form_validation->set_rules('shared_pro_desc', 'Description', 'trim|required|max_length[2000]');
                         $this->form_validation->set_rules('location', 'Country', 'trim|required');
                         $this->form_validation->set_rules('city', 'Emirate', 'trim|required');
                         $this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -857,7 +857,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('sub_cat', 'Subcategory', 'trim|required');
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('car_desc', 'Description', 'trim|required');
-                        $this->form_validation->set_rules('car_desc', 'Description', 'trim|required|max_length[650]');
+                        $this->form_validation->set_rules('car_desc', 'Description', 'trim|required|max_length[2000]');
                         //                    $this->form_validation->set_rules('car_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('car_number', 'Car Number', 'trim|required');
@@ -966,7 +966,7 @@ class User extends My_controller {
                         $this->form_validation->set_rules('sub_cat', 'Subcategory', 'trim|required');
                         $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                         $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required');
-                        $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required|max_length[650]');
+                        $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required|max_length[2000]');
                         //                    $this->form_validation->set_rules('mobile_original_price', 'Price', 'trim|required');
                         //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                         $this->form_validation->set_rules('mobile_operators', 'Mobile Operator', 'trim|required');
@@ -2106,7 +2106,7 @@ class User extends My_controller {
 
                     $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('pro_desc', 'Description', 'trim|required');
-                    $this->form_validation->set_rules('pro_desc', 'Description', 'trim|required|max_length[650]');
+                    $this->form_validation->set_rules('pro_desc', 'Description', 'trim|required|max_length[2000]');
                     // $this->form_validation->set_rules('original_price', 'Price', 'trim|required');
 //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('location', 'Country', 'trim|required');
@@ -2210,7 +2210,7 @@ class User extends My_controller {
 
                     $this->form_validation->set_rules('title', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required');
-                    $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[650]');
+                    $this->form_validation->set_rules('vehicle_pro_desc', 'Description', 'trim|required|max_length[2000]');
 //                    $this->form_validation->set_rules('vehicle_pro_price', 'Price', 'trim|required');
                     // $this->form_validation->set_rules('vehicle_original_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('pro_brand', 'Brand', 'trim|required');
@@ -2341,7 +2341,7 @@ class User extends My_controller {
 
                     $this->form_validation->set_rules('houses_ad_title', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('house_pro_desc', 'Description', 'trim|required');
-                    $this->form_validation->set_rules('house_pro_desc', 'Description', 'trim|required|max_length[650]');
+                    $this->form_validation->set_rules('house_pro_desc', 'Description', 'trim|required|max_length[2000]');
                     $this->form_validation->set_rules('pro_square_meters', 'Square Meters', 'trim|required');
                     $this->form_validation->set_rules('location', 'Country', 'trim|required');
                     $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
@@ -2463,7 +2463,7 @@ class User extends My_controller {
 
                     $this->form_validation->set_rules('shared_ad_title', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('shared_pro_desc', 'Description', 'trim|required');
-                    $this->form_validation->set_rules('shared_pro_desc', 'Description', 'trim|required|max_length[650]');
+                    $this->form_validation->set_rules('shared_pro_desc', 'Description', 'trim|required|max_length[2000]');
                     $this->form_validation->set_rules('location', 'Country', 'trim|required');
                     $this->form_validation->set_rules('state', 'Emirate', 'trim|required');
                     $this->form_validation->set_rules('address', 'Address', 'trim|required');
@@ -2580,7 +2580,7 @@ class User extends My_controller {
                     $this->form_validation->set_rules('sub_cat', 'Subcategory', 'trim|required');
                     $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('car_desc', 'Description', 'trim|required');
-                    $this->form_validation->set_rules('car_desc', 'Description', 'trim|required|max_length[650]');
+                    $this->form_validation->set_rules('car_desc', 'Description', 'trim|required|max_length[2000]');
 //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                     //                    $this->form_validation->set_rules('car_original_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('car_number', 'Car Number', 'trim|required');
@@ -2717,7 +2717,7 @@ class User extends My_controller {
                     $this->form_validation->set_rules('sub_cat', 'Subcategory', 'trim|required');
                     $this->form_validation->set_rules('pro_name', 'Ad Title', 'trim|required|max_length[80]');
                     $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required');
-                    $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required|max_length[650]');
+                    $this->form_validation->set_rules('mob_desc', 'Description', 'trim|required|max_length[2000]');
                     //                    $this->form_validation->set_rules('mobile_original_price', 'Price', 'trim|required');
 //                    $this->form_validation->set_rules('pro_price', 'Price', 'trim|required');
                     $this->form_validation->set_rules('mobile_operators', 'Mobile Operator', 'trim|required');

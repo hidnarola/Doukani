@@ -162,114 +162,218 @@ class Offers extends CI_Controller {
         $data['company'] = $company;
 
         if (!empty($_POST) && $_POST['offer_title'] != ''):
-
-            // validation
-            $this->form_validation->set_rules('offer_title', 'Offer Title', 'trim|required|max_length[80]');
-            $this->form_validation->set_rules('offer_description', 'Offer Description', 'trim|required');
-            $this->form_validation->set_rules('offer_user_company_id', 'Offer Company', 'trim|required');
-            $this->form_validation->set_rules('phone_no', 'Phone No.', 'trim|required|min_length[10]');
-
-            if ($this->form_validation->run() == FALSE):
-                $this->load->view('admin/offers/add', $data);
-            else:
-
-                $picture_ban = '';
-                if (isset($_FILES['offer_image_0']['tmp_name']) && $_FILES['offer_image_0']['tmp_name'] != '') {
-                    $target_dir = document_root . offers;
-                    $profile_picture = $_FILES['offer_image_0']['name'];
-                    $ext = explode(".", $_FILES['offer_image_0']['name']);
-                    $picture_ban = time() . "." . end($ext);
-                    $target_file = $target_dir . "original/" . $picture_ban;
-                    $uploadOk = 1;
-                    $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-                    $imageFileType = strtolower($imageFileType);
-                    // Allow certain file formats
-                    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                        $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                        $data['msg_class'] = 'alert-info';
-                        $uploadOk = 0;
-                        $this->load->view('admin/offers/add', $data);
-                    }
-                    if ($uploadOk == 0) {
-                        $data['msg'] = "Sorry, your file was not uploaded.";
-                        $data['msg_class'] = 'alert-info';
-                        $this->load->view('admin/offers/add', $data);
-                    } else {
-                        if (move_uploaded_file($_FILES['offer_image_0']["tmp_name"], $target_file)) {
-
-                            /* Image Processing */
-                            $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
-                            $dest = document_root . offers . 'original/' . $picture_ban;
-
-                            $medium = $target_dir . "offer_detail/" . $picture_ban;
-                            if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
-                                $this->dbcommon->crop_product_image($target_file, image_product_detail_width, image_product_detail_height, $medium, 'offer_detail', $picture_ban);
-                            }
-
-                            $medium = $target_dir . "medium/" . $picture_ban;
-                            if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
-                                $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $picture_ban);
-                            }
-
-                            if (file_exists(document_root . offers . 'original/' . $picture_ban))
-                                $this->dbcommon->watermarkOfferImage($picture_ban, $WaterMark, $dest, 50, 'original');
-                        }
-                    }
-                }
-
-                $where = " where user_id ='" . $_POST['offer_user_company_id'] . "'";
-                $company_user = $this->dbcommon->getdetails('offer_user_company', $where);
-
-                $offer_slug = $this->dbcommon->generate_slug($_POST['offer_title']);
-
-                $data = array(
-                    'offer_title' => $_POST['offer_title'],
-                    'offer_slug' => $offer_slug,
-                    'offer_image' => $picture_ban,
-                    'offer_posted_by' => $user[0]->user_id,
-                    'offer_posted_on' => date('Y-m-d H:i:s'),
-                    'offer_url' => $_POST['offer_url'],
-                    'offer_is_approve' => ($admin_permission == 'only_listing') ? 'unapprove' : $_POST['offer_is_approve'],
-                    'offer_user_company_id' => $_POST['offer_user_company_id'],
-                    'is_delete' => 0,
-                    'offer_category_id' => $company_user[0]->offer_category_id,
-                    'offer_description' => $_POST['offer_description'],
-                    'phone_no' => $_POST['phone_no']
-                );
-
-                if (isset($_POST['st_dt_0']) && $_POST['st_dt_0'] == 'st_now') {
-                    $data['offer_start_date'] = date('Y-m-d');
-                } else {
-                    $data['offer_start_date'] = $_POST['start_date'];
-                }
-
-                if (isset($_POST['end_dt_0']) && $_POST['end_dt_0'] == 'end_never') {
-                    $data['offer_end_date'] = '0000-00-00';
-                    $data['is_enddate'] = 1;
-                } else {
-                    $data['offer_end_date'] = $_POST['end_date'];
-                    $data['is_enddate'] = 0;
-                }
-
-                if (isset($_POST['offer_is_approve']) && $_POST['offer_is_approve'] == 'approve') {
-                    $data['offer_approve_date'] = date('Y-m-d H:i:s');
-                }
-
-                $result = $this->dbcommon->insert('offers', $data);
-
-                if (isset($result) && isset($_POST['offer_is_approve']) && $_POST['offer_is_approve'] == 'approve') {
-                    $this->dbcommon->send_offer_mail($company_user, $offer_slug, $data['offer_start_date'], $data['offer_end_date'], $picture_ban, NULL, $_POST['offer_title']);
-                }
-
-                if ($result):
-                    $this->session->set_flashdata(array('msg1' => 'Offers added successfully.', 'class' => 'alert-success'));
-                    redirect('admin/offers');
-                else:
-                    $data['msg'] = 'Offers not added, Please try again';
-                    $data['msg_class'] = 'alert-info';
+            $uplado_err_cnt = 0;
+//            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                $this->form_validation->set_rules('offer_title', 'Offer Title', 'trim|required|max_length[80]');
+                $this->form_validation->set_rules('offer_description', 'Offer Description', 'trim|required');
+                $this->form_validation->set_rules('offer_user_company_id', 'Offer Company', 'trim|required');
+                $this->form_validation->set_rules('phone_no', 'Phone No.', 'trim|required');
+//                $this->form_validation->set_rules('phone_no', 'Phone No.', 'trim|required|min_length[10]');
+                if ($this->form_validation->run() == FALSE):
                     $this->load->view('admin/offers/add', $data);
+                else:
+                    $where = " where user_id ='" . $_POST['offer_user_company_id'] . "'";
+                    $company_user = $this->dbcommon->getdetails('offer_user_company', $where);
+                    $offer_slug = $this->dbcommon->generate_slug($_POST['offer_title']);
+                    $data = array(
+                        'offer_title' => $_POST['offer_title'],
+                        'offer_slug' => $offer_slug,
+                        'offer_image' => '',
+                        'offer_posted_by' => $user[0]->user_id,
+                        'offer_posted_on' => date('Y-m-d H:i:s'),
+                        'offer_url' => $_POST['offer_url'],
+                        'offer_is_approve' => ($admin_permission == 'only_listing') ? 'unapprove' : $_POST['offer_is_approve'],
+                        'offer_user_company_id' => $_POST['offer_user_company_id'],
+                        'is_delete' => 0,
+                        'offer_category_id' => $company_user[0]->offer_category_id,
+                        'offer_description' => $_POST['offer_description'],
+                        'phone_no' => $_POST['phone_no']
+                    );
+                    if (isset($_POST['st_dt_0']) && $_POST['st_dt_0'] == 'st_now') {
+                        $data['offer_start_date'] = date('Y-m-d');
+                    } else {
+                        $data['offer_start_date'] = $_POST['start_date'];
+                    }
+
+                    if (isset($_POST['end_dt_0']) && $_POST['end_dt_0'] == 'end_never') {
+                        $data['offer_end_date'] = '0000-00-00';
+                        $data['is_enddate'] = 1;
+                    } else {
+                        $data['offer_end_date'] = $_POST['end_date'];
+                        $data['is_enddate'] = 0;
+                    }
+
+                    if (isset($_POST['offer_is_approve']) && $_POST['offer_is_approve'] == 'approve') {
+                        $data['offer_approve_date'] = date('Y-m-d H:i:s');
+                    }
+
+                    $result = $this->dbcommon->insert('offers', $data, '1');
+                    if (isset($result) && isset($_POST['offer_is_approve']) && $_POST['offer_is_approve'] == 'approve') {
+                        if (isset($_FILES['offer_image_0'])) {
+                            $picture_ban = '';
+                            $target_dir = document_root . offers;
+                            $total_images = count($_FILES['offer_image_0']['name']);
+                            for ($i = 0; $i < $total_images; $i++){
+                                $upload_picture = $_FILES['offer_image_0']['name'][$i];
+                                $ext = explode(".", $_FILES['offer_image_0']['name'][$i]);
+                                $picture_ban = time() . $i . "." . end($ext);
+                                $target_file = $target_dir . "original/" . $picture_ban;
+                                $uploadOk = 1;
+                                $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+                                $imageFileType = strtolower($imageFileType);
+                                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                                    $uplado_err_cnt++;
+                                }
+                                if ($uploadOk == 0) {
+                                    $uplado_err_cnt++;
+                                }  else {
+                                    if (move_uploaded_file($_FILES['offer_image_0']["tmp_name"][$i], $target_file)) {
+                                        $file_save['offer_id'] = $result;
+                                        $file_save['file_path'] = $picture_ban;
+                                        $file_save['is_active'] = 1;
+                                        $save_file = $this->dbcommon->insert('offer_images', $file_save);
+                                        $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
+                                        $dest = document_root . offers . 'original/' . $picture_ban;
+                                        $medium = $target_dir . "offer_detail/" . $picture_ban;
+                                        if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
+                                            $this->dbcommon->crop_product_image($target_file, image_product_detail_width, image_product_detail_height, $medium, 'offer_detail', $picture_ban);
+                                        }
+                                        $medium = $target_dir . "medium/" . $picture_ban;
+                                        if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
+                                            $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $picture_ban);
+                                        }
+                                        if (file_exists(document_root . offers . 'original/' . $picture_ban))
+                                            $this->dbcommon->watermarkOfferImage($picture_ban, $WaterMark, $dest, 50, 'original');
+                                    }else{
+                                        $uplado_err_cnt++;
+                                    }
+                                }
+                            }
+                        }
+                        $this->dbcommon->send_offer_mail($company_user, $offer_slug, $data['offer_start_date'], $data['offer_end_date'], $picture_ban, NULL, $_POST['offer_title']);
+                    }
+                    if ($result):
+                        if($uplado_err_cnt > 0){
+                            $this->session->set_flashdata(array('msg1' => 'Offers added successfully. But some of images were not uploaded.', 'class' => 'alert-success'));
+                        }else{
+                            $this->session->set_flashdata(array('msg1' => 'Offers added successfully.', 'class' => 'alert-success'));
+                        }
+                        redirect('admin/offers');
+                    else:
+                        $data['msg'] = 'Offers not added, Please try again';
+                        $data['msg_class'] = 'alert-info';
+                        $this->load->view('admin/offers/add', $data);
+                    endif;
                 endif;
-            endif;
+//            }else{
+//            // validation
+//                $this->form_validation->set_rules('offer_title', 'Offer Title', 'trim|required|max_length[80]');
+//                $this->form_validation->set_rules('offer_description', 'Offer Description', 'trim|required');
+//                $this->form_validation->set_rules('offer_user_company_id', 'Offer Company', 'trim|required');
+//                $this->form_validation->set_rules('phone_no', 'Phone No.', 'trim|required|min_length[10]');
+//
+//                if ($this->form_validation->run() == FALSE):
+//                    $this->load->view('admin/offers/add', $data);
+//                else:
+//
+//                    $picture_ban = '';
+//                    if (isset($_FILES['offer_image_0']['tmp_name']) && $_FILES['offer_image_0']['tmp_name'] != '') {
+//                        $target_dir = document_root . offers;
+//                        $profile_picture = $_FILES['offer_image_0']['name'];
+//                        $ext = explode(".", $_FILES['offer_image_0']['name']);
+//                        $picture_ban = time() . "." . end($ext);
+//                        $target_file = $target_dir . "original/" . $picture_ban;
+//                        $uploadOk = 1;
+//                        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+//                        $imageFileType = strtolower($imageFileType);
+//                        // Allow certain file formats
+//                        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+//                            $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+//                            $data['msg_class'] = 'alert-info';
+//                            $uploadOk = 0;
+//                            $this->load->view('admin/offers/add', $data);
+//                        }
+//                        if ($uploadOk == 0) {
+//                            $data['msg'] = "Sorry, your file was not uploaded.";
+//                            $data['msg_class'] = 'alert-info';
+//                            $this->load->view('admin/offers/add', $data);
+//                        } else {
+//                            if (move_uploaded_file($_FILES['offer_image_0']["tmp_name"], $target_file)) {
+//
+//                                /* Image Processing */
+//                                $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
+//                                $dest = document_root . offers . 'original/' . $picture_ban;
+//
+//                                $medium = $target_dir . "offer_detail/" . $picture_ban;
+//                                if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
+//                                    $this->dbcommon->crop_product_image($target_file, image_product_detail_width, image_product_detail_height, $medium, 'offer_detail', $picture_ban);
+//                                }
+//
+//                                $medium = $target_dir . "medium/" . $picture_ban;
+//                                if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
+//                                    $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $picture_ban);
+//                                }
+//
+//                                if (file_exists(document_root . offers . 'original/' . $picture_ban))
+//                                    $this->dbcommon->watermarkOfferImage($picture_ban, $WaterMark, $dest, 50, 'original');
+//                            }
+//                        }
+//                    }
+//
+//                    $where = " where user_id ='" . $_POST['offer_user_company_id'] . "'";
+//                    $company_user = $this->dbcommon->getdetails('offer_user_company', $where);
+//
+//                    $offer_slug = $this->dbcommon->generate_slug($_POST['offer_title']);
+//
+//                    $data = array(
+//                        'offer_title' => $_POST['offer_title'],
+//                        'offer_slug' => $offer_slug,
+//                        'offer_image' => $picture_ban,
+//                        'offer_posted_by' => $user[0]->user_id,
+//                        'offer_posted_on' => date('Y-m-d H:i:s'),
+//                        'offer_url' => $_POST['offer_url'],
+//                        'offer_is_approve' => ($admin_permission == 'only_listing') ? 'unapprove' : $_POST['offer_is_approve'],
+//                        'offer_user_company_id' => $_POST['offer_user_company_id'],
+//                        'is_delete' => 0,
+//                        'offer_category_id' => $company_user[0]->offer_category_id,
+//                        'offer_description' => $_POST['offer_description'],
+//                        'phone_no' => $_POST['phone_no']
+//                    );
+//
+//                    if (isset($_POST['st_dt_0']) && $_POST['st_dt_0'] == 'st_now') {
+//                        $data['offer_start_date'] = date('Y-m-d');
+//                    } else {
+//                        $data['offer_start_date'] = $_POST['start_date'];
+//                    }
+//
+//                    if (isset($_POST['end_dt_0']) && $_POST['end_dt_0'] == 'end_never') {
+//                        $data['offer_end_date'] = '0000-00-00';
+//                        $data['is_enddate'] = 1;
+//                    } else {
+//                        $data['offer_end_date'] = $_POST['end_date'];
+//                        $data['is_enddate'] = 0;
+//                    }
+//
+//                    if (isset($_POST['offer_is_approve']) && $_POST['offer_is_approve'] == 'approve') {
+//                        $data['offer_approve_date'] = date('Y-m-d H:i:s');
+//                    }
+//
+//                    $result = $this->dbcommon->insert('offers', $data);
+//
+//                    if (isset($result) && isset($_POST['offer_is_approve']) && $_POST['offer_is_approve'] == 'approve') {
+//                        $this->dbcommon->send_offer_mail($company_user, $offer_slug, $data['offer_start_date'], $data['offer_end_date'], $picture_ban, NULL, $_POST['offer_title']);
+//                    }
+//
+//                    if ($result):
+//                        $this->session->set_flashdata(array('msg1' => 'Offers added successfully.', 'class' => 'alert-success'));
+//                        redirect('admin/offers');
+//                    else:
+//                        $data['msg'] = 'Offers not added, Please try again';
+//                        $data['msg_class'] = 'alert-info';
+//                        $this->load->view('admin/offers/add', $data);
+//                    endif;
+//                endif;
+//            }
         else:
 //            echo $user[0]->user_id;die;
             $this->load->view('admin/offers/add', $data);
@@ -296,65 +400,112 @@ class Offers extends CI_Controller {
 
         if ($offer_id != null && !empty($offers) && (($admin_permission == 'only_listing' && $offers[0]->offer_posted_by == $admin_user->user_id && $offers[0]->offer_is_approve == 'unapprove') || empty($admin_permission))):
             $data['offers'] = $offers;
+            $con = ' is_active = 1 AND offer_id = ' . $offer_id;
+            $data['offer_images'] = $this->dbcommon->select('offer_images', $con);
             if (!empty($_POST)):
 
                 $this->form_validation->set_rules('offer_title', 'Offer Title', 'trim|required|max_length[80]');
                 $this->form_validation->set_rules('offer_description', 'Offer Description', 'trim|required');
                 $this->form_validation->set_rules('offer_user_company_id', 'Offer Company', 'trim|required');
-                $this->form_validation->set_rules('phone_no', 'Phone No.', 'trim|required|min_length[10]');
+                $this->form_validation->set_rules('phone_no', 'Phone No.', 'trim|required');
+//                $this->form_validation->set_rules('phone_no', 'Phone No.', 'trim|required|min_length[10]');
 
                 if ($this->form_validation->run() == FALSE):
                     $this->load->view('admin/offers/edit', $data);
                 else:
 
                     $picture_ban = $offers[0]->offer_image;
-
-                    if (isset($_FILES['offer_image_0']['tmp_name']) && $_FILES['offer_image_0']['tmp_name'] != '') {
-                        $target_dir = document_root . offers;
-                        $profile_picture = $_FILES['offer_image_0']['name'];
-                        $ext = explode(".", $_FILES['offer_image_0']['name']);
-                        $picture_ban = time() . "." . end($ext);
-                        $target_file = $target_dir . "original/" . $picture_ban;
-                        $uploadOk = 1;
-                        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-                        $imageFileType = strtolower($imageFileType);
-
-                        // Allow certain file formats
-                        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                            $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                            $data['msg_class'] = 'alert-info';
-                            $uploadOk = 0;
-                            $this->load->view('admin/offers/edit', $data);
-                        }
-                        if ($uploadOk == 0) {
-                            $data['msg'] = "Sorry, your file was not uploaded.";
-                            $data['msg_class'] = 'alert-info';
-                            $this->load->view('admin/offers/edit', $data);
-                        } else {
-                            if (move_uploaded_file($_FILES["offer_image_0"]["tmp_name"], $target_file)) {
-                                $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
-                                $dest = document_root . offers . 'original/' . $picture_ban;
-
-//                                    $this->dbcommon->crop_offer_image($target_file,260,165, $medium, 'medium', $picture_ban);
-                                $medium = $target_dir . "offer_detail/" . $picture_ban;
-                                if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
-                                    $this->dbcommon->crop_product_image($target_file, image_product_detail_width, image_product_detail_height, $medium, 'offer_detail', $picture_ban);
+                
+//                    if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                        if (isset($_FILES['offer_image_0'])) {
+                            $picture_ban = '';
+                            $target_dir = document_root . offers;
+                            $total_images = count($_FILES['offer_image_0']['name']);
+                            for ($i = 0; $i < $total_images; $i++){
+                                $upload_picture = $_FILES['offer_image_0']['name'][$i];
+                                $ext = explode(".", $_FILES['offer_image_0']['name'][$i]);
+                                $picture_ban = time() . $i . "." . end($ext);
+                                $target_file = $target_dir . "original/" . $picture_ban;
+                                $uploadOk = 1;
+                                $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+                                $imageFileType = strtolower($imageFileType);
+                                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                                    $uplado_err_cnt++;
                                 }
-
-                                $medium = $target_dir . "medium/" . $picture_ban;
-                                if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
-                                    $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $picture_ban);
+                                if ($uploadOk == 0) {
+                                    $uplado_err_cnt++;
+                                }  else {
+                                    if (move_uploaded_file($_FILES['offer_image_0']["tmp_name"][$i], $target_file)) {
+                                        $file_save['offer_id'] = $offers[0]->offer_id;
+                                        $file_save['file_path'] = $picture_ban;
+                                        $file_save['is_active'] = 1;
+                                        $save_file = $this->dbcommon->insert('offer_images', $file_save);
+                                        $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
+                                        $dest = document_root . offers . 'original/' . $picture_ban;
+                                        $medium = $target_dir . "offer_detail/" . $picture_ban;
+                                        if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
+                                            $this->dbcommon->crop_product_image($target_file, image_product_detail_width, image_product_detail_height, $medium, 'offer_detail', $picture_ban);
+                                        }
+                                        $medium = $target_dir . "medium/" . $picture_ban;
+                                        if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
+                                            $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $picture_ban);
+                                        }
+                                        if (file_exists(document_root . offers . 'original/' . $picture_ban))
+                                            $this->dbcommon->watermarkOfferImage($picture_ban, $WaterMark, $dest, 50, 'original');
+                                    }else{
+                                        $uplado_err_cnt++;
+                                    }
                                 }
-
-                                if (file_exists(document_root . offers . 'original/' . $picture_ban))
-                                    $this->dbcommon->watermarkOfferImage($picture_ban, $WaterMark, $dest, 50, 'original');
-
-                                @unlink($target_dir . "product_detail/" . $offers[0]->offer_image);
-                                @unlink($target_dir . "original/" . $offers[0]->offer_image);
-                                @unlink($target_dir . "medium/" . $offers[0]->offer_image);
                             }
                         }
-                    }
+//                    }else{
+//                        if (isset($_FILES['offer_image_0']['tmp_name']) && $_FILES['offer_image_0']['tmp_name'] != '') {
+//                            $target_dir = document_root . offers;
+//                            $profile_picture = $_FILES['offer_image_0']['name'];
+//                            $ext = explode(".", $_FILES['offer_image_0']['name']);
+//                            $picture_ban = time() . "." . end($ext);
+//                            $target_file = $target_dir . "original/" . $picture_ban;
+//                            $uploadOk = 1;
+//                            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+//                            $imageFileType = strtolower($imageFileType);
+//
+//                            // Allow certain file formats
+//                            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+//                                $data['msg'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+//                                $data['msg_class'] = 'alert-info';
+//                                $uploadOk = 0;
+//                                $this->load->view('admin/offers/edit', $data);
+//                            }
+//                            if ($uploadOk == 0) {
+//                                $data['msg'] = "Sorry, your file was not uploaded.";
+//                                $data['msg_class'] = 'alert-info';
+//                                $this->load->view('admin/offers/edit', $data);
+//                            } else {
+//                                if (move_uploaded_file($_FILES["offer_image_0"]["tmp_name"], $target_file)) {
+//                                    $WaterMark = site_url() . 'assets/front/images/logoWmark.png';
+//                                    $dest = document_root . offers . 'original/' . $picture_ban;
+//
+//    //                                    $this->dbcommon->crop_offer_image($target_file,260,165, $medium, 'medium', $picture_ban);
+//                                    $medium = $target_dir . "offer_detail/" . $picture_ban;
+//                                    if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
+//                                        $this->dbcommon->crop_product_image($target_file, image_product_detail_width, image_product_detail_height, $medium, 'offer_detail', $picture_ban);
+//                                    }
+//
+//                                    $medium = $target_dir . "medium/" . $picture_ban;
+//                                    if (file_exists(document_root . offers . 'original/' . $picture_ban)) {
+//                                        $this->dbcommon->crop_product_image($target_file, image_medium_width, image_medium_height, $medium, 'medium', $picture_ban);
+//                                    }
+//
+//                                    if (file_exists(document_root . offers . 'original/' . $picture_ban))
+//                                        $this->dbcommon->watermarkOfferImage($picture_ban, $WaterMark, $dest, 50, 'original');
+//
+//                                    @unlink($target_dir . "product_detail/" . $offers[0]->offer_image);
+//                                    @unlink($target_dir . "original/" . $offers[0]->offer_image);
+//                                    @unlink($target_dir . "medium/" . $offers[0]->offer_image);
+//                                }
+//                            }
+//                        }
+//                    }
 
                     $where = " where user_id ='" . $_POST['offer_user_company_id'] . "'";
                     $company_user = $this->dbcommon->getdetails('offer_user_company', $where);
@@ -477,6 +628,25 @@ class Offers extends CI_Controller {
             $this->session->set_flashdata(array('msg1' => 'Offer(s) not found', 'class' => 'alert-info'));
             redirect('admin/offers/index' . $today . $redirect_url);
         }
+    }
+    
+    public function delete_offer_image(){
+        if($this->input->post()){
+            $image_id = $this->input->post('image_id');
+            $offer_id = $this->input->post('offer_id');
+            $del_img['is_active'] = 0;
+            $con['is_active'] = 1;
+            $con['id'] = $image_id;
+            $con['offer_id'] = $offer_id;
+            $remove_img = $this->dbcommon->update('offer_images', $con, $del_img);
+//            $remove_image = $this->db->query('update offer_images set is_active = 0 where id = ' . $image_id . ' AND offer_id = ' . $offer_id . ' and is_active = 1');
+            if($remove_img){
+                echo 'success';
+            }else{
+                echo 'fail';
+            }
+        }
+        exit;
     }
 
     public function view($offer_id = null) {

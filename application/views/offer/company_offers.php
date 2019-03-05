@@ -69,16 +69,16 @@
                                             <h3 class="comp-name"><a href="<?php echo site_url() . $company_details['user_slug']; ?>" class="company_name_link"><?php echo $company_details['company_name']; ?></a>
                                                 <ul class="social-icn">
                                                     <?php if (isset($company_details['website_url']) && !empty($company_details['website_url'])) { ?>
-                                                        <li><a href="//<?php echo $company_details['website_url']; ?>"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+                                                        <li><a href="<?php echo $company_details['website_url']; ?>"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
                                                     <?php } ?>
                                                     <?php if (isset($company_details['facebook_social_link']) && !empty($company_details['facebook_social_link'])) { ?>
-                                                        <li><a href="//<?php echo $company_details['facebook_social_link']; ?>"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+                                                        <li><a href="<?php echo $company_details['facebook_social_link']; ?>"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
                                                     <?php } ?>
                                                     <?php if (isset($company_details['twitter_social_link']) && !empty($company_details['twitter_social_link'])) { ?>
-                                                        <li><a href="//<?php echo $company_details['twitter_social_link']; ?>"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+                                                        <li><a href="<?php echo $company_details['twitter_social_link']; ?>"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
                                                     <?php } ?>
                                                     <?php if (isset($company_details['instagram_social_link']) && !empty($company_details['instagram_social_link'])) { ?>
-                                                        <li><a href="//<?php echo $company_details['instagram_social_link']; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                                        <li><a href="<?php echo $company_details['instagram_social_link']; ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
                                                     <?php } ?>
                                                     <?php if (isset($company_details['company_total_views']) && !empty($company_details['company_total_views'])) { ?>
                                                         <li><span><i class="fa fa-eye" aria-hidden="true"></i> <?php echo $company_details['company_total_views']; ?> Views </span></li>

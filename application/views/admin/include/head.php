@@ -30,5 +30,6 @@
 <link rel='stylesheet' type='text/css' href='<?php echo base_url(); ?>assets/admin/stylesheets/plugins/bootstrap_colorpicker/bootstrap-colorpicker.css'/>
 <link rel='stylesheet' type='text/css' href='<?php echo base_url(); ?>assets/admin/stylesheets/icomoon/style.css' />
 <link rel='stylesheet' type='text/css' href='<?php echo base_url(); ?>assets/admin/stylesheets/multiple-select.css' />
+<link rel='stylesheet' type='text/css' href='<?php echo base_url(); ?>assets/admin/stylesheets/admin_custom.css?v=<?php echo time(); ?>' />
 
 

@@ -138,7 +138,17 @@
                                             <div class='form-group'>                        
                                                 <label class='col-md-2 control-label' for='inputText1'>Offer Image</label>
                                                 <div class='col-md-12'>
-                                                    <input title="Search for file" name='offer_image_0' type='file' id="offer_image" onchange="javascript:loadimage(this);">
+                                                    <?php
+//                                                    if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                                                    ?>
+                                                    <input title="Search for file" name='offer_image_0[]' type='file' id="offer_image" onchange="javascript:checkimage(this);" multiple="">
+                                                    <?php
+//                                                    }else{
+                                                    ?>
+                                                    <!--<input title="Search for file" name='offer_image_0' type='file' id="offer_image" onchange="javascript:loadimage(this);">-->
+                                                    <?php
+//                                                    }
+                                                    ?>
                                                     <label class='control-label' for='inputText1'>Minimum Size: 300px*300px</label>
                                                 </div>
                                             </div>
@@ -300,6 +310,41 @@
                                                                             });
                                                                 };
                                                                 reader.readAsDataURL(input.files[0]);
+                                                            }
+                                                        }
+                                                        
+                                                        function checkimage(input){
+                                                            var img_error_cnt = 0;
+                                                            var _URL = window.URL || window.webkitURL;
+                                                            var total_files_selected = input.files.length;
+                                                            if(total_files_selected > 15){
+                                                                alert('You can not upload more than 15 images');
+                                                                $(input).val('');
+                                                                return false;
+                                                            }
+
+                                                            var file, img;
+                                                            for (var i = 0; i < total_files_selected; i++){
+                                                                if((file = input.files[i])){
+                                                                    img = new Image();
+                                                                    img.src = _URL.createObjectURL(file);
+                                                                    img.onload = function () {
+                                                                        if(this.complete){
+                                                                            if(this.width < 300 || this.height < 300){
+                                                                                img_error_cnt = img_error_cnt + 1;
+                                                                            }
+                                                                        }
+                                                                    };
+
+                                                                }
+
+                                                            }
+                                                            console.log('Outside ', img_error_cnt);
+
+
+                                                            if(img_error_cnt > 0){
+                                                                alert('Offer Image size should be minimum of 300px*300px');
+                                                                return false;
                                                             }
                                                         }
     </script>
