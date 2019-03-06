@@ -439,7 +439,7 @@ class Home extends My_controller {
                 $total_product = $this->dbcommon->get_my_listing_count(NULL, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
             }
             $data['products'] = $product;
-            
+
 //            $total_product = $this->dbcommon->get_products_by_cat_num($cat_id, $subcat_id);
             // functionality for load more product
             $data['hide'] = "false";
@@ -574,7 +574,7 @@ class Home extends My_controller {
         //$this->load->library("security");
         $search_value = $this->input->get_post("s");
         //$search_value = $this->security->xss_clean($this->input->get_post("s"));
-        
+
         $str = explode('==', $this->dbcommon->search_query($cat_id, $sub_cat_id, $city_id, $location, $min_amount, $max_amount, $search_value));
         $where = $str[1];
         $query1 = $str[0];
@@ -631,7 +631,7 @@ class Home extends My_controller {
 
                 $product = $this->dbcommon->get_distinct($query);
                 $data['listing'] = $product;
-                
+
                 $data['hide'] = "false";
 
                 if ($total_product <= 15) {
@@ -671,7 +671,7 @@ class Home extends My_controller {
 
             $query .= $where;
             $product = $this->dbcommon->get_distinct($query);
-            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198'){
+            if ($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
 //                pr($product); exit;
             }
             $data['products'] = $product;
@@ -1801,7 +1801,7 @@ class Home extends My_controller {
                 $product = $this->dbcommon->get_my_listing(NULL, $start, 12, NULL, NULL, NULL, NULL, $cat_id, $subcat_id);
             else
                 $product = $this->dbcommon->get_my_listing(NULL, $start, 12, NULL, NULL, 'generalUser', NULL, $cat_id, $subcat_id);
-            
+
             $data['products'] = $product;
 
 //            if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'list') {
@@ -1948,9 +1948,9 @@ class Home extends My_controller {
             else {
 
                 $data['category_slug_details'] = $subcategory[0]['sub_category_slug'];
-                $related_product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, $pro_id, 8, '', $rand, NULL, NULL, NULL, NULL,'yes');
-               
-                    
+                $related_product = $this->dbcommon->get_product_by_categories($cat_id, $subcat_id, $pro_id, 8, '', $rand, NULL, NULL, NULL, NULL, 'yes');
+
+
                 $feature_banners = $this->dbcommon->getBanner_forCategory('sidebar', "'all_page','content_page'", $cat_id, $subcat_id);
 
                 $breadcrumb = array(
@@ -3062,7 +3062,7 @@ class Home extends My_controller {
             $data['keyword_'] = implode(', ', $__keywords) . ' doukani, store, shop ,seller, storeuser,' . $store[0]->store_name . ',' . $store[0]->store_domain . ',' . $store_user[0]->username . ',' . $store_user[0]->nick_name . '';
 
 //            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
-                $listing = $this->dbcommon->get_my_listing($store[0]->store_owner, $start = 0, $limit = 100, NULL, $user_status, $store_user[0]->user_role, 'store');
+            $listing = $this->dbcommon->get_my_listing($store[0]->store_owner, $start = 0, $limit = 100, NULL, $user_status, $store_user[0]->user_role, 'store');
 //            }else{
 //                $listing = $this->dbcommon->get_my_listing($store[0]->store_owner, $start = 0, $limit = 15, NULL, $user_status, $store_user[0]->user_role, 'store');
 //            }
@@ -3141,10 +3141,10 @@ class Home extends My_controller {
 
 //            $start = 15 * $filter_val;
 //            $end = $start + 15;
-            
+
             $start = $filter_val;
             $end = $start + 100;
-            
+
             $hide = "false";
 
             if (isset($_POST['type']))
@@ -3213,7 +3213,7 @@ class Home extends My_controller {
             $cat_id = $this->input->post('cat_id', TRUE);
 //            $start = 15 * $filter_val;
 //            $end = $start + 15;
-            
+
             $start = $filter_val;
             $end = $start + 100;
 //            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
@@ -3321,9 +3321,9 @@ class Home extends My_controller {
         $main_data['product_view'] = $_POST['product_view'];
 
         if ($cat_id > 0)
-            $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id,NULL,'yes');
+            $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', $cat_id, NULL, 'yes');
         else
-            $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store',NULL,NULL,'yes');
+            $products = $this->dbcommon->get_my_listing(NULL, $start, 15, $search, 0, 'storeUser', 'store', NULL, NULL, 'yes');
 
         $main_data['listing'] = $products;
         $main_data['html'] = $this->load->view('store/filter_store_products', $main_data, TRUE);

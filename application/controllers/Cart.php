@@ -50,49 +50,57 @@ class Cart extends My_controller {
             $data['product_list'] = $this->dbcart->product_list_cart();
             $admin_ship_condition = 'store_id = 0 AND is_active = 1';
             $data['shipping_admin_cost'] = $this->dbcommon->select('shipping_costs_admin', $admin_ship_condition)[0];
-            
-//            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198'){
+
+//            if ($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {
+                $product_ids = array();
+                $product_arry = explode(",", $session_qunatity);
+                foreach ($product_arry as $id) {
+                    $arr = explode('-', $id);
+                    if (isset($arr[0]) && !empty($arr[0]) && isset($arr[1]) && !empty($arr[1])) {
+                        $product_ids[$arr[0]] = $arr[1];
+                    }
+                }
+
                 $shipping_cost = array();
                 $shipping_weight = array();
-                
-                
-                foreach ($data['product_list'] as $list_key => $list_data):
+
+                foreach ($data['product_list'] as $list_key => $list_data) {
                     $c_store_id = 0;
                     $c_shipping_method_id = 0;
                     $c_weight = 0;
-                
-                    if($list_data['store'] != $c_store_id){
+
+                    if ($list_data['store'] != $c_store_id) {
                         $c_store_id = $list_data['store'];
                     }
-                    if($list_data['timeline_id'] != $c_shipping_method_id){
+                    if ($list_data['timeline_id'] != $c_shipping_method_id) {
                         $c_shipping_method_id = $list_data['timeline_id'];
                     }
-                    if(isset($shipping_weight[$c_store_id][$c_shipping_method_id]) && !empty($shipping_weight[$c_store_id][$c_shipping_method_id])){
-                        $c_weight = $shipping_weight[$c_store_id][$c_shipping_method_id];
+                    if (isset($shipping_weight[$c_store_id][$c_shipping_method_id]) && !empty($shipping_weight[$c_store_id][$c_shipping_method_id])) {
+                        $c_weight = (float) $shipping_weight[$c_store_id][$c_shipping_method_id] * $product_ids[$list_data['product_id']];
                     }
-                    $c_weight = $c_weight + $list_data['weight'];
+                    $c_weight = $c_weight + ($list_data['weight'] * $product_ids[$list_data['product_id']]);
 //                    echo $c_weight . '<br>';
                     $shipping_weight[$c_store_id][$c_shipping_method_id] = ceil($c_weight);
-                endforeach;
+                }
                 $total_charge = 0;
-                foreach ($shipping_weight as $w_key => $w_data):
+                foreach ($shipping_weight as $w_key => $w_data) {
                     $weight = 0;
                     $store_ship_condition = 'store_id = ' . $w_key . ' AND is_active = 1';
                     $shipping_charges = $this->dbcommon->select('shipping_costs_admin', $store_ship_condition);
-                    if(empty($shipping_charges)){
+                    if (empty($shipping_charges)) {
                         $shipping_charges = $data['shipping_admin_cost'];
                     }
                     $c_charge = 0;
-                    foreach ($w_data as $k_key => $k_data):
+                    foreach ($w_data as $k_key => $k_data) {
                         $c_charge = $shipping_charges['cost'];
-                        if($k_data > $shipping_charges['max_weight']){
+                        if ($k_data > $shipping_charges['max_weight']) {
                             $weight = $k_data - $shipping_charges['max_weight'];
                             $n_charge = $weight * $shipping_charges['cost_per_extra_kg'];
                             $c_charge = $c_charge + $n_charge;
                         }
                         $total_charge = $total_charge + $c_charge;
-                    endforeach;
-                endforeach;
+                    }
+                }
                 $data['shipping_total'] = $total_charge;
 //            }
 //            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198'){
@@ -140,53 +148,53 @@ class Cart extends My_controller {
             }
 
             $shipping_cost_list = $this->dbcommon->get_distinct(" select shipping_cost from store where store_owner in (" . rtrim($sel_list, ',') . ") and  store_status=0 and store_is_inappropriate='Approve' group by store_owner");
-            
+
 //            if($_SERVER['REMOTE_ADDR'] == '203.109.68.198'){
-                $admin_ship_condition = 'store_id = 0 AND is_active = 1';
-                $data['shipping_admin_cost'] = $this->dbcommon->select('shipping_costs_admin', $admin_ship_condition)[0];
-                $product_list = $this->dbcart->product_list_cart();
-                
-                $shipping_cost = array();
-                $shipping_weight = array();
-                foreach ($product_list as $list_key => $list_data):
-                    $c_store_id = 0;
-                    $c_shipping_method_id = 0;
-                    $c_weight = 0;
-                
-                    if($list_data['store'] != $c_store_id){
-                        $c_store_id = $list_data['store'];
+            $admin_ship_condition = 'store_id = 0 AND is_active = 1';
+            $data['shipping_admin_cost'] = $this->dbcommon->select('shipping_costs_admin', $admin_ship_condition)[0];
+            $product_list = $this->dbcart->product_list_cart();
+
+            $shipping_cost = array();
+            $shipping_weight = array();
+            foreach ($product_list as $list_key => $list_data):
+                $c_store_id = 0;
+                $c_shipping_method_id = 0;
+                $c_weight = 0;
+
+                if ($list_data['store'] != $c_store_id) {
+                    $c_store_id = $list_data['store'];
+                }
+                if ($list_data['timeline_id'] != $c_shipping_method_id) {
+                    $c_shipping_method_id = $list_data['timeline_id'];
+                }
+                if (isset($shipping_weight[$c_store_id][$c_shipping_method_id]) && !empty($shipping_weight[$c_store_id][$c_shipping_method_id])) {
+                    $c_weight = $shipping_weight[$c_store_id][$c_shipping_method_id];
+                }
+                $c_weight = $c_weight + $list_data['weight'];
+                $shipping_weight[$c_store_id][$c_shipping_method_id] = ceil($c_weight);
+            endforeach;
+            $total_charge = 0;
+            foreach ($shipping_weight as $w_key => $w_data):
+                $weight = 0;
+                $store_ship_condition = 'store_id = ' . $w_key . ' AND is_active = 1';
+                $shipping_charges = $this->dbcommon->select('shipping_costs_admin', $store_ship_condition);
+                if (empty($shipping_charges)) {
+                    $shipping_charges = $data['shipping_admin_cost'];
+                }
+                $c_charge = 0;
+                foreach ($w_data as $k_key => $k_data):
+                    $c_charge = $shipping_charges['cost'];
+                    if ($k_data > $shipping_charges['max_weight']) {
+                        $weight = $k_data - $shipping_charges['max_weight'];
+                        $n_charge = $weight * $shipping_charges['cost_per_extra_kg'];
+                        $c_charge = $c_charge + $n_charge;
                     }
-                    if($list_data['timeline_id'] != $c_shipping_method_id){
-                        $c_shipping_method_id = $list_data['timeline_id'];
-                    }
-                    if(isset($shipping_weight[$c_store_id][$c_shipping_method_id]) && !empty($shipping_weight[$c_store_id][$c_shipping_method_id])){
-                        $c_weight = $shipping_weight[$c_store_id][$c_shipping_method_id];
-                    }
-                    $c_weight = $c_weight + $list_data['weight'];
-                    $shipping_weight[$c_store_id][$c_shipping_method_id] = ceil($c_weight);
+                    $total_charge = $total_charge + $c_charge;
                 endforeach;
-                $total_charge = 0;
-                foreach ($shipping_weight as $w_key => $w_data):
-                    $weight = 0;
-                    $store_ship_condition = 'store_id = ' . $w_key . ' AND is_active = 1';
-                    $shipping_charges = $this->dbcommon->select('shipping_costs_admin', $store_ship_condition);
-                    if(empty($shipping_charges)){
-                        $shipping_charges = $data['shipping_admin_cost'];
-                    }
-                    $c_charge = 0;
-                    foreach ($w_data as $k_key => $k_data):
-                        $c_charge = $shipping_charges['cost'];
-                        if($k_data > $shipping_charges['max_weight']){
-                            $weight = $k_data - $shipping_charges['max_weight'];
-                            $n_charge = $weight * $shipping_charges['cost_per_extra_kg'];
-                            $c_charge = $c_charge + $n_charge;
-                        }
-                        $total_charge = $total_charge + $c_charge;
-                    endforeach;
-                endforeach;
-                $data['shipping_total'] = $total_charge;
+            endforeach;
+            $data['shipping_total'] = $total_charge;
 //            }
-            
+
 
             $seller_total_cost = 0;
             foreach ($shipping_cost_list as $sel) {
@@ -462,7 +470,6 @@ class Cart extends My_controller {
 //            if($_SERVER['203.109.68.198']){
 //                pr($product_arry); exit;
 //            }
-            
 //            pr($products_arr); exit;
 
             if ($product_count == sizeof($products_arr)) {

@@ -16,7 +16,7 @@
                         <div class='col-xs-12'>
                             <div class='page-header page-header-with-buttons'>
                                 <h1 class='pull-left'>
-                                    <i class='fa fa-cogs'></i>
+                                    <i class='fa fa-ambulance'></i>
                                     <span>Shipping Cost</span>
                                 </h1>               
                             </div>
@@ -34,7 +34,7 @@
                                     <div class='box-header orange-background'>
                                         <div class='title'>
                                             <div class='icon-edit'></div>
-                                            Site Shipping Cost
+                                            Shipping Cost
                                         </div>
                                         <div class='actions'>
                                             <a class="btn box-collapse btn-xs btn-link" href="#"><i></i>
@@ -81,14 +81,14 @@
                                                 
                                                 
                                                 <div class='form-group'>
-                                                    <label class='col-md-2 control-label' for='cost_per_extra_kg'>Additional Cost per KG</label>
+                                                    <label class='col-md-2 control-label' for='cost_per_extra_kg'>Additional Cost Per KG</label>
                                                     <div class='col-md-8 controls'>
                                                         <input class="form-control original_price" placeholder="Cost per extra KG" name="cost_per_extra_kg" type="text" value="<?php echo $ship_cost_per_extra_kg; ?>" required="" />
                                                     </div>
                                                 </div>
                                                 <div class="form-actions form-actions-padding-sm">
                                                     <div class="row">
-                                                        <div class="col-md-8">
+                                                        <div class="col-md-8 col-md-offset-1">
                                                             <button class='btn btn-primary' type='submit' name="submit">
                                                                 <i class="fa fa-floppy-o"></i>
                                                                 Save

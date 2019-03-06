@@ -508,18 +508,18 @@
                                                                         }
                                                                     }
                                                                 }
-                                                               
-                                                                if ((int) $pro['stock_availability'] != 0) {
-                                                                if (isset($pro['product_for']) && $pro['product_for'] == 'store'){
-                                                                            ?>
-                                                                                <div class="addtocart" >
-                                                                                        <button data-toggle="tooltip" title="Add To Cart" class="add_to_cart_cus" type="button" id="add_to_cart_button" quantity="1" proid="<?php echo $pro['product_id']; ?>">
-                                                                                            <i class="fa fa-shopping-cart <?php echo $pro['product_id']; ?>"></i>
-                                                                                        </button>
-                                                                                    </div>
 
-                                                                            <?php
-                                                                      }
+                                                                if ((int) $pro['stock_availability'] != 0) {
+                                                                    if (isset($pro['product_for']) && $pro['product_for'] == 'store') {
+                                                                        ?>
+                                                                        <div class="addtocart" >
+                                                                            <button data-toggle="tooltip" title="Add To Cart" class="add_to_cart_cus" type="button" id="add_to_cart_button" quantity="1" proid="<?php echo $pro['product_id']; ?>">
+                                                                                <i class="fa fa-shopping-cart <?php echo $pro['product_id']; ?>"></i>
+                                                                            </button>
+                                                                        </div>
+
+                                                                        <?php
+                                                                    }
                                                                 }
                                                                 ?>                                                          
                                                             </div>
@@ -844,7 +844,7 @@
 
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-success btn-md add_cart_btn" id="buy_now_button" name="buy_now_button" style="display:none;">Buy Now</button>
-                                        <button type="button" class="btn btn-success btn-md add_cart_btn" id="add_to_cart_button" name="add_to_cart_button" style="display:none;">Add To Cart</button>
+                                        <button type="button" class="btn btn-success btn-md add_cart_btn" id="add_to_cart_button1" name="add_to_cart_button1" style="display:none;">Add To Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -867,293 +867,291 @@
     <script type="text/javascript" src="<?php echo HTTPS . website_url; ?>assets/front/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
     <script type="text/javascript" src="<?php echo HTTPS . website_url; ?>assets/front/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>        
     <script type="text/javascript">
-                                                $(document).on("click", "#reply_btn", function (e) {
-                                                    $("#<?php echo ($is_logged == 1) ? 'replyModal' : 'ifLoginModal' ?>").modal('show');
-                                                });
-                                                jQuery(document).ready(function ($) {
-
-                                                    $(".fancybox-thumb").fancybox({
-                                                        beforeShow: function () {
-                                                            var imgAlt = $(this.element).find("img").attr("alt");
-                                                            if (imgAlt) {
-                                                                $(".fancybox-image").attr("alt", imgAlt);
-                                                            }
-                                                        },
-                                                        padding: 0,
-                                                        helpers: {
-                                                            title: {
-                                                                type: 'outside'
-                                                            },
-                                                            thumbs: {
-                                                                width: 50,
-                                                                height: 50
-                                                            }
-                                                        }
-
+                                                    $(document).on("click", "#reply_btn", function (e) {
+                                                        $("#<?php echo ($is_logged == 1) ? 'replyModal' : 'ifLoginModal' ?>").modal('show');
                                                     });
-                                                    var jssor_1_SlideshowTransitions = [
-                                                        {$Duration: 1200, x: 0.3, $During: {$Left: [0.3, 0.7]}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: 0.3, $SlideOut: false, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: -0.3, $During: {$Left: [0.3, 0.7]}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: 0.3, $SlideOut: true, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, y: 0.3, $During: {$Top: [0.3, 0.7]}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, y: -0.3, $SlideOut: true, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, y: -0.3, $During: {$Top: [0.3, 0.7]}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, y: 0.3, $SlideOut: true, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: 0.3, $Cols: 2, $During: {$Left: [0.3, 0.7]}, $ChessMode: {$Column: 3}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: 0.3, $Cols: 2, $SlideOut: true, $ChessMode: {$Column: 3}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, y: 0.3, $Rows: 2, $During: {$Top: [0.3, 0.7]}, $ChessMode: {$Row: 12}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, y: 0.3, $Rows: 2, $SlideOut: true, $ChessMode: {$Row: 12}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, y: 0.3, $Cols: 2, $During: {$Top: [0.3, 0.7]}, $ChessMode: {$Column: 12}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, y: -0.3, $Cols: 2, $SlideOut: true, $ChessMode: {$Column: 12}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: 0.3, $Rows: 2, $During: {$Left: [0.3, 0.7]}, $ChessMode: {$Row: 3}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: -0.3, $Rows: 2, $SlideOut: true, $ChessMode: {$Row: 3}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: 0.3, y: 0.3, $Cols: 2, $Rows: 2, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $ChessMode: {$Column: 3, $Row: 12}, $Easing: {$Left: $Jease$.$InCubic, $Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, x: 0.3, y: 0.3, $Cols: 2, $Rows: 2, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $SlideOut: true, $ChessMode: {$Column: 3, $Row: 12}, $Easing: {$Left: $Jease$.$InCubic, $Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, $Delay: 20, $Clip: 3, $Assembly: 260, $Easing: {$Clip: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, $Delay: 20, $Clip: 3, $SlideOut: true, $Assembly: 260, $Easing: {$Clip: $Jease$.$OutCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, $Delay: 20, $Clip: 12, $Assembly: 260, $Easing: {$Clip: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
-                                                        {$Duration: 1200, $Delay: 20, $Clip: 12, $SlideOut: true, $Assembly: 260, $Easing: {$Clip: $Jease$.$OutCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2}
-                                                    ];
+                                                    jQuery(document).ready(function ($) {
 
-                                                    var jssor_1_options = {
-                                                        $AutoPlay: false,
-                                                        $SlideshowOptions: {
-                                                            $Class: $JssorSlideshowRunner$,
-                                                            $Transitions: jssor_1_SlideshowTransitions,
-                                                            $TransitionsOrder: 1
-                                                        },
-                                                        $ArrowNavigatorOptions: {
-                                                            $Class: $JssorArrowNavigator$
-                                                        },
-                                                        $ThumbnailNavigatorOptions: {
-                                                            $Class: $JssorThumbnailNavigator$,
-                                                            $Rows: 1,
-                                                            $Cols: 6,
-                                                            $SpacingX: 5,
-                                                            $SpacingY: 5,
-                                                            $Orientation: 2,
-                                                            $Align: 156
+                                                        $(".fancybox-thumb").fancybox({
+                                                            beforeShow: function () {
+                                                                var imgAlt = $(this.element).find("img").attr("alt");
+                                                                if (imgAlt) {
+                                                                    $(".fancybox-image").attr("alt", imgAlt);
+                                                                }
+                                                            },
+                                                            padding: 0,
+                                                            helpers: {
+                                                                title: {
+                                                                    type: 'outside'
+                                                                },
+                                                                thumbs: {
+                                                                    width: 50,
+                                                                    height: 50
+                                                                }
+                                                            }
+
+                                                        });
+                                                        var jssor_1_SlideshowTransitions = [
+                                                            {$Duration: 1200, x: 0.3, $During: {$Left: [0.3, 0.7]}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: 0.3, $SlideOut: false, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: -0.3, $During: {$Left: [0.3, 0.7]}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: 0.3, $SlideOut: true, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, y: 0.3, $During: {$Top: [0.3, 0.7]}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, y: -0.3, $SlideOut: true, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, y: -0.3, $During: {$Top: [0.3, 0.7]}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, y: 0.3, $SlideOut: true, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: 0.3, $Cols: 2, $During: {$Left: [0.3, 0.7]}, $ChessMode: {$Column: 3}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: 0.3, $Cols: 2, $SlideOut: true, $ChessMode: {$Column: 3}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, y: 0.3, $Rows: 2, $During: {$Top: [0.3, 0.7]}, $ChessMode: {$Row: 12}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, y: 0.3, $Rows: 2, $SlideOut: true, $ChessMode: {$Row: 12}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, y: 0.3, $Cols: 2, $During: {$Top: [0.3, 0.7]}, $ChessMode: {$Column: 12}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, y: -0.3, $Cols: 2, $SlideOut: true, $ChessMode: {$Column: 12}, $Easing: {$Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: 0.3, $Rows: 2, $During: {$Left: [0.3, 0.7]}, $ChessMode: {$Row: 3}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: -0.3, $Rows: 2, $SlideOut: true, $ChessMode: {$Row: 3}, $Easing: {$Left: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: 0.3, y: 0.3, $Cols: 2, $Rows: 2, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $ChessMode: {$Column: 3, $Row: 12}, $Easing: {$Left: $Jease$.$InCubic, $Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, x: 0.3, y: 0.3, $Cols: 2, $Rows: 2, $During: {$Left: [0.3, 0.7], $Top: [0.3, 0.7]}, $SlideOut: true, $ChessMode: {$Column: 3, $Row: 12}, $Easing: {$Left: $Jease$.$InCubic, $Top: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, $Delay: 20, $Clip: 3, $Assembly: 260, $Easing: {$Clip: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, $Delay: 20, $Clip: 3, $SlideOut: true, $Assembly: 260, $Easing: {$Clip: $Jease$.$OutCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, $Delay: 20, $Clip: 12, $Assembly: 260, $Easing: {$Clip: $Jease$.$InCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2},
+                                                            {$Duration: 1200, $Delay: 20, $Clip: 12, $SlideOut: true, $Assembly: 260, $Easing: {$Clip: $Jease$.$OutCubic, $Opacity: $Jease$.$Linear}, $Opacity: 2}
+                                                        ];
+
+                                                        var jssor_1_options = {
+                                                            $AutoPlay: false,
+                                                            $SlideshowOptions: {
+                                                                $Class: $JssorSlideshowRunner$,
+                                                                $Transitions: jssor_1_SlideshowTransitions,
+                                                                $TransitionsOrder: 1
+                                                            },
+                                                            $ArrowNavigatorOptions: {
+                                                                $Class: $JssorArrowNavigator$
+                                                            },
+                                                            $ThumbnailNavigatorOptions: {
+                                                                $Class: $JssorThumbnailNavigator$,
+                                                                $Rows: 1,
+                                                                $Cols: 6,
+                                                                $SpacingX: 5,
+                                                                $SpacingY: 5,
+                                                                $Orientation: 2,
+                                                                $Align: 156
+                                                            }
+                                                        };
+
+
+                                                        var jssor_1_slider = new $JssorSlider$("slider1_container", jssor_1_options);
+
+                                                        //responsive code begin
+                                                        //you can remove responsive code if you don't want the slider scales while window resizing
+                                                        function ScaleSlider() {
+
+                                                            var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                                                            if (refSize) {
+                                                                refSize = Math.min(refSize, 1000);
+                                                                jssor_1_slider.$ScaleWidth(refSize);
+                                                            } else {
+                                                                window.setTimeout(ScaleSlider, 30);
+                                                            }
                                                         }
-                                                    };
+                                                        ScaleSlider();
+                                                        $(window).bind("load", ScaleSlider);
+                                                        $(window).bind("resize", ScaleSlider);
+                                                        $(window).bind("orientationchange", ScaleSlider);
+
+                                                        //responsive code end
 
 
-                                                    var jssor_1_slider = new $JssorSlider$("slider1_container", jssor_1_options);
-
-                                                    //responsive code begin
-                                                    //you can remove responsive code if you don't want the slider scales while window resizing
-                                                    function ScaleSlider() {
-
-                                                        var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
-                                                        if (refSize) {
-                                                            refSize = Math.min(refSize, 1000);
-                                                            jssor_1_slider.$ScaleWidth(refSize);
-                                                        } else {
-                                                            window.setTimeout(ScaleSlider, 30);
-                                                        }
-                                                    }
-                                                    ScaleSlider();
-                                                    $(window).bind("load", ScaleSlider);
-                                                    $(window).bind("resize", ScaleSlider);
-                                                    $(window).bind("orientationchange", ScaleSlider);
-
-                                                    //responsive code end
-
-
-                                                    var w = $('.catlist .col-lg-3 .item-sell .item-img').width();
-                                                    $('.catlist .col-lg-3 .item-sell .item-img a').css('width', w);
-                                                    var h = $('.catlist .col-lg-3 .item-sell .item-img').height();
-                                                    $('.catlist .col-lg-3 .item-sell .item-img a').css('height', h);
-
-                                                    $(window).resize(function () {
                                                         var w = $('.catlist .col-lg-3 .item-sell .item-img').width();
                                                         $('.catlist .col-lg-3 .item-sell .item-img a').css('width', w);
                                                         var h = $('.catlist .col-lg-3 .item-sell .item-img').height();
                                                         $('.catlist .col-lg-3 .item-sell .item-img a').css('height', h);
-                                                    });
 
-                                                    //$('#video').trigger('click');
-                                                    //jQuery('#video_div').click();
-                                                    $(".image-wrapper").hide();
-                                                    $("#video_div").show();
-                                                    // We only want these styles applied when javascript is enabled
-                                                    $('div.navigation').css({'float': 'left'});
-                                                    $('button.mybtn').click(function () {
-                                                        $(this).find('.show_number').text('<?php echo $product->phone; ?>');
-                                                    });
-                                                    $('div.content').css('display', 'block');
+                                                        $(window).resize(function () {
+                                                            var w = $('.catlist .col-lg-3 .item-sell .item-img').width();
+                                                            $('.catlist .col-lg-3 .item-sell .item-img a').css('width', w);
+                                                            var h = $('.catlist .col-lg-3 .item-sell .item-img').height();
+                                                            $('.catlist .col-lg-3 .item-sell .item-img a').css('height', h);
+                                                        });
 
-                                                    $("#formReportAds").validate({
-                                                        rules: {
-                                                            report: "required",
-                                                            comments: "required"
-                                                        },
-                                                        messages: {
-                                                            report: "Please select one of the options",
-                                                            comments: "Please enter comments",
-                                                        },
-                                                        submitHandler: function (form) {
-                                                            $("#reportModal").modal('hide');
-                                                            form.submit();
-                                                        }
-                                                    });
+                                                        //$('#video').trigger('click');
+                                                        //jQuery('#video_div').click();
+                                                        $(".image-wrapper").hide();
+                                                        $("#video_div").show();
+                                                        // We only want these styles applied when javascript is enabled
+                                                        $('div.navigation').css({'float': 'left'});
+                                                        $('button.mybtn').click(function () {
+                                                            $(this).find('.show_number').text('<?php echo $product->phone; ?>');
+                                                        });
+                                                        $('div.content').css('display', 'block');
 
-                                                    $("#formReplyAds").validate({
-                                                        rules: {
-                                                            sender_name: "required",
-                                                            //subject: "required",
-                                                            message: "required",
-                                                            sender_email: {
-                                                                required: true,
-                                                                email: true
+                                                        $("#formReportAds").validate({
+                                                            rules: {
+                                                                report: "required",
+                                                                comments: "required"
+                                                            },
+                                                            messages: {
+                                                                report: "Please select one of the options",
+                                                                comments: "Please enter comments",
+                                                            },
+                                                            submitHandler: function (form) {
+                                                                $("#reportModal").modal('hide');
+                                                                form.submit();
                                                             }
-                                                        },
-                                                        messages: {
-                                                            sender_name: "Please enter name",
-                                                            //subject: "Please provide a subject",
-                                                            message: "Please enter a message",
-                                                            sender_email: {
-                                                                required: "Please enter an email address",
-                                                                email: "Please enter a valid email address"
+                                                        });
+
+                                                        $("#formReplyAds").validate({
+                                                            rules: {
+                                                                sender_name: "required",
+                                                                //subject: "required",
+                                                                message: "required",
+                                                                sender_email: {
+                                                                    required: true,
+                                                                    email: true
+                                                                }
+                                                            },
+                                                            messages: {
+                                                                sender_name: "Please enter name",
+                                                                //subject: "Please provide a subject",
+                                                                message: "Please enter a message",
+                                                                sender_email: {
+                                                                    required: "Please enter an email address",
+                                                                    email: "Please enter a valid email address"
+                                                                }
+                                                            },
+                                                            submitHandler: function (form) {
+                                                                form.submit();
                                                             }
-                                                        },
-                                                        submitHandler: function (form) {
-                                                            form.submit();
-                                                        }
+                                                        });
                                                     });
-                                                });
 
 
-                                                var Youtube = (function () {
-                                                    'use strict';
-                                                    var video, results;
+                                                    var Youtube = (function () {
+                                                        'use strict';
+                                                        var video, results;
 
-                                                    var getThumb = function (url, size) {
-                                                        if (url === null) {
-                                                            return '';
-                                                        }
-                                                        size = (size === null) ? 'big' : size;
-                                                        results = url.match('[\\?&]v=([^&#]*)');
-                                                        video = (results === null) ? url : results[1];
+                                                        var getThumb = function (url, size) {
+                                                            if (url === null) {
+                                                                return '';
+                                                            }
+                                                            size = (size === null) ? 'big' : size;
+                                                            results = url.match('[\\?&]v=([^&#]*)');
+                                                            video = (results === null) ? url : results[1];
 
-                                                        if (size === 'small') {
-                                                            return 'https://img.youtube.com/vi/' + video + '/2.jpg';
-                                                        }
-                                                        return 'https://img.youtube.com/vi/' + video + '/0.jpg';
-                                                    };
-                                                    return {
-                                                        thumb: getThumb
-                                                    };
-                                                }());
+                                                            if (size === 'small') {
+                                                                return 'https://img.youtube.com/vi/' + video + '/2.jpg';
+                                                            }
+                                                            return 'https://img.youtube.com/vi/' + video + '/0.jpg';
+                                                        };
+                                                        return {
+                                                            thumb: getThumb
+                                                        };
+                                                    }());
 <?php if (isset($youtube_link) && $youtube_link != '') { ?>
-                                                    var link = "<?php echo (string) getYouTubeId($youtube_link); ?>";
+                                                        var link = "<?php echo (string) getYouTubeId($youtube_link); ?>";
 <?php } else { ?>
-                                                    var link = "";
+                                                        var link = "";
 <?php } ?>
 
-                                                var thumb = Youtube.thumb("https://www.youtube.com/watch?v=" + link, 'small');
-                                                $('#video123').attr("src", thumb);
-                                                var thumb = Youtube.thumb("https://www.youtube.com/watch?v=" + link, 'big');
-                                                $("#youtube_link").attr("href", thumb);
+                                                    var thumb = Youtube.thumb("https://www.youtube.com/watch?v=" + link, 'small');
+                                                    $('#video123').attr("src", thumb);
+                                                    var thumb = Youtube.thumb("https://www.youtube.com/watch?v=" + link, 'big');
+                                                    $("#youtube_link").attr("href", thumb);
 
 
-                                                function show_number() {
-                                                    $('.show_number').text('<?php echo $product->phone; ?>');
-                                                }
-
-                                                $('.buy_link').click(function () {
-
-                                                    $("#quantity_popup").modal('show');
-                                                    var link_id = $(this).attr('id');
-
-                                                    $('#quantity').prop('selectedIndex', 0);
-
-                                                    if (link_id == 'buy_now') {
-                                                        var path = '<?php echo HTTPS . website_url; ?>cart/buy_now';
-                                                        $('#cart_form').attr('action', path);
-
-                                                        $('.add_to_cart_label').hide();
-                                                        $('#add_to_cart_button').hide();
-                                                        $('.buy_now_label').show();
-                                                        $('#buy_now_button').show();
-                                                    } else {
-
-                                                        var path = '<?php echo $store_url; ?>cart/add_to_cart';
-                                                        $('#cart_form').attr('action', path);
-
-                                                        $('.buy_now_label').hide();
-                                                        $('#buy_now_button').hide();
-                                                        $('.add_to_cart_label').show();
-                                                        $('#add_to_cart_button').show();
+                                                    function show_number() {
+                                                        $('.show_number').text('<?php echo $product->phone; ?>');
                                                     }
-                                                });
 
-                                                // Buy now button
-                                                $('#buy_now_button').click(function () {
-                                                    window.location = "<?php echo $store_url . 'cart'; ?>";
-                                                });
+                                                    $('.buy_link').click(function () {
 
-                                                //add to cart button
-                                                $('#add_to_cart_button').click(function () {
-                                                    check_product_quantity();
-                                                });
+                                                        $("#quantity_popup").modal('show');
+                                                        var link_id = $(this).attr('id');
 
+                                                        $('#quantity').prop('selectedIndex', 0);
 
-                                                function check_product_quantity() {
+                                                        if (link_id == 'buy_now') {
+                                                            var path = '<?php echo HTTPS . website_url; ?>cart/buy_now';
+                                                            $('#cart_form').attr('action', path);
 
-                                                    var product_id = $('#cart_product_id').val();
-                                                    var quantity = $('#quantity').val();
+                                                            $('.add_to_cart_label').hide();
+                                                            $('#add_to_cart_button1').hide();
+                                                            $('.buy_now_label').show();
+                                                            $('#buy_now_button').show();
+                                                        } else {                                                            
+                                                            var path = '<?php echo $store_url; ?>cart/add_to_cart';
+                                                            $('#cart_form').attr('action', path);
 
-                                                    var url = "<?php echo $store_url; ?>home/check_product_and_quantity";
-
-                                                    $.post(url, {quantity: quantity, product_id: product_id}, function (response)
-                                                    {
-                                                        if (response == 'success') {
-                                                            $('#span_error').hide();
-
-                                                            var url = "<?php echo $store_url; ?>cart/add_to_cart";
-                                                            var quantity = $('#quantity').val();
-                                                            var cart_product_id = $('#cart_product_id').val();
-
-                                                            $.post(url, {quantity: quantity, cart_product_id: cart_product_id}, function (response)
-                                                            {
-                                                                //                                    $('#cart_count').text(response);
-                                                                $('.total-no').text(response);
-                                                                $('.cart-li').show();
-                                                            });
-
-                                                            $("#quantity_popup").modal('hide');
-                                                        } else {
-                                                            if (response == 'Out of stock' || response == 'Not Available') {
-                                                                $('#span_error').show();
-                                                                $('#span_error').text('* ' + response);
-                                                                return 0;
-                                                            } else
-                                                            {
-                                                                $('#span_error').show();
-                                                                $('#span_error').text('* ' + response + ' Available in Stock');
-
-                                                                //reset dropdown
-                                                                var availability = parseInt(response);
-                                                                var i = 1;
-                                                                var concat_str = '';
-
-                                                                while (i <= availability) {
-                                                                    concat_str = concat_str + '<option value="' + i + '">' + i + '</option>';
-                                                                    i++;
-                                                                }
-
-                                                                $("#quantity").html(concat_str);
-                                                                return 0;
-                                                            }
-
+                                                            $('.buy_now_label').hide();
+                                                            $('#buy_now_button').hide();
+                                                            $('.add_to_cart_label').show();
+                                                            $('#add_to_cart_button1').show();
                                                         }
                                                     });
-                                                }
 
-                                                //                                                $(document).on("click", "#reply_btn", function (e) {
-                                                //                                                    $("#replyModal").modal('show');
-                                                //                                                });
+                                                    // Buy now button
+                                                    $('#buy_now_button').click(function () {
+                                                        window.location = "<?php echo $store_url . 'cart'; ?>";
+                                                    });
+
+                                                    //add to cart button
+                                                    $('#add_to_cart_button1').click(function () {
+                                                        console.log("i m called.....")
+                                                        check_product_quantity();
+                                                    });
+
+                                                    function check_product_quantity() {
+
+                                                        var product_id = $(document).find('#cart_product_id').val();
+                                                        var quantity = $(document).find('#quantity').val();                                                        
+                                                        var url = "<?php echo $store_url; ?>home/check_product_and_quantity";
+
+                                                        $.post(url, {quantity: quantity, product_id: product_id}, function (response)
+                                                        {
+                                                            if (response == 'success') {
+                                                                $('#span_error').hide();
+
+                                                                var url = "<?php echo $store_url; ?>cart/add_to_cart";
+                                                                var quantity = $('#quantity').val();
+                                                                var cart_product_id = $('#cart_product_id').val();
+
+                                                                $.post(url, {quantity: quantity, cart_product_id: cart_product_id}, function (response)
+                                                                {
+                                                                    //                                    $('#cart_count').text(response);
+                                                                    $('.total-no').text(response);
+                                                                    $('.cart-li').show();
+                                                                });
+
+                                                                $("#quantity_popup").modal('hide');
+                                                            } else {
+                                                                if (response == 'Out of stock' || response == 'Not Available') {
+                                                                    $('#span_error').show();
+                                                                    $('#span_error').text('* ' + response);
+                                                                    return 0;
+                                                                } else
+                                                                {
+                                                                    $('#span_error').show();
+                                                                    $('#span_error').text('* ' + response + ' Available in Stock');
+
+                                                                    //reset dropdown
+                                                                    var availability = parseInt(response);
+                                                                    var i = 1;
+                                                                    var concat_str = '';
+
+                                                                    while (i <= availability) {
+                                                                        concat_str = concat_str + '<option value="' + i + '">' + i + '</option>';
+                                                                        i++;
+                                                                    }
+
+                                                                    $("#quantity").html(concat_str);
+                                                                    return 0;
+                                                                }
+
+                                                            }
+                                                        });
+                                                    }
+
+                                                    //                                                $(document).on("click", "#reply_btn", function (e) {
+                                                    //                                                    $("#replyModal").modal('show');
+                                                    //                                                });
     </script>
     <script src="<?php echo HTTPS . website_url; ?>assets/googleMap.js"></script>
     <?php if (!isset($exclude_map)) { ?>
@@ -1163,67 +1161,67 @@
 </body>
 </html>
 <script type="text/javascript">
-      $('[data-toggle="tooltip"]').tooltip();
-            //add to cart button
-                                                $('.add_to_cart_cus').click(function () {
-                                                   var proid= $(this).attr('proid');
-                                                   var qat=  $(this).attr('quantity');
-                                                   console.log(proid);
-                                                   console.log(qat);
-                                                    check_product_quantity(proid,qat);
-                                                    $("i."+proid).removeClass('fa-shopping-cart');
-                                                    $("i."+proid).addClass('fa-check');
-                                                });
+                                                    $('[data-toggle="tooltip"]').tooltip();
+                                                    //add to cart button
+                                                    $('.add_to_cart_cus').click(function () {
+                                                        var proid = $(this).attr('proid');
+                                                        var qat = $(this).attr('quantity');
+                                                        console.log(proid);
+                                                        console.log(qat);
+                                                        check_product_quantity1(proid, qat);
+                                                        $("i." + proid).removeClass('fa-shopping-cart');
+                                                        $("i." + proid).addClass('fa-check');
+                                                    });
 
 
-                                                function check_product_quantity(proid,qat) {
+                                                    function check_product_quantity1(proid, qat) {
 
-                                                    var product_id = $('#cart_product_id').val();
-                                                    var quantity = $('#quantity').val();
+                                                        var product_id = $('#cart_product_id').val();
+                                                        var quantity = $('#quantity').val();
 
-                                                    var url = "<?php echo $store_url; ?>home/check_product_and_quantity";
+                                                        var url = "<?php echo $store_url; ?>home/check_product_and_quantity";
 
-                                                    $.post(url, {quantity: qat, product_id: proid}, function (response)
-                                                    {
-                                                        if (response == 'success') {
-                                                            $('#span_error').hide();
+                                                        $.post(url, {quantity: qat, product_id: proid}, function (response)
+                                                        {
+                                                            if (response == 'success') {
+                                                                $('#span_error').hide();
 
-                                                            var url = "<?php echo $store_url; ?>cart/add_to_cart";
-                                                            var quantity = $('#quantity').val();
-                                                            var cart_product_id = $('#cart_product_id').val();
+                                                                var url = "<?php echo $store_url; ?>cart/add_to_cart";
+                                                                var quantity = $('#quantity').val();
+                                                                var cart_product_id = $('#cart_product_id').val();
 
-                                                            $.post(url, {quantity: qat, cart_product_id: proid}, function (response)
-                                                            {
-                                                                //                                    $('#cart_count').text(response);
-                                                                $('.total-no').text(response);
-                                                                $('.cart-li').show();
-                                                            });
-                                                          //  $("#quantity_popup").modal('hide');
-                                                        } else {
-                                                            if (response == 'Out of stock' || response == 'Not Available') {
-                                                             //   $('#span_error').show();
-                                                               // $('#span_error').text('* ' + response);
-                                                                return 0;
-                                                            } else
-                                                            {
-                                                             //   $('#span_error').show();
-                                                             //   $('#span_error').text('* ' + response + ' Available in Stock');
+                                                                $.post(url, {quantity: qat, cart_product_id: proid}, function (response)
+                                                                {
+                                                                    //                                    $('#cart_count').text(response);
+                                                                    $('.total-no').text(response);
+                                                                    $('.cart-li').show();
+                                                                });
+                                                                //  $("#quantity_popup").modal('hide');
+                                                            } else {
+                                                                if (response == 'Out of stock' || response == 'Not Available') {
+                                                                    //   $('#span_error').show();
+                                                                    // $('#span_error').text('* ' + response);
+                                                                    return 0;
+                                                                } else
+                                                                {
+                                                                    //   $('#span_error').show();
+                                                                    //   $('#span_error').text('* ' + response + ' Available in Stock');
 
-                                                                //reset dropdown
-                                                                var availability = parseInt(response);
-                                                                var i = 1;
-                                                                var concat_str = '';
+                                                                    //reset dropdown
+                                                                    var availability = parseInt(response);
+                                                                    var i = 1;
+                                                                    var concat_str = '';
 
-                                                                while (i <= availability) {
-                                                                    concat_str = concat_str + '<option value="' + i + '">' + i + '</option>';
-                                                                    i++;
+                                                                    while (i <= availability) {
+                                                                        concat_str = concat_str + '<option value="' + i + '">' + i + '</option>';
+                                                                        i++;
+                                                                    }
+
+                                                                    $("#quantity").html(concat_str);
+                                                                    return 0;
                                                                 }
 
-                                                                $("#quantity").html(concat_str);
-                                                                return 0;
                                                             }
-
-                                                        }
-                                                    });
-                                                }
-            </script>
+                                                        });
+                                                    }
+</script>

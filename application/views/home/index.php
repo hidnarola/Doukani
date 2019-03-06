@@ -122,7 +122,8 @@
                                                     else
                                                         echo 'javascript:void(0);';
                                                     ?>" role="tab" data-toggle="tab"  rel="nofollow" >
-                                                        <h3>Latest Posted Items</h3>
+                                                        <!--<h3>Latest Posted Items</h3>-->
+                                                        <h3>Latest Ads</h3>
                                                     </a>
                                                 </li>
                                             </ul>

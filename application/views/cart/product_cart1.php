@@ -22,21 +22,19 @@
                                     </div>
                                 <?php endif; ?>
                                 <div class="inner_wrap_hd">
-                                <h3 class = "cart-title">My Cart</h3>
-                                <div class="inner_hd_right">
-                                <?php   if($_SERVER['REMOTE_ADDR'] == '203.109.68.198') {?>
-                                <div class="prod-info cart_pro_inf" >
-                                    <div class="btn-wrap">
-                                         <a href="<?php echo HTTPS . website_url; ?>/allstores" class="btn red-btn continue_ship" >Continue Shopping</a>
+                                    <h3 class = "cart-title">My Cart</h3>
+                                    <div class="inner_hd_right">                                
+                                        <div class="prod-info cart_pro_inf" >
+                                            <div class="btn-wrap">
+                                                <a href="<?php echo HTTPS . website_url; ?>/allstores" class="btn red-btn continue_ship" >Continue Shopping</a>
+                                            </div>
+                                        </div>                                
+                                        <div class = "forward">
+                                            <span class = "next" id = "cart_next">Next <i class = "fa fa-arrow-right" aria-hidden = "true"></i>
+                                            </span>
+                                            <a href = "<?php echo HTTP . website_url . 'cart'; ?>" class = "back" id = "cart_back"><i class = "fa fa-arrow-left" aria-hidden = "true"></i> Back</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <?php } ?> 
-                                <div class = "forward">
-                                    <span class = "next" id = "cart_next">Next <i class = "fa fa-arrow-right" aria-hidden = "true"></i>
-                                    </span>
-                                    <a href = "<?php echo HTTP . website_url . 'cart'; ?>" class = "back" id = "cart_back"><i class = "fa fa-arrow-left" aria-hidden = "true"></i> Back</a>
-                                </div>
-                                </div>
                                 </div>
                                 <div class = "clearfix"></div>
                                 <div class = "cart-table-bg" id = "display_div">

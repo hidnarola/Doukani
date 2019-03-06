@@ -17,8 +17,7 @@
                                     <span>Stores</span>
                                 </h1>
                                 <div class='pull-right'>
-                                    <i class='fa fa-ambulance'></i>
-                                    <a href="<?php echo base_url(); ?>admin/users/store_shipping_cost/<?php echo $old_store_details[0]->store_id; ?>" class="edit_ship_cost">Edit Shipping Cost</a>
+                                    <a target="_blank" href="<?php echo base_url(); ?>admin/users/store_shipping_cost/<?php echo $old_store_details[0]->store_id; ?>" class="edit_ship_cost btn btn-info"> <i class='fa fa-ambulance'></i> Edit Shipping Cost</a>                                    
                                 </div>	
                             </div>
                             <hr>
@@ -281,12 +280,12 @@
                                                     </select>                
                                                 </div>
                                             </div>                                            
-                                            <div class='form-group shopping_cost' style="<?php echo ($old_store_details[0]->category_id == 0) ? 'display:none;' : ''; ?>">
+                                            <!-- <div class='form-group shopping_cost' style="<?php echo ($old_store_details[0]->category_id == 0) ? 'display:none;' : ''; ?>">
                                                 <label class='col-md-2 control-label' for='inputText1'>Shipping Cost</label>
                                                 <div class='col-md-3 controls'>
                                                     <input type="text" name="shipping_cost" id="shipping_cost" class="form-control" value="<?php echo $old_store_details[0]->shipping_cost; ?>">
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class='form-group shopping_cost' style="<?php echo ($old_store_details[0]->category_id == 0) ? 'display:none;' : ''; ?>">
                                                 <label class='col-md-2 control-label' for='inputText1'>Commission on purchase</label>
                                                 <div class='col-md-3 controls'>
@@ -299,10 +298,10 @@
 //                                                    foreach ($state as $st) {
                                             ?>
                                             <!--                                            <div class='form-group'>
-                                                                                            <label class='col-md-2 control-label' for='inputText1'><?php // echo $st['state_name'];     ?></label>
+                                                                                            <label class='col-md-2 control-label' for='inputText1'><?php // echo $st['state_name'];      ?></label>
                                                                                             <div class='col-md-3 controls'>
                                             <?php // $costing =  $this->dbcommon->shipping_cost($old_store_details[0]->store_owner,$st['state_id']);    ?>
-                                                                                                <input type="text" name="state_<?php // echo $st['state_id'];    ?>" id="state_<?php // echo $st['state_id'];    ?>" value="<?php // if(isset($costing->shipping_cost) && sizeof($costing->shipping_cost) > 0) echo $costing->shipping_cost    ?>" class="form-control">                                                    
+                                                                                                <input type="text" name="state_<?php // echo $st['state_id'];     ?>" id="state_<?php // echo $st['state_id'];     ?>" value="<?php // if(isset($costing->shipping_cost) && sizeof($costing->shipping_cost) > 0) echo $costing->shipping_cost     ?>" class="form-control">                                                    
                                                                                             </div>
                                                                                         </div>-->
                                             <?php
