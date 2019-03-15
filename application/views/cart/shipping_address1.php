@@ -20,7 +20,8 @@
                                     </tr>
                                     <tr>
                                         <td>Shipping Cost</td>
-                                        <td id="shipping_cost_value"><?php echo 'AED ' . number_format($shipping_total, 2); ?></td>
+                                        <td id="shipping_cost_value"><?php echo 'AED ' . number_format($shipping_cost, 2); ?></td>
+                                        
                                     </tr>
                                     <tr>
                                         <td>Total</td>

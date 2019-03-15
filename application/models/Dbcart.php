@@ -173,7 +173,7 @@ class Dbcart extends CI_Model {
 
     public function generate_order_number($key = NULL) {
 
-        $order_number = strtotime(date('y-m-d H:i:s'));
+        $order_number = strtotime(date('y-m-d H:i:s')) + rand(11111, 99999);
         $random = $order_number + rand(111111111, 999999999) + $key;
         $rand_number = substr($random, 0, 9);
 
@@ -324,7 +324,7 @@ class Dbcart extends CI_Model {
         $this->db->group_by('p.product_id');
         $query = $this->db->get('product_orders po');
 
-        $result = $query->result_array();        
+        $result = $query->result_array();
         return $result;
     }
 
@@ -484,14 +484,20 @@ class Dbcart extends CI_Model {
         </span>
         <div style="float:left; padding:10px; width:96%;  font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#030002; line-height:28px;">
             <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                    <tr><td>Full Name</td><td>:</td><td>' . $shipping_details->customer_name . '</td></tr>
-                    <tr><td>Address 1</td><td>:</td><td>' . $shipping_details->address_1 . '</td></tr>
-                    <tr><td>Address 2</td><td>:</td><td>' . $shipping_details->address_2 . '</td></tr>
-                    <tr><td>Emirate:</td><td>:</td><td>' . $_state_name[0]->state_name . '</td></tr>
-                    <tr><td>PO Box</td><td>:</td><td>' . $shipping_details->po_box . '</td></tr>
-                    <tr><td>Contact Number</td><td>:</td><td>' . $shipping_details->contact_number . '</td></tr>
-                    <tr><td>Email Id</td><td>:</td><td>' . $shipping_details->email_id . '</td></tr>
-            </table>
+                    <tr><td>Full Name</td><td>:</td><td>' . $shipping_details->customer_name . '</td></tr>';
+        if (isset($shipping_details->address_1) && !empty($shipping_details->address_1))
+            $shipping .= '<tr><td>Address 1</td><td>:</td><td>' . $shipping_details->address_1 . '</td></tr>';
+        if (isset($shipping_details->address_2) && !empty($shipping_details->address_2))
+            $shipping .= '<tr><td>Address 2</td><td>:</td><td>' . $shipping_details->address_2 . '</td></tr>';
+        if (isset($shipping_details->state_name) && !empty($shipping_details->state_name))
+            $shipping .= '<tr><td>Emirate:</td><td>:</td><td>' . $_state_name[0]->state_name . '</td></tr>';
+        if (isset($shipping_details->po_box) && !empty($shipping_details->po_box))
+            $shipping .= '<tr><td>PO Box</td><td>:</td><td>' . $shipping_details->po_box . '</td></tr>';
+        if (isset($shipping_details->contact_number) && !empty($shipping_details->contact_number))
+            $shipping .= '<tr><td>Contact Number</td><td>:</td><td>' . $shipping_details->contact_number . '</td></tr>';
+        if (isset($shipping_details->email_id) && !empty($shipping_details->email_id))
+            $shipping .= '<tr><td>Email Id</td><td>:</td><td>' . $shipping_details->email_id . '</td></tr>';
+        $shipping .= '</table>
         </div>
         </div>';
 
@@ -547,22 +553,21 @@ class Dbcart extends CI_Model {
                     </tr>';
 
         $buyer_mail = $header_part .
-                '<td>' . $right_header . '</td></tr>' . $title1 . '
+        '<td>' . $right_header . '</td></tr>' . $title1 . '
                                             <tr>
                                                 <td colspan="2">' . $product_table . '</td>
                                             </tr>
                                             <tr>
                                                <td style="vertical-align:top;" colspan="2">'
-                . $shipping_address . '
+        . $shipping_address . '
                                                </td>
                                             </tr>
                 </table>' .
-                $footer_part;
+        $footer_part;
 
 //        if (isset($current_user['email_id']) && !empty($current_user['email_id'])) {
         if (!empty($user_email)) {
-            if (send_mail($user_email, 'Thank you for Shopping from Doukani.com', $buyer_mail)) {
-                
+            if (send_mail($user_email, 'Thank you for Shopping from Doukani.com', $buyer_mail)) {                
             }
         }
     }
@@ -599,21 +604,20 @@ class Dbcart extends CI_Model {
                    </tr>';
 
         $seller_mail = $header_part .
-                ' <td>' . $right_header . '</td>
+        ' <td>' . $right_header . '</td>
                          </tr>'
-                . $title1 . $title2 .
-                '                        
+        . $title1 . $title2 .
+        '                        
                          <tr>
                              <td colspan="2">' . $product_table . '</td>
                          </tr>
                          <tr>
                              <td style="vertical-align:top;" colspan="2">' . $shipping_address . '</td>
                         </tr></table>'
-                . $footer_part;
+        . $footer_part;
 
         if (isset($email_id) && !empty($email_id)) {
-            if (send_mail($email_id, 'You sold something at Doukani.com', $seller_mail)) {
-                
+            if (send_mail($email_id, 'You sold something at Doukani.com', $seller_mail)) {                
             }
         }
     }
@@ -670,6 +674,75 @@ class Dbcart extends CI_Model {
 
         $result = $query->result_array();
         return $result;
+    }
+
+    function getShippingCost() {
+
+        $session_qunatity = $this->session->userdata('doukani_products');
+        $product_list = $this->dbcart->product_list_cart();
+
+        $admin_ship_condition = 'store_id = 0 AND is_active = 1';
+        $shipping_admin_cost = $this->dbcommon->select('shipping_costs_admin', $admin_ship_condition)[0];
+
+        $product_ids = array();
+        $product_arry = explode(",", $session_qunatity);
+        foreach ($product_arry as $id) {
+            $arr = explode('-', $id);
+            if (isset($arr[0]) && !empty($arr[0]) && isset($arr[1]) && !empty($arr[1])) {
+                $product_ids[$arr[0]] = $arr[1];
+            }
+        }
+
+        $shipping_cost = array();
+        $shipping_weight = array();
+
+        foreach ($product_list as $list_key => $list_data) {
+            $c_store_id = 0;
+            $c_shipping_method_id = 0;
+            $c_weight = 0;
+
+            if ($list_data['store'] != $c_store_id) {
+                $c_store_id = $list_data['store'];
+            }
+            if ($list_data['timeline_id'] != $c_shipping_method_id) {
+                $c_shipping_method_id = $list_data['timeline_id'];
+            }
+            if (isset($shipping_weight[$c_store_id][$c_shipping_method_id]) && !empty($shipping_weight[$c_store_id][$c_shipping_method_id])) {
+                $c_weight = (float) $shipping_weight[$c_store_id][$c_shipping_method_id] * $product_ids[$list_data['product_id']];
+            }
+            $c_weight = $c_weight + ($list_data['weight'] * $product_ids[$list_data['product_id']]);
+            $shipping_weight[$c_store_id][$c_shipping_method_id] = array('weight' => ceil($c_weight));
+        }
+
+        $total_charge = 0;
+        if (isset($shipping_weight) && sizeof($shipping_weight) > 0) {
+            foreach ($shipping_weight as $w_key => $w_data) {
+                $weight = 0;
+                $store_ship_condition = 'store_id = ' . $w_key . ' AND is_active = 1';
+                $shipping_charges = $this->dbcommon->select('shipping_costs_admin', $store_ship_condition);
+
+                if (empty($shipping_charges)) {
+                    $shipping_charges = $shipping_admin_cost;
+                }
+
+                $c_charge = 0;
+                foreach ($w_data as $k_key => $k_data) {
+                    $c_charge = $shipping_charges['cost'];
+                    if ($k_data['weight'] > $shipping_charges['max_weight']) {
+                        $weight = $k_data['weight'] - $shipping_charges['max_weight'];
+                        $n_charge = $weight * $shipping_charges['cost_per_extra_kg'];
+                        $c_charge = $c_charge + $n_charge;
+                    }
+                    $shipping_weight[$w_key][$k_key]['shipping_cost'] = $c_charge;
+                    $total_charge = $total_charge + $c_charge;
+                }
+            }
+        }
+        $final_result = array();
+        $final_result['store_shipping_weight'] = $shipping_weight;
+        $final_result['shipping_total'] = $total_charge;
+
+        return $final_result;
     }
 
 }

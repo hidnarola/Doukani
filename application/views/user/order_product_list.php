@@ -109,7 +109,9 @@
                                                 </div>
                                                 <div class="responsive-table">
                                                     <div class="scrollable-area">
-                                                        <?php if (sizeof($products) > 0) { ?>
+                                                        <?php 
+                                                        $shipping_option = '';
+                                                        if (sizeof($products) > 0) { ?>
                                                             <table style="margin-bottom:0;" class="table order-product-list">
                                                                 <thead>
                                                                     <tr>
@@ -117,7 +119,7 @@
                                                                         <?php if ($order_details[0]->seller_id == $current_user['user_id']) { ?>                                                                            
                                                                             <th class="ord-prod-qty-th">Weight</th>
                                                                         <?php } else { ?>
-                                                                            <th class="ord-prod-qty-th">Shipping Option</th>
+                                                                            <!--<th class="ord-prod-qty-th">Shipping Option</th>-->
                                                                         <?php } ?>
                                                                         <th class="ord-prod-qty-th">Quantity</th>
                                                                         <th class="ord-prod-price-th">Price</th>
@@ -141,7 +143,7 @@
                                                                             <?php if ($order_details[0]->seller_id == $current_user['user_id']) { ?>                                                                                
                                                                                 <td class="ord-prod-qty-td"><?php echo $pro['weight_text']; ?></td>                                                                                
                                                                             <?php } else { ?>
-                                                                                <td class="ord-prod-qty-td"><?php echo $pro['option_text']; ?></td>
+                                                                                <!--<td class="ord-prod-qty-td"><?php // echo $pro['option_text']; ?></td>-->
                                                                             <?php } ?>
                                                                             <td class="ord-prod-qty-td"><?php echo $pro['quantity']; ?></td>
                                                                             <td class="ord-prod-price-td">

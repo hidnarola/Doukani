@@ -188,11 +188,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Shipping Cost</td>
-                                                        <td id="ship_total"><?php if (isset($shipping_total)) echo 'AED ' . number_format($shipping_total, 2); ?></td>
+                                                        <td id="ship_total"><?php if (isset($shipping_cost)) echo 'AED ' . number_format($shipping_cost, 2); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Total</td>
-                                                        <td id="ship_total"><?php echo 'AED ' . number_format($sub_total + $shipping_total, 2); ?></td>
+                                                        <td id="grand_total"><?php echo 'AED ' . number_format($sub_total + $shipping_cost, 2); ?></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -326,6 +326,26 @@
 
                     }
                     get_subtotal();
+
+                    var url1 = "<?php echo base_url(); ?>cart/getTotalShippingCost";
+
+                    $.post(url1, {}, function (response1)
+                    {
+                        $(document).find('#ship_total').text("AED " + number_format(parseFloat(response1), 2));
+
+                        var sub_total__ = $(document).find('#sub_total').text();
+                        __sub_total = sub_total__.replace("AED ", '');
+                        __sub_total = __sub_total.replace(",", '');
+
+                        var ship_total__ = $(document).find('#ship_total').text();
+                        __ship_total = ship_total__.replace("AED ", '');
+                        __ship_total = __ship_total.replace(",", '');
+
+                        var grand_total__ = parseFloat(__sub_total) + parseFloat(__ship_total);
+                        var __grand_total = "AED " + number_format(grand_total__, 2);
+
+                        $(document).find('#grand_total').text(__grand_total);
+                    });
                 });
             });
 
@@ -340,28 +360,48 @@
 
                 $.post(url, {quantity: quantity, product_id: product_id}, function (response)
                 {
-                    if (response == 'success')
-                        $('#data_row_' + product_id).hide();
-                    else
+                    if (response == 'success') {
+                        $('#data_row_' + product_id).remove();
+                        get_subtotal();
+//                        $('#data_row_' + product_id).hide();
+                    } else
                         window.location = "<?php echo HTTPS . doukani_website; ?>";
                 });
-                get_subtotal();
+
+                var url1 = "<?php echo base_url(); ?>cart/getTotalShippingCost";
+
+                $.post(url1, {}, function (response1)
+                {
+                    $(document).find('#ship_total').text("AED " + number_format(parseFloat(response1), 2));
+
+                    var sub_total__ = $(document).find('#sub_total').text();
+                    __sub_total = sub_total__.replace("AED ", '');
+                    __sub_total = __sub_total.replace(",", '');
+
+                    var ship_total__ = $(document).find('#ship_total').text();
+                    __ship_total = ship_total__.replace("AED ", '');
+                    __ship_total = __ship_total.replace(",", '');
+
+                    var grand_total__ = parseFloat(__sub_total) + parseFloat(__ship_total);
+                    var __grand_total = "AED " + number_format(grand_total__, 2);
+
+                    $(document).find('#grand_total').text(__grand_total);
+                });
             });
 
             function get_subtotal() {
                 var sub_total = 0;
 
-                $('.qunatity_dropdown').each(function (i, obj) {
+                $(document).find('.qunatity_dropdown').each(function (i, obj) {
                     var dropdown = $(this).attr('id');
                     var get_product_id = dropdown.split("_").pop();
-                    var get_quantity = $('#quantity_' + get_product_id).val();
+                    var get_quantity = $(document).find('#quantity_' + get_product_id).val();
 
-                    var get_price = $('#price_' + get_product_id).text().replace(",", "");
+                    var get_price = $(document).find('#price_' + get_product_id).text().replace(",", "");
                     var get_answer = parseFloat(get_price) * parseInt(get_quantity);
-
                     sub_total = sub_total + get_answer;
-                    $('#sub_total').text('AED ' + number_format(sub_total, 2));
-                    $('#stotal').val(number_format(sub_total, 2));
+                    $(document).find('#sub_total').text('AED ' + number_format(sub_total, 2));
+                    $(document).find('#stotal').val(number_format(sub_total, 2));
                 });
             }
         </script>
