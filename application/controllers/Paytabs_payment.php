@@ -158,7 +158,6 @@ class Paytabs_payment extends My_controller {
     }
 
     public function payment_status($reference_number = NULL) {
-        $reference_number = base64_encode('455');
 
         $check_cart = $this->db->query('SELECT * FROM user_shopping_cart WHERE id = ' . base64_decode($reference_number))->row_array();
         if (isset($check_cart) && sizeof($check_cart) > 0) {
@@ -208,8 +207,8 @@ class Paytabs_payment extends My_controller {
                 $this->dbcommon->insert('paytabs_payment', $in_data);
                 $paytabs_payment_id = $this->db->insert_id();
 
-                if ($result->response_code == PAY_TABS_PAGE_PAYMENT_SUCCESS) {
-//                if ($result) {
+//                if ($result->response_code == PAY_TABS_PAGE_PAYMENT_SUCCESS) {
+                if ($result) {
 
                     $products = rtrim($product_str, ',');
 
@@ -258,7 +257,7 @@ class Paytabs_payment extends My_controller {
                                     $ord_no = '';
                                     $ord_no = $this->dbcart->generate_order_number();
                                     $order_number = substr($ord_no + $key, 0, 9);
-
+                                    $store_owner_id = 0;
                                     foreach ($val as $v) {
 
                                         $qunatity = $v['requested_qunatitiy'];
@@ -283,6 +282,7 @@ class Paytabs_payment extends My_controller {
                                             'price' => $product_price,
                                             'product_name' => $v['product_name']
                                         );
+                                        $store_owner_id = $v['product_posted_by'];
                                     }
                                     $weight = $shipping_details['store_shipping_weight'][$key][$key1]['weight'];
                                     $final_shipping_cost = $shipping_details['store_shipping_weight'][$key][$key1]['shipping_cost'];
@@ -300,31 +300,43 @@ class Paytabs_payment extends My_controller {
                                         'contact_number' => $cart_shipping_address['contact_number'],
                                         'email_id' => $cart_shipping_address['email_id'],
                                         'user_id' => $user_id,
-                                        'sub_total' => $sub_total,
-                                        'shipping_cost' => $final_shipping_cost,
-                                        'final_total' => $final_total,
                                         'final_qunatity' => $final_qunatity,
                                         'status' => 'new',
                                         'is_delete' => 0,
                                         'delivery_type' => 0,
-                                        'seller_id' => $value['product_posted_by'],
+                                        'seller_id' => $store_owner_id,
                                         'created_date' => date('Y-m-d H:i:s'),
-                                        'delivery_type' => $delivery_type
+                                        'delivery_type' => $delivery_type,
+                                        'delivery_option' => $key1,
+                                        'sub_total' => $sub_total,
+                                        'shipping_cost' => $final_shipping_cost,
+                                        'final_total' => $final_total,
+                                        'weight' => $weight
                                     );
 
                                     $str_order_number .= $order_number . ',';
                                     $this->dbcommon->insert('orders', $in_data);
 
-//                                    $order_id = 1;
                                     $order_id = $this->db->insert_id();
 
                                     if (isset($in_order_products) && sizeof($in_order_products) > 0) {
                                         foreach ($in_order_products as $k => $prod) {
-                                            $in_order_products[$k]['order_id'] = $order_id;
+//                                            $in_order_products[$k]['order_id'] = $order_id;
+                                            $prod['order_id'] = $order_id;
+                                            $this->dbcommon->insert('product_orders', $prod);
+                                            $this->db->query('UPDATE product p 
+                                LEFT JOIN product_orders po ON po.product_id = p.product_id
+                                SET       
+                                p.stock_availability = p.stock_availability - ' . $prod['quantity'] . ' 
+                                po.delivery_option = p.delivery_option , po.weight = p.weight * po.quantity
+                                WHERE po.product_id = p.product_id AND po.order_id = ' . $order_id);
+//                                            $this->db->query('UPDATE product p 
+//                                        LEFT JOIN product_orders po ON po.product_id = p.product_id
+//                                        SET
+//                                        po.delivery_option = p.delivery_option , po.weight = p.weight * po.quantity
+//                                        WHERE po.product_id = p.product_id AND po.order_id = ' . $order_id);
                                         }
                                     }
-                                    if (isset($in_order_products) && sizeof($in_order_products) > 0)
-                                        $this->dbcommon->insert_batch('product_orders', $in_order_products);
 
                                     $wh_data = array('id' => $paytabs_payment_id);
                                     $up_data = array('order_id' => $order_id);
@@ -360,21 +372,6 @@ class Paytabs_payment extends My_controller {
 
                                     $this->dbcart->seller_mail($seller_name, $sold_date, $right_header, $email_id, $product_table, $shipping_address);
                                     $i++;
-                                }
-                            }
-
-                            foreach ($product_arry as $res) {
-
-                                $arr = explode('-', $res);
-                                if (isset($arr) && !empty($arr) && isset($arr[0]) && isset($arr[1])) {
-                                    $product_str .= $arr[0] . ',';
-
-//                                        $this->db->query('update product set stock_availability= stock_availability - ' . $arr[1] . ' where product_id=' . $arr[0]);
-                                    $this->db->query('UPDATE product p 
-                                    LEFT JOIN product_orders po ON po.product_id = p.product_id
-                                    SET p.stock_availability = p.stock_availability - ' . $arr[1] . ' , 
-                                    po.delivery_option = p.delivery_option , po.weight = p.weight
-                                    WHERE p.product_id = ' . $arr[0] . ' AND po.order_id = ' . $order_id);
                                 }
                             }
 

@@ -877,7 +877,7 @@ class Classifieds extends CI_Controller {
                 $filter_val = 0;
             }
             //Hold
-             if (isset($_REQUEST['is_hold'])) {
+            if (isset($_REQUEST['is_hold'])) {
                 $is_hold = $_REQUEST['is_hold'];
             } else {
                 $is_hold = 0;
@@ -928,10 +928,10 @@ class Classifieds extends CI_Controller {
                 $listing_date = 0;
             }
 
-          
-           
-                $spam_query = " and p.is_delete=0";
-           
+
+
+            $spam_query = " and p.is_delete=0";
+
             if ($filter_val == '0') {
                 $query .= '' . $spam_query;
                 $url .= '&filter=' . $filter_val;
@@ -1048,7 +1048,7 @@ class Classifieds extends CI_Controller {
     			where p.category_id=c.category_id  and product_for='" . $product_for . "' and p.product_id not in (select productid from repost where p.product_id=repost.productid group by productid) " . $query;
 
             $product = $this->dbcommon->get_distinct($wh);
-            
+
             $data['product'] = $product;
             $data['mystatus'] = $listing_oth_status;
             $data['search'] = $search;
@@ -1062,6 +1062,18 @@ class Classifieds extends CI_Controller {
         }
         else {
             redirect('admin/home');
+        }
+    }
+
+    public function check_weight() {
+
+        $weight = $this->input->post('weight', TRUE);
+
+        if ($weight < 0) {
+            $this->form_validation->set_message('check_weight', 'Weight must be greater than zero.');
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -1161,11 +1173,10 @@ class Classifieds extends CI_Controller {
                         $data['user_sub_category_id'] = $check_getuser['sub_category_id'];
                         $data['user_store_status'] = $check_getuser['store_status'];
                     } else {
-                        $this->session->set_flashdata('msg', 'Sorry, No ads remaining for this user.');                        
+                        $this->session->set_flashdata('msg', 'Sorry, No ads remaining for this user.');
                         redirect('admin/home');
                     }
-                }
-                else {
+                } else {
                     redirect('admin/home');
                 }
             }
@@ -1216,7 +1227,7 @@ class Classifieds extends CI_Controller {
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1324,7 +1335,7 @@ class Classifieds extends CI_Controller {
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1434,7 +1445,7 @@ class Classifieds extends CI_Controller {
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1547,7 +1558,7 @@ class Classifieds extends CI_Controller {
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1658,7 +1669,7 @@ class Classifieds extends CI_Controller {
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -1771,7 +1782,7 @@ class Classifieds extends CI_Controller {
                     if (isset($_POST['ad_type']) && $_POST['ad_type'] == '1') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -2272,7 +2283,7 @@ class Classifieds extends CI_Controller {
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                             $this->form_validation->set_rules('pr_status', 'Active / Hold Status', 'trim|required');
                         }
 
@@ -2426,7 +2437,7 @@ class Classifieds extends CI_Controller {
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                             $this->form_validation->set_rules('pr_status', 'Active / Hold Status', 'trim|required');
                         }
 
@@ -2582,8 +2593,7 @@ class Classifieds extends CI_Controller {
                             }
 //exit;
                         endif;
-                    }
-                    elseif (isset($_POST['real_estate_houses_submit'])) {
+                    } elseif (isset($_POST['real_estate_houses_submit'])) {
                         $img1 = $this->dbcommon->get_images($pro_id);
                         $where = " where category_id='" . $_POST['cat_id'] . "'";
                         $cat_name = $this->dbcommon->getdetails('category', $where);
@@ -2604,7 +2614,7 @@ class Classifieds extends CI_Controller {
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                             $data['original_price'] = str_replace(",", "", $_POST['house_original_price']);
                             $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
                         }
@@ -2785,10 +2795,9 @@ class Classifieds extends CI_Controller {
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
-                             $data['original_price'] = str_replace(",", "", $_POST['shared_original_price']);
-                             $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
-                             
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
+                            $data['original_price'] = str_replace(",", "", $_POST['shared_original_price']);
+                            $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2892,7 +2901,7 @@ class Classifieds extends CI_Controller {
 
                                 $data['delivery_option'] = $_POST['delivery_option'];
                                 $data['weight'] = $_POST['weight'];
-                               
+
 
                                 if ($avail_stock != '')
                                     $avail_stock = $avail_stock;
@@ -2959,7 +2968,7 @@ class Classifieds extends CI_Controller {
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                             $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
                         }
 
@@ -3136,7 +3145,7 @@ class Classifieds extends CI_Controller {
                         if (isset($product[0]['product_for']) && $product[0]['product_for'] == 'store') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                             $data['is_delete'] = str_replace(",", "", $_POST['pr_status']);
                         }
 

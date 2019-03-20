@@ -21,24 +21,30 @@ else
             <textarea class='input-block-level wysihtml5 form-control' id="vehicle_pro_desc" placeholder="Description" name="vehicle_pro_desc" rows="10"  data-rule-required='true' ><?php echo set_value('vehicle_pro_desc'); ?></textarea>
         </div>
     </div>   
-    <?php if(isset($user_role) && $user_role == 'storeUser')  { ?>
-    <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
-        <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
-        <div class='col-md-3 controls'>
-            <input class="form-control original_price"  id="form_org_price2" placeholder="Price" name="vehicle_original_price" type="text" value="<?php  echo (isset($_POST['vehicle_original_price']) && !empty($_POST['vehicle_original_price'])) ? set_value('vehicle_original_price') : ''; ?>" />            
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <div class="alert alert-info price_zero_lbl">
-                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+    <?php if (isset($user_role) && $user_role == 'storeUser') { ?>
+        <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
+            <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
+            <div class='col-md-3 controls'>
+                <input class="form-control original_price"  id="form_org_price2" placeholder="Price" name="vehicle_original_price" type="text" value="<?php echo (isset($_POST['vehicle_original_price']) && !empty($_POST['vehicle_original_price'])) ? set_value('vehicle_original_price') : ''; ?>" />            
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="alert alert-info price_zero_lbl">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                </div>
             </div>
         </div>
-    </div>
     <?php } ?>
     <?php //if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>
     <div class='form-group' >                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>
         <div class='col-md-3 controls'>
-            <input class="form-control price_txt" <?php if (isset($user_role) && $user_role != 'storeUser'){ echo ''; }else{ echo 'id="form_pro_price2"'; } ?> placeholder="Price" name="vehicle_pro_price" id="vehicle_pro_price" type="text"   value="<?php echo (isset($_POST['vehicle_pro_price']) && !empty($_POST['vehicle_pro_price'])) ? set_value('vehicle_pro_price') : ''; ?>" />
+            <input class="form-control price_txt" <?php
+            if (isset($user_role) && $user_role != 'storeUser') {
+                echo '';
+            } else {
+                echo 'id="form_pro_price2"';
+            }
+            ?> placeholder="Price" name="vehicle_pro_price" id="vehicle_pro_price" type="text"   value="<?php echo (isset($_POST['vehicle_pro_price']) && !empty($_POST['vehicle_pro_price'])) ? set_value('vehicle_pro_price') : ''; ?>" />
         </div>
         <div class="col-md-3 col-sm-4">
             <div class="alert alert-info price_zero_lbl">
@@ -59,12 +65,12 @@ else
     <div class='form-group'>                        
         <label class='col-md-2 control-label' for='inputText1'>Car Brand<span> *</span></label>                   
         <div class='col-md-5 controls'>
-            <!--<input class="form-control"  placeholder="Brand" name="pro_brand" type="text" value="<?php //echo $product[0]['product_brand'];     ?>" /> -->
+            <!--<input class="form-control"  placeholder="Brand" name="pro_brand" type="text" value="<?php //echo $product[0]['product_brand'];       ?>" /> -->
             <select name="pro_brand"  class="form-control" onchange="show_model(this.value);" id="pro_brand" data-rule-required='true'>    
                 <option value="">Select Brand</option>  
                 <?php foreach ($brand as $col): ?>
                     <option value="<?php echo $col['brand_id']; ?>" <?php if (isset($_REQUEST['pro_brand']) && $_REQUEST['pro_brand'] == $col['brand_id']) echo set_select('pro_brand', $col['brand_id'], TRUE); ?> ><?php echo $col['name']; ?></option>
-                <?php endforeach; ?>
+<?php endforeach; ?>
             </select>                                               
         </div>
     </div>
@@ -120,7 +126,7 @@ else
                 <option value="">Select Mileage</option>
                 <?php foreach ($mileage as $col): ?>
                     <option value="<?php echo $col['mileage_id']; ?>" <?php if (isset($_REQUEST['vehicle_pro_mileage']) && $_REQUEST['vehicle_pro_mileage'] == $col['mileage_id']) echo set_select('vehicle_pro_mileage', $col['mileage_id'], TRUE); ?> ><?php echo $col['name']; ?></option>     
-                <?php endforeach; ?>
+<?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -137,12 +143,12 @@ else
                 <option value="">Select Color</option>                                  
                 <?php foreach ($colors as $col): ?>                                       
                     <option style="color:<?php echo $col['font_color']; ?>;background-color:<?php echo $col['background_color']; ?>" value="<?php echo $col['id']; ?>" <?php if (isset($_REQUEST['vehicle_pro_color']) && $_REQUEST['vehicle_pro_color'] == $col['id']) echo set_select('vehicle_pro_color', $col['id'], TRUE); ?> ><?php echo $col['name']; ?></option>
-                <?php endforeach; ?>
+<?php endforeach; ?>
             </select>
         </div>
     </div>
 
-    <?php if (isset($user_category_id) && (int) $user_category_id > 0) { ?>
+<?php if (isset($user_category_id) && (int) $user_category_id > 0) { ?>
         <div class="form-group delivery_option_section">                    
             <label class='col-md-2 control-label' for='inputText1'>Delivery Option <span> *</span></label>
             <div class="col-md-5 controls">
@@ -150,22 +156,23 @@ else
                     <option value="">Select Delivery Option</option>
                     <?php foreach ($delivery_options as $d): ?>                    
                         <option value="<?php echo $d['id'] ?>"><?php echo $d['option_text'] ?></option>                    
-                    <?php endforeach; ?>                                   
+    <?php endforeach; ?>                                   
                 </select>
             </div>
         </div>
         <div class="form-group product_weight_section">                    
-            <label class='col-md-2 control-label' for='inputText1'>Product Weight <span> *</span></label>
+            <label class='col-md-2 control-label' for='inputText1'>Product Weight (in kg)<span> *</span></label>
             <div class="col-md-5 controls">
-                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
+                <input type="number" class="form-control" name="weight" id="weight" data-rule-required='true' value="<?php echo set_value('weight'); ?>">
+    <!--                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
                     <option value="">Select Product Weight</option>
-                    <?php foreach ($product_weights as $w): ?>                    
-                        <option value="<?php echo $w['id'] ?>"><?php echo $w['weight_text'] ?></option>                    
-                    <?php endforeach; ?>
-                </select>
+                <?php // foreach ($product_weights as $w):  ?>                    
+                        <option value="<?php // echo $w['id']   ?>"><?php // echo $w['weight_text']   ?></option>                    
+    <?php // endforeach;  ?>
+                </select>-->
             </div>
         </div>
-    <?php } ?>
+<?php } ?>
 
     <h4><i class="fa fa-home"></i>&nbsp;&nbsp;Contact Details</h4>
     <hr />
@@ -179,8 +186,8 @@ else
                         <option value="<?php echo $st['country_id'] ?>" selected><?php echo $st['country_name'] ?></option>
                     <?php } else { ?>
                         <option value="<?php echo $st['country_id'] ?>" <?php echo set_select('location', $st['country_id']); ?> ><?php echo $st['country_name'] ?></option>
-                    <?php } ?>                                        
-                <?php endforeach; ?>                                   
+    <?php } ?>                                        
+<?php endforeach; ?>                                   
             </select>
         </div>
     </div>      
@@ -194,8 +201,8 @@ else
                         <option value="<?php echo $st['state_id']; ?>" <?php echo set_select('state', @$_POST['city'], TRUE); ?> ><?php echo $st['state_name']; ?></option>
                     <?php } else { ?>
                         <option value="<?php echo $st['state_id']; ?>" <?php echo set_select('state', @$_POST['city']); ?> ><?php echo $st['state_name']; ?></option>
-                    <?php } ?>
-                <?php endforeach; ?>
+    <?php } ?>
+<?php endforeach; ?>
             </select>                
         </div>
     </div>                                            
@@ -237,8 +244,8 @@ else
     if ($admin_permission == 'only_listing') {
         ?>    
         <input id="product_is_inappropriate" name="product_is_inappropriate" class="form-control" type="hidden" value="Unapprove">                 
-    <?php } else {
-        ?>
+<?php } else {
+    ?>
         <div class="form-group" >
             <label class='col-md-2 control-label' for='inputText1'>Product Is<span> *</span></label>
             <div class='col-md-5 controls'>
@@ -251,7 +258,7 @@ else
                 </select>                     
             </div>
         </div>
-    <?php } ?>
+<?php } ?>
     <div class="form-actions form-actions-padding-sm btn-btm-css">
         <div class="row">
             <div class="col-md-10 col-md-offset-2">
@@ -265,23 +272,23 @@ else
     </div>
 </form>
 <script type="text/javascript">
-$(document).ready(function(){
-$('#form2 #form_pro_price2').focusout(function(){
-    validateForm();   
-});
-$('#form2 #form_org_price2').focusout(function(){
-    validateForm();   
-});
-function validateForm(){
-    var price = $('#form2 #form_pro_price2').val();
-    var oprice = $('#form2 #form_org_price2').val();
-     $('.error').hide();
-        if(price >= oprice){
-            $('#form2 #form_pro_price2').after('<label for="pro_name" class="error cls_pro">Price less than to original price.</label>');
-        } 
-        if(oprice <= price){
-            $('#form2 #form_org_price2').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+    $(document).ready(function () {
+        $('#form2 #form_pro_price2').focusout(function () {
+            validateForm();
+        });
+        $('#form2 #form_org_price2').focusout(function () {
+            validateForm();
+        });
+        function validateForm() {
+            var price = $('#form2 #form_pro_price2').val();
+            var oprice = $('#form2 #form_org_price2').val();
+            $('.error').hide();
+            if (price >= oprice) {
+                $('#form2 #form_pro_price2').after('<label for="pro_name" class="error cls_pro">Price less than to original price.</label>');
+            }
+            if (oprice <= price) {
+                $('#form2 #form_org_price2').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+            }
         }
-}   
-});
+    });
 </script>

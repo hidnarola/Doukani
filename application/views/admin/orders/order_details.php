@@ -46,13 +46,16 @@
                                             <div class='box-content box-no-padding'>
                                                 <div class="responsive-table">
                                                     <div class="scrollable-area">
-                                                        <?php if (sizeof($products) > 0) { ?>
+                                                        <?php
+                                                        $shipping_delivery_option = '';
+                                                        if (sizeof($products) > 0) {
+                                                            ?>
                                                             <table style="margin-bottom:0;" class="table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Product </th>
                                                                         <th class="ord-prod-qty-th">Weight</th>
-                                                                        <th class="ord-prod-qty-th">Shipping Option</th>
+                                                                        <!--<th class="ord-prod-qty-th">Shipping Option</th>-->
                                                                         <th>Quantity</th>
                                                                         <th>Price</th>
                                                                     </tr>
@@ -60,6 +63,7 @@
                                                                 <tbody>
                                                                     <?php
                                                                     foreach ($products as $pro) {
+                                                                        $shipping_delivery_option = $pro['option_text'];
                                                                         ?>
                                                                         <tr>
                                                                             <td>
@@ -70,10 +74,10 @@
                                                                                     $cover_image = base_url() . 'assets/upload/No_Image.png';
                                                                                 ?>
                                                                                 <img src="<?php echo thumb_start_cart . $cover_image . thumb_end_cart; ?>"  alt="Product Image" onerror="this.src='<?php echo thumb_start_grid . base_url(); ?>assets/upload/No_Image.png<?php echo thumb_end_grid; ?>'">
-                                                                                <?php echo $pro['product_name']; ?>
+        <?php echo $pro['product_name']; ?>
                                                                             </td>
                                                                             <td><?php echo $pro['weight_text']; ?></td>
-                                                                            <td><?php echo $pro['option_text']; ?></td>
+                                                                            <!--<td><?php // echo $pro['option_text'];   ?></td>-->
                                                                             <td><?php echo $pro['quantity']; ?></td>
                                                                             <td><?php echo number_format($pro['price'], 2); ?></td>                                                                          </tr>
                                                                         <?php
@@ -81,7 +85,7 @@
                                                                     ?>
                                                                 </tbody>
                                                             </table>
-                                                        <?php } ?>
+<?php } ?>
                                                     </div>
                                                 </div>
                                             </div></div></div>
@@ -90,7 +94,7 @@
                                 <div class="row most-viewed">
                                     <div  id="most-viewed">                                        
                                         <div class="row">
-                                            <?php if (isset($order_details) && !empty($order_details)) { ?>
+<?php if (isset($order_details) && !empty($order_details)) { ?>
                                                 <div class="col-sm-4">
                                                     <div class="box">
                                                         <div class="box-header box-header green-background">
@@ -101,15 +105,15 @@
                                                         <div class="box-content">
                                                             <div class="form-group">
                                                                 <label>Receiver Name:</label> 
-                                                                <?php echo $order_details[0]->customer_name; ?>
+    <?php echo $order_details[0]->customer_name; ?>
                                                             </div>                        
                                                             <div class="form-group">
                                                                 <label>Contact Number:</label>
-                                                                <?php echo $order_details[0]->contact_number; ?>
+    <?php echo $order_details[0]->contact_number; ?>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Email ID:</label>
-                                                                <?php echo $order_details[0]->email_id; ?>
+    <?php echo $order_details[0]->email_id; ?>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Address:</label>
@@ -160,17 +164,17 @@
 
                                                             <div class="form-group">
                                                                 <label>Store Name: </label>
-                                                                <?php echo $seller_details[0]->store_name; ?>
+                                                            <?php echo $seller_details[0]->store_name; ?>
                                                             </div>      
-                                                            <?php if ($seller_details[0]->store_is_inappropriate == 'Approve' && $seller_details[0]->store_status == 0) { ?>
+    <?php if ($seller_details[0]->store_is_inappropriate == 'Approve' && $seller_details[0]->store_status == 0) { ?>
                                                                 <div class="form-group col-sm-12">
                                                                     <a href="<?php echo HTTP . $seller_details[0]->store_domain . after_subdomain . remove_home; ?>" class="btn btn-primary">Visit Store</a>
                                                                 </div>       
-                                                            <?php } ?>
+    <?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <?php } ?>
+<?php } ?>
                                             <div class="col-sm-4">
                                                 <div class="box">
                                                     <div class="box-header box-header orange-background">
@@ -180,29 +184,35 @@
                                                     </div>
                                                     <div class="box-content">
                                                         <div class="form-group">
-                                                            <label>Order No: </label>&nbsp;<?php if (isset($order_details[0]->order_number)) echo $order_details[0]->order_number; ?>
+                                                            <label>Order No : </label>&nbsp;<?php if (isset($order_details[0]->order_number)) echo $order_details[0]->order_number; ?>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Payment Type: </label>&nbsp;<?php if (isset($order_details[0]->delivery_type)) echo $order_details[0]->delivery_type; ?>
+                                                            <label>Delivery Option : </label><span><?php echo @$shipping_delivery_option; ?></span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Weight : </label><span><?php if (isset($order_details[0]->weight)) echo $order_details[0]->weight . 'kg'; ?></span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Payment Type : </label>&nbsp;<?php if (isset($order_details[0]->delivery_type)) echo $order_details[0]->delivery_type; ?>
                                                         </div>                        
                                                         <div class="form-group">
-                                                            <label>Purchased On: </label>
-                                                            <?php if (isset($order_details[0]->created_date)) echo $order_details[0]->created_date; ?>
+                                                            <label>Purchased On : </label>
+<?php if (isset($order_details[0]->created_date)) echo $order_details[0]->created_date; ?>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Sub-total: </label>
-                                                            <?php if (isset($order_details[0]->sub_total)) echo $order_details[0]->sub_total; ?>
+                                                            <label>Sub-total : </label>
+<?php if (isset($order_details[0]->sub_total)) echo $order_details[0]->sub_total; ?>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Shipping Cost: </label>
-                                                            <?php if (isset($order_details[0]->shipping_cost)) echo $order_details[0]->shipping_cost; ?>
+                                                            <label>Shipping Cost : </label>
+<?php if (isset($order_details[0]->shipping_cost)) echo $order_details[0]->shipping_cost; ?>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Final Total: </label>
-                                                            <?php if (isset($order_details[0]->final_total)) echo $order_details[0]->final_total; ?>
+                                                            <label>Final Total : </label>
+<?php if (isset($order_details[0]->final_total)) echo $order_details[0]->final_total; ?>
                                                         </div>                                                        
                                                         <div class="form-group">
-                                                            <label>Status: </label>
+                                                            <label>Status : </label>
                                                             <?php
                                                             if (isset($order_details[0]->status)) {
 
@@ -233,7 +243,7 @@
                 </div>
             </section>
         </div>
-        <?php $this->load->view('admin/include/footer-script'); ?>
+<?php $this->load->view('admin/include/footer-script'); ?>
     </body>
 </html>
 

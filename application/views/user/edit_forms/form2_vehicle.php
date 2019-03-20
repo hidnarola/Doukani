@@ -16,40 +16,40 @@
         </div>
     </div>	
     <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
-    <div class='form-group'>     
-        <div class="col-md-2 col-sm-3">Original Price</div>
-        <div class='col-md-3 col-sm-4 controls'>
-            <input class="form-control original_price"  id="form_org_price2" placeholder="Price" name="vehicle_original_price" type="text" value="<?php  echo $product[0]['original_price']; ?>" />            
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <div class="alert alert-info price_zero_lbl">
-                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+        <div class='form-group'>     
+            <div class="col-md-2 col-sm-3">Original Price</div>
+            <div class='col-md-3 col-sm-4 controls'>
+                <input class="form-control original_price"  id="form_org_price2" placeholder="Price" name="vehicle_original_price" type="text" value="<?php echo $product[0]['original_price']; ?>" />            
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="alert alert-info price_zero_lbl">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                </div>
+            </div>
+        </div>    
+        <div class='form-group'>                        
+            <div class="col-md-2 col-sm-3">Discounted Price</div>
+            <div class='col-md-3 col-sm-4 controls'>
+                <input class="form-control price_txt" id="form_pro_price2" placeholder="Price" value="<?php echo $product[0]['product_price']; ?>" name="vehicle_pro_price" id="vehicle_pro_price" type="text" />
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="alert alert-info price_zero_lbl">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                </div>
             </div>
         </div>
-    </div>    
-    <div class='form-group'>                        
-        <div class="col-md-2 col-sm-3">Discounted Price</div>
-        <div class='col-md-3 col-sm-4 controls'>
-            <input class="form-control price_txt" id="form_pro_price2" placeholder="Price" value="<?php echo $product[0]['product_price']; ?>" name="vehicle_pro_price" id="vehicle_pro_price" type="text" />
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <div class="alert alert-info price_zero_lbl">
-                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+    <?php } else { ?>
+        <div class='form-group'>                        
+            <div class="col-md-2 col-sm-3">Price</div>
+            <div class='col-md-3 col-sm-4 controls'>
+                <input class="form-control price_txt" placeholder="Price" value="<?php echo $product[0]['product_price']; ?>" name="vehicle_pro_price" id="vehicle_pro_price" type="text" />
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="alert alert-info price_zero_lbl">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                </div>
             </div>
         </div>
-    </div>
-    <?php }else{ ?>
-    <div class='form-group'>                        
-        <div class="col-md-2 col-sm-3">Price</div>
-        <div class='col-md-3 col-sm-4 controls'>
-            <input class="form-control price_txt" placeholder="Price" value="<?php echo $product[0]['product_price']; ?>" name="vehicle_pro_price" id="vehicle_pro_price" type="text" />
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <div class="alert alert-info price_zero_lbl">
-                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
-            </div>
-        </div>
-    </div>
     <?php } ?>
     <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
         <div class='form-group'>                        
@@ -64,7 +64,7 @@
         <div class="col-md-2 col-sm-3">Car Brand<span> *</span></div>
         <input type="hidden" id="mybrand" value="<?php echo $product[0]['product_brand']; ?>">
         <div class='col-md-6 col-sm-8 controls'>
-                <!--<input class="form-control"  placeholder="Brand" name="pro_brand" type="text" value="<?php //echo $product[0]['product_brand'];         ?>" /> -->                                                  
+                <!--<input class="form-control"  placeholder="Brand" name="pro_brand" type="text" value="<?php //echo $product[0]['product_brand'];          ?>" /> -->                                                  
             <select name="pro_brand"  class="form-control select2 " onchange="show_model(this.value);" id="pro_brand" data-rule-required='true'>    
                 <option value="">Select Brand</option>  
                 <?php foreach ($brand as $col): ?>
@@ -168,14 +168,15 @@
             </div>
         </div>
         <div class="form-group product_weight_section">                    
-            <div class="col-md-2 col-sm-3">Product Weight <span> *</span></div>
+            <div class="col-md-2 col-sm-3">Product Weight (in kg)<span> *</span></div>
             <div class="col-md-6 col-sm-8 controls">
-                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
+                <input type="number" class="form-control" name="weight" id="weight" data-rule-required='true' value="<?php echo $product[0]['weight']; ?>">
+    <!--                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
                     <option value="">Select Product Weight</option>
-                    <?php foreach ($product_weights as $w): ?>                    
-                        <option value="<?php echo $w['id'] ?>" <?php echo ($product[0]['weight'] == $w['id']) ? 'selected' : ''; ?>><?php echo $w['weight_text'] ?></option>                    
-                    <?php endforeach; ?>
-                </select>
+                <?php // foreach ($product_weights as $w): ?>                    
+                        <option value="<?php // echo $w['id']  ?>" <?php // echo ($product[0]['weight'] == $w['id']) ? 'selected' : '';  ?>><?php // echo $w['weight_text']  ?></option>                    
+                <?php // endforeach; ?>
+                </select>-->
             </div>
         </div>
     <?php } ?>
@@ -264,23 +265,23 @@
     </div>
 </form>
 <script type="text/javascript">
-$(document).ready(function(){
-$('#form2 #form_pro_price2').focusout(function(){
-    validateForm();   
-});
-$('#form2 #form_org_price2').focusout(function(){
-    validateForm();   
-});
-function validateForm(){
-    var price = $('#form2 #form_pro_price2').val();
-    var oprice = $('#form2 #form_org_price2').val();
-     $('.error').hide();
-        if(price >= oprice){
-            $('#form2 #form_pro_price2').after('<label for="pro_name" class="error">Price less than to original price.</label>');
-        } 
-        if(oprice <= price){
-            $('#form2 #form_org_price2').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+    $(document).ready(function () {
+        $('#form2 #form_pro_price2').focusout(function () {
+            validateForm();
+        });
+        $('#form2 #form_org_price2').focusout(function () {
+            validateForm();
+        });
+        function validateForm() {
+            var price = $('#form2 #form_pro_price2').val();
+            var oprice = $('#form2 #form_org_price2').val();
+            $('.error').hide();
+            if (price >= oprice) {
+                $('#form2 #form_pro_price2').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+            }
+            if (oprice <= price) {
+                $('#form2 #form_org_price2').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+            }
         }
-}   
-});
+    });
 </script>

@@ -17,52 +17,52 @@
         </div>
     </div>   
     <?php if (isset($logged_in_user['last_login_as']) && $logged_in_user['last_login_as'] == 'storeUser') { ?>
-    <div class='form-group'>     
-        <div class="col-md-2 col-sm-3">Original Price</div>
-        <div class='col-md-3 col-sm-4 controls'>
-            <input class="form-control shared_original_price" id="form_org_price4"  placeholder="Price" name="shared_original_price" type="text" value="<?php  echo $product[0]['original_price']; ?>" />            
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <div class="alert alert-info price_zero_lbl">
-                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+        <div class='form-group'>     
+            <div class="col-md-2 col-sm-3">Original Price</div>
+            <div class='col-md-3 col-sm-4 controls'>
+                <input class="form-control shared_original_price" id="form_org_price4"  placeholder="Price" name="shared_original_price" type="text" value="<?php echo $product[0]['original_price']; ?>" />            
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="alert alert-info price_zero_lbl">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                </div>
             </div>
         </div>
-    </div>
-    <div class='form-group'>                        
-        <div class="col-md-2 col-sm-3">Discounted Price</div>                                                
-        <div class="col-md-6 col-sm-8">
-            <div class="input-group controls price-group">
-                <span class="input-group-addon">Dirham</span>
-                <input type="text" value="<?php echo $product[0]['product_price']; ?>" id="shared_price" name="shared_price" class="form-control price_txt" >
-                <span class="input-group-addon">.00</span>
+        <div class='form-group'>                        
+            <div class="col-md-2 col-sm-3">Discounted Price</div>                                                
+            <div class="col-md-6 col-sm-8">
+                <div class="input-group controls price-group">
+                    <span class="input-group-addon">Dirham</span>
+                    <input type="text" value="<?php echo $product[0]['product_price']; ?>" id="shared_price" name="shared_price" class="form-control price_txt" >
+                    <span class="input-group-addon">.00</span>
+                </div>
+                <div class="checkbox col-md-2">
+                    <label>
+                        <input type="checkbox" <?php echo ($product[0]['free_status'] == 1) ? 'checked' : ''; ?> name="shared_free" value="1">
+                        Free
+                    </label>
+                </div>						  
             </div>
-            <div class="checkbox col-md-2">
-                <label>
-                    <input type="checkbox" <?php echo ($product[0]['free_status'] == 1) ? 'checked' : ''; ?> name="shared_free" value="1">
-                    Free
-                </label>
-            </div>						  
+            <span for="shared_price" class="help-block has-error"></span>
         </div>
-        <span for="shared_price" class="help-block has-error"></span>
-    </div>
-    <?php } else{ ?>
-    <div class='form-group'>                        
-        <div class="col-md-2 col-sm-3">Price</div>                                                
-        <div class="col-md-6 col-sm-8">
-            <div class="input-group controls price-group">
-                <span class="input-group-addon">Dirham</span>
-                <input type="text" value="<?php echo $product[0]['product_price']; ?>" id="shared_price" name="shared_price" class="form-control price_txt" >
-                <span class="input-group-addon">.00</span>
+    <?php } else { ?>
+        <div class='form-group'>                        
+            <div class="col-md-2 col-sm-3">Price</div>                                                
+            <div class="col-md-6 col-sm-8">
+                <div class="input-group controls price-group">
+                    <span class="input-group-addon">Dirham</span>
+                    <input type="text" value="<?php echo $product[0]['product_price']; ?>" id="shared_price" name="shared_price" class="form-control price_txt" >
+                    <span class="input-group-addon">.00</span>
+                </div>
+                <div class="checkbox col-md-2">
+                    <label>
+                        <input type="checkbox" <?php echo ($product[0]['free_status'] == 1) ? 'checked' : ''; ?> name="shared_free" value="1">
+                        Free
+                    </label>
+                </div>						  
             </div>
-            <div class="checkbox col-md-2">
-                <label>
-                    <input type="checkbox" <?php echo ($product[0]['free_status'] == 1) ? 'checked' : ''; ?> name="shared_free" value="1">
-                    Free
-                </label>
-            </div>						  
+            <span for="shared_price" class="help-block has-error"></span>
         </div>
-        <span for="shared_price" class="help-block has-error"></span>
-    </div>
     <?php } ?>
     <div class='form-group'>
         <div class="col-md-2 col-sm-3 "></div>
@@ -96,14 +96,15 @@
             </div>
         </div>
         <div class="form-group product_weight_section">                    
-            <div class="col-md-2 col-sm-3">Product Weight <span> *</span></div>
+            <div class="col-md-2 col-sm-3">Product Weight (in kg)<span> *</span></div>
             <div class="col-md-6 col-sm-8 controls">
-                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
+                <input type="number" class="form-control" name="weight" id="weight" data-rule-required='true' value="<?php echo $product[0]['weight']; ?>">
+    <!--                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
                     <option value="">Select Product Weight</option>
-                    <?php foreach ($product_weights as $w): ?>                    
-                        <option value="<?php echo $w['id'] ?>" <?php echo ($product[0]['weight'] == $w['id']) ? 'selected' : ''; ?>><?php echo $w['weight_text'] ?></option>                    
-                    <?php endforeach; ?>
-                </select>
+                <?php // foreach ($product_weights as $w): ?>                    
+                        <option value="<?php // echo $w['id']  ?>" <?php // echo ($product[0]['weight'] == $w['id']) ? 'selected' : '';  ?>><?php // echo $w['weight_text']  ?></option>                    
+                <?php // endforeach; ?>
+                </select>-->
             </div>
         </div>
     <?php } ?>
@@ -205,23 +206,23 @@
     </div>
 </form>
 <script type="text/javascript">
-$(document).ready(function(){
-$('#form4 #shared_price').focusout(function(){
-    validateForm();   
-});
-$('#form4 #form_org_price4').focusout(function(){
-    validateForm();   
-});
-function validateForm(){
-    var price = $('#form4 #shared_price').val();
-    var oprice = $('#form4 #form_org_price4').val();
-     $('.error').hide();
-        if(price >= oprice){
-            $('#form4 .for_share_price').after('<label for="pro_name" class="error">Price less than to original price.</label>');
-        } 
-        if(oprice <= price){
-            $('#form4 #form_org_price4').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+    $(document).ready(function () {
+        $('#form4 #shared_price').focusout(function () {
+            validateForm();
+        });
+        $('#form4 #form_org_price4').focusout(function () {
+            validateForm();
+        });
+        function validateForm() {
+            var price = $('#form4 #shared_price').val();
+            var oprice = $('#form4 #form_org_price4').val();
+            $('.error').hide();
+            if (price >= oprice) {
+                $('#form4 .for_share_price').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+            }
+            if (oprice <= price) {
+                $('#form4 #form_org_price4').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+            }
         }
-}   
-});
+    });
 </script>

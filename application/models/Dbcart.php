@@ -553,21 +553,22 @@ class Dbcart extends CI_Model {
                     </tr>';
 
         $buyer_mail = $header_part .
-        '<td>' . $right_header . '</td></tr>' . $title1 . '
+                '<td>' . $right_header . '</td></tr>' . $title1 . '
                                             <tr>
                                                 <td colspan="2">' . $product_table . '</td>
                                             </tr>
                                             <tr>
                                                <td style="vertical-align:top;" colspan="2">'
-        . $shipping_address . '
+                . $shipping_address . '
                                                </td>
                                             </tr>
                 </table>' .
-        $footer_part;
+                $footer_part;
 
 //        if (isset($current_user['email_id']) && !empty($current_user['email_id'])) {
         if (!empty($user_email)) {
-            if (send_mail($user_email, 'Thank you for Shopping from Doukani.com', $buyer_mail)) {                
+            if (send_mail($user_email, 'Thank you for Shopping from Doukani.com', $buyer_mail)) {
+                
             }
         }
     }
@@ -604,20 +605,21 @@ class Dbcart extends CI_Model {
                    </tr>';
 
         $seller_mail = $header_part .
-        ' <td>' . $right_header . '</td>
+                ' <td>' . $right_header . '</td>
                          </tr>'
-        . $title1 . $title2 .
-        '                        
+                . $title1 . $title2 .
+                '                        
                          <tr>
                              <td colspan="2">' . $product_table . '</td>
                          </tr>
                          <tr>
                              <td style="vertical-align:top;" colspan="2">' . $shipping_address . '</td>
                         </tr></table>'
-        . $footer_part;
+                . $footer_part;
 
         if (isset($email_id) && !empty($email_id)) {
-            if (send_mail($email_id, 'You sold something at Doukani.com', $seller_mail)) {                
+            if (send_mail($email_id, 'You sold something at Doukani.com', $seller_mail)) {
+                
             }
         }
     }

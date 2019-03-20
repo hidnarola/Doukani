@@ -383,7 +383,7 @@ if ($user_type == 'offerUser') {
                 <?php if ($this->permission->has_permission('user_mgt')) {
                     ?>
                     <li class='<?php echo ($controller == 'users' || ($controller == 'classifieds' && isset($ussert_ID) && $ussert_ID != '' && $action == 'listings_add' ) || ($controller == 'stores' && $action == 'edit')) ? 'active' : '' ?>'>
-                        <a class='dropdown-collapse' href='/'>                            
+                        <a class='dropdown-collapse' href='#'>                            
                             <i class='icon-group'></i>
                             <span>Users Management</span>
                             <i class='icon-angle-down angle-down'></i>
@@ -613,7 +613,7 @@ if ($user_type == 'offerUser') {
                 <!--System management-->
                 <?php if ($this->permission->has_permission('system_mgt')) { ?>
                     <li class='<?php echo $controller == 'systems' ? 'active' : '' ?>'>
-                        <a class='dropdown-collapse' href='/'>
+                        <a class='dropdown-collapse' href='#'>
                             <i class=' icon-wrench'></i>
                             <span>System Management</span>
 
@@ -776,7 +776,8 @@ if ($user_type == 'offerUser') {
                     else
                         echo '';
                     ?>'>		
-                        <a class='dropdown-collapse' href='<?php echo base_url(); ?>admin/pages'>
+                        
+                        <a class='dropdown-collapse' href='#'>
                             <i class='icon-book'></i>
                             <span>Pages Management</span>
                             <i class='icon-angle-down angle-down'></i>
@@ -847,7 +848,7 @@ if ($user_type == 'offerUser') {
                 <!--Push notifications-->
                 <?php if ($this->permission->has_permission('push_notification')) { ?>
                     <li class='<?php echo $controller == 'push_notification' ? 'active' : '' ?>'>
-                        <a class='dropdown-collapse' href='/'>
+                        <a class='dropdown-collapse' href='#'>
                             <i class='icon-bell'></i>
                             <span>Push Notifications</span>
                             <i class='icon-angle-down angle-down'></i>
@@ -887,7 +888,7 @@ if ($user_type == 'offerUser') {
                     else
                         echo '';
                     ?>'>		
-                        <a class='dropdown-collapse' href='<?php echo base_url(); ?>admin/orders'>
+                        <a class='dropdown-collapse' href='#'>
                             <i class='icon-book'></i>
                             <span>Order Management</span>
                             <i class='icon-angle-down angle-down'></i>

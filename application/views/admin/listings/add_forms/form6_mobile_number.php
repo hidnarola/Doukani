@@ -21,19 +21,19 @@ else
             <textarea class='input-block-level wysihtml5 form-control' id="inputTextArea1" placeholder="Description" name="mob_desc" rows="10"   data-rule-required='true' ><?php echo set_value('pro_desc'); ?></textarea>
         </div>
     </div>     
-    <?php if(isset($user_role) && $user_role == 'storeUser')  { ?>
-    <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
-         <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
-        <div class='col-md-3 col-sm-4 controls'>
-            <input class="form-control mobile_original_price" id="form_org_price6"  placeholder="Price" name="mobile_original_price" type="text" value="<?php  echo (isset($_POST['mobile_original_price']) && !empty($_POST['mobile_original_price'])) ? set_value('mobile_original_price') : ''; ?>" />            
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <div class="alert alert-info price_zero_lbl">
-                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+    <?php if (isset($user_role) && $user_role == 'storeUser') { ?>
+        <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
+            <label class='col-md-2 control-label' for='inputText1'>Original Price</label>
+            <div class='col-md-3 col-sm-4 controls'>
+                <input class="form-control mobile_original_price" id="form_org_price6"  placeholder="Price" name="mobile_original_price" type="text" value="<?php echo (isset($_POST['mobile_original_price']) && !empty($_POST['mobile_original_price'])) ? set_value('mobile_original_price') : ''; ?>" />            
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="alert alert-info price_zero_lbl">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                </div>
             </div>
         </div>
-    </div>
-      <?php } ?>
+    <?php } ?>
     <?php //  if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>
     <div class='form-group' >                        
         <label class='col-md-2 control-label' for='inputText1'>Price</label>
@@ -99,14 +99,15 @@ else
             </div>
         </div>
         <div class="form-group product_weight_section">                    
-            <label class='col-md-2 control-label' for='inputText1'>Product Weight <span> *</span></label>
+            <label class='col-md-2 control-label' for='inputText1'>Product Weight (in kg)<span> *</span></label>
             <div class="col-md-5 controls">
-                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
+                <input type="number" class="form-control" name="weight" id="weight" data-rule-required='true' value="<?php echo set_value('weight'); ?>">
+    <!--                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
                     <option value="">Select Product Weight</option>
-                    <?php foreach ($product_weights as $w): ?>                    
-                        <option value="<?php echo $w['id'] ?>"><?php echo $w['weight_text'] ?></option>                    
-                    <?php endforeach; ?>
-                </select>
+                <?php // foreach ($product_weights as $w): ?>                    
+                        <option value="<?php // echo $w['id']  ?>"><?php // echo $w['weight_text']  ?></option>                    
+                <?php // endforeach; ?>
+                </select>-->
             </div>
         </div>
     <?php } ?>
@@ -208,23 +209,23 @@ else
     </div>
 </form>
 <script type="text/javascript">
-$(document).ready(function(){
-$('#form6 #form_pro_price6').focusout(function(){
-    validateForm();   
-});
-$('#form6 #form_org_price6').focusout(function(){
-    validateForm();   
-});
-function validateForm(){
-    var price = $('#form6 #form_pro_price6').val();
-    var oprice = $('#form6 #form_org_price6').val();
-     $('.error').hide();
-        if(price >= oprice){
-            $('#form6 #form_pro_price6').after('<label for="pro_name" class="error">Price less than to original price.</label>');
-        } 
-        if(oprice <= price){
-            $('#form6 #form_org_price6').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+    $(document).ready(function () {
+        $('#form6 #form_pro_price6').focusout(function () {
+            validateForm();
+        });
+        $('#form6 #form_org_price6').focusout(function () {
+            validateForm();
+        });
+        function validateForm() {
+            var price = $('#form6 #form_pro_price6').val();
+            var oprice = $('#form6 #form_org_price6').val();
+            $('.error').hide();
+            if (price >= oprice) {
+                $('#form6 #form_pro_price6').after('<label for="pro_name" class="error">Price less than to original price.</label>');
+            }
+            if (oprice <= price) {
+                $('#form6 #form_org_price6').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+            }
         }
-}   
-});
+    });
 </script>

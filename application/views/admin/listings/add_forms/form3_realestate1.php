@@ -21,19 +21,19 @@ else
             <textarea class='input-block-level wysihtml5 form-control' placeholder="Description" name="house_pro_desc" rows="10" data-rule-required='true'><?php echo set_value('house_pro_desc'); ?></textarea>
         </div>
     </div>  
-    <?php if(isset($user_role) && $user_role == 'storeUser')  { ?>
-    <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
-        <label class='col-md-2 control-label' for='inputText1' >Original Price</label>
-        <div class='col-md-3 controls'>
-            <input class="form-control house_original_price" id="form_org_price3"  placeholder="Price" name="house_original_price" type="text" value="<?php  echo (isset($_POST['house_original_price']) && !empty($_POST['house_original_price'])) ? set_value('house_original_price') : ''; ?>" />            
-        </div>
-        <div class="col-md-3 col-sm-4">
-            <div class="alert alert-info price_zero_lbl">
-                <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+    <?php if (isset($user_role) && $user_role == 'storeUser') { ?>
+        <div class='form-group original_price_section' <?php if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>>     
+            <label class='col-md-2 control-label' for='inputText1' >Original Price</label>
+            <div class='col-md-3 controls'>
+                <input class="form-control house_original_price" id="form_org_price3"  placeholder="Price" name="house_original_price" type="text" value="<?php echo (isset($_POST['house_original_price']) && !empty($_POST['house_original_price'])) ? set_value('house_original_price') : ''; ?>" />            
+            </div>
+            <div class="col-md-3 col-sm-4">
+                <div class="alert alert-info price_zero_lbl">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i><?php echo price_zero_label; ?>
+                </div>
             </div>
         </div>
-    </div>
-     <?php } ?>
+    <?php } ?>
     <?php // if (isset($user_role) && $user_role != 'storeUser') echo 'style="display:none;"'; ?>
     <div class='form-group'>                        
         <label class='col-md-2 control-label' for='inputText1' >Price</label>
@@ -150,7 +150,7 @@ else
             </select>                     
         </div>
     </div>      
-    
+
     <?php if (isset($user_category_id) && (int) $user_category_id > 0) { ?>
         <div class="form-group delivery_option_section">                    
             <label class='col-md-2 control-label' for='inputText1'>Delivery Option <span> *</span></label>
@@ -164,14 +164,15 @@ else
             </div>
         </div>
         <div class="form-group product_weight_section">                    
-            <label class='col-md-2 control-label' for='inputText1'>Product Weight <span> *</span></label>
+            <label class='col-md-2 control-label' for='inputText1'>Product Weight (in kg)<span> *</span></label>
             <div class="col-md-5 controls">
-                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
+                <input type="number" class="form-control" name="weight" id="weight" data-rule-required='true' value="<?php echo set_value('weight'); ?>">
+    <!--                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true' >
                     <option value="">Select Product Weight</option>
-                    <?php foreach ($product_weights as $w): ?>                    
-                        <option value="<?php echo $w['id'] ?>"><?php echo $w['weight_text'] ?></option>                    
-                    <?php endforeach; ?>
-                </select>
+                <?php // foreach ($product_weights as $w): ?>                    
+                        <option value="<?php // echo $w['id']   ?>"><?php // echo $w['weight_text']   ?></option>                    
+                <?php // endforeach; ?>
+                </select>-->
             </div>
         </div>
     <?php } ?>
@@ -242,7 +243,7 @@ else
     if ($admin_permission == 'only_listing') {
         ?>    
         <input id="product_is_inappropriate" name="product_is_inappropriate" class="form-control" type="hidden" value="Unapprove">
-        <?php } else {
+    <?php } else {
         ?>
         <div class="form-group" >
             <label class='col-md-2 control-label' for='inputText1'>Product Is<span> *</span></label>
@@ -256,7 +257,7 @@ else
                 </select>                     
             </div>
         </div>
-<?php } ?>
+    <?php } ?>
     <div class="row form-group" style="margin-top:20px;display:none;">
         <div class="col-md-2 col-sm-3">Youtube Link</div>
         <div class="col-md-6 col-sm-8"><input type="text" class="form-control" name="youtube" id="youtube_form3"/>
@@ -280,23 +281,23 @@ else
     </div>
 </form>
 <script type="text/javascript">
-$(document).ready(function(){
-$('#form3 #houses_price').focusout(function(){
-    validateForm();   
-});
-$('#form3 #form_org_price3').focusout(function(){
-    validateForm();   
-});
-function validateForm(){
-    var price = $('#form3 #houses_price').val();
-    var oprice = $('#form3 #form_org_price3').val();
-     $('.error').hide();
-        if(price >= oprice){
-            $('#form3 .sell_grp').after('<label for="pro_name" class="error cls_pro">Price less than to original price.</label>');
-        } 
-        if(oprice <= price){
-            $('#form3 #form_org_price3').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+    $(document).ready(function () {
+        $('#form3 #houses_price').focusout(function () {
+            validateForm();
+        });
+        $('#form3 #form_org_price3').focusout(function () {
+            validateForm();
+        });
+        function validateForm() {
+            var price = $('#form3 #houses_price').val();
+            var oprice = $('#form3 #form_org_price3').val();
+            $('.error').hide();
+            if (price >= oprice) {
+                $('#form3 .sell_grp').after('<label for="pro_name" class="error cls_pro">Price less than to original price.</label>');
+            }
+            if (oprice <= price) {
+                $('#form3 #form_org_price3').after('<label for="pro_name" class="error">Original price more than to discounted price.</label>');
+            }
         }
-}   
-});
+    });
 </script>

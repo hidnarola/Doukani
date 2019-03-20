@@ -109,9 +109,10 @@
                                                 </div>
                                                 <div class="responsive-table">
                                                     <div class="scrollable-area">
-                                                        <?php 
-                                                        $shipping_option = '';
-                                                        if (sizeof($products) > 0) { ?>
+                                                        <?php
+                                                        $shipping_delivery_option = '';
+                                                        if (sizeof($products) > 0) {
+                                                            ?>
                                                             <table style="margin-bottom:0;" class="table order-product-list">
                                                                 <thead>
                                                                     <tr>
@@ -142,8 +143,11 @@
                                                                             </td>
                                                                             <?php if ($order_details[0]->seller_id == $current_user['user_id']) { ?>                                                                                
                                                                                 <td class="ord-prod-qty-td"><?php echo $pro['weight_text']; ?></td>                                                                                
-                                                                            <?php } else { ?>
-                                                                                <!--<td class="ord-prod-qty-td"><?php // echo $pro['option_text']; ?></td>-->
+                                                                                <?php
+                                                                            } else {
+                                                                                $shipping_delivery_option = $pro['option_text'];
+                                                                                ?>
+                                                                                <!--<td class="ord-prod-qty-td"><?php // echo $pro['option_text'];    ?></td>-->
                                                                             <?php } ?>
                                                                             <td class="ord-prod-qty-td"><?php echo $pro['quantity']; ?></td>
                                                                             <td class="ord-prod-price-td">
@@ -249,26 +253,37 @@
                                                         </div>
                                                         <div class="box-content">
                                                             <div class="form-group">
-                                                                <label>Payment Type:</label><span><?php if (isset($order_details[0]->delivery_type)) echo $order_details[0]->delivery_type; ?></span>
+                                                            <label>Order No : </label>&nbsp;<?php if (isset($order_details[0]->order_number)) echo $order_details[0]->order_number; ?>
+                                                        </div>
+                                                            <div class="form-group">
+                                                                <label>Delivery Option : </label><span><?php echo @$shipping_delivery_option; ?></span>
+                                                            </div>
+                                                            <?php if ($order_details[0]->seller_id == $current_user['user_id']) { ?>
+                                                                <div class="form-group">
+                                                                    <label>Weight : </label><span><?php if (isset($order_details[0]->weight)) echo $order_details[0]->weight . 'kg'; ?></span>
+                                                                </div>
+                                                            <?php } ?>
+                                                            <div class="form-group">
+                                                                <label>Payment Type : </label><span><?php if (isset($order_details[0]->delivery_type)) echo $order_details[0]->delivery_type; ?></span>
                                                             </div>                        
                                                             <div class="form-group">
-                                                                <label>Purchased On:</label>
+                                                                <label>Purchased On : </label>
                                                                 <span><?php if (isset($order_details[0]->created_date)) echo $order_details[0]->created_date; ?></span>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Sub-total:</label>
+                                                                <label>Sub-total : </label>
                                                                 <span><?php if (isset($order_details[0]->sub_total)) echo number_format($order_details[0]->sub_total, 2); ?></span>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Shipping Cost:</label>
+                                                                <label>Shipping Cost : </label>
                                                                 <span><?php if (isset($order_details[0]->shipping_cost)) echo number_format($order_details[0]->shipping_cost, 2); ?></span>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Final Total:</label>
+                                                                <label>Final Total : </label>
                                                                 <span><?php if (isset($order_details[0]->final_total)) echo number_format($order_details[0]->final_total, 2); ?></span>
                                                             </div>                                                        
                                                             <div class="form-group">
-                                                                <label>Status:</label>
+                                                                <label>Status : </label>
                                                                 <span><?php
                                                                     if (isset($order_details[0]->status)) {
 

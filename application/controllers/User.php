@@ -445,7 +445,7 @@ class User extends My_controller {
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                         }
 
                         if ($this->form_validation->run() == FALSE) {
@@ -548,7 +548,7 @@ class User extends My_controller {
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                         }
 
                         if ($this->form_validation->run() == FALSE) {
@@ -653,7 +653,7 @@ class User extends My_controller {
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                         }
 
                         if ($this->form_validation->run() == FALSE) {
@@ -762,7 +762,7 @@ class User extends My_controller {
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                         }
 
                         if ($this->form_validation->run() == FALSE) {
@@ -870,7 +870,7 @@ class User extends My_controller {
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -978,7 +978,7 @@ class User extends My_controller {
                         if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                             $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                             $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                            $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                         }
 
                         if ($this->form_validation->run() == FALSE):
@@ -2115,7 +2115,7 @@ class User extends My_controller {
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2226,7 +2226,7 @@ class User extends My_controller {
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2350,7 +2350,7 @@ class User extends My_controller {
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2471,7 +2471,7 @@ class User extends My_controller {
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE) {
@@ -2593,7 +2593,7 @@ class User extends My_controller {
                     if (isset($current_user['last_login_as']) && $current_user['last_login_as'] == 'storeUser') {
                         $this->form_validation->set_rules('total_stock', 'Total Stock', 'trim|required|is_natural');
                         $this->form_validation->set_rules('delivery_option', 'Delivery Option', 'trim|required');
-                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required');
+                        $this->form_validation->set_rules('weight', 'Weight', 'trim|required|callback_check_weight');
                     }
 
                     if ($this->form_validation->run() == FALSE):
@@ -2948,14 +2948,27 @@ class User extends My_controller {
         }
     }
 
+    public function check_weight() {
+
+        $weight = $this->input->post('weight', TRUE);
+
+        if ($weight < 0) {
+            $this->form_validation->set_message('check_weight', 'Weight must be greater than zero.');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     //update isdelete for product while delete
     public function removeproduct() {
         $this->db->query('update product set is_delete=1 where product_id=' . $_POST['prod_id'] . ' and product_posted_by=' . session_userid . ' and is_delete in (0,3,6)');
     }
+
     public function updateproduct() {
         $this->db->query('update product set is_delete=0 where product_id=' . $_POST['prod_id'] . ' and product_posted_by=' . session_userid . ' and is_delete in (0,3,6)');
     }
-    
+
     public function update_hold_product() {
         $this->db->query('update product set is_delete=3 where product_id=' . $_POST['prod_id'] . ' and product_posted_by=' . session_userid . ' and is_delete in (0,3,6)');
     }

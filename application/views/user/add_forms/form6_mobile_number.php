@@ -106,14 +106,15 @@
             </div>
         </div>
         <div class="form-group product_weight_section">                    
-            <div class="col-md-2 col-sm-3">Product Weight <span> *</span></div>
+            <div class="col-md-2 col-sm-3">Product Weight (in kg)<span> *</span></div>
             <div class="col-md-6 col-sm-8 controls">
-                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true'>
+                <input type="number" class="form-control" name="weight" id="weight" data-rule-required='true' value="<?php echo set_value('weight'); ?>">
+<!--                <select class="select2 form-control" name="weight" id="weight" data-rule-required='true'>
                     <option value="">Product Weight</option>
-                    <?php foreach ($product_weights as $w): ?>                    
-                        <option value="<?php echo $w['id'] ?>"><?php echo $w['weight_text'] ?></option>                    
-                    <?php endforeach; ?>
-                </select>
+                    <?php // foreach ($product_weights as $w): ?>                    
+                        <option value="<?php // echo $w['id'] ?>"><?php // echo $w['weight_text'] ?></option>                    
+                    <?php // endforeach; ?>
+                </select>-->
             </div>
         </div>
     <?php } ?>
