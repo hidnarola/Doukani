@@ -126,22 +126,14 @@
                                         </div>
                                         <div class="cate-list all_stores_cat_list">
                                             <ul class="list-ul boxes wide">
-                                                <li class="-1"> 
+                                                <li class=""> 
                                                     <a href="javascript:void(0);" class="category_chk chk_all" data-id="-1">
                                                         <div class="cate-block">
                                                             <div class="cate-icn" style="color: #05a846;"><i class="fa fa-repeat"></i></div>
                                                             <h4 class="cate-name"><span>All</span></h4>
                                                         </div>
                                                     </a> 
-                                                </li>
-                                                <!--                                                <li class="0">
-                                                                                                    <a href="javascript:void(0);" class="category_chk chk_others" data-id="0">
-                                                                                                        <div class="cate-block">
-                                                                                                            <div class="cate-icn" style="color: #0066ff;"><i class="fa fa-globe"></i></div>
-                                                                                                            <h4 class="cate-name"><span>Store Websites</span></h4>
-                                                                                                        </div>
-                                                                                                    </a> 
-                                                                                                </li>-->
+                                                </li>                                                
                                                 <?php foreach ($category as $cat): ?>
                                                     <li class="<?php echo $cat['category_id']; ?>"> 
                                                         <a href="javascript:void(0);" class="category_chk chk_others" data-id="<?php echo $cat['category_id']; ?>">
@@ -172,13 +164,12 @@
                                     </ul>
                                 </div>
                             </div>                            
-                            
+
                             <div class="catlist">
-                                <div class="store-products-list-wrapper" id="reset_data">
-                                    <?php $this->load->view('store/product_store_grid_view'); ?>
-                                    <!--item1-->
-                                    <input type="hidden" name="load_more_status" id="load_more_status" value="<?php echo (isset($hide)) ? $hide : ''; ?>">
-                                </div>                                
+                                <div class="store-products-list-wrapper" id="reset_data"></div>
+                                <div class="pagination_parent">
+                                    <div id="pagination" class="pagination_links_"></div>
+                                </div>
                             </div>
                         </div>   
                     </div>
@@ -191,240 +182,217 @@
         </div>
         <script src="<?php echo base_url(); ?>assets/admin/javascripts/plugins/common/moment.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/front/javascripts/owl.carousel.js"></script>
-        
-        <script src="<?php echo base_url(); ?>assets/admin/javascripts/jquery.twbsPagination.js" type="text/javascript"></script>
         <script>
-                
-                $('#page-selection').twbsPagination({
-                    totalPages: <?php echo $total_pages; ?>,
-                    visiblePages: <?php echo $initial_pages; ?>,
-                    onPageClick: function (event, page) {
-                        $('.loader_display').show();
-                        var url = "<?php echo site_url(); ?>home/load_more_storelisting_for_home/";
-                        var start = page;
-                        var product_view = $('#product_view').val();
-                        var type = $('#search').val();
-                        var val = $("#val").val();
-                        var val1 = ((start - 1) * 100) + 1;
-                        var cat_id = $('#categories').val();
-                        $.post(url, {cat_id: cat_id, value: val1, product_view: product_view, type: type, val: val, state_id_selection: state_id_selection}, function (response)
-                        {
-                            $('.loader_display').hide();
-                            $('#load_more_status').val(response.val);
-                            $(".store-products-list-wrapper").html(response.html);
-                            if (response.val == "true")
-                                $("#load_product").hide();
-                        }, "json");
-                    }
+
+            var owl = $("#owl-demo1");
+            owl.owlCarousel({
+                autoPlay: 2000,
+                items: 4,
+                navigation: true,
+                itemsDesktop: [1000, 2],
+                itemsDesktopSmall: [900, 2],
+                itemsTablet: [600, 1],
+                itemsMobile: false,
+                stopOnHover: true
+            });
+
+            $("#demo1_next").click(function () {
+                owl.trigger('owl.next');
+            })
+            $("#demo1_prev").click(function () {
+                owl.trigger('owl.prev');
+            })
+
+            jQuery(document).on('mouseenter', ".following1", function (event) {
+                $(this).text('Un-follow  ');
+            });
+
+            jQuery(document).on('mouseout', ".following1", function (event) {
+                $(this).text('Following');
+            });
+
+            jQuery(document).on('mouseenter', ".following", function (event) {
+                $(this).text('Un-follow ');
+            });
+
+            jQuery(document).on('mouseout', ".following", function (event) {
+                $(this).text('Following');
+            });
+
+            $(document).ready(function () {
+
+                $('.store-individual-user-social-toggle').click(function () {
+                    $('.store-individual-user-social ul').slideToggle();
                 });
-        </script>
-        <script>
+                $('.store-individual-user-right-toggle').click(function () {
+                    $('.store-individual-user-right > ul').slideToggle();
+                });
 
-                                                var owl = $("#owl-demo1");
-                                                owl.owlCarousel({
-                                                    autoPlay: 2000,
-                                                    items: 4,
-                                                    navigation: true,
-                                                    itemsDesktop: [1000, 2],
-                                                    itemsDesktopSmall: [900, 2],
-                                                    itemsTablet: [600, 1],
-                                                    itemsMobile: false,
-                                                    stopOnHover: true
-                                                });
+                $('.chk_all').prop('checked', true);
+                $('.chk_others').prop('checked', false);
 
-                                                $("#demo1_next").click(function () {
-                                                    owl.trigger('owl.next');
-                                                })
-                                                $("#demo1_prev").click(function () {
-                                                    owl.trigger('owl.prev');
-                                                })
+                $('.category_chk').on('click', function (e) {
+                    $('#categories').val($(this).attr('data-id'));
+                    var window_width = parseInt($(window).width());
+                    if (window_width <= 1024) {
+                        $('html, body').animate({
+                            scrollTop: $(".store-list").offset().top
+                        }, 2000);
+                    }
+                    get_data("single");
+                });
 
-                                                jQuery(document).on('mouseenter', ".following1", function (event) {
-                                                    $(this).text('Un-follow  ');
-                                                });
+                $('#filter').on('change', function (e) {
+                    get_data("filter");
+                });
 
-                                                jQuery(document).on('mouseout', ".following1", function (event) {
-                                                    $(this).text('Following');
-                                                });
+                function get_data(selection) {
 
-                                                jQuery(document).on('mouseenter', ".following", function (event) {
-                                                    $(this).text('Un-follow ');
-                                                });
+                    var cat_id = $('#categories').val();
 
-                                                jQuery(document).on('mouseout', ".following", function (event) {
-                                                    $(this).text('Following');
-                                                });
+                    if (selection == "single") {
+                        $('.list-ul li').removeClass('active');
+                        $('.list-ul li.' + cat_id).addClass('active');
+                    }
 
-                                                $(document).ready(function () {
+                    $('.loader_display').show();
 
-                                                    $('.store-individual-user-social-toggle').click(function () {
-                                                        $('.store-individual-user-social ul').slideToggle();
-                                                    });
-                                                    $('.store-individual-user-right-toggle').click(function () {
-                                                        $('.store-individual-user-right > ul').slideToggle();
-                                                    });
+                    var filters = '';
+                    var filter_val = '';
 
-                                                    $('.chk_all').prop('checked', true);
-                                                    $('.chk_others').prop('checked', false);
+                    filter_val = $('#filter').val();
+                    $('#filter_sel').val(filter_val);
+                    filters = $('#filter_sel').val();
 
-                                                    $('.category_chk').on('click', function (e) {
-                                                        $('#categories').val($(this).attr('data-id'));
-                                                        var window_width = parseInt($(window).width());
-                                                        if (window_width <= 1024) {
-                                                            $('html, body').animate({
-                                                                scrollTop: $(".store-list").offset().top
-                                                            }, 2000);
-                                                        }
-                                                        get_data("single");
-                                                    });
+                    $("#load_product").prop('value', '0');
 
-                                                    $('#filter').on('change', function (e) {
-                                                        get_data("filter");
-                                                    });
+                    var start = $("#load_product").val();
+                    start++;
+                    $("#load_product").val(start);
 
-                                                    function get_data(selection) {
+                    var val1 = start;
+                    var url = "<?php echo base_url(); ?>home/load_all_store_ads";
+                    var product_view = $('#product_view').val();
+                    var type = $('#search').val();
+                    var val = $("#val").val();
 
-                                                        var cat_id = $('#categories').val();
+                    $.get(url, {cat_id: cat_id, product_view: product_view, filters: filters, type: type, state_id_selection: state_id_selection, ipp: ipp}, function (response)
+                    {
+                        $('#reset_data').html('');
+                        $('#pagination').html(response.pagination);
+                        $('#pagination').children().last().remove();
+                        $('#reset_data').html(response.html);
+                        if (response.val == "true") {
+                            $("#load_product").hide();
+                        }
+                        $('.loader_display').hide();
+                    }, "json");
+                    $('html, body').animate({
+                        scrollTop: $(".store-products-head").offset().top
+                    }, 1000);
+                }
 
-                                                        if (selection == "single") {
-                                                            $('.list-ul li').removeClass('active');
-                                                            $('.list-ul li.' + cat_id).addClass('active');
-                                                        }
+                var ipp = 100;
+                $('#pagination').on('click', 'a', function (e) {
+                    e.preventDefault();
+                    var pageno = $(this).attr('data-page');
+                    loadPagination(pageno);
+                });
 
-                                                        $('.loader_display').show();
+                loadPagination(1);
 
-                                                        var filters = '';
-                                                        var filter_val = '';
+                function loadPagination(pagno) {
+                    $('.loader_display').show();
+                    var type = $('#search').val();
+                    var cat_id = $('#categories').val();
+                    var product_view = $('#product_view').val();
 
-                                                        filter_val = $('#filter').val();
-                                                        $('#filter_sel').val(filter_val);
-                                                        filters = $('#filter_sel').val();
+                    var send_values = {page: pagno, cat_id: cat_id, product_view: product_view, type: type, state_id_selection: state_id_selection, ipp: ipp};
 
-                                                        $("#load_product").prop('value', '0');
+                    $.ajax({
+                        url: '<?php echo $mypath_; ?>home/load_all_store_ads/',
+                        type: 'GET',
+                        data: send_values,
+                        dataType: 'json',
+                        success: function (response) {
+                            $('#pagination').html(response.pagination);
+                            $('#pagination').children().last().remove();
+                            $('#reset_data').html('');
+                            var final_response = response.html;
+//                    final_response = final_response.replace('...', '');
+                            $('#reset_data').html(final_response);
+                            $("html, body").animate({
+                                scrollTop: 0
+                            }, 600);
+                            $('.loader_display').hide();
+                        }
+                    });
+                }
 
-                                                        var start = $("#load_product").val();
-                                                        start++;
-                                                        $("#load_product").val(start);
-                                                        //                  console.log($("#load_store").val());
-                                                        var val1 = start;
-                                                        var url = "<?php echo base_url(); ?>home/get_allstore_products";
-                                                        var product_view = $('#product_view').val();
-                                                        var type = $('#search').val();
-                                                        var val = $("#val").val();
+                $(document).on("click", ".type", function (e) {
+                    $('.loader_display').show();
+                    e.preventDefault();
 
-                                                        $.post(url, {cat_id: cat_id, product_view: product_view, value: val1, filters: filters, type: type, state_id_selection: state_id_selection}, function (response)
-                                                        {
-                                                            $('#reset_data').html('');
-                                                            $('#reset_data').html(response.html);
-                                                            if (response.val == "true") {
-                                                                $("#load_product").hide();
-                                                            }
-                                                            $('.loader_display').hide();
-                                                        }, "json");
-                                                        $('html, body').animate({
-                                                            scrollTop: $("div.catlist").offset().top
-                                                        }, 1000)
-                                                    }
-                                                });
+                    var url = "<?php echo $mypath_; ?>home/load_all_store_ads";
+                    var search = $(this).attr('data-id');
+                    $('#search').val(search);
+                    var cat_id = $('#categories').val();
+                    var product_view = $('#product_view').val();
+                    var type = $('#search').val();
 
-                                                function load_more_data() {
+                    if (search == 'all') {
+                        $("#" + search).addClass("active");
+                        $("#new").removeClass("active");
+                        $("#popular").removeClass("active");
+                    } else if (search == 'new') {
+                        $("#" + search).addClass("active");
+                        $("#all").removeClass("active");
+                        $("#popular").removeClass("active");
+                    } else if (search == 'popular') {
+                        $("#" + search).addClass("active");
+                        $("#all").removeClass("active");
+                        $("#new").removeClass("active");
+                    }
 
-                                                    $("#load_product").html('<i class="fa fa-empire fa-spin fa-fw"></i> &nbsp; Loading Data...');
-                                                    $('#load_product').prop('disabled', true);
+                    $.get(url, {cat_id: cat_id, product_view: product_view, type: type, state_id_selection: state_id_selection, ipp: ipp}, function (response) {
+                        $('#reset_data').html('');
+                        $('#pagination').html(response.pagination);
+                        $('#pagination').children().last().remove();
+                        $('#reset_data').html(response.html);
+                        $('.loader_display').hide();
+                    }, "json");
+                });
 
-                                                    var load_more_status = $('#load_more_status').val();
-                                                    var url = "<?php echo site_url(); ?>home/load_more_storelisting_for_home/";
-                                                    var start = $("#load_product").val();
-                                                    start++;
-                                                    $("#load_product").val(start);
-                                                    var product_view = $('#product_view').val();
-                                                    var type = $('#search').val();
-                                                    var val = $("#val").val();
-                                                    var val1 = start;
-                                                    var cat_id = $('#categories').val();
-                                                    if (load_more_status == 'false') {
-                                                        $.post(url, {cat_id: cat_id, value: val1, product_view: product_view, type: type, val: val, state_id_selection: state_id_selection}, function (response)
-                                                        {
-                                                            $('#load_more_status').val(response.val);
+                $(document).on("click", ".product_view", function (e) {
+                    $('.loader_display').show();
+                    e.preventDefault();
+                    var search = $(this).attr('data-id');
+                    $('#product_view').val(search);
+                    var product_view = $('#product_view').val();
+                    var type = $('#search').val();
+                    var cat_id = $('#categories').val();
 
-                                                            $("#load_more").before(response.html);
-                                                            if (response.val == "true")
-                                                                $("#load_product").hide();
+                    if (search == 'grid') {
+                        $('.' + search).addClass('view-active');
+                        $('.list').removeClass('view-active');
+                    } else if (search == 'list') {
+                        $('.' + search).addClass('view-active');
+                        $('.grid').removeClass('view-active');
+                    }
 
-                                                            $('#load_product').prop('disabled', false);
-                                                            $("#load_product").html('Load More');
-
-                                                        }, "json");
-                                                    }
-                                                }
-
-                                                $(document).on("click", ".product_view", function (e) {
-                                                    $('.loader_display').show();
-                                                    e.preventDefault();
-                                                    var search = $(this).attr('data-id');
-                                                    var val1 = 1;
-                                                    $('#product_view').val(search);
-                                                    var product_view = $('#product_view').val();
-                                                    var type = $('#search').val();
-                                                    var cat_id = $('#categories').val();
-
-                                                    if (search == 'grid') {
-                                                        $('.' + search).addClass('view-active');
-                                                        $('.list').removeClass('view-active');
-                                                    } else if (search == 'list') {
-                                                        $('.' + search).addClass('view-active');
-                                                        $('.grid').removeClass('view-active');
-                                                    }
-
-                                                    var url = "<?php echo site_url(); ?>home/get_allstore_products";
-                                                    $.post(url, {cat_id: cat_id, value: val1, product_view: product_view, type: type, state_id_selection: state_id_selection}, function (response) {
-                                                        $('#reset_data').html('');
-                                                        $('#reset_data').html(response.html);
-                                                        if (response.val == "true") {
-                                                            $("#load_store").hide();
-                                                        }
-                                                        $('.loader_display').hide();
-                                                    }, "json");
-
-                                                });
-
-                                                $(document).on("click", ".type", function (e) {
-                                                    $('.loader_display').show();
-                                                    e.preventDefault();
-                                                    var cat_id = $('#categories').val();
-                                                    var val1 = 1;
-                                                    var url = "<?php echo site_url(); ?>home/get_allstore_products";
-                                                    var search = $(this).attr('data-id');
-
-                                                    $('#search').val(search);
-
-                                                    var product_view = $('#product_view').val();
-                                                    var type = $('#search').val();
-
-                                                    if (search == 'all') {
-                                                        $("#" + search).addClass("active");
-                                                        $("#new").removeClass("active");
-                                                        $("#popular").removeClass("active");
-                                                    } else if (search == 'new') {
-                                                        $("#" + search).addClass("active");
-                                                        $("#all").removeClass("active");
-                                                        $("#popular").removeClass("active");
-                                                    } else if (search == 'popular') {
-                                                        $("#" + search).addClass("active");
-                                                        $("#all").removeClass("active");
-                                                        $("#new").removeClass("active");
-                                                    }
-
-                                                    $.post(url, {cat_id: cat_id, value: val1, product_view: product_view, type: type, state_id_selection: state_id_selection}, function (response) {
-                                                        $('#reset_data').html('');
-                                                        $('#reset_data').html(response.html);
-                                                        if (response.val == "true") {
-                                                            $("#load_store").hide();
-                                                        }
-                                                        $('.loader_display').hide();
-                                                    }, "json");
-                                                });
-                                                
+                    var url = "<?php echo site_url(); ?>home/load_all_store_ads";
+                    $.get(url, {cat_id: cat_id, product_view: product_view, type: type, state_id_selection: state_id_selection, ipp: ipp}, function (response) {
+                        $('#reset_data').html('');
+                        $('#pagination').html(response.pagination);
+                        $('#pagination').children().last().remove();
+                        $('#reset_data').html(response.html);
+                        if (response.val == "true") {
+                            $("#load_store").hide();
+                        }
+                        $('.loader_display').hide();
+                    }, "json");
+                });
+            });
         </script>
     </body>
 </html>
