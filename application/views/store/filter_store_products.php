@@ -7,11 +7,25 @@ if (isset($product_view) && $product_view == 'list') {
 }
 
 if (@$hide == "false") {
+    $total_pages = ceil($total_product/100);
+    $initial_pages = 10;
+    if($total_pages < $initial_pages){
+        $initial_pages = $total_pages;
+    }
+
+    $display_pagination = " display: none;";
+    if($total_pages > 0){
+        $display_pagination = "";
+    }
+?>
+<div id="page-selection" style="text-align: center;<?php echo $display_pagination; ?>"></div>
+<?php } 
+//if (@$hide == "false") {
     ?>
-    <div class="col-sm-12 text-center" id="load_more">
+    <!-- <div class="col-sm-12 text-center" id="load_more">
         <button class="btn btn-blue" onclick="load_more_jquerylisting();" id="load_product1" value="0">Load More</button><br><br><br>
-    </div>
-<?php } ?>
+    </div> -->
+<?php //} ?>
 <div id="loading" style="text-align:center" class="loader_display">
     <img id="loading-image" src="<?php echo HTTPS . website_url; ?>assets/front/images/ajax-loader.gif" alt="Loading..." />
 </div>

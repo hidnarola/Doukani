@@ -105,7 +105,7 @@
                             <a href="<?php echo base_url() . emirate_slug .$pro['user_slug']; ?>" title="<?php echo $pro['username1']; ?>"><?php echo $pro['username1']; ?></a>
                         </div>
                         <div class="price">
-                            <span title=" <?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED'.number_format($pro['product_price']) : ''; ?>" ><?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED '.number_format($pro['product_price']) : ''; ?></span>
+                            <span title=" <?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED'.number_format($pro['product_price'],2) : ''; ?>" ><?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED '.number_format($pro['product_price'],2) : ''; ?></span>
                         </div>
                     </div>
                     <div class="count-img">

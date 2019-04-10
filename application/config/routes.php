@@ -168,6 +168,7 @@ else
 
 $route['payment_status/(:any)'] = 'paytabs_payment/payment_status/$1';
 $route['phone'] = 'phone/index';
+$route['test'] = 'test/index';
 
 //$route['(:any)/(:any)']= 'home/index';
 //$route['404_override'] = 'Error404';

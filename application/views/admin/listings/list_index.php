@@ -197,7 +197,7 @@
 
                                                                         </td>
                                                                         <td><?php echo str_replace('\n', " ", $pro['catagory_name']); ?></td>
-                                                                        <td><?php echo number_format($pro['product_price']); ?></td>
+                                                                        <td><?php echo number_format($pro['product_price'],2); ?></td>
                                                                         <!-- <td><?php //echo $pro['product_status'];                             ?></td> -->
                                                                         <td><?php echo $pro['product_is_inappropriate']; ?> </td>
                                                                         <td>

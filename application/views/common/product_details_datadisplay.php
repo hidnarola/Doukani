@@ -44,7 +44,7 @@
         <?php if ($product->product_price != '' && $product->product_price <> 0) { ?>
             <div class="price-wrap" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                 <span class="sel_price_lbl">Selling Price</span>
-                <div><span itemprop="priceCurrency" content="AED">AED </span><span itemprop="price" content="<?php echo $product->product_price; ?>"><?php echo number_format($product->product_price); ?></span></div>
+                <div><span itemprop="priceCurrency" content="AED">AED </span><span itemprop="price" content="<?php echo $product->product_price; ?>"><?php echo number_format($product->product_price, 2); ?></span></div>
             </div>
         <?php } ?>
     </div>

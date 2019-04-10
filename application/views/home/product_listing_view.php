@@ -154,7 +154,7 @@ if (!empty($products)) {
                             <?php if ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) { ?>
                                 <div class="price">
                                     <h4><?php
-                                        echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : '';
+                                        echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price'],2) : '';
                                         ;
                                         ?></h4>
                                 </div>

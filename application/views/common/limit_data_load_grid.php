@@ -208,7 +208,7 @@ if (!empty($product_data)) {
 
                         <div class="price">
                             
-                            <span title="<?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED '.number_format($pro['product_price']) : '' ; ?>"><?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED '.number_format($pro['product_price']) : ''; ?></span>
+                            <span title="<?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED '.number_format($pro['product_price'],2) : '' ; ?>"><?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED '.number_format($pro['product_price'],2) : ''; ?></span>
                             
                         </div>
                     </div>

@@ -104,7 +104,7 @@
                                                             <a href="<?php echo base_url() . 'seller/listings/' . $pro['product_posted_by']; ?>"><?php echo $pro['username1']; ?></a>                                            
                                                         </div>
                                                         <div class="col-sm-12 price">
-                                                            <span>AED <?php echo number_format($pro['product_price']); ?></span>
+                                                            <span>AED <?php echo number_format($pro['product_price'],2); ?></span>
                                                         </div>
                                                     </div>
                                                     <div class="count-img">

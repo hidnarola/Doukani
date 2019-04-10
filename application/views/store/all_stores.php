@@ -178,22 +178,7 @@
                                     <?php $this->load->view('store/product_store_grid_view'); ?>
                                     <!--item1-->
                                     <input type="hidden" name="load_more_status" id="load_more_status" value="<?php echo (isset($hide)) ? $hide : ''; ?>">
-                                </div>
-                                <?php
-                                if (@$hide == "false") {
-                                    $total_pages = ceil($total_product/100);
-                                    $initial_pages = 10;
-                                    if($total_pages < $initial_pages){
-                                        $initial_pages = $total_pages;
-                                    }
-                                    
-                                    $display_pagination = " display: none;";
-                                    if($total_pages > 0){
-                                        $display_pagination = "";
-                                    }
-                                ?>
-                                <div id="page-selection" style="text-align: center;<?php echo $display_pagination; ?>"></div>
-                                <?php } ?>
+                                </div>                                
                             </div>
                         </div>   
                     </div>
@@ -204,8 +189,6 @@
             </div>
             <?php $this->load->view('include/footer'); ?>            
         </div>
-
-
         <script src="<?php echo base_url(); ?>assets/admin/javascripts/plugins/common/moment.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/front/javascripts/owl.carousel.js"></script>
         

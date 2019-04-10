@@ -1,8 +1,10 @@
 .Header_Left {width: 40%;}
 .Header_Right{width: 60%;}
-.offer-disp .offer-img {margin: 0 0 130px;text-align: center;}
+.offer-disp .offer-img {margin: 0 0 20px;text-align: center;}
 .cart-view .totle-count table.table tr td{font-weight: 500;font-size: 14px;}
 .cart-view .totle-count .table tr:last-child td {font-size: 16px;font-weight: 600;background: #f2f2f2;}
+.offer_other_images{display: block;overflow: auto;max-height: 200px; margin-top: 25px;}
+.offer_other_images .image_other_single{margin-bottom: 10px;}
 
 @media (max-width: 1200px) and (min-width: 1025px){
 .Header_Left {width: 40%;}

@@ -241,7 +241,7 @@
                                                                                 <a href="<?php echo base_url() . emirate_slug . $pro['user_slug']; ?>"><?php echo $pro['username1']; ?></a>                                            					 
                                                                             </div>
                                                                             <div class="price">
-                                                                                <span>AED <?php echo number_format($pro['product_price']); ?></span>
+                                                                                <span>AED <?php echo number_format($pro['product_price'],2); ?></span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="count-img">

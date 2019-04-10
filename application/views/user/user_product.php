@@ -280,7 +280,7 @@ $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === FALSE ?
                                             <div class="prod-data">                        
                                                 <div class="action-wrap">
                                                     <div class="price-block">
-                                                        <span class="sell_lbl">Selling Price:</span> <span>AED </span><span><?php echo number_format($product[0]->product_price); ?></span>
+                                                        <span class="sell_lbl">Selling Price:</span> <span>AED </span><span><?php echo number_format($product[0]->product_price, 2); ?></span>
                                                     </div>   
                                                     <div class="btn-div0001">                                                                   
                                                         <a href="<?php echo site_url() . 'user/listings_edit/' . $product[0]->product_id; ?>"  class="edit_b btn btn-blue blue-btn"><i><img src="<?php echo site_url(); ?>assets/front/images/edit.png" class="item-det-edit" alt="Image"></i>&nbsp; Edit Ad</a>

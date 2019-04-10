@@ -288,7 +288,7 @@
                                                                             </a>
                                                                         </td>
                                                                         <td><?php echo str_replace('\n', " ", $pro['catagory_name']); ?></td>
-                                                                        <td><?php echo number_format($pro['product_price']); ?></td>
+                                                                        <td><?php echo number_format($pro['product_price'],2); ?></td>
                                                                         <td><?php
                                                                             if ((int) $pro['product_is_sold'] == 1 && (int) $pro['product_deactivate'] != 1)
                                                                                 echo 'Sold';

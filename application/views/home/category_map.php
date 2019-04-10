@@ -105,7 +105,7 @@ foreach ($products as $key => $val) {
     $profile_picture = $this->dbcommon->load_picture($val['profile_picture'], $val['facebook_id'], $val['twitter_id'], $val['username'], $val['google_id']);
 
     if ($val['product_price'] != '' && (int) $val['product_price'] != 0)
-        $product_price = 'AED ' . number_format($val['product_price']);
+        $product_price = 'AED ' . number_format($val['product_price'],2);
     else
         $product_price = '';
     ?>
@@ -346,7 +346,7 @@ foreach ($products as $key => $val) {
 
                                                                     <td> <?php
                                                                         if (isset($pro['product_price']) && !empty($pro['product_price'])) {
-                                                                            echo 'AED ' . number_format($pro['product_price']);
+                                                                            echo 'AED ' . number_format($pro['product_price'],2);
                                                                         }
                                                                         ?></td>                                                                    
                                                                 </tr>

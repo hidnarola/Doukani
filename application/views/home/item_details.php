@@ -291,7 +291,7 @@
                                                             <div class="price-block" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                                                                 <span class="sell_lbl">Selling Price:</span> 
                                                                 <span itemprop="priceCurrency" content="AED">AED </span>
-                                                                <span itemprop="price" content="<?php echo $product->product_price; ?>"><?php echo number_format($product->product_price); ?></span>
+                                                                <span itemprop="price" content="<?php echo $product->product_price; ?>"><?php echo number_format($product->product_price,2); ?></span>
                                                             </div>
                                                         <?php } ?>
                                                         <?php if ($product_is_sold == 0 && $product->product_is_inappropriate == 'Approve' && $product->product_deactivate == NULL) { ?>
@@ -798,7 +798,7 @@
                                                                                                                         <a href="<?php echo $user_profile_pg; ?>" title="<?php echo $pro['username1']; ?>"><?php echo $pro['username1']; ?></a>                                            
                                                                                                                     </div>
 
-                                                                                                                    <div class=" price">                                                                                                          <span title=" <?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?>"><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?></span>
+                                                                                                                    <div class=" price">                                                                                                          <span title=" <?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price'],2) : ''; ?>"><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price'],2) : ''; ?></span>
                                                                                                                     </div>
 
                                                                                                                 </div>

@@ -46,8 +46,8 @@
         <?php $this->load->view('include/google_tab_manager_body'); ?>
         <div class="container-fluid">            
             <?php
-                $this->load->view('include/header');
-                $this->load->view('include/menu');
+            $this->load->view('include/header');
+            $this->load->view('include/menu');
 
             if ($store[0]->category_id > 0) {
                 ?>
@@ -77,31 +77,10 @@
                                             </div>
                                         </div>     
                                         <div class="catlist">
-                                            <div class="store-products-list-wrapper" id="reset_data">
-                                                <?php $this->load->view('store/product_store_grid_view'); ?>
-                                                <!--item1-->
-                                                <input type="hidden" name="load_more_status" id="load_more_status" value="<?php echo (isset($hide)) ? $hide : ''; ?>">
-                                                <?php // if (@$hide == "false") { ?>
-<!--                                                    <div class="col-sm-12 text-center" id="load_more">
-                                                        <button class="btn btn-blue" onclick="load_more_data();" id="load_product" value="0">Load More</button><br><br><br>
-                                                    </div>-->
-                                                <?php // } ?>
+                                            <div class="store-products-list-wrapper" id="reset_data"></div>
+                                            <div class="pagination_parent">
+                                                <div id="pagination" class="pagination_links_"></div>
                                             </div>
-                                            <?php
-                                            if (@$hide == "false") {
-                                                $total_pages = ceil($total_product/100);
-                                                $initial_pages = 10;
-                                                if($total_pages < $initial_pages){
-                                                    $initial_pages = $total_pages;
-                                                }
-
-                                                $display_pagination = " display: none;";
-                                                if($total_pages > 0){
-                                                    $display_pagination = "";
-                                                }
-                                            ?>
-                                            <div id="page-selection" style="text-align: center;<?php echo $display_pagination; ?>"></div>
-                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -116,138 +95,11 @@
         </div>
         <div id="loading" style="text-align:center" class="loader_display">
             <img id="loading-image1" src="<?php echo HTTPS . website_url; ?>assets/front/images/ajax-loader.gif" alt="Loading..." />
-        </div>
-        <script src="<?php echo HTTPS . website_url; ?>assets/admin/javascripts/jquery.twbsPagination.js" type="text/javascript"></script>
-        <script>
-                $('#page-selection').twbsPagination({
-                    totalPages: <?php echo $total_pages; ?>,
-                    visiblePages: <?php echo $initial_pages; ?>,
-                    onPageClick: function (event, page) {
-                        $('.loader_display').show();
-                        var url = "<?php echo $mypath_; ?>home/load_more_storelisting/";
-                        var start = page;
-                        var product_view = $('#product_view').val();
-                        var user_id = $("#user_id").val();
-                        var type = $('#search').val();
-                        var val = $("#val").val();
-                        var val1 = ((start - 1) * 100) + 1;
-                        var cat_id = $('#categories').val();
-                        $.post(url, {value: val1, user_id: user_id, product_view: product_view, type: type, val: val, user_status:<?php echo $user_status; ?>, state_id_selection: state_id_selection}, function (response)
-                        {
-                            $('.loader_display').hide();
-                            $('#load_more_status').val(response.val);
-                            $(".store-products-list-wrapper").html(response.html);
-                            if (response.val == "true")
-                                $("#load_product").hide();
-                        }, "json");
-                    }
-                });
-        </script>
+        </div>        
         <script>
 <?php
 $mypath_ = $store_url;
 ?>
-            $('#loader_display').show();
-            function load_more_data() {
-
-                $("#load_product").html('<i class="fa fa-empire fa-spin fa-fw"></i> &nbsp; Loading Data...');
-                $('#load_product').prop('disabled', true);
-
-                var load_more_status = $('#load_more_status').val();
-                var url = "<?php echo $mypath_; ?>home/load_more_storelisting/";
-                var start = $("#load_product").val();
-                start++;
-                $("#load_product").val(start);
-                var user_id = $("#user_id").val();
-                var product_view = $('#product_view').val();
-                var type = $('#search').val();
-                var val = $("#val").val();
-                var val1 = start;
-
-                if (load_more_status == 'false') {
-                    $.post(url, {value: val1, user_id: user_id, product_view: product_view, type: type, val: val, user_status:<?php echo $user_status; ?>, state_id_selection: state_id_selection}, function (response)
-                    {
-                        $('#load_more_status').val(response.val);
-
-                        $("#load_more").before(response.html);
-                        if (response.val == "true")
-                            $("#load_product").hide();
-
-                        $('#load_product').prop('disabled', false);
-                        $("#load_product").html('Load More');
-//                        $(window).bind('scroll', bindScroll);
-
-                    }, "json");
-                }
-            }
-
-            $(document).on("click", ".product_view", function (e) {
-                $('.loader_display').show();
-                e.preventDefault();
-                var search = $(this).attr('data-id');
-                var val1 = 1;
-                $('#product_view').val(search);
-                var product_view = $('#product_view').val();
-                var type = $('#search').val();
-                var user_id = $("#user_id").val();
-
-                if (search == 'grid') {
-                    $('.' + search).addClass('view-active');
-                    $('.list').removeClass('view-active');
-                }
-                else if (search == 'list') {
-                    $('.' + search).addClass('view-active');
-                    $('.grid').removeClass('view-active');
-                }
-
-                var url = "<?php echo $mypath_; ?>home/get_store_products";
-                $.post(url, {value: val1, product_view: product_view, type: type, user_id: user_id, user_status:<?php echo $user_status; ?>, state_id_selection: state_id_selection}, function (response) {
-                    $('#reset_data').html('');
-                    $('#reset_data').html(response.html);
-
-                    $('.loader_display').hide();
-                }, "json");
-
-            });
-
-            $(document).on("click", ".type", function (e) {
-                $('.loader_display').show();
-                e.preventDefault();
-
-                var val1 = 1;
-                var url = "<?php echo $mypath_; ?>home/get_store_products";
-                var user_id = $("#user_id").val();
-                var search = $(this).attr('data-id');
-
-                $('#search').val(search);
-
-                var product_view = $('#product_view').val();
-                var type = $('#search').val();
-
-                if (search == 'all') {
-                    $("#" + search).addClass("active");
-                    $("#new").removeClass("active");
-                    $("#popular").removeClass("active");
-                }
-                else if (search == 'new') {
-                    $("#" + search).addClass("active");
-                    $("#all").removeClass("active");
-                    $("#popular").removeClass("active");
-                }
-                else if (search == 'popular') {
-                    $("#" + search).addClass("active");
-                    $("#all").removeClass("active");
-                    $("#new").removeClass("active");
-                }
-
-                $.post(url, {value: val1, product_view: product_view, type: type, user_id: user_id, user_status:<?php echo $user_status; ?>, state_id_selection: state_id_selection}, function (response) {
-                    $('#reset_data').html('');
-                    $('#reset_data').html(response.html);
-
-                    $('.loader_display').hide();
-                }, "json");
-            });
-
 <?php
 $store_address = '';
 $state_name_s = '';
@@ -263,44 +115,142 @@ else
     $store_address = 'United Arab Emirates';
 if (!empty($store_address)) {
     ?>
-    var address = '<?php echo $store_address; ?>';
-    $('#store_on_google').attr('href', 'https://maps.google.com/maps/place/' + address);
+                var address = '<?php echo $store_address; ?>';
+                $('#store_on_google').attr('href', 'https://maps.google.com/maps/place/' + address);
 
 <?php } ?>
-    
-    jQuery(document).ready(function (e) {
-        
-        var header_section = parseInt($('#HeadertopSection').height());
-        var header_second = parseInt($('.HeaderSecound').height());
-        var bottom = parseInt($('#bottom').height());
-        var sum = parseInt(header_section) + parseInt(header_second) + parseInt(bottom);
-        var window_height = parseInt($( window ).height());
-        var window_width = parseInt($( window ).width());
-        var get_height = parseInt(window_height) - parseInt(sum);
-//        console.log(header_section + "==" + header_second +"====" + sum +"====" + window_height + "===" + get_height);
-        $('#website_load').height(get_height);
-        $('#website_load').width('100%');
-        var resizeId;
-        $(window).resize(function () {
-            clearTimeout(resizeId);
-            resizeId = setTimeout(doneResizing, 200);
 
-            var header_section = parseInt($('#HeadertopSection').height());
-            var header_second = parseInt($('.HeaderSecound').height());
-            var bottom = parseInt($('#bottom').height());
-            var sum = parseInt(header_section) + parseInt(header_second) + parseInt(bottom);
-            var window_height = parseInt($( window ).height());
-            var window_width = parseInt($( window ).width());
-            var get_height = parseInt(window_height) - parseInt(sum);
-            $('#website_load').height(get_height);
-            $('#website_load').width('100%');
+            jQuery(document).ready(function (e) {
+
+                var header_section = parseInt($('#HeadertopSection').height());
+                var header_second = parseInt($('.HeaderSecound').height());
+                var bottom = parseInt($('#bottom').height());
+                var sum = parseInt(header_section) + parseInt(header_second) + parseInt(bottom);
+                var window_height = parseInt($(window).height());
+                var window_width = parseInt($(window).width());
+                var get_height = parseInt(window_height) - parseInt(sum);
+//        console.log(header_section + "==" + header_second +"====" + sum +"====" + window_height + "===" + get_height);
+                $('#website_load').height(get_height);
+                $('#website_load').width('100%');
+//        var resizeId;
+                $(window).resize(function () {
+//            clearTimeout(resizeId);
+//            resizeId = setTimeout(doneResizing, 200);
+
+                    var header_section = parseInt($('#HeadertopSection').height());
+                    var header_second = parseInt($('.HeaderSecound').height());
+                    var bottom = parseInt($('#bottom').height());
+                    var sum = parseInt(header_section) + parseInt(header_second) + parseInt(bottom);
+                    var window_height = parseInt($(window).height());
+                    var window_width = parseInt($(window).width());
+                    var get_height = parseInt(window_height) - parseInt(sum);
+                    $('#website_load').height(get_height);
+                    $('#website_load').width('100%');
 //            console.log(header_section + "==" + header_second +"====" + sum +"====" + window_height + "===" + get_height);
-        });
-        
-        $('#loader_display').hide();
-    });
-    
-    $(document).find('#Layer_5').css("margin-top", "-20px");
+                });
+
+                $('#loader_display').hide();
+
+                var ipp = 100;
+                $('#pagination').on('click', 'a', function (e) {
+                    e.preventDefault();
+                    var pageno = $(this).attr('data-page');
+                    loadPagination(pageno);
+                });
+
+                loadPagination(1);
+
+                function loadPagination(pagno) {
+                    $('.loader_display').show();
+                    var product_view = $('#product_view').val();
+                    var type = $('#search').val();
+                    var send_values = {page: pagno, product_view: product_view, type: type, user_status: '<?php echo $user_status; ?>', store_owner: '<?php echo $store_owner; ?>', user_role: '<?php echo $user_role; ?>', ipp: ipp};
+
+                    $.ajax({
+                        url: '<?php echo $mypath_; ?>home/load_store_ads/',
+                        type: 'GET',
+                        data: send_values,
+                        dataType: 'json',
+                        success: function (response) {
+                            $('#pagination').html(response.pagination);
+                            $('#pagination').children().last().remove();
+                            $('#reset_data').html('');
+                            var final_response = response.html;
+//                    final_response = final_response.replace('...', '');
+                            $('#reset_data').html(final_response);
+                            $('.loader_display').hide();
+                        }
+                    });
+                }
+
+                $(document).on("click", ".type", function (e) {
+                    $('.loader_display').show();
+                    e.preventDefault();
+
+                    var val1 = 1;
+                    var url = "<?php echo $mypath_; ?>home/load_store_ads";
+
+                    var search = $(this).attr('data-id');
+
+                    $('#search').val(search);
+
+                    var product_view = $('#product_view').val();
+                    var type = $('#search').val();
+
+                    if (search == 'all') {
+                        $("#" + search).addClass("active");
+                        $("#new").removeClass("active");
+                        $("#popular").removeClass("active");
+                    } else if (search == 'new') {
+                        $("#" + search).addClass("active");
+                        $("#all").removeClass("active");
+                        $("#popular").removeClass("active");
+                    } else if (search == 'popular') {
+                        $("#" + search).addClass("active");
+                        $("#all").removeClass("active");
+                        $("#new").removeClass("active");
+                    }
+
+                    $.get(url, {value: val1, product_view: product_view, type: type, user_status: '<?php echo $user_status; ?>', store_owner: '<?php echo $store_owner; ?>', user_role: '<?php echo $user_role; ?>', state_id_selection: state_id_selection, ipp: ipp}, function (response) {
+                        $('#reset_data').html('');
+                        $('#pagination').html(response.pagination);
+                        $('#pagination').children().last().remove();
+                        $('#reset_data').html(response.html);
+                        $('.loader_display').hide();
+                    }, "json");
+                });
+
+                $(document).on("click", ".product_view", function (e) {
+                    $('.loader_display').show();
+                    e.preventDefault();
+                    var search = $(this).attr('data-id');
+                    var val1 = 1;
+                    $('#product_view').val(search);
+                    var product_view = $('#product_view').val();
+                    var type = $('#search').val();
+
+                    if (search == 'grid') {
+                        $('.' + search).addClass('view-active');
+                        $('.list').removeClass('view-active');
+                    } else if (search == 'list') {
+                        $('.' + search).addClass('view-active');
+                        $('.grid').removeClass('view-active');
+                    }
+
+                    var url = "<?php echo $mypath_; ?>home/load_store_ads";
+                    $.get(url, {value: val1, product_view: product_view, type: type, user_status: '<?php echo $user_status; ?>', store_owner: '<?php echo $store_owner; ?>', user_role: '<?php echo $user_role; ?>', state_id_selection: state_id_selection, ipp: ipp}, function (response) {
+                        $('#reset_data').html('');
+                        $('#pagination').html(response.pagination);
+                        $('#pagination').children().last().remove();
+                        $('#reset_data').html(response.html);
+                        $('.loader_display').hide();
+                    }, "json");
+
+                });
+
+            });
+
+            $(document).find('#Layer_5').css("margin-top", "-20px");
         </script>
     </body>
 </html>

@@ -60,7 +60,7 @@ if (!empty($product)) {
                     <small><?php echo str_replace('\n', " ", $pro['catagory_name']); ?></small>
                 </div>
                 <div class="col-sm-6 price padding-r50">
-                    <h4>AED <?php echo number_format($pro['product_price']); ?></h4>
+                    <h4>AED <?php echo number_format($pro['product_price'],2); ?></h4>
                 </div>
 
                 <div class="infobar col-sm-12">

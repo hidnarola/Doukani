@@ -2287,8 +2287,7 @@ align-items: center;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-con
 .inner_wrap_hd .inner_hd_right{display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;}
 .inner_wrap_hd .inner_hd_right .btn{font-size: 13px;}
 .cart-wrap .inner_wrap_hd .cart-title , .cart-wrap .inner_wrap_hd .forward{margin-bottom: 0;}
-.pro_inf_btn{ display: -webkit-box;display: -ms-flexbox;display: flex; -ms-flex-wrap: wrap;
-                flex-wrap: wrap;}
+.pro_inf_btn{ display: -webkit-box;display: -ms-flexbox;display: flex; -ms-flex-wrap: wrap;}
 .pro_inf_btn .continue_ship {margin: inherit;}
 
 
@@ -2310,6 +2309,8 @@ align-items: center;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-con
 @media (max-width:1367px){
     .classi-sub-head.main-head .head-action{width:75%;}
     .extra-det .right-btn{float:none;}
+	.prod-info .pro_inf_btn {    display: block;}
+	.prod-info .pro_inf_btn a{margin: 5px;}
 }
 @media(max-width:1350px){
     .list-ul li{width:25%;}
@@ -2445,6 +2446,8 @@ align-items: center;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-con
 	.inner_wrap_hd .inner_hd_right .cart_pro_inf a.btn.red-btn.continue_ship {margin: 20px 0;}
 	.inner_wrap_hd {margin: 0 0 20px;}
 	.pro_inf_btn a {width: 100% !important;min-width: 100% !important;}
+	.pro_inf_btn { display: -webkit-box;display: -ms-flexbox;display: flex; -ms-flex-wrap: wrap;
+                flex-wrap: wrap;}
 }
 
 @media(max-width:450px){
@@ -2498,3 +2501,8 @@ align-items: center;-webkit-box-pack: justify;-ms-flex-pack: justify;justify-con
 .term_condition{margin: 4px 0px 0px 15px !important;}
 .classified-registration button#register {width: 300px;margin: 0 auto;}
 .classified-registration .agree{float: left;margin-top: 8px;}
+
+.pagination_links_ { display: inline-block; padding-left: 0; margin: 20px 0; border-radius: 4px;}
+.pagination_links_ a.paginate, .pagination_links_ a.current, .pagination_links_ span.inactive.inactive {display: inline;position: relative;float: left;padding: 6px 12px;border: 1px solid #ed1b33;}
+.pagination_links_ a.current {background-color: #ed1b33; color: #FFF;}
+.pagination_parent {text-align: center;}

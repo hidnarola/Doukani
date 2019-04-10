@@ -549,7 +549,7 @@
                                                         </div>
                                                         <div class="cat_grid"> 
                                                             <div class=" price">
-                                                                <span title=" <?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?>"><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?></span>
+                                                                <span title=" <?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price'],2) : ''; ?>"><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price'], 2) : ''; ?></span>
 
                                                             </div>
 
@@ -579,11 +579,26 @@
                                         }
                                         ?>
                                         <!--item1-->
-                                        <?php if (@$hide == "false") { ?>
-                                            <div class="col-sm-12 text-center" id="load_more">
-                                                <button class="btn btn-blue" onclick="load_more_category();" id="load_product" value="0">Load More</button><br><br><br>
-                                            </div>
+                                        <?php
+                                        if (@$hide == "false") {
+                                            $total_pages = ceil($total_product/100);
+                                            $initial_pages = 10;
+                                            if($total_pages < $initial_pages){
+                                                $initial_pages = $total_pages;
+                                            }
+
+                                            $display_pagination = " display: none;";
+                                            if($total_pages > 0){
+                                                $display_pagination = "";
+                                            }
+                                        ?>
+                                        <div id="page-selection" style="text-align: center;<?php echo $display_pagination; ?>"></div>
                                         <?php } ?>
+                                        <?php // if (@$hide == "false") { ?>
+<!--                                            <div class="col-sm-12 text-center" id="load_more">
+                                                <button class="btn btn-blue" onclick="load_more_category();" id="load_product" value="0">Load More</button><br><br><br>
+                                            </div>-->
+                                        <?php // } ?>
                                     </div>
                                 </div>                                
                             </div>

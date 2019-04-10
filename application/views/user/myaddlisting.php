@@ -31,7 +31,7 @@
 					<a href="#"><?php echo $pro['username1']; ?></a>                                            
 				</div>
 				<div class="col-xs-12 price">
-					<span>AED <?php echo number_format($pro['product_price']); ?></span>
+					<span>AED <?php echo number_format($pro['product_price'],2); ?></span>
 				</div>
 			</div>
 			<div class="count-img">

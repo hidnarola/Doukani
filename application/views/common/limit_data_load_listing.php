@@ -106,7 +106,7 @@ if (!empty($product_data)) {
                                     ?>                                                          
                                 </div>
                                 <div class="price">
-                                    <h4><?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED '.number_format($pro['product_price']) : '' ;; ?></h4> 
+                                    <h4><?php echo ($pro['product_price'] != '' && (int)$pro['product_price'] != 0) ? 'AED '.number_format($pro['product_price'],2) : '' ;; ?></h4> 
                                 </div>
                             </div>
                         </div>

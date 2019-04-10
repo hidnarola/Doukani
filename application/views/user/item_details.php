@@ -275,7 +275,7 @@ if (!empty($product_images)) {
                                 </div>
                                 <div class="col-sm-4 details">
                                     <h4 class="no-margin">Selling Price :</h4>
-                                    <h3>AED <?php echo number_format($product->product_price); ?></h3>
+                                    <h3>AED <?php echo number_format($product->product_price, 2); ?></h3>
                                     <div class="table-responsive">
                                         <table class="table tbl-details">
                                             <tr style="color:#9197a3;">
@@ -651,7 +651,7 @@ if (!empty($product_images)) {
                                                                     <a href="<?php echo base_url() . 'seller/listings/' . $pro['product_posted_by']; ?>" ><p style="text-align:left;margin-top:6px;"><?php echo $pro['username1']; ?></p></a>													
                                                                 </div>
                                                                 <div class="col-sm-12 price">
-                                                                    <span>AED <?php echo number_format($pro['product_price']); ?></span>
+                                                                    <span>AED <?php echo number_format($pro['product_price'], 2); ?></span>
                                                                 </div>
                                                             </div>
                                                             <div class="count-img">

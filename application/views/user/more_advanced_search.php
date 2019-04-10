@@ -63,7 +63,7 @@ if (!empty($product_data)) {
                         <a href="<?php echo base_url() . 'seller/listings/' . $pro['product_posted_by']; ?>" ><p style="text-align:left;margin-top:6px;"><?php echo $pro['username1']; ?></p></a>                                            
                     </div>
                     <div class="col-sm-12 price">
-                        <span>AED <?php echo number_format($pro['product_price']); ?></span>
+                        <span>AED <?php echo number_format($pro['product_price'], 2); ?></span>
                     </div>
                 </div>
                 <div class="count-img">

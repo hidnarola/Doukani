@@ -73,7 +73,7 @@
                                                         }
                                                     } else {
                                                         ?>
-                                                        <div class="star" ><a href="<?php echo site_url() . 'login/index'; ?>">
+                                                        <div class="star" ><a href="<?php echo HTTPS . website_url . 'login/index'; ?>">
                                                                 <i class="fa fa-star-o"></i>
                                                             </a>
                                                         </div>
@@ -97,7 +97,7 @@
                                                         }
                                                     } else {
                                                         ?>
-                                                        <div class="newthumb" ><a href="<?php echo site_url() . 'login/index'; ?>">
+                                                        <div class="newthumb" ><a href="<?php echo HTTPS . website_url . 'login/index'; ?>">
                                                                 <i class="fa fa-thumbs-o-up"></i>
                                                             </a>
                                                         </div>
@@ -105,20 +105,19 @@
                                                     }
                                                     ?>
 
-                                                            <div class="addtocart listview" >
-                                                                <button data-toggle="tooltip" title="Add To Cart" class="add_to_cart_cus" type="button" id="add_to_cart_button" quantity="1" proid="<?php echo $pro['product_id']; ?>">
-                                                                    <i class="fa fa-shopping-cart <?php echo $pro['product_id']; ?>"></i>
-                                                                </button>
-                                                            </div>
-           
-                                                <?php 
-                                              
+                                                    <div class="addtocart listview" >
+                                                        <button data-toggle="tooltip" title="Add To Cart" class="add_to_cart_cus" type="button" id="add_to_cart_button" quantity="1" proid="<?php echo $pro['product_id']; ?>">
+                                                            <i class="fa fa-shopping-cart <?php echo $pro['product_id']; ?>"></i>
+                                                        </button>
+                                                    </div>
+
+                                                    <?php
                                                 }
                                             }
                                             ?> 
-                                              
+
                                         </div>
-                                        <div class="price"> <h4><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price']) : ''; ?></h4> </div>										
+                                        <div class="price"> <h4><?php echo ($pro['product_price'] != '' && (int) $pro['product_price'] != 0) ? 'AED ' . number_format($pro['product_price'], 2) : ''; ?></h4> </div>										
                                     </div>
 
                                 </div>
@@ -161,19 +160,19 @@
                                                 <div class="col-sm-4 col-md-3"><span>Property Type : </span><p><?php echo @$pro['PropertyType']; ?></p></div>
                                             <?php } if (isset($pro['Bedrooms']) && !empty($pro['Bedrooms'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Bedrooms : </span><p><?php
-                                                        if (@$pro['Bedrooms'] == '-1')
-                                                            echo 'More than 10';
-                                                        else
-                                                            echo @$pro['Bedrooms'];
-                                                        ?></p></div>
-                                            <?php }if (isset($pro['Bathrooms']) && !empty($pro['Bathrooms'])) { ?>
+                                                if (@$pro['Bedrooms'] == '-1')
+                                                    echo 'More than 10';
+                                                else
+                                                    echo @$pro['Bedrooms'];
+                                                ?></p></div>
+                                                    <?php }if (isset($pro['Bathrooms']) && !empty($pro['Bathrooms'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Bathrooms : </span><p><?php
-                                                        if ($pro['Bathrooms'] == '-1')
-                                                            echo 'More than 10';
-                                                        else
-                                                            echo @$pro['Bathrooms'];
+                                    if ($pro['Bathrooms'] == '-1')
+                                        echo 'More than 10';
+                                    else
+                                        echo @$pro['Bathrooms'];
                                                         ?></p></div>                                                    
-                                            <?php } if (isset($pro['Area']) && !empty($pro['Area'])) { ?>
+                                                    <?php } if (isset($pro['Area']) && !empty($pro['Area'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Area : </span><p><?php echo @$pro['Area']; ?></p></div>
                                             <?php } if (isset($pro['Amenities']) && !empty($pro['Amenities'])) { ?>
                                                 <div class="col-sm-4 col-md-3"><span>Amenities : </span><p><?php echo @$pro['Amenities']; ?></p></div>
@@ -251,68 +250,68 @@
         $(document).find('.horizontalList .img-holder .img-holderInner').css('height', h);
     });
 </script>
-   <script type="text/javascript">
-            //add to cart button
-            $('[data-toggle="tooltip"]').tooltip();
-                                                $('.add_to_cart_cus').click(function () {
-                                                   var proid= $(this).attr('proid');
-                                                   var qat=  $(this).attr('quantity');
-                                                   console.log(proid);
-                                                   console.log(qat);
-                                                    check_product_quantity(proid,qat);
-                                                    $("i."+proid).removeClass('fa-shopping-cart');
-                                                    $("i."+proid).addClass('fa-check');
-                                                });
+<script type="text/javascript">
+    //add to cart button
+    $('[data-toggle="tooltip"]').tooltip();
+    $('.add_to_cart_cus').click(function () {
+        var proid = $(this).attr('proid');
+        var qat = $(this).attr('quantity');
+        console.log(proid);
+        console.log(qat);
+        check_product_quantity(proid, qat);
+        $("i." + proid).removeClass('fa-shopping-cart');
+        $("i." + proid).addClass('fa-check');
+    });
 
 
-                                                function check_product_quantity(proid,qat) {
+    function check_product_quantity(proid, qat) {
 
-                                                    var product_id = $('#cart_product_id').val();
-                                                    var quantity = $('#quantity').val();
+        var product_id = $('#cart_product_id').val();
+        var quantity = $('#quantity').val();
 
-                                                    var url = "<?php echo $store_url; ?>home/check_product_and_quantity";
+        var url = "<?php echo $store_url; ?>home/check_product_and_quantity";
 
-                                                    $.post(url, {quantity: qat, product_id: proid}, function (response)
-                                                    {
-                                                        if (response == 'success') {
-                                                            $('#span_error').hide();
+        $.post(url, {quantity: qat, product_id: proid}, function (response)
+        {
+            if (response == 'success') {
+                $('#span_error').hide();
 
-                                                            var url = "<?php echo $store_url; ?>cart/add_to_cart";
-                                                            var quantity = $('#quantity').val();
-                                                            var cart_product_id = $('#cart_product_id').val();
+                var url = "<?php echo $store_url; ?>cart/add_to_cart";
+                var quantity = $('#quantity').val();
+                var cart_product_id = $('#cart_product_id').val();
 
-                                                            $.post(url, {quantity: qat, cart_product_id: proid}, function (response)
-                                                            {
-                                                                //                                    $('#cart_count').text(response);
-                                                                $('.total-no').text(response);
-                                                                $('.cart-li').show();
-                                                            });
-                                                          //  $("#quantity_popup").modal('hide');
-                                                        } else {
-                                                            if (response == 'Out of stock' || response == 'Not Available') {
-                                                             //   $('#span_error').show();
-                                                               // $('#span_error').text('* ' + response);
-                                                                return 0;
-                                                            } else
-                                                            {
-                                                             //   $('#span_error').show();
-                                                             //   $('#span_error').text('* ' + response + ' Available in Stock');
+                $.post(url, {quantity: qat, cart_product_id: proid}, function (response)
+                {
+                    //                                    $('#cart_count').text(response);
+                    $('.total-no').text(response);
+                    $('.cart-li').show();
+                });
+                //  $("#quantity_popup").modal('hide');
+            } else {
+                if (response == 'Out of stock' || response == 'Not Available') {
+                    //   $('#span_error').show();
+                    // $('#span_error').text('* ' + response);
+                    return 0;
+                } else
+                {
+                    //   $('#span_error').show();
+                    //   $('#span_error').text('* ' + response + ' Available in Stock');
 
-                                                                //reset dropdown
-                                                                var availability = parseInt(response);
-                                                                var i = 1;
-                                                                var concat_str = '';
+                    //reset dropdown
+                    var availability = parseInt(response);
+                    var i = 1;
+                    var concat_str = '';
 
-                                                                while (i <= availability) {
-                                                                    concat_str = concat_str + '<option value="' + i + '">' + i + '</option>';
-                                                                    i++;
-                                                                }
+                    while (i <= availability) {
+                        concat_str = concat_str + '<option value="' + i + '">' + i + '</option>';
+                        i++;
+                    }
 
-                                                                $("#quantity").html(concat_str);
-                                                                return 0;
-                                                            }
+                    $("#quantity").html(concat_str);
+                    return 0;
+                }
 
-                                                        }
-                                                    });
-                                                }
-            </script>
+            }
+        });
+    }
+</script>
